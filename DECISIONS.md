@@ -38,7 +38,7 @@ B8. Descriptions (open item 6): each starts with the situation, flow skills say 
 B9. datafolx reuse: adapted the review protocol, technical and business review, methods, and the planted-flaw case designs. Rewrote all text. The word is never used outside SPEC.md and DECISIONS.md. Invented data only.
 B10. Eval cases live in `evals/<skill>/case-N.md` with `rubric.md`. Each case holds an input and a pass description. Planted-flaw cases for `review-analysis` are adapted from the earlier cases.
 B11. Added `scripts/self-check`, not in SPEC 16. Options: manual checks only or a script. Reason: repeatable, and the PR can show the output. It is not packaged into any skill.
-B12. Em dash check excludes `SPEC.md`: the task says to save it unchanged. Every other file is clean.
+B12. Em dash check skips `SPEC.md` because it must stay unchanged. It has none anyway.
 B13. Skill commands are named in descriptions with a trailing space check ("Use only when the user runs /<name> or explicitly asks to ..."), which the self-check matches.
 B14. Install docs for Codex, Gemini CLI, Cursor and Copilot give the `npx skills add` route and say to check each agent's current docs for the exact folder. I could not verify folder paths from this session, so I avoided stating them as fact.
 B15. Chat-app ZIP upload steps in `docs/install.md` describe the general route. Exact menu names change, so they are not pinned.

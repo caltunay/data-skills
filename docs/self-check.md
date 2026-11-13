@@ -6,7 +6,7 @@ Run on 2026-11-13 with `scripts/self-check`. Result: all pass.
 |---|---|
 | Every SKILL.md frontmatter has only `name` and `description` | PASS |
 | No links between skill folders (no `../`, no `skills/<name>/` paths) | PASS |
-| No em dashes anywhere (SPEC.md excluded: it is kept unchanged as the source of truth) | PASS |
+| No em dashes anywhere (SPEC.md skipped: kept unchanged, and has none) | PASS |
 | The reserved product name appears only in SPEC.md and DECISIONS.md | PASS |
 | No text telling the agent to use a named tool of one agent | PASS |
 | Every flow skill description says "Use only when the user runs /<name>" | PASS |
