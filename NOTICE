@@ -1,0 +1,9 @@
+data-skills
+Copyright (c) 2026 caltunay. Licensed under MIT (see LICENSE).
+
+Acknowledgements. No text or code is copied from these sources.
+
+- mattpocock/skills: inspiration for skill structure, the flow, and the split between user-invoked and model-invoked skills.
+- anthropics/knowledge-work-plugins (data plugin), Apache License 2.0: the data skills in this repo were written with its skill inventory in mind. Credited as a courtesy.
+- "The Art of Data Science" by Roger D. Peng and Elizabeth Matsui: the epicycle of analysis and the six question types.
+- sqlstyle.guide by Simon Holywell: the default SQL style. Summarised in our own words with a link. See docs/upstream-map.md.
