@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+# Self-check for hard rules. Prints PASS or FAIL per check. Exit 1 on any failure.
+cd "$(dirname "$0")/.." || exit 1
+fail=0
+ok() { echo "PASS  $1"; }
+bad() { echo "FAIL  $1"; shift; printf '      %s\n' "$@"; fail=1; }
+
+flow="setup-data-work grill-the-ask plan-analysis run-analysis review-analysis retro-analysis"
+
+# 1 frontmatter only name and description
+out=$(for f in skills/*/SKILL.md; do
+  awk -v f="$f" 'NR==1&&$0!="---"{print f": no frontmatter"; exit}
+    NR>1&&$0=="---"{exit}
+    NR>1&&$0!~/^(name|description): /{print f": bad key: "$0}' "$f"
+  grep -q '^name: ' "$f" || echo "$f: no name"
+  grep -q '^description: ' "$f" || echo "$f: no description"
+done)
+[ -z "$out" ] && ok "frontmatter has only name and description" || bad "frontmatter" "$out"
+
+# 2 no links between skill folders
+out=$(grep -rnE '\.\./|skills/[a-z-]+/|\]\([^)]*SKILL\.md' skills | grep -v '^skills/[^:]*:[0-9]*:.*DATA-MAP.template' )
+[ -z "$out" ] && ok "no links between skill folders" || bad "cross-skill paths" "$out"
+
+# 3 no em dashes outside SPEC.md
+dash=$(printf '\342\200\224')
+out=$(grep -rln "$dash" --exclude-dir=.git --exclude-dir=dist . | grep -v '^./SPEC.md$')
+[ -z "$out" ] && ok "no em dashes (SPEC.md excluded, it must stay unchanged)" || bad "em dashes" "$out"
+
+# 4 reserved name
+word="data""folx"
+out=$(grep -rli "$word" --exclude-dir=.git --exclude-dir=dist . | grep -vE '^./(SPEC|DECISIONS)\.md$')
+[ -z "$out" ] && ok "reserved name only in SPEC.md and DECISIONS.md" || bad "reserved name" "$out"
+
+# 5 no agent-specific tool names in skills
+out=$(grep -rnE '\b(Bash|Read|Write|Edit|Grep|Glob|Task|Agent|Skill|WebFetch|WebSearch|ToolSearch|AskUserQuestion|NotebookEdit) tool\b|mcp__|\buse the [A-Z][A-Za-z]+ tool' skills)
+[ -z "$out" ] && ok "no agent-specific tool names" || bad "tool names" "$out"
+
+# 6 flow skill descriptions
+out=""
+for s in $flow; do
+  grep -q "^description: .*Use only when the user runs /$s " skills/$s/SKILL.md || out="$out skills/$s/SKILL.md"
+done
+[ -z "$out" ] && ok "flow descriptions say 'Use only when the user runs /<name>'" || bad "flow descriptions" "$out"
+
+# 7 name matches folder
+out=$(for f in skills/*/SKILL.md; do d=$(basename "$(dirname "$f")"); grep -q "^name: $d\$" "$f" || echo "$f"; done)
+[ -z "$out" ] && ok "skill name matches folder" || bad "name mismatch" "$out"
+
+# 8 section 16 files exist
+need="README.md LICENSE NOTICE SPEC.md DECISIONS.md templates/analysis.template.md docs/install.md docs/upstream-map.md scripts/package-zips
+skills/question-types/descriptive.md skills/question-types/experiment.md skills/data-map/DATA-MAP.template.md
+skills/shaping-data/sql.md skills/shaping-data/python.md skills/shaping-data/excel.md skills/shaping-data/powerbi.md skills/shaping-data/tableau.md evals/results"
+for s in $flow grilling assumptions validation-ladder question-types data-map run-or-hand-over shaping-data data-audit stats-tests; do need="$need skills/$s/SKILL.md"; done
+for s in $flow; do need="$need evals/$s/case-1.md evals/$s/case-2.md evals/$s/case-3.md evals/$s/rubric.md"; done
+out=$(for p in $need; do [ -e "$p" ] || echo "$p"; done)
+[ -z "$out" ] && ok "every section 16 file exists" || bad "missing files" "$out"
+
+# 9 SKILL.md under 500 lines
+out=$(for f in skills/*/SKILL.md; do n=$(wc -l < "$f"); [ "$n" -ge 500 ] && echo "$f $n"; done)
+[ -z "$out" ] && ok "every SKILL.md under 500 lines" || bad "too long" "$out"
+
+# 10 template copies match
+cmp -s templates/analysis.template.md skills/grill-the-ask/analysis.template.md && ok "analysis template copies match" || bad "template copies differ"
+
+# 11 skill count
+n=$(ls -d skills/*/ | wc -l); [ "$n" -eq 15 ] && ok "15 skills" || bad "skill count is $n"
+
+# 12 no credentials-like strings
+out=$(grep -rnEi '(api[_-]?key|secret|password|token)\s*[:=]\s*\S{8,}|sk-[A-Za-z0-9]{20,}' --exclude-dir=.git --exclude-dir=dist . )
+[ -z "$out" ] && ok "no credentials" || bad "credentials" "$out"
+
+exit $fail

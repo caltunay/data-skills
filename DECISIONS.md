@@ -37,7 +37,18 @@ B7. Plugin manifests (open item 5): not added. Options: add or v1. Reason: not t
 B8. Descriptions (open item 6): each starts with the situation, flow skills say "Use only when the user runs /<name> or explicitly asks to ...", disciplines name concrete triggers and say they are called by the flow. See each SKILL.md.
 B9. datafolx reuse: adapted the review protocol, technical and business review, methods, and the planted-flaw case designs. Rewrote all text. The word is never used outside SPEC.md and DECISIONS.md. Invented data only.
 B10. Eval cases live in `evals/<skill>/case-N.md` with `rubric.md`. Each case holds an input and a pass description. Planted-flaw cases for `review-analysis` are adapted from the earlier cases.
+B11. Added `scripts/self-check`, not in SPEC 16. Options: manual checks only or a script. Reason: repeatable, and the PR can show the output. It is not packaged into any skill.
+B12. Em dash check excludes `SPEC.md`: the task says to save it unchanged. Every other file is clean.
+B13. Skill commands are named in descriptions with a trailing space check ("Use only when the user runs /<name> or explicitly asks to ..."), which the self-check matches.
+B14. Install docs for Codex, Gemini CLI, Cursor and Copilot give the `npx skills add` route and say to check each agent's current docs for the exact folder. I could not verify folder paths from this session, so I avoided stating them as fact.
+B15. Chat-app ZIP upload steps in `docs/install.md` describe the general route. Exact menu names change, so they are not pinned.
+B16. The eval cases are written as inputs plus pass and fail descriptions. They are run by hand (SPEC 15), so there is no runner. Results go in `evals/results/`, which is empty until the maintainer runs them.
+B17. No manual run of the evals in the four agents was possible from this session. The manual test checklist in the PR is for the maintainer.
 
 ## Questions for Cenan
 
 Short yes/no or A/B. Default is used until answered.
+
+Q1. Is `anthropics/knowledge-work-plugins` credit in `NOTICE` wanted even though no text was copied? Default: yes, keep it (A: keep, B: remove).
+Q2. Should the plugin manifests for Claude Code and Codex be added in v1? Default: yes, v1 (A: v1, B: add now).
+Q3. sqlstyle.guide could not be reached to confirm its license. Default: we paraphrase only and link. OK? (A: yes, B: check and quote some)
