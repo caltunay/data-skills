@@ -48,6 +48,23 @@ Invented data, real query results. Each folder holds the data script, `DATA-MAP.
 - [examples/signup-drop](examples/signup-drop/): "Why did sign-ups drop in March?" Descriptive, then exploratory. The readout says where the fall is, and that it cannot say why.
 - [examples/pricing-page-test](examples/pricing-page-test/): an A/B test on the shop's pricing page, with a sample ratio check, power and a readout that keeps its uncertainty.
 
+## Experimental extras (v0.2)
+
+Every skill in this section is **experimental** until it has passed its evals. Expect changes.
+
+| Command | Status | Does |
+|---|---|---|
+| `/ask-data-skills` | **experimental** | Tells you which command to run, why, and what comes after it |
+| `/wayfinder-data` | **experimental** | Maps big, vague work as decision items, settles them one at a time, and ends with ready `/grill-the-ask` prompts |
+| `/storytell` | **experimental** | Turns a final readout into an exec, product or data version, as a doc, chat message, email or slide outline. Never raises a claim |
+| `/improve-code` | **experimental** | Reviews SQL or Python in order: intent, correctness, style, performance. Shows a diff and proves the result did not change |
+| `/handoff` | **experimental** | Writes `handoff.md` so a colleague or a fresh session can pick the analysis up |
+
+| Skill the agent applies | Status | Does |
+|---|---|---|
+| `viz` | **experimental** | Chart choice by question and 12 chart checks, with notes for Python, Excel, Tableau, Power BI and dashboards |
+| `metric-design` | **experimental** | Defines a metric with a formula, grain, population, owner, guardrails and a trusted number |
+
 ## What makes it different
 
 Plain models already spot visible flaws. These skills add:
@@ -77,6 +94,7 @@ Plain models already spot visible flaws. These skills add:
 - **Flow skills (you run them):** the 6 commands above.
 - **Disciplines (the agent applies them):** `grilling`, `assumptions`, `validation-ladder`, `question-types`, `data-map`, `run-or-hand-over`.
 - **Data skills (the agent applies them):** `shaping-data` (SQL, Python, Excel, Power BI, Tableau), `data-audit`, `stats-tests`.
+- **Experimental (v0.2):** `/ask-data-skills`, `/wayfinder-data`, `/storytell`, `/improve-code`, `/handoff`, `viz`, `metric-design`. See the table above.
 
 ## Works with or without a data connection
 
@@ -105,8 +123,10 @@ All six question types have method cards in the `question-types` skill: descript
 
 - `skills/` the skills
 - `templates/` the `analysis.md` and `readout.md` templates
-- `evals/` test cases and rubrics
-- `docs/` install guide, upstream map, self-check
+- `examples/` two worked examples on invented data
+- `evals/` test cases, rubrics and an eval runner (`evals/runner/`)
+- `docs/` install guide, upstream map, self-check, walkthrough
+- `CONTRIBUTING.md` how to add a skill or a method card
 - `SPEC.md` the spec, `DECISIONS.md` the decisions
 
 ## License

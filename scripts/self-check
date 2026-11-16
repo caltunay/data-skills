@@ -173,6 +173,13 @@ PY
 )
 [ -z "$out" ] && ok "plugin manifests are valid JSON with one name and one version" || bad "plugin manifests" "$out"
 
+# 24 every v0.2 skill is marked experimental in the README and in its own file
+out=$(for s in $offflow viz metric-design; do
+  grep -qE "\`/?$s\` \| \*\*experimental\*\*" README.md || echo "README.md: $s not marked experimental"
+  grep -q '^Experimental (v0.2)\.$' "skills/$s/SKILL.md" || echo "skills/$s/SKILL.md: no experimental line"
+done)
+[ -z "$out" ] && ok "every v0.2 skill is marked experimental" || bad "experimental marks" "$out"
+
 # 21 private blocklist (gitignored .blocklist, one word per line)
 if [ -f .blocklist ]; then
   out=$(grep -rnwiIF -f .blocklist --exclude-dir=.git --exclude=.blocklist . | cut -d: -f1,2)

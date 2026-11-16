@@ -142,6 +142,7 @@ B64. Eval runner (v0.2 item 12). `evals/runner/run.py` uses the standard library
 B65. Runner defaults. Anthropic default model is `claude-opus-5-5`; OpenAI needs `--model`, because no model id could be checked from this session. The price table holds four Anthropic list prices with their cache date; other models need `--price-in` and `--price-out`. For Anthropic models that can decline a request, the runner sends the server-side fallback parameter (`--no-fallbacks` turns it off). The judge defaults to the model under test; `--judge-model` picks another.
 B66. Runner safety. Keys are read by the SDKs from the environment; the script never touches them. `--dry-run` sends nothing. A real run prints the estimate and needs the word "yes" (or `--yes`). A full dry run today: 45 cases, 68 user turns.
 B67. Every eval case now has a "Simulated answers" section (the user's later turns, or "None needed"). Self-check 20 tests for it. The runner was tested in dry-run mode only: this session has no API key, so no real run was made and `evals/results/` is still empty.
+B68. Finish (v0.2). The README marks all seven v0.2 skills **experimental** in one section, and each of their files carries "Experimental (v0.2)." Self-check 24 tests both. The self-check now runs 24 checks and covers every new skill, the examples, the runner, the workflows, the templates and the manifests.
 
 ## Questions for Cenan
 
