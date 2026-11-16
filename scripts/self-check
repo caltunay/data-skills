@@ -6,8 +6,8 @@ ok() { echo "PASS  $1"; }
 bad() { echo "FAIL  $1"; shift; printf '      %s\n' "$@"; fail=1; }
 
 flow="setup-data-work grill-the-ask plan-analysis run-analysis review-analysis retro-analysis"
-offflow=""
-flowstyle=""
+offflow="storytell"
+flowstyle="storytell"
 extra_files="skills/viz/python.md skills/viz/excel.md skills/viz/tableau.md skills/viz/powerbi.md"
 predictive_full=5
 predictive_short=2
