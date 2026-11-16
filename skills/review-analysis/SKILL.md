@@ -23,6 +23,7 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
 
 - `question-types`: name the type. Every claim is checked against its ceiling. No "caused" without a randomised experiment or a credible causal design that passed its checks.
 - `assumptions`: flag any high-impact row still `open` when results are reported. Alternatives are required for high-impact rows. Standard and deep depth always show the full 7-column table (id, assumption, why unavoidable, likely alternatives, impact if wrong, how to check, status). Never drop columns.
+- `viz` (experimental): for each chart, check that the title states a takeaway at or below the ceiling, axes carry units, bars start at zero, uncertainty is shown, there are no dual axes and no 3D, colours are colour-blind safe, and compared panels share a scale.
 - `validation-ladder`: check the ladder log. Each rung has an expected result, an actual result and pass or fail. Reconcile to a trusted number.
 
 ## Steps
@@ -42,6 +43,7 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
    - Spec match: do the results match the analysis table spec (grain, filters, row count)?
    - Ladder: was each rung run and logged? Can one number be recomputed independently?
    - Method card: open the `question-types` file for the question type and find the card for the method used. Check the analysis against every item under "Checks that must pass". A check that was not run, or that failed, is an issue, and the claim allowed drops.
+   - Charts: if the analysis or the readout has charts, apply the `viz` checks to each. Report only the fails.
 4. **Business review.** Ask what leadership will ask.
    - Decision: what will be done differently because of this? If nothing, why was it run?
    - Size: the effect in money, users or orders per month. Big enough to act on?

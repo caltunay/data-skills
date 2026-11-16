@@ -39,6 +39,7 @@ When you stop, say what you are waiting for and set the Progress line, for examp
 - `stats-tests`: choose the test by data type and design. Report direction, magnitude and uncertainty. Correct for multiple comparisons.
 - `question-types`: word every claim at or below the ceiling. One file per question type holds the method cards. Load the card for the chosen method and apply its "Checks that must pass". No "caused" without a randomised experiment or a credible causal design that passed its checks.
 - `data-map`: read it before writing queries. Flag entries older than 90 days or contradicted by data, then ask.
+- `viz` (experimental): choose the chart by the question. The title states the takeaway, axes carry units, bars start at zero, uncertainty is shown, no dual axes, no 3D, colour-blind safe, same scale when comparing.
 - `assumptions`: ask instead of assuming. When you must assume, add a row. Standard and deep depth always show the full 7-column table (id, assumption, why unavoidable, likely alternatives, impact if wrong, how to check, status). Never drop columns.
 
 ## Steps
@@ -86,7 +87,7 @@ Examples: no clean control group, a metric that is not available, a sample ratio
 
 ## Data safety
 
-Show aggregates by default. Ask before saving row-level data anywhere. Put charts and tables in `outputs/` only when asked. Never store credentials.
+Show aggregates by default. Ask before saving row-level data anywhere. Put charts and tables in `outputs/` only when asked or when the plan names one. Apply the `viz` skill to every chart before saving it. Never store credentials.
 
 ## Output
 

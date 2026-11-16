@@ -118,6 +118,7 @@ B41. `scripts/self-check` extended to 22 checks (fix M). New: naming rule and so
 
 B42. Setup (v0.2 item 0). Branch `v0.2` from the finished `spec/v0`. SPEC section 20 describes the v0.2 items. Design decisions 33 to 46 appended. The brief lists 13 items; SPEC 20.14 adds the catalogue count.
 B43. "Flow-style" skill, as used in the v0.2 brief, means a skill that reads or writes files in `data-work/`: `/storytell`, `/wayfinder-data`, `/handoff`. They get the 4-step start and the chat-app end. `/improve-code` gets a lighter start (it looks for the data map only) and the chat-app end for any file it changes. `/ask-data-skills` is a router and gets neither. Options: give all five the full blocks, or only those that touch flow files. Reason: the start block asks for `analysis.md`, which a pasted query or a routing question does not have.
+B44. `viz` (v0.2 item 2). One model-invoked skill: `SKILL.md` holds the chart table (7 question kinds) and 12 checks. The 9 checks from the brief are checks 1 to 9; three more were added (partial periods, source line, sort order) because they are the most common faults left. Tool files: `python.md`, `excel.md`, `tableau.md`, `powerbi.md`. The description ties it to the flow so it does not clash with built-in chart skills. `/run-analysis` and `/review-analysis` restate its rule and call it. No evals of its own: the brief asks for evals on user-invoked skills only. Chart checks are covered in the `/storytell` evals.
 
 ## Questions for Cenan
 

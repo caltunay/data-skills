@@ -8,10 +8,10 @@ bad() { echo "FAIL  $1"; shift; printf '      %s\n' "$@"; fail=1; }
 flow="setup-data-work grill-the-ask plan-analysis run-analysis review-analysis retro-analysis"
 offflow=""
 flowstyle=""
-extra_files=""
+extra_files="skills/viz/python.md skills/viz/excel.md skills/viz/tableau.md skills/viz/powerbi.md"
 predictive_full=5
 predictive_short=2
-model="grilling assumptions validation-ladder question-types data-map run-or-hand-over shaping-data data-audit stats-tests"
+model="grilling assumptions validation-ladder question-types data-map run-or-hand-over shaping-data data-audit stats-tests viz"
 user="$flow $offflow"
 all="$user $model"
 qt="descriptive exploratory inferential predictive causal experiment mechanistic"
@@ -114,10 +114,10 @@ grep -q 'How do you want to set up your data map?' skills/setup-data-work/SKILL.
 calls_setup="grilling data-map run-or-hand-over"
 calls_grill="grilling assumptions question-types data-map"
 calls_plan="assumptions question-types shaping-data"
-calls_run="validation-ladder run-or-hand-over shaping-data data-audit stats-tests question-types data-map assumptions"
-calls_review="question-types assumptions validation-ladder"
+calls_run="validation-ladder run-or-hand-over shaping-data data-audit stats-tests question-types data-map assumptions viz"
+calls_review="question-types assumptions validation-ladder viz"
 calls_retro="data-map"
-out=$(chk() { f="skills/$1/SKILL.md"; shift; for d in "$@"; do grep -q "^- \`$d\`: " "$f" || echo "$f: does not restate $d"; done; }
+out=$(chk() { f="skills/$1/SKILL.md"; shift; for d in "$@"; do grep -qE "^- \`$d\`( \(experimental\))?: " "$f" || echo "$f: does not restate $d"; done; }
   chk setup-data-work $calls_setup; chk grill-the-ask $calls_grill; chk plan-analysis $calls_plan
   chk run-analysis $calls_run; chk review-analysis $calls_review; chk retro-analysis $calls_retro)
 [ -z "$out" ] && ok "flow skills restate the core rule of each discipline they call" || bad "fallback rules" "$out"
