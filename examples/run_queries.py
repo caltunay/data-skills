@@ -39,32 +39,41 @@ def fmt(value):
     return "" if value is None else str(value)
 
 
+def connect(example):
+    conn = sqlite3.connect(":memory:")
+    for path in sorted((Path(example) / "data").glob("*.csv")):
+        load(conn, path)
+    return conn
+
+
+def run_file(conn, path):
+    """Run every statement in a .sql file. Return (header, rows) of the last one."""
+    sql = Path(path).read_text()
+    body = "\n".join(line for line in sql.splitlines() if not line.startswith("--"))
+    statements = [s.strip() for s in body.split(";") if s.strip()]
+    cursor = None
+    for statement in statements:
+        cursor = conn.execute(statement)
+    if cursor is None or not cursor.description:
+        return [], []
+    return [d[0] for d in cursor.description], cursor.fetchall()
+
+
 def main():
     example = Path(sys.argv[1])
-    conn = sqlite3.connect(":memory:")
-    for path in sorted((example / "data").glob("*.csv")):
-        load(conn, path)
+    conn = connect(example)
     lines = []
     for path in sorted((example / "queries").glob("*.sql")):
-        sql = path.read_text()
         lines.append(f"=== {path.name}")
-        for line in sql.splitlines():
-            if line.startswith("--"):
-                lines.append(line)
-        # a file may hold setup statements (views) before the final select
-        body = "\n".join(line for line in sql.splitlines() if not line.startswith("--"))
-        statements = [s.strip() for s in body.split(";") if s.strip()]
-        cursor = None
-        for statement in statements:
-            cursor = conn.execute(statement)
-        if cursor is not None and cursor.description:
-            header = [d[0] for d in cursor.description]
-            rows = [[fmt(v) for v in row] for row in cursor.fetchall()]
-            widths = [max(len(header[i]), *(len(r[i]) for r in rows)) if rows else len(header[i]) for i in range(len(header))]
+        lines.extend(line for line in path.read_text().splitlines() if line.startswith("--"))
+        header, raw = run_file(conn, path)
+        if header:
+            rows = [[fmt(v) for v in row] for row in raw]
+            widths = [max([len(header[i])] + [len(r[i]) for r in rows]) for i in range(len(header))]
             lines.append(" | ".join(h.ljust(w) for h, w in zip(header, widths)))
             lines.append("-|-".join("-" * w for w in widths))
             for r in rows:
-                lines.append(" | ".join(v.ljust(w) for v, w in zip(r, widths)))
+                lines.append(" | ".join(v.ljust(w) for v, w in zip(r, widths)).rstrip())
             lines.append(f"({len(rows)} rows)")
         lines.append("")
     (example / "outputs").mkdir(exist_ok=True)

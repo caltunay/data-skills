@@ -2,7 +2,7 @@
 -- Q0.1  Purpose: audit the shape of signups. Expect: about 3,500 rows, 1 Jan to 31 Mar 2026, no null keys.
 row_count | distinct_signup_ids | first_signup_ts     | last_signup_ts      | null_ids | blank_channels | test_rows
 ----------|---------------------|---------------------|---------------------|----------|----------------|----------
-3582      | 3542                | 2026-01-01 00:41:36 | 2026-03-31 22:49:30 | 0        | 0              | 66       
+3582      | 3542                | 2026-01-01 00:41:36 | 2026-03-31 22:49:30 | 0        | 0              | 66
 (1 rows)
 
 === q1-1-one-entity.sql
@@ -18,22 +18,22 @@ signup_id | account_id | signup_ts           | channel     | platform | plan    
 -- Expect: every row before 2026-03-01 00:00:00 falls in 2026-02, every row from then on in 2026-03.
 signup_month | first_ts            | last_ts             | row_count
 -------------|---------------------|---------------------|----------
-2026-02      | 2026-02-28 22:06:02 | 2026-02-28 22:06:02 | 1        
-2026-03      | 2026-03-01 00:44:02 | 2026-03-01 01:56:30 | 7        
+2026-02      | 2026-02-28 22:06:02 | 2026-02-28 22:06:02 | 1
+2026-03      | 2026-03-01 00:44:02 | 2026-03-01 01:56:30 | 7
 (2 rows)
 
 === q1-3-many-entities-duplicates.sql
 -- Q1.3  Rung 3, many entities. Purpose: is signup_id unique? Expect: zero ids with more than one row.
 ids_with_more_than_one_row | rows_on_those_ids | most_rows_on_one_id
 ---------------------------|-------------------|--------------------
-40                         | 80                | 2                  
+40                         | 80                | 2
 (1 rows)
 
 === q1-3b-duplicates-differ-how.sql
 -- Q1.3b  Purpose: what differs between the duplicate rows? Expect: unknown. This is a look, after rung 3 failed.
 duplicated_ids | ids_where_signup_ts_differs | ids_where_channel_differs | ids_where_is_test_differs | ids_where_updated_ts_differs
 ---------------|-----------------------------|---------------------------|---------------------------|-----------------------------
-40             | 0                           | 0                         | 0                         | 40                          
+40             | 0                           | 0                         | 0                         | 40
 (1 rows)
 
 === q1-3c-clean-view.sql
@@ -41,7 +41,7 @@ duplicated_ids | ids_where_signup_ts_differs | ids_where_channel_differs | ids_w
 -- test accounts excluded) and re-check uniqueness. Expect: row_count equals distinct ids. 3,542 ids before the test filter.
 distinct_ids_in_source | test_ids_excluded | rows_in_clean | distinct_ids_in_clean
 -----------------------|-------------------|---------------|----------------------
-3542                   | 64                | 3478          | 3478                 
+3542                   | 64                | 3478          | 3478
 (1 rows)
 
 === q1-4-aggregates.sql
@@ -49,9 +49,9 @@ distinct_ids_in_source | test_ids_excluded | rows_in_clean | distinct_ids_in_cle
 -- Expect: three full months, 31, 28 and 31 days, no day with zero sign-ups, total equals rows in signups_clean.
 signup_month | signups | days_with_signups | signups_per_day
 -------------|---------|-------------------|----------------
-2026-01      | 1330    | 31                | 42.9           
-2026-02      | 1175    | 28                | 41.96          
-2026-03      | 973     | 31                | 31.39          
+2026-01      | 1330    | 31                | 42.9
+2026-02      | 1175    | 28                | 41.96
+2026-03      | 973     | 31                | 31.39
 (3 rows)
 
 === q1-5-reconcile.sql
@@ -59,9 +59,9 @@ signup_month | signups | days_with_signups | signups_per_day
 -- Expect: every month within the 1% tolerance set in the plan.
 signup_month | our_count | dashboard_count | gap | gap_pct
 -------------|-----------|-----------------|-----|--------
-2026-01      | 1330      | 1326            | 4   | 0.3    
-2026-02      | 1175      | 1171            | 4   | 0.34   
-2026-03      | 973       | 972             | 1   | 0.1    
+2026-01      | 1330      | 1326            | 4   | 0.3
+2026-02      | 1175      | 1171            | 4   | 0.34
+2026-03      | 973       | 972             | 1   | 0.1
 (3 rows)
 
 === q2-1-february-vs-march.sql
@@ -70,7 +70,7 @@ signup_month | our_count | dashboard_count | gap | gap_pct
 -- Expect: March lower on both. The daily average falls more, because March is 3 days longer.
 feb_signups | mar_signups | total_change_pct | feb_per_day | mar_per_day | per_day_change_pct
 ------------|-------------|------------------|-------------|-------------|-------------------
-1175        | 973         | -17.2            | 41.96       | 31.39       | -25.2             
+1175        | 973         | -17.2            | 41.96       | 31.39       | -25.2
 (1 rows)
 
 === q2-2-weekly-series.sql
@@ -78,18 +78,18 @@ feb_signups | mar_signups | total_change_pct | feb_per_day | mar_per_day | per_d
 -- Expect: a step down in one week, not a slow slide. Partial weeks at both ends are left out.
 week_start | signups | days
 -----------|---------|-----
-2026-01-05 | 314     | 7   
-2026-01-12 | 310     | 7   
-2026-01-19 | 275     | 7   
-2026-01-26 | 325     | 7   
-2026-02-02 | 266     | 7   
-2026-02-09 | 316     | 7   
-2026-02-16 | 297     | 7   
-2026-02-23 | 295     | 7   
-2026-03-02 | 218     | 7   
-2026-03-09 | 209     | 7   
-2026-03-16 | 212     | 7   
-2026-03-23 | 210     | 7   
+2026-01-05 | 314     | 7
+2026-01-12 | 310     | 7
+2026-01-19 | 275     | 7
+2026-01-26 | 325     | 7
+2026-02-02 | 266     | 7
+2026-02-09 | 316     | 7
+2026-02-16 | 297     | 7
+2026-02-23 | 295     | 7
+2026-03-02 | 218     | 7
+2026-03-09 | 209     | 7
+2026-03-16 | 212     | 7
+2026-03-23 | 210     | 7
 (12 rows)
 
 === q3-1-scan-channel.sql
@@ -98,11 +98,11 @@ week_start | signups | days
 -- Expect: unknown. Contributions sum to 100%.
 channel     | feb_per_day | mar_per_day | change_per_day | change_pct | share_of_fall_pct
 ------------|-------------|-------------|----------------|------------|------------------
-paid_social | 15.32       | 5.42        | -9.9           | -64.6      | 93.6             
-referral    | 3.82        | 3.26        | -0.56          | -14.7      | 5.3              
-paid_search | 8.07        | 7.61        | -0.46          | -5.7       | 4.3              
-email       | 2.71        | 2.77        | 0.06           | 2.2        | -0.6             
-organic     | 12.04       | 12.32       | 0.29           | 2.4        | -2.7             
+paid_social | 15.32       | 5.42        | -9.9           | -64.6      | 93.6
+referral    | 3.82        | 3.26        | -0.56          | -14.7      | 5.3
+paid_search | 8.07        | 7.61        | -0.46          | -5.7       | 4.3
+email       | 2.71        | 2.77        | 0.06           | 2.2        | -0.6
+organic     | 12.04       | 12.32       | 0.29           | 2.4        | -2.7
 (5 rows)
 
 === q3-2-scan-platform.sql
@@ -111,8 +111,8 @@ organic     | 12.04       | 12.32       | 0.29           | 2.4        | -2.7
 -- Expect: unknown. Contributions sum to 100%.
 platform | feb_per_day | mar_per_day | change_per_day | change_pct | share_of_fall_pct
 ---------|-------------|-------------|----------------|------------|------------------
-mobile   | 27.18       | 17.26       | -9.92          | -36.5      | 93.8             
-desktop  | 14.79       | 14.13       | -0.66          | -4.4       | 6.2              
+mobile   | 27.18       | 17.26       | -9.92          | -36.5      | 93.8
+desktop  | 14.79       | 14.13       | -0.66          | -4.4       | 6.2
 (2 rows)
 
 === q3-3-scan-country.sql
@@ -121,9 +121,9 @@ desktop  | 14.79       | 14.13       | -0.66          | -4.4       | 6.2
 -- Expect: unknown. Contributions sum to 100%.
 country | feb_per_day | mar_per_day | change_per_day | change_pct | share_of_fall_pct
 --------|-------------|-------------|----------------|------------|------------------
-GB      | 21.82       | 14.61       | -7.21          | -33        | 68.2             
-DE      | 12.86       | 10.16       | -2.7           | -21        | 25.5             
-FR      | 7.29        | 6.61        | -0.67          | -9.2       | 6.4              
+GB      | 21.82       | 14.61       | -7.21          | -33        | 68.2
+DE      | 12.86       | 10.16       | -2.7           | -21        | 25.5
+FR      | 7.29        | 6.61        | -0.67          | -9.2       | 6.4
 (3 rows)
 
 === q3-4-scan-plan.sql
@@ -132,8 +132,8 @@ FR      | 7.29        | 6.61        | -0.67          | -9.2       | 6.4
 -- Expect: unknown. Contributions sum to 100%.
 plan    | feb_per_day | mar_per_day | change_per_day | change_pct | share_of_fall_pct
 --------|-------------|-------------|----------------|------------|------------------
-monthly | 29.07       | 20.94       | -8.14          | -28        | 76.9             
-annual  | 12.89       | 10.45       | -2.44          | -18.9      | 23.1             
+monthly | 29.07       | 20.94       | -8.14          | -28        | 76.9
+annual  | 12.89       | 10.45       | -2.44          | -18.9      | 23.1
 (2 rows)
 
 === q3-5-second-cut-channel-platform.sql
@@ -141,10 +141,10 @@ annual  | 12.89       | 10.45       | -2.44          | -18.9      | 23.1
 -- Expect: if the pattern is real, paid_social falls on both mobile and desktop, and other channels stay flat on both.
 channel_group      | platform | feb_per_day | mar_per_day | change_pct
 -------------------|----------|-------------|-------------|-----------
-all other channels | desktop  | 12.71       | 13.26       | 4.3       
-all other channels | mobile   | 13.93       | 12.71       | -8.8      
-paid_social        | desktop  | 2.07        | 0.87        | -58       
-paid_social        | mobile   | 13.25       | 4.55        | -65.7     
+all other channels | desktop  | 12.71       | 13.26       | 4.3
+all other channels | mobile   | 13.93       | 12.71       | -8.8
+paid_social        | desktop  | 2.07        | 0.87        | -58
+paid_social        | mobile   | 13.25       | 4.55        | -65.7
 (4 rows)
 
 === q3-6-timing-paid-social-and-spend.sql
@@ -152,12 +152,12 @@ paid_social        | mobile   | 13.25       | 4.55        | -65.7
 -- Expect: unknown. Matching dates are a lead, not a cause.
 week_start | paid_social_signups | paid_social_spend
 -----------|---------------------|------------------
-2026-02-02 | 95                  | 2746             
-2026-02-09 | 110                 | 2801             
-2026-02-16 | 112                 | 2813             
-2026-02-23 | 111                 | 2777             
-2026-03-02 | 37                  | 983              
-2026-03-09 | 32                  | 981              
-2026-03-16 | 39                  | 979              
-2026-03-23 | 25                  | 993              
+2026-02-02 | 95                  | 2746
+2026-02-09 | 110                 | 2801
+2026-02-16 | 112                 | 2813
+2026-02-23 | 111                 | 2777
+2026-03-02 | 37                  | 983
+2026-03-09 | 32                  | 981
+2026-03-16 | 39                  | 979
+2026-03-23 | 25                  | 993
 (8 rows)

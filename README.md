@@ -41,6 +41,13 @@ Codex also has a plugin manifest. Or upload the ZIPs in claude.ai and ChatGPT. S
 | `/review-analysis` | Technical and business review, claim check, verdict. Checks the readout word by word and marks it final |
 | `/retro-analysis` | Proposes data map updates. You approve each one |
 
+## Demo: two worked examples
+
+Invented data, real query results. Each folder holds the data script, `DATA-MAP.md`, `analysis.md`, `readout.md` and the queries.
+
+- [examples/signup-drop](examples/signup-drop/): "Why did sign-ups drop in March?" Descriptive, then exploratory. The readout says where the fall is, and that it cannot say why.
+- [examples/pricing-page-test](examples/pricing-page-test/): an A/B test on the shop's pricing page, with a sample ratio check, power and a readout that keeps its uncertainty.
+
 ## What makes it different
 
 Plain models already spot visible flaws. These skills add:
