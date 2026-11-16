@@ -10,7 +10,10 @@ Run in a chat app (claude.ai or ChatGPT) in an incognito chat. No Project files.
 
 User runs `/grill-the-ask`: "Head of growth wants to know how sign-ups for the subscription app did in March compared with February. It feeds the Q2 budget split by channel."
 
-Simulated answers: B (continue without a map); sign-up means account created; all channels; standard depth is fine; audience is exec.
+## Simulated answers
+
+Round 1: "B, continue without a map. A sign-up is an account created. All channels."
+Round 2: "Standard depth is fine. The audience is exec."
 
 ## Pass
 
