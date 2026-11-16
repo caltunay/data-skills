@@ -26,7 +26,7 @@ Read `analysis.md`, or the analysis pasted into the chat. If there is no ladder 
    - Join type: does a left join become an inner join through a where filter?
    - Denominator: who is in it? Does it match the numerator population?
    - Filters and windows: same dates, time zone and status filters on both sides of a comparison?
-   - Dedup: unique ids, test or internal users, bots, refunds, cancelled rows.
+   - Dedup: unique ids, test or internal users, bots, returned or cancelled orders.
    - Definitions: same metric definition in both periods or arms?
    - Nulls: how treated? Do they drop rows silently?
    - Sample: size, selection, survivorship, who is missing.

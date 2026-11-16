@@ -1,4 +1,6 @@
-# data-skills: spec (v0)
+# data-skills: spec (v0.1)
+
+v0.1 adds: connector rules, data map check, chat-app handoff, readout, progress tracker, method cards for all question types, neutral example domain. See section 19, decisions 21 to 32.
 
 - Repo: `caltunay/data-skills`
 - License: MIT, unless an upstream license we borrow from requires otherwise.
@@ -52,8 +54,12 @@ Inspired by `mattpocock/skills` (structure, flow, user-invoked vs model-invoked)
 - **Model-invoked skills:** the description names the concrete situations they apply to. Keep descriptions narrow so they do not clash with built-in data skills in Claude or Codex.
 - **No keys or credentials.** The user's agent handles data access through its own connectors.
 - **No employer material, ever.** Examples and evals use public or invented data only.
+- **One neutral example domain:** an invented online shop and subscription app (orders, customers, subscriptions, sign-ups, returns). Use no other domain in examples or evals.
+- **Private blocklist:** `scripts/self-check` also reads banned words from a gitignored `.blocklist` file, so the banned words never appear in the public repo.
+- **Never touch a data tool before the user names the source.** No connector or data tool call until the user has named the source it applies to. Never build answer options from the connectors you can see. Use generic options: warehouse or database, data lake, product analytics tool, spreadsheet or file, API, not sure, other.
+- **Never fill in names the user has not said.** No company, product, table or source name that the user has not said in this conversation, even if you know it from elsewhere (memory, profile, connectors). Ask instead.
 - **Skills never write into the skills repo.** All user files live in `data-work/` in the user's own project, or are handed over in chat.
-- **Writing style for all skill text:** plain English, short sentences, active voice, no em dashes.
+- **Writing style for all skill text:** plain English, short sentences, active verbs, no em dashes.
 - Must work in at least: Claude Code, Codex, Gemini CLI, claude.ai chat, ChatGPT chat.
 
 ---
@@ -79,17 +85,29 @@ Inspired by `mattpocock/skills` (structure, flow, user-invoked vs model-invoked)
         |
         v
 /grill-the-ask -> /plan-analysis -> /run-analysis -> /review-analysis -> /retro-analysis
-                        ^                  |
-                        |__________________|
-                   plan revision entry (no restart)
+                        ^                  |                 |
+                        |__________________|                 |
+                   plan revision entry       draft readout.md -> final readout.md
 ```
+
+### Every flow step starts the same way
+
+1. Check for `DATA-MAP.md` and `analysis.md`. Say in one line what was found.
+2. If there is no `DATA-MAP.md`, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map."
+3. If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before re-asking anything.
+4. Read the Progress line and resume from it.
+
+### Goal-driven run
+
+`/run-analysis` states its goal at the start: "Done when the success checks in the plan pass and a draft readout is written." It then keeps working step after step, and stops only to wait for a paste or an answer. This needs no agent-specific goal feature.
 
 ### Branches
 
 One main flow. `/grill-the-ask` and `/plan-analysis` set the **question type**. Later steps load that type's method notes and checks from the `question-types` skill.
 
-- v0 branches: **descriptive** and **experiment**.
-- v1: causal (diff-in-diff, interrupted time series, matching), then ML.
+- v0: **descriptive** and **experiment**.
+- v0.1: all six types have method cards (section 10). Advanced causal methods get short cards with a specialist-review flag.
+- v1: ML beyond baselines.
 
 ### Cycling back
 
@@ -106,7 +124,8 @@ When `/run-analysis` or `/review-analysis` finds the plan cannot hold (for examp
 | Plan | One line: method + success check | 2 to 4 options, chosen plan | Options, chosen plan, power or MDE where relevant |
 | Ladder | One entity check + reconcile | Full ladder | Full ladder + alternative specification |
 | Review | Self-check against claim ceiling | Technical + business review | Full review + leadership questions |
-| Files | None | `analysis.md` | Full analysis folder |
+| Readout | Short answer in chat | `readout.md` | `readout.md` plus appendix |
+| Files | None | `analysis.md`, `readout.md` | Full analysis folder |
 
 ---
 
@@ -122,6 +141,12 @@ Three environments, one behaviour:
 
 The `run-or-hand-over` discipline defines this. **Rule:** run it or save it if you can; otherwise offer a download; otherwise print it and wait. Never fail because a tool is missing.
 
+**What counts as a chat app:** decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), behave as a chat app, even if you can write files in a sandbox.
+
+**Chat-app handoff:** at the end of every flow step, offer the updated `analysis.md` (and `readout.md` when it exists) as a download, else print it as one block. Tell the user to save it to their Project files so the next step, in any chat, can read it.
+
+**Progress tracker:** `analysis.md` Meta keeps one line, for example `Progress: run step 3 of 7, waiting for Q3.1 paste`. Every step updates it. Any new session resumes from it.
+
 Copy-paste form for queries: numbered (`Q2.1`, `Q2.2`), each with one purpose line, the expected result stated before it runs, and "Paste the result here." Keep each check query small.
 
 ---
@@ -132,23 +157,23 @@ Copy-paste form for queries: numbered (`Q2.1`, `Q2.2`), each with one purpose li
 
 | Skill | Trigger | Inputs | Does | Writes | Calls |
 |---|---|---|---|---|---|
-| `/setup-data-work` | User runs it, once per team or project | Nothing, or an existing `DATA-MAP.md` | Tests data access. Points to the agent's connector directory if there is none. Interviews the user (see section 8). Can be partial; the map fills in over time. Target: under 20 minutes. | `data-work/DATA-MAP.md`, `.gitignore` entry | grilling, data-map, run-or-hand-over |
-| `/grill-the-ask` | User runs it with a stakeholder ask | The ask, `DATA-MAP.md` if present | Rounds of max 3 questions, each with options and a recommended default. Covers goal, the decision it feeds, question type, metric, population, time window, constraints, deadline. Sets the depth. | `analysis.md`: Meta, Ask, Assumptions | grilling, assumptions, question-types, data-map |
+| `/setup-data-work` | User runs it, once per team or project | Nothing, or an existing `DATA-MAP.md` | First asks how the user wants to set up the map (section 8). Tests access only against a source the user named. Points to the agent's connector directory if there is none. Interviews the user. Can be partial; the map fills in over time. Target: under 20 minutes. | `data-work/DATA-MAP.md`, `.gitignore` entry | grilling, data-map, run-or-hand-over |
+| `/grill-the-ask` | User runs it with a stakeholder ask | The ask, `DATA-MAP.md` if present | Rounds of max 3 questions, each with options and a recommended default. Covers goal, the decision it feeds, question type, metric, population, time window, constraints, deadline, and who reads the result (audience). Sets the depth with a one-line reason. Never asks the same question twice. | `analysis.md`: Meta, Ask, Assumptions | grilling, assumptions, question-types, data-map |
 | `/plan-analysis` | User runs it after grilling | `analysis.md` | 2 to 4 options with trade-offs, then the chosen plan. Writes the analysis table spec. Sets success checks. Records decisions already made; does not invent new ones. | `analysis.md`: Plan, Analysis table spec | assumptions, question-types, shaping-data |
-| `/run-analysis` | User runs it after the plan | `analysis.md`, `DATA-MAP.md` | Builds the analysis table from the spec, climbing the validation ladder. States the expected result before each query. Audits the data. Runs the method for the question type. Asks instead of assuming. Adds plan revisions when needed. | `analysis.md`: Results; `queries/`; `outputs/` | validation-ladder, run-or-hand-over, shaping-data, data-audit, stats-tests, question-types, data-map, assumptions |
-| `/review-analysis` | User runs it on a finished analysis (theirs or anyone's) | `analysis.md` or any pasted analysis | Technical review and business review. Checks claims against the ceiling. Checks assumption status. Gives a verdict. Writes questions leadership will ask, with answers. Says "no material issues" when that is true. | `analysis.md`: Review | question-types, assumptions, validation-ladder |
+| `/run-analysis` | User runs it after the plan | `analysis.md`, `DATA-MAP.md` | Builds the analysis table from the spec, climbing the validation ladder. States the expected result before each query. Audits the data. Runs the method for the question type. Asks instead of assuming. Adds plan revisions when needed. States its goal up front and keeps going until it is met. Writes a draft readout. | `analysis.md`: Results, Progress; `readout.md` (draft); `queries/`; `outputs/` | validation-ladder, run-or-hand-over, shaping-data, data-audit, stats-tests, question-types, data-map, assumptions |
+| `/review-analysis` | User runs it on a finished analysis (theirs or anyone's) | `analysis.md` or any pasted analysis | Technical review and business review. Checks claims against the ceiling. Checks assumption status. Gives a verdict. Writes questions leadership will ask, with answers. Says "no material issues" when that is true. Reviews the draft readout word by word, fixes claims above the ceiling, and marks it final. | `analysis.md`: Review; `readout.md` (final) | question-types, assumptions, validation-ladder |
 | `/retro-analysis` | User runs it at the end | `analysis.md`, `DATA-MAP.md` | Proposes dated changes to the data map: new joins, traps, filters, definitions, trusted numbers, gotchas. Shows a diff. The user approves each change. Not a memory dump. | `DATA-MAP.md` (approved changes only) | data-map |
 
 ### 6.2 Disciplines (model-invoked, v0)
 
 | Skill | Applies when | Core rule (restate in each caller) |
 |---|---|---|
-| `grilling` | Any clarification step | Rounds of at most 3 questions, each with 2 to 4 options and a recommended default. Wait for answers. Never assume silently. |
+| `grilling` | Clarification of a data ask only (analysis, metric, query, report, experiment). Never fires on non-data asks. | Rounds of at most 3 questions, each with 2 to 4 options and a recommended default. Wait for answers. Never assume silently. |
 | `assumptions` | An assumption is about to be made | Write it in the assumptions table. High-impact rows need 1 to 3 likely alternatives. |
 | `validation-ladder` | Before trusting any query or analysis result | One entity -> one entity-day -> many entities -> aggregates -> reconcile to a trusted number. State the expected result before each rung. |
-| `question-types` | Framing, planning, writing claims, reviewing | Six question types and their claim ceilings. Holds method notes per branch: `descriptive.md` and `experiment.md` in v0 (SRM, A/A, novelty, power, MDE, runtime, seasonality, unit of randomisation). |
-| `data-map` | Reading or updating `DATA-MAP.md` | Read it before writing queries. Flag entries older than 90 days or contradicted by data, then ask. Updates only through approved retro changes. Check the format version and offer a migration if old. |
-| `run-or-hand-over` | Any query to run or file to save | Run or save if you can, else offer a download, else print it and wait. Numbered queries in copy-paste form. |
+| `question-types` | Framing, planning, choosing a method, writing claims, reviewing | Six question types and their claim ceilings. `SKILL.md` holds the type selector and the causal method selector. One file per type holds that type's method cards (section 10). Load only the file for the type in use. |
+| `data-map` | Reading or updating `DATA-MAP.md` | Outside the flow, stay silent if there is no map. Read it before writing queries. Flag entries older than 90 days or contradicted by data, then ask. Updates only through approved retro changes. Check the format version and offer a migration if old. |
+| `run-or-hand-over` | Any query to run or file to save | Run or save if you can, else offer a download, else print it and wait. Numbered queries in copy-paste form. Never call a data tool before the user names the source. |
 
 ### 6.3 Data skills (model-invoked, v0; our own versions)
 
@@ -160,8 +185,7 @@ Copy-paste form for queries: numbered (`Q2.1`, `Q2.2`), each with one purpose li
 
 ### 6.4 v1 and later
 
-- **Off-flow (v1):** `/ask-data-skills` (router), `/wayfinder-data` (map big, ambiguous work as decision tickets), `/handoff`, `/improve-code` (review and refactor SQL or Python), `/storytell` (narrative by audience), `/viz`.
-- **Branches (v1):** causal, then ML.
+- **Off-flow (v1):** `/ask-data-skills` (router), `/wayfinder-data` (map big, ambiguous work as decision items), `/handoff`, `/improve-code` (review and refactor SQL or Python), `/storytell` (narrative by audience), `/viz`.
 - **Rest of the upstream inventory (v1).**
 - **Automated eval runner (v1).**
 - **Productionisation and monitoring (v2+).**
@@ -178,14 +202,15 @@ All user-owned files live in the user's own project, never in the skills repo. U
 <user project>/data-work/
   DATA-MAP.md
   analyses/
-    2026-11-13-refund-drop/
-      analysis.md
+    2026-11-13-signup-drop/
+      analysis.md     working notes
+      readout.md      stakeholder readout (draft, then final)
       queries/        numbered ladder steps (q1-1-one-entity.sql ...)
       outputs/        charts, tables, notebooks
 ```
 
 - **Coding agents:** the skills write here.
-- **Chat users:** keep `DATA-MAP.md` in the chat app's Project files. The analysis lives in the chat; `analysis.md` is offered as a download at the end, not forced. `/retro-analysis` hands back a full updated `DATA-MAP.md` to replace the Project file.
+- **Chat users:** keep `DATA-MAP.md`, `analysis.md` and `readout.md` in the chat app's Project files. Each flow step offers the updated files as downloads at its end. `/retro-analysis` hands back a full updated `DATA-MAP.md` to replace the Project file.
 - **Quick depth:** no files.
 - **No raw chat transcripts are stored.** `analysis.md` is the record.
 
@@ -213,7 +238,7 @@ Shared by the team: committed to git where there is a repo, so every retro impro
 
 First line: `format: v1`. Sections, filled by step:
 
-1. **Meta:** title, requester, date, depth, question type, status.
+1. **Meta:** title, requester, audience, date, depth, question type, status, progress line.
 2. **Ask:** the original ask verbatim, the clarified question, the decision it feeds, constraints, deadline. *(grill)*
 3. **Assumptions:** table, see 7.5. *(grill, then any step)*
 4. **Plan:** options considered, chosen plan, success checks. **Plan revisions** log: date, what changed, why. *(plan)*
@@ -242,13 +267,27 @@ Designed before any query or code, without reference to a tool:
 
 | id | assumption | why unavoidable | likely alternatives (1-3) | impact if wrong | how to check | status |
 |---|---|---|---|---|---|---|
-| A1 | Refunds are counted on refund date, not booking date | Stakeholder unavailable until Friday | Booking date; payment settlement date | High: shifts monthly totals by about 10% | Ask finance; compare both definitions for one month | open |
+| A1 | Orders are counted on order date, not dispatch date | Stakeholder unavailable until Friday | Dispatch date; payment date | High: shifts monthly totals by about 10% | Ask finance; compare both definitions for one month | open |
 
 - Status: `open`, `confirmed` or `rejected`.
 - Alternatives are required for high-impact rows only.
+- Standard and deep depth always show all 7 columns. Never drop columns. Only quick depth uses an inline list.
 - `/review-analysis` flags any high-impact row still `open` when results are reported.
 
-### 7.6 Data safety
+### 7.6 Readout (`readout.md`)
+
+The stakeholder-facing result. Plain markdown, ready to paste into Confluence, Notion or a doc. One layout; wording adapts to the audience set in grilling.
+
+1. **Answer** in 2 lines.
+2. **Key numbers**, each with its uncertainty.
+3. **What it means** and the recommendation.
+4. **Caveats:** open high-impact assumptions, and the claim ceiling in plain words.
+5. **Method** in 3 lines.
+6. **Link** to `analysis.md`.
+
+`/run-analysis` writes the draft. `/review-analysis` checks every sentence against the claim ceiling, fixes it, and marks it final. Quick depth: a short answer in the chat, no file.
+
+### 7.7 Data safety
 
 - `/run-analysis` shows aggregates by default and asks before saving row-level data anywhere.
 - `/setup-data-work` asks whether `outputs/` should be committed. The default adds `data-work/analyses/*/outputs/` to `.gitignore`.
@@ -259,7 +298,8 @@ Designed before any query or code, without reference to a tool:
 
 Rounds of max 3 questions. Partial answers are fine; the map grows through retros.
 
-1. **Access test:** "Can you run a query from here?" If yes, run a trivial test (`select 1`). If no, tell the user once to check their agent's connector directory for their source; if it is missing or blocked by company policy, continue in hand-over mode. No dead ends.
+0. **Setup mode (always first, before touching any tool):** "How do you want to set up your data map? A) Connect: I list the data tools you have connected and you pick one or none. B) Describe it in your own words. C) Paste a schema: table list, CREATE statements, dbt file or doc. D) A mix."
+1. **Access test (only for a source the user named):** if the user chose to connect, run a trivial test (`select 1`) against that source only. If no, tell the user once to check their agent's connector directory for their source; if it is missing or blocked by company policy, continue in hand-over mode. No dead ends.
 2. **Sources:** which sources, type, and dialect for each.
 3. **Key tables:** the 3 to 10 tables used most, grain and keys for each.
 4. **Joins:** the joins they trust, and any known fan-out traps.
@@ -292,13 +332,53 @@ Then write `DATA-MAP.md` and show a short summary of what is still missing.
 | Causal | What happens if we change X? | "caused", "effect of" only with a randomised experiment or a credible causal design that passed its checks | Causal language from observational data without a design |
 | Mechanistic | How exactly does it work? | Rarely reachable in business DSA; flag it | Most claims |
 
-Reuse the existing question-type ceilings and must-answer questions from `caltunay/datafolx` where they fit, rewritten in this repo's style.
+Reuse the existing question-type ceilings and must-answer questions from the author's earlier repo where they fit, rewritten in this repo's style.
+
+### 10.1 Method cards
+
+Plain models know what each method is. They fail at choosing the method, checking its assumptions and overclaiming. Every card covers exactly that, in this format:
+
+- **When to use:** the situation and data shape
+- **Data needed**
+- **Key assumptions**
+- **Checks that must pass**
+- **Common failure**
+- **Claim allowed**
+- **Simplest version first**
+- **Tool notes:** SQL, Python (statsmodels, scipy, scikit-learn, DoWhy or EconML), and Excel where it applies
+
+**Full cards** for common methods. **Short cards** (when to use, key assumption, key check, claim allowed) for advanced methods, ending with: "Get a specialist review before shipping."
+
+### 10.2 Method catalogue
+
+| Type file | Full cards | Short cards |
+|---|---|---|
+| `descriptive.md` | counts and rates; means and medians; rolling windows (7-day, 28-day); week-on-week and year-on-year with seasonality; cohort tables; funnels; segment breakdowns; mix-shift decomposition; index to baseline | |
+| `exploratory.md` | segment scan; metric decomposition (driver tree); correlation | clustering; anomaly detection |
+| `inferential.md` | confidence intervals; t-test and Mann-Whitney; proportion and chi-square tests; bootstrap; regression for association; multiple-comparison correction | |
+| `predictive.md` | naive and seasonal-naive baselines; linear and logistic regression; forecasting (ETS, ARIMA); backtesting and cross-validation; leakage checks | gradient boosting; calibration |
+| `causal.md` (plus `experiment.md` for A/B) | randomised experiment (A/B); difference-in-differences; interrupted time series | regression discontinuity; synthetic control; instrumental variables; propensity score matching and inverse probability weighting; uplift and heterogeneous treatment effects |
+| `mechanistic.md` | | one short note: rarely reachable in business work; flag it and fall back to the highest type the data supports |
+
+Exploratory outputs are hypotheses, never findings.
+
+### 10.3 Causal method selector (in `question-types/SKILL.md`)
+
+- Randomised assignment? -> A/B (`experiment.md`)
+- Rollout to some units, with a comparison group and a pre-period? -> difference-in-differences
+- Assignment by a cut-off on a score or threshold? -> regression discontinuity
+- One treated unit (a region, a market) and several untreated ones? -> synthetic control
+- One time series with a known change date and no comparison group? -> interrupted time series
+- A variable that moves treatment but not the outcome directly? -> instrumental variables
+- Observational data with rich pre-treatment covariates? -> matching or weighting
+- The question is who to treat, not whether it works? -> uplift
+- None fits? -> say so, give the ceiling the data supports, and offer the best descriptive path.
 
 ---
 
 ## 11. Validation ladder
 
-1. **One entity:** follow one customer, order or ticket end to end. Check every column by hand.
+1. **One entity:** follow one customer, order or account end to end. Check every column by hand.
 2. **One entity-day:** one entity over one day or period. Check the time logic.
 3. **Many entities:** a small sample. Check duplicates, nulls and join fan-out (row counts before and after each join).
 4. **Aggregates:** the full query. Check totals, distributions and edge periods.
@@ -351,7 +431,10 @@ Pre-release check, run by the maintainer:
 - Run by hand in Claude Code, Codex, Gemini CLI and claude.ai. Record results in `evals/results/<date>-<agent>.md`.
 - Plus 3 real asks on public data, end to end.
 - Reuse the existing planted-flaw cases from `caltunay/datafolx` where they fit. Public or invented data only.
-- Also check triggering: user-invoked skills must not fire on their own, and disciplines must fire when they should.
+- Also check triggering: user-invoked skills must not fire on their own, and disciplines must fire when they should. A generic ask ("write a SQL query for monthly sign-ups") must not trigger our skills over built-in data skills, and a non-data vague ask must not trigger `grilling`.
+- Every flow skill rubric also checks: no connector call before the source is named; the data map check is announced; in chat apps, `analysis.md` is offered at the end; no names the user did not say.
+- Extra cases: `setup-data-work` with several connectors visible (must ask first); `grill-the-ask` in a chat app with no project folder (must offer a download); `question-types` method choice, 6 cases (for example "rollout to 3 regions, which method?"), testing the choice and the checks named, not calculations.
+- Run all chat-app tests in incognito chats, and with a neutral profile, so memory and profile preferences do not leak in.
 
 ---
 
@@ -374,7 +457,7 @@ data-skills/
     grilling/SKILL.md
     assumptions/SKILL.md
     validation-ladder/SKILL.md
-    question-types/SKILL.md, descriptive.md, experiment.md
+    question-types/SKILL.md, descriptive.md, exploratory.md, inferential.md, predictive.md, causal.md, experiment.md, mechanistic.md
     data-map/SKILL.md, DATA-MAP.template.md
     run-or-hand-over/SKILL.md
     shaping-data/SKILL.md, sql.md, python.md, excel.md, powerbi.md, tableau.md
@@ -404,8 +487,11 @@ Flat `skills/<name>/` unless the installer handles nesting well (see section 18)
 - Data: `shaping-data` (5 tool files), `data-audit`, `stats-tests`
 - Plus: templates, `docs/upstream-map.md`, `docs/install.md`, evals for the 6 flow skills, ZIP packaging, README.
 
+### v0.1 (fix pass)
+Everything in decisions 21 to 32: connector rules, data map check, chat-app handoff, readout, progress tracker, method cards for all question types, neutral domain, private blocklist, eval additions.
+
 ### v1
-Router, wayfinder, handoff, improve-code, storytell, viz; causal and ML branches; rest of the upstream inventory; automated eval runner; split Conventions into its own file if it grows.
+Router, wayfinder, handoff, improve-code, storytell (audience-specific layouts), viz; ML beyond baselines; rest of the upstream inventory; automated eval runner; split Conventions into its own file if it grows.
 
 ### v2+
 Productionisation and monitoring, as off-flow skills.
@@ -446,3 +532,15 @@ Decide these, then log each choice and reason in `DECISIONS.md`:
 18. v0 is 15 skills. Router and other off-flow skills in v1.
 19. Testing: 3 eval cases per flow skill (2 flawed, 1 clean), run by hand in 4 agents, plus 3 real asks on public data.
 20. Names: repo `caltunay/data-skills`; commands `/setup-data-work`, `/grill-the-ask`, `/plan-analysis`, `/run-analysis`, `/review-analysis`, `/retro-analysis`. "datafolx" is reserved for another product.
+21. Never call a connector or data tool before the user names the source. Never build options from visible connectors.
+22. Never fill in company, product, table or source names the user has not said in this conversation.
+23. Setup asks first how to set up the map: connect, describe, paste a schema, or a mix.
+24. Every flow step checks for `DATA-MAP.md` and `analysis.md`, says what it found, and offers setup if there is no map. Outside the flow, no map means silence.
+25. Chat app is defined by situation (no user project folder), not by file access. Each flow step offers its files as downloads and tells the user to save them to Project files.
+26. Standard and deep depth always show the full 7-column assumptions table.
+27. `/run-analysis` is goal-driven: it states its goal and keeps going until the success checks pass, stopping only for pastes or answers.
+28. Readout: `/run-analysis` drafts `readout.md`; `/review-analysis` checks it word by word and marks it final. One layout, wording adapted to the audience set in grilling.
+29. Progress line in `analysis.md` Meta; every new session resumes from it.
+30. `question-types` covers all six types: one skill, a selector in `SKILL.md`, one file per type with method cards. Full cards for common methods, short cards plus a specialist-review flag for advanced ones. In v0.1, with method-choice evals.
+31. One neutral example domain: an invented online shop and subscription app. A private gitignored `.blocklist` is checked by `scripts/self-check`.
+32. `grilling` fires on data asks only. Descriptions are tuned so generic data asks do not trigger ours over built-in data skills.

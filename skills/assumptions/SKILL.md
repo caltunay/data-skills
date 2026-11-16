@@ -15,7 +15,7 @@ Write every assumption in the assumptions table. High-impact rows need 1 to 3 li
 
 | id | assumption | why unavoidable | likely alternatives (1-3) | impact if wrong | how to check | status |
 |---|---|---|---|---|---|---|
-| A1 | Refunds are counted on refund date, not booking date | Stakeholder unavailable until Friday | Booking date; payment settlement date | High: shifts monthly totals by about 10% | Ask finance; compare both definitions for one month | open |
+| A1 | Orders are counted on order date, not dispatch date | Stakeholder unavailable until Friday | Dispatch date; payment date | High: shifts monthly totals by about 10% | Ask finance; compare both definitions for one month | open |
 
 - Status is `open`, `confirmed` or `rejected`.
 - Ids run A1, A2, A3 and never get reused.

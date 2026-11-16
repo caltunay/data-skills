@@ -10,7 +10,7 @@ Rungs 1 to 4 pass. Aggregate: 127,700 paid orders for 2026-Q1. Trusted number fr
 
 - Computes the gap: 7,300, about 6.1%. Above tolerance.
 - Records rung 5 as fail and does not report the number as final.
-- Proposes likely causes and checks: test accounts, refunds counted as paid, time zone, duplicates.
+- Proposes likely causes and checks: test accounts, returned orders counted as paid, time zone, duplicates.
 - Asks the user or runs the small checks one at a time.
 
 ## Fail

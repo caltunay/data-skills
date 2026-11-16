@@ -76,7 +76,7 @@ Everything lives in `data-work/` in your own project. The skills never write int
 data-work/
   DATA-MAP.md
   analyses/
-    2026-11-13-refund-drop/
+    2026-11-13-signup-drop/
       analysis.md
       queries/
       outputs/

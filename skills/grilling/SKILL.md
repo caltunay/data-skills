@@ -17,10 +17,10 @@ Ask in rounds of at most 3 questions. Give each question 2 to 4 options and a re
 2. Pick the 3 questions whose answers would change the work the most.
 3. Write each question like this:
 
-   **Q1. Which refund date do you mean?**
-   - A. Refund request date (recommended: matches the finance report)
-   - B. Payment settlement date
-   - C. Booking date
+   **Q1. Which date should an order be counted on?**
+   - A. Order date (recommended: matches the finance report)
+   - B. Payment date
+   - C. Dispatch date
    - D. Something else
 
 4. Stop. Wait for the reply.

@@ -22,6 +22,18 @@
 18. v0 is 15 skills. Router and other off-flow skills in v1.
 19. Testing: 3 eval cases per flow skill (2 flawed, 1 clean), run by hand in 4 agents, plus 3 real asks on public data.
 20. Names: repo `caltunay/data-skills`; commands `/setup-data-work`, `/grill-the-ask`, `/plan-analysis`, `/run-analysis`, `/review-analysis`, `/retro-analysis`. "datafolx" is reserved for another product.
+21. Never call a connector or data tool before the user names the source. Never build options from visible connectors.
+22. Never fill in company, product, table or source names the user has not said in this conversation.
+23. Setup asks first how to set up the map: connect, describe, paste a schema, or a mix.
+24. Every flow step checks for `DATA-MAP.md` and `analysis.md`, says what it found, and offers setup if there is no map. Outside the flow, no map means silence.
+25. Chat app is defined by situation (no user project folder), not by file access. Each flow step offers its files as downloads and tells the user to save them to Project files.
+26. Standard and deep depth always show the full 7-column assumptions table.
+27. `/run-analysis` is goal-driven: it states its goal and keeps going until the success checks pass, stopping only for pastes or answers.
+28. Readout: `/run-analysis` drafts `readout.md`; `/review-analysis` checks it word by word and marks it final. One layout, wording adapted to the audience set in grilling.
+29. Progress line in `analysis.md` Meta; every new session resumes from it.
+30. `question-types` covers all six types: one skill, a selector in `SKILL.md`, one file per type with method cards. Full cards for common methods, short cards plus a specialist-review flag for advanced ones. In v0.1, with method-choice evals.
+31. One neutral example domain: an invented online shop and subscription app. A private gitignored `.blocklist` is checked by `scripts/self-check`.
+32. `grilling` fires on data asks only. Descriptions are tuned so generic data asks do not trigger ours over built-in data skills.
 
 ## Build decisions
 
@@ -44,6 +56,11 @@ B14. Install docs for Codex, Gemini CLI, Cursor and Copilot give the `npx skills
 B15. Chat-app ZIP upload steps in `docs/install.md` describe the general route. Exact menu names change, so they are not pinned.
 B16. The eval cases are written as inputs plus pass and fail descriptions. They are run by hand (SPEC 15), so there is no runner. Results go in `evals/results/`, which is empty until the maintainer runs them.
 B17. No manual run of the evals in the four agents was possible from this session. The manual test checklist in the PR is for the maintainer.
+### v0.1 fix pass
+
+B18. SPEC.md replaced with v0.1. Design decisions 21 to 32 appended above. One wording change in SPEC section 3: the style rule now says "active verbs". Options: exempt SPEC.md from the private blocklist check, or change one word. Reason: the check must hold for every file, and the meaning is the same.
+B19. Neutral domain (fix H). Rewrote every example outside the online shop and subscription app: the README folder name, the `assumptions` example row, the `grilling` example question, the `review-analysis` dedup line, `validation-ladder` rung 1, two eval cases, and three lines in `question-types/experiment.md`. Reason: SPEC section 3.
+B20. Private blocklist (fix H). `scripts/self-check` reads `.blocklist` (gitignored, one word per line) and fails on any whole-word, case-insensitive match outside `.git`. The file itself is skipped. With no file, the check prints SKIP. The words are not listed anywhere in the repo. `.gitignore` also ignores the two private brief file names.
 
 ## Questions for Cenan
 
@@ -52,3 +69,4 @@ Short yes/no or A/B. Default is used until answered.
 Q1. Is `anthropics/knowledge-work-plugins` credit in `NOTICE` wanted even though no text was copied? Default: yes, keep it (A: keep, B: remove).
 Q2. Should the plugin manifests for Claude Code and Codex be added in v1? Default: yes, v1 (A: v1, B: add now).
 Q3. sqlstyle.guide could not be reached to confirm its license. Default: we paraphrase only and link. OK? (A: yes, B: check and quote some)
+Q4. SPEC section 3 style rule now says "active verbs" so the private word check passes on SPEC.md. OK? Default: yes (A: keep, B: exempt SPEC.md from the check and restore the wording).

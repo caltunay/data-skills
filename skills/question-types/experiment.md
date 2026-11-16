@@ -5,7 +5,7 @@ Ceiling: a valid randomised test supports a causal claim for the tested populati
 ## Before the test
 
 - **One primary metric**, fixed in advance. Guardrail metrics listed too.
-- **Unit of randomisation**: user, session, device, account, store. Analyse at that unit. Analysing at a finer unit (sessions when users were randomised) makes intervals too narrow.
+- **Unit of randomisation**: user, session, device or account. Analyse at that unit. Analysing at a finer unit (sessions when users were randomised) makes intervals too narrow.
 - **Power and MDE**: the smallest effect that matters, and the sample needed to detect it. State the numbers.
 - **Runtime**: fixed in advance, at least one full weekly cycle. Two cycles is better when behaviour differs by weekday.
 - **A/A test** where the setup is new: do two identical arms show no difference?
@@ -19,9 +19,9 @@ Ceiling: a valid randomised test supports a causal claim for the tested populati
 5. **Multiple comparisons.** One primary metric. Many metrics or many segments checked means some will look good by chance. Correct or label as exploratory.
 6. **Novelty and primacy.** Does the effect shrink or grow over time? Plot the effect by day or week.
 7. **Seasonality.** Did the run overlap a holiday, a sale or a release?
-8. **Guardrails.** Did revenue, errors, latency or support contacts get worse?
+8. **Guardrails.** Did revenue, error rate, page speed or returns get worse?
 9. **Segments.** A win found only after slicing is a hypothesis, not a result.
-10. **Interference.** Can one arm affect the other (shared inventory, social effects, shared drivers)?
+10. **Interference.** Can one arm affect the other (shared stock, referrals, shared discount codes)?
 
 ## Reporting
 

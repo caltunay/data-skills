@@ -69,4 +69,12 @@ n=$(ls -d skills/*/ | wc -l); [ "$n" -eq 15 ] && ok "15 skills" || bad "skill co
 out=$(grep -rnEi '(api[_-]?key|secret|password|token)\s*[:=]\s*\S{8,}|sk-[A-Za-z0-9]{20,}' --exclude-dir=.git --exclude-dir=dist . )
 [ -z "$out" ] && ok "no credentials" || bad "credentials" "$out"
 
+# 13 private blocklist (gitignored .blocklist, one word per line)
+if [ -f .blocklist ]; then
+  out=$(grep -rnwiIF -f .blocklist --exclude-dir=.git --exclude=.blocklist . | cut -d: -f1,2)
+  [ -z "$out" ] && ok "private blocklist: no banned words" || bad "private blocklist match (file:line)" "$out"
+else
+  echo "SKIP  private blocklist (.blocklist not present)"
+fi
+
 exit $fail

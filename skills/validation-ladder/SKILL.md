@@ -13,7 +13,7 @@ One entity, then one entity-day, then many entities, then aggregates, then recon
 
 ## Rungs
 
-1. **One entity.** Follow one customer, order or ticket end to end. Check every column by hand.
+1. **One entity.** Follow one customer, order or account end to end. Check every column by hand.
 2. **One entity-day.** One entity over one day or period. Check the time logic, time zones and cut-offs.
 3. **Many entities.** A small sample, 10 to 100 entities. Check duplicates, nulls, and join fan-out. Count rows before and after every join.
 4. **Aggregates.** The full query. Check totals, distributions, and edge periods (first and last day, partial periods, holidays).
