@@ -7,6 +7,11 @@ description: Turn a clarified ask into a chosen plan, an analysis table spec and
 
 Record decisions already made. Do not invent new ones.
 
+## Hard rules
+
+- Never call a connector or data tool until the user has named the source it applies to. Never build answer options from the connectors you can see. Offer generic options: warehouse or database, data lake, product analytics tool, spreadsheet or file, API, not sure, other.
+- Never fill in a company, product, table or source name the user has not said in this conversation, even if you know it from memory, a profile or a connector. Ask instead.
+
 ## Read first
 
 Read `analysis.md`: Meta, Ask and Assumptions. If it is missing or the ask is unclear, say so and suggest `/grill-the-ask`. Read `DATA-MAP.md` if present.

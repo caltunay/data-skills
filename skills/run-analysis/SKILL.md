@@ -7,6 +7,11 @@ description: Build the analysis table from the plan, climb the validation ladder
 
 Build from the spec. Trust nothing until it has climbed the ladder.
 
+## Hard rules
+
+- Never call a connector or data tool until the user has named the source it applies to. Never build answer options from the connectors you can see. Offer generic options: warehouse or database, data lake, product analytics tool, spreadsheet or file, API, not sure, other.
+- Never fill in a company, product, table or source name the user has not said in this conversation, even if you know it from memory, a profile or a connector. Ask instead.
+
 ## Read first
 
 Read `analysis.md` (Ask, Assumptions, Plan, Analysis table spec) and `DATA-MAP.md`. If the plan or spec is missing, say so and suggest `/plan-analysis`. At quick depth with no file, work from the one-line plan in the chat.
@@ -14,7 +19,7 @@ Read `analysis.md` (Ask, Assumptions, Plan, Analysis table spec) and `DATA-MAP.m
 ## Rules from the disciplines (in case they do not load)
 
 - `validation-ladder`: one entity, one entity-day, many entities, aggregates, reconcile to a trusted number. State the expected result before each rung. Record actual and pass or fail.
-- `run-or-hand-over`: run or save if you can, else offer a download, else print it and wait. Numbered queries (`Q2.1`), one purpose line, expected result first, "Paste the result here."
+- `run-or-hand-over`: run or save if you can, else offer a download, else print it and wait. Numbered queries (`Q2.1`), one purpose line, expected result first, "Paste the result here." Never call a data tool before the user names the source.
 - `shaping-data`: grain first. Count rows before and after every join. Apply filters from the data map. Named steps.
 - `data-audit`: check shape, nulls, duplicates, outliers, date coverage, and validate against a trusted number. Write cleaning choices down.
 - `stats-tests`: choose the test by data type and design. Report direction, magnitude and uncertainty. Correct for multiple comparisons.

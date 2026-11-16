@@ -50,3 +50,7 @@ Each new entry gets today's date and `source: analyses/<slug>`. In a chat app, h
 
 - Never put credentials, keys or row-level data in the map.
 - The map is shared, so keep entries factual and neutral.
+
+## Names and sources
+
+Use only company, product, table and source names the user has said in this conversation. If one is missing, ask. Never call a data tool before the user names the source it applies to.

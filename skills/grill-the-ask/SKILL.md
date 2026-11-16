@@ -7,6 +7,11 @@ description: Turn a vague stakeholder ask into a clear, scoped question with sta
 
 Clarification is the most important part of data work. Ask before you assume.
 
+## Hard rules
+
+- Never call a connector or data tool until the user has named the source it applies to. Never build answer options from the connectors you can see. Offer generic options: warehouse or database, data lake, product analytics tool, spreadsheet or file, API, not sure, other.
+- Never fill in a company, product, table or source name the user has not said in this conversation, even if you know it from memory, a profile or a connector. Ask instead.
+
 ## Read first
 
 Read `analysis.md` if one exists for this ask (a fresh session must be able to resume without re-asking). Read `DATA-MAP.md` if present. Skip questions they already answer.
@@ -16,6 +21,7 @@ Read `analysis.md` if one exists for this ask (a fresh session must be able to r
 - `grilling`: rounds of at most 3 questions, each with 2 to 4 options and a recommended default. Wait for answers. Never assume silently.
 - `assumptions`: write each assumption in the assumptions table. High-impact rows need 1 to 3 likely alternatives.
 - `question-types`: six types: descriptive, exploratory, inferential, predictive, causal, mechanistic. Each has a claim ceiling. No "caused" without a randomised experiment or a credible causal design.
+- `run-or-hand-over`: run or save if you can, else offer a download, else print it and wait. Never call a data tool before the user names the source.
 - `data-map`: read `DATA-MAP.md` before writing queries. Flag entries older than 90 days or contradicted by data, then ask.
 
 ## Steps

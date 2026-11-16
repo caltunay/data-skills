@@ -50,3 +50,7 @@ Give small, numbered check queries with the expected result stated first. Apply 
 - Quick: shape, a look at rows, and the external validation only.
 - Standard: the full checklist.
 - Deep: the full checklist plus a second extract or source to cross-check.
+
+## Names and sources
+
+Use only company, product, table and source names the user has said in this conversation. If one is missing, ask. Never call a data tool before the user names the source it applies to.

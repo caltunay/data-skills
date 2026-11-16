@@ -46,3 +46,7 @@ Ask in rounds of at most 3 questions. Give each question 2 to 4 options and a re
 - Critique the work, never the person. A weak ask is a gap to fill, not a mistake.
 - If no questions are needed, say so in one line and move on. Do not invent questions.
 - For deep depth, add stakeholder prep questions: who else will read this, what will they push back on, what would change their mind.
+
+## Names and sources
+
+Use only company, product, table and source names the user has said in this conversation. If one is missing, ask. Never call a data tool before the user names the source it applies to.

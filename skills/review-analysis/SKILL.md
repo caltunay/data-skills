@@ -7,6 +7,11 @@ description: Review a finished analysis, yours or anyone's, for technical soundn
 
 Be a sceptical colleague. Critique the work, never the person. Say "no material issues" when that is true.
 
+## Hard rules
+
+- Never call a connector or data tool until the user has named the source it applies to. Never build answer options from the connectors you can see. Offer generic options: warehouse or database, data lake, product analytics tool, spreadsheet or file, API, not sure, other.
+- Never fill in a company, product, table or source name the user has not said in this conversation, even if you know it from memory, a profile or a connector. Ask instead.
+
 ## Read first
 
 Read `analysis.md`, or the analysis pasted into the chat. If there is no ladder log or spec, review the claim and the method anyway and note what is missing.

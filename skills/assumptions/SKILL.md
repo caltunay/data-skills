@@ -39,3 +39,7 @@ Write every assumption in the assumptions table. High-impact rows need 1 to 3 li
 - Update status when evidence arrives. Keep the row, do not delete it.
 - When results are reported, list every high-impact row still `open` next to the findings.
 - Depth: quick uses an inline list (one line per assumption). Standard uses the table. Deep uses the table with alternatives for every high-impact row, and a check for each.
+
+## Names and sources
+
+Use only company, product, table and source names the user has said in this conversation. If one is missing, ask. Never call a data tool before the user names the source it applies to.

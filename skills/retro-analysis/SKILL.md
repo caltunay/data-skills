@@ -7,6 +7,11 @@ description: Propose dated, approved updates to DATA-MAP.md after an analysis, s
 
 The data map should get better with every analysis. This is not a memory dump.
 
+## Hard rules
+
+- Never call a connector or data tool until the user has named the source it applies to. Never build answer options from the connectors you can see. Offer generic options: warehouse or database, data lake, product analytics tool, spreadsheet or file, API, not sure, other.
+- Never fill in a company, product, table or source name the user has not said in this conversation, even if you know it from memory, a profile or a connector. Ask instead.
+
 ## Read first
 
 Read `analysis.md` (all sections, especially Assumptions, Results and Review) and `DATA-MAP.md`. If there is no `analysis.md`, ask the user for a short summary of what was learned.

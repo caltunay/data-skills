@@ -45,3 +45,7 @@ Log each rung in `analysis.md` under Results, in the ladder log table. In chat, 
 ## Small check queries
 
 Keep each check query small. Give each a number (`Q2.1`, `Q2.2`), one purpose line, and the expected result. When the user must run it, apply the `run-or-hand-over` skill.
+
+## Names and sources
+
+Use only company, product, table and source names the user has said in this conversation. If one is missing, ask. Never call a data tool before the user names the source it applies to.
