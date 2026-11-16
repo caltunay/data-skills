@@ -148,6 +148,30 @@ out=$(for f in skills/assumptions/SKILL.md templates/analysis.template.md; do gr
 out=$(grep -L 'Data is invented' evals/*/case-*.md)
 [ -z "$out" ] && ok "every eval case is marked as invented data" || bad "eval cases not marked" "$out"
 
+# 23 plugin manifests: valid JSON, one name, one version
+out=$(python3 - <<'PY' 2>&1
+import json
+files = [".claude-plugin/plugin.json", ".claude-plugin/marketplace.json", ".codex-plugin/plugin.json", ".agents/plugins/marketplace.json"]
+docs = {}
+for f in files:
+    try:
+        docs[f] = json.load(open(f))
+    except Exception as e:
+        print(f"{f}: {e}")
+if len(docs) == len(files):
+    names = {docs[f]["name"] for f in files}
+    names |= {p["name"] for f in files for p in docs[f].get("plugins", [])}
+    if names != {"data-skills"}:
+        print(f"names differ: {sorted(names)}")
+    versions = {docs[f]["version"] for f in files if "version" in docs[f]}
+    if len(versions) != 1:
+        print(f"versions differ: {sorted(versions)}")
+    if docs[".codex-plugin/plugin.json"].get("skills") != "./skills/":
+        print("codex manifest: skills path is not ./skills/")
+PY
+)
+[ -z "$out" ] && ok "plugin manifests are valid JSON with one name and one version" || bad "plugin manifests" "$out"
+
 # 21 private blocklist (gitignored .blocklist, one word per line)
 if [ -f .blocklist ]; then
   out=$(grep -rnwiIF -f .blocklist --exclude-dir=.git --exclude=.blocklist . | cut -d: -f1,2)

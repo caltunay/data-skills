@@ -12,15 +12,42 @@ Pick your agent when asked. This copies the skills into the agent's skills folde
 
 ## Claude Code
 
-```bash
-npx skills add caltunay/data-skills
+As a plugin, in one line inside Claude Code (version 2.1.275 or later):
+
+```
+/plugin install data-skills --marketplace caltunay/data-skills
 ```
 
-Or copy the folders in `skills/` into `~/.claude/skills/` (all projects) or `.claude/skills/` (one project).
+Or in two steps from your shell:
+
+```bash
+claude plugin marketplace add caltunay/data-skills
+```
+
+```bash
+claude plugin install data-skills@data-skills
+```
+
+Installed as a plugin, the commands carry the plugin name: `/data-skills:grill-the-ask`, `/data-skills:plan-analysis`, and so on. They are the same commands.
+
+Without the plugin: `npx skills add caltunay/data-skills`, or copy the folders in `skills/` into `~/.claude/skills/` (all projects) or `.claude/skills/` (one project). Then the commands have no prefix.
+
+The manifests are `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`. Check them with `claude plugin validate .`.
 
 ## Codex
 
-Copy the folders in `skills/` into your Codex skills folder (for example `~/.codex/skills/` or `.agents/skills/`). Check the current Codex docs for the exact folder. Or use the `npx` command and pick Codex.
+The repo ships a Codex plugin manifest (`.codex-plugin/plugin.json`) and a marketplace file (`.agents/plugins/marketplace.json`), in the same shape as the plugins in the public `openai/plugins` repo.
+
+1. Add this repo as a plugin marketplace in Codex.
+2. Install `data-skills` from it.
+
+The likely one-line form is below. It was not verified from the build session, because the Codex docs site was not reachable. Check `codex plugin --help` or the current Codex docs if it fails.
+
+```bash
+codex plugin marketplace add caltunay/data-skills
+```
+
+Without the plugin: use the `npx` command and pick Codex, or copy the folders in `skills/` into your Codex skills folder (for example `~/.codex/skills/` or `.agents/skills/`). Check the current Codex docs for the exact folder.
 
 ## Gemini CLI
 

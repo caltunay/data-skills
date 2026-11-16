@@ -10,7 +10,13 @@ Free and open source (MIT).
 npx skills add caltunay/data-skills
 ```
 
-Or upload the ZIPs in claude.ai and ChatGPT. See [docs/install.md](docs/install.md).
+Claude Code, as a plugin:
+
+```
+/plugin install data-skills --marketplace caltunay/data-skills
+```
+
+Codex also has a plugin manifest. Or upload the ZIPs in claude.ai and ChatGPT. See [docs/install.md](docs/install.md).
 
 ## The flow
 
