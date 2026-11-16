@@ -1,6 +1,6 @@
 ---
 name: retro-analysis
-description: Propose dated, approved updates to DATA-MAP.md after an analysis, such as new joins, traps, filters, definitions and trusted numbers. Use only when the user runs /retro-analysis or explicitly asks for a retro on an analysis.
+description: Propose dated, approved updates to DATA-MAP.md after an analysis, such as new joins, traps, filters, definitions and trusted numbers. Use only when the user runs /retro-analysis or explicitly asks to run a retro on an analysis.
 ---
 
 # /retro-analysis
@@ -10,12 +10,12 @@ The data map should get better with every analysis. This is not a memory dump.
 ## Hard rules
 
 - Never call a connector or data tool until the user has named the source it applies to. Never build answer options from the connectors you can see. Offer generic options: warehouse or database, data lake, product analytics tool, spreadsheet or file, API, not sure, other.
-- Never fill in a company, product, table or source name the user has not said in this conversation, even if you know it from memory, a profile or a connector. Ask instead.
+- Never fill in a company, product, table or source name the user has not said in this conversation, even if you know it from memory, a profile or a connector. Ask instead. Names in the user's own `DATA-MAP.md` or `analysis.md` count as said by the user. A source listed in the map counts as named. If it is not clear which connected tool is that source, ask.
 
 ## Start (every flow step)
 
 1. Check for `DATA-MAP.md` and `analysis.md` (in `data-work/`, in the Project files, or attached). Say in one line what you found.
-2. If there is no `DATA-MAP.md`, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: this retro starts the map from the template, with only the entries you approve."
+2. If there is no `DATA-MAP.md`, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: this retro starts the map from the template, with only the entries you approve." The template is `DATA-MAP.template.md` in the `data-map` skill. If it is not available, start with `format: v1` on line 1 and these sections: Sources, Tables, Joins, Metrics, Rules, Gotchas, Glossary, Conventions.
 3. If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before re-asking anything. At quick depth there is no file: ask for a short summary of what was learned.
 4. Read the Progress line in Meta and resume from it. Then read all sections, especially Assumptions, Results and Review.
 
@@ -54,6 +54,8 @@ The data map should get better with every analysis. This is not a memory dump.
 - If the map is not `format: v1`, show the migration first and apply it only after approval.
 
 ## End (every flow step)
+
+Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, and name the next step.
 
 1. Update the Progress line in `analysis.md` Meta.
 2. Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app, even if you can write files in a sandbox.

@@ -10,13 +10,13 @@ Run once per team or project. Target: under 20 minutes. Partial answers are fine
 ## Hard rules
 
 - Never call a connector or data tool until the user has named the source it applies to. Never build answer options from the connectors you can see. Offer generic options: warehouse or database, data lake, product analytics tool, spreadsheet or file, API, not sure, other.
-- Never fill in a company, product, table or source name the user has not said in this conversation, even if you know it from memory, a profile or a connector. Ask instead.
+- Never fill in a company, product, table or source name the user has not said in this conversation, even if you know it from memory, a profile or a connector. Ask instead. Names in the user's own `DATA-MAP.md` or `analysis.md` count as said by the user. A source listed in the map counts as named. If it is not clear which connected tool is that source, ask.
 - Never ask for keys or passwords.
 
 ## Start
 
 1. Check for `DATA-MAP.md` (in `data-work/`, in the Project files, or pasted). Say in one line what you found. This step needs no `analysis.md`.
-2. If a map exists, read it. Check its format line and stale entries (see the `data-map` rule below). Offer to extend it. Do not start from zero.
+2. If a map exists, read it. Check its format line and stale entries (see the `data-map` rule below). Offer to extend it. Do not start from zero. Step 0 still applies to anything new: ask how the user wants to add it.
 3. If there is no map, say so and go to step 0.
 
 ## Rules from the disciplines (in case they do not load)
@@ -31,7 +31,7 @@ Ask in rounds of at most 3 questions. Skip what the user already told you.
 
 0. **Setup mode. Always first, before touching any tool.** Ask: "How do you want to set up your data map? A) Connect: I list the data tools you have connected and you pick one or none. B) Describe it in your own words. C) Paste a schema: table list, CREATE statements, dbt file or doc. D) A mix." Wait for the answer.
    - If the user's own message already makes the mode clear (for example, they pasted a schema, or said connectors are blocked), say in one line which mode you understood and continue. Never work the mode out from the connectors you can see.
-   - A: only now, list the connected data tools by name. Listing is not calling. The user picks one or none.
+   - A: only now, list the connected data tools by name. Listing is not calling. The user picks one or none. This is the only place where connector names may be listed, and only after the user chose A.
    - B: interview the user with the steps below.
    - C: read the paste. Fill what it states. Ask the user to confirm grain and keys. Do not guess them.
    - D: combine the above, in the order the user prefers.
@@ -49,7 +49,7 @@ Optional line: "If you have a web search or docs lookup tool, check the current 
 ## Output
 
 1. Write `data-work/DATA-MAP.md` from the template. Fill what you know. Leave unknown sections as empty tables. Date every entry today, with `source: setup`.
-2. Add `data-work/analyses/*/outputs/` to `.gitignore` unless the user chose to commit outputs.
+2. Add `data-work/analyses/*/outputs/` to `.gitignore` unless the user chose to commit outputs. Chat app: there is no repo, so give the user the line to add.
 3. Show a short summary of what is still missing, as a list.
 
 ## End

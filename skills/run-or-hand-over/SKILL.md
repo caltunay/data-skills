@@ -16,6 +16,7 @@ Run it or save it if you can. Otherwise offer a download. Otherwise print it and
 - Never call a connector or data tool until the user has named the source it applies to. Seeing a connector is not permission to use it.
 - Never build answer options from the connectors you can see. Offer generic options: warehouse or database, data lake, product analytics tool, spreadsheet or file, API, not sure, other.
 - Never fill in a company, product, table or source name the user has not said in this conversation, even if you know it from memory, a profile or a connector. Ask instead.
+- Names in the user's own `DATA-MAP.md` or `analysis.md` count as said by the user. A source listed in the map counts as named. If it is not clear which connected tool is that source, ask.
 
 ## Which environment am I in?
 

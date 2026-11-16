@@ -44,7 +44,7 @@ Exploratory outputs are hypotheses, never findings.
 Go down the list. Take the first that fits. Then open `causal.md` (or `experiment.md`) and load that card.
 
 1. Randomised assignment? Use an A/B test: `experiment.md`.
-2. Rollout to some units, with a comparison group and a pre-period? Use difference-in-differences.
+2. Rollout to several units, with a comparison group and a pre-period? Use difference-in-differences.
 3. Assignment by a cut-off on a score or threshold? Use regression discontinuity.
 4. One treated unit (a region, a market) and several untreated ones? Use synthetic control.
 5. One time series with a known change date and no comparison group? Use interrupted time series.
@@ -52,6 +52,13 @@ Go down the list. Take the first that fits. Then open `causal.md` (or `experimen
 7. Observational data with rich pre-treatment covariates? Use matching or weighting.
 8. The question is who to treat, not whether it works? Use uplift.
 9. None fits? Say so. Give the ceiling the data supports. Offer the best descriptive path.
+
+When two seem to fit:
+
+- Only one treated unit: not 2. Go to 4.
+- Units got the treatment by a score cut-off: not 2. Go to 3.
+- Units chose the treatment themselves (they installed, opted in, upgraded): not 2. Go to 6, 7 or 9.
+- A randomised nudge exists but the question is about the thing it nudges: 6, not 1.
 
 Pre-post with no control and no long series: at most "Y changed after X". Not "X caused Y". Ask what else changed at the same time.
 
@@ -61,7 +68,7 @@ Plain models know what each method is. They fail at choosing the method, checkin
 
 Full card format: When to use, Data needed, Key assumptions, Checks that must pass, Common failure, Claim allowed, Simplest version first, Tool notes.
 
-Short card format (advanced methods): When to use, Key assumption, Key check, Claim allowed. Every short card ends with "Get a specialist review before shipping." Treat that line as a requirement and repeat it to the user.
+Short card format (advanced methods): When to use, Key assumption, Key check, Claim allowed, and sometimes a one-line tool note. Every short card ends with "Get a specialist review before shipping." Treat that line as a requirement and repeat it to the user.
 
 | File | Full cards | Short cards |
 |---|---|---|

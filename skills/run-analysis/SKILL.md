@@ -10,18 +10,18 @@ Build from the spec. Trust nothing until it has climbed the ladder.
 ## Hard rules
 
 - Never call a connector or data tool until the user has named the source it applies to. Never build answer options from the connectors you can see. Offer generic options: warehouse or database, data lake, product analytics tool, spreadsheet or file, API, not sure, other.
-- Never fill in a company, product, table or source name the user has not said in this conversation, even if you know it from memory, a profile or a connector. Ask instead.
+- Never fill in a company, product, table or source name the user has not said in this conversation, even if you know it from memory, a profile or a connector. Ask instead. Names in the user's own `DATA-MAP.md` or `analysis.md` count as said by the user. A source listed in the map counts as named. If it is not clear which connected tool is that source, ask.
 
 ## Start (every flow step)
 
 1. Check for `DATA-MAP.md` and `analysis.md` (in `data-work/`, in the Project files, or attached). Say in one line what you found.
-2. If there is no `DATA-MAP.md`, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Wait for the choice. Do not offer it again if the user already chose B for this analysis.
+2. If there is no `DATA-MAP.md`, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Wait for the choice. Exception: if the ask is small and already clear (quick depth), make the offer in one line and continue with B without waiting. Do not offer it again if the user already chose B for this analysis.
 3. If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before re-asking anything. Quick depth has no file: work from the one-line plan in the chat. If the plan or the spec is missing, say so and suggest `/plan-analysis`.
 4. Read the Progress line in Meta and resume from it. Do not redo rungs the ladder log shows as passed. Then read Ask, Assumptions, Plan and Analysis table spec.
 
 ## Goal
 
-State the goal before any work, in these words: "Goal: done when the success checks in the plan pass and a draft readout is written." List the success checks from the plan under it.
+State the goal before any work, in these words: "Goal: done when the success checks in the plan pass and a draft readout is written." List the success checks from the plan under it. At quick depth say: "Goal: done when the success check passes and the short answer is given."
 
 Then keep going, step after step, until the goal is met. Do not stop to ask "shall I continue?". Stop only for:
 
@@ -43,13 +43,13 @@ When you stop, say what you are waiting for and set the Progress line, for examp
 
 ## Steps
 
-Set status `running`. Number the steps in the Progress line (step 1 of 7, and so on).
+Set status `running`. Number the steps in the Progress line (step 1 of 7, and so on). Quick depth runs rung 1, the query, and step 5, then gives the short answer. No step 7.
 
 1. **Audit** each new table or extract (apply `data-audit`).
 2. **Build** the analysis table from the spec, using the tool file in `shaping-data` for the tool in use. Save queries as numbered files in `queries/` (`q1-1-one-entity.sql`, `q1-2-one-entity-day.sql`, and so on).
-3. **Climb the ladder.** Before each rung, write the expected result. Run the check. Write the actual and pass or fail. A fail means find the cause before going up.
+3. **Climb the ladder, rungs 1 to 4.** Before each rung, write the expected result. Run the check. Write the actual and pass or fail. A fail means find the cause before going up. If the fix needs a choice (for example, a rule for duplicates), propose it, add an assumption row, and ask.
 4. **Run the method.** Open the `question-types` file for the question type and load the method card named in the plan. Apply every item under "Checks that must pass" and log each as pass or fail in Results. If a check fails, the claim allowed drops: say to what.
-5. **Reconcile** to the trusted number from the plan. Explain any gap above the stated tolerance.
+5. **Reconcile (rung 5).** Compare the headline number to the trusted number from the plan. Compute the gap and compare it with the stated tolerance. Above tolerance: record rung 5 as fail, do not report the number as final, and test likely causes one small check at a time. Never explain a gap with an untested story.
 6. **Write findings.** Each finding gets direction, magnitude, uncertainty, and the claim ceiling applied. Update assumption statuses as evidence arrives. List high-impact rows still `open` beside the findings.
 7. **Draft the readout.** Write `readout.md` next to `analysis.md`, from `readout.template.md` in this skill's folder. Mark it `Status: draft`.
 
@@ -95,6 +95,8 @@ Show aggregates by default. Ask before saving row-level data anywhere. Put chart
 - Apply `run-or-hand-over` for saving. Chat app: see End.
 
 ## End (every flow step)
+
+Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, and name the next step.
 
 1. Update the Progress line in `analysis.md` Meta, for example `Progress: run done, draft readout written, next /review-analysis`.
 2. Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app, even if you can write files in a sandbox.

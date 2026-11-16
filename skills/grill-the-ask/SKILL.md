@@ -10,12 +10,12 @@ Clarification is the most important part of data work. Ask before you assume.
 ## Hard rules
 
 - Never call a connector or data tool until the user has named the source it applies to. Never build answer options from the connectors you can see. Offer generic options: warehouse or database, data lake, product analytics tool, spreadsheet or file, API, not sure, other.
-- Never fill in a company, product, table or source name the user has not said in this conversation, even if you know it from memory, a profile or a connector. Ask instead.
+- Never fill in a company, product, table or source name the user has not said in this conversation, even if you know it from memory, a profile or a connector. Ask instead. Names in the user's own `DATA-MAP.md` or `analysis.md` count as said by the user. A source listed in the map counts as named. If it is not clear which connected tool is that source, ask.
 
 ## Start (every flow step)
 
 1. Check for `DATA-MAP.md` and `analysis.md` (in `data-work/`, in the Project files, or attached). Say in one line what you found.
-2. If there is no `DATA-MAP.md`, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Wait for the choice.
+2. If there is no `DATA-MAP.md`, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Wait for the choice. Exception: if the ask is small and already clear (quick depth), make the offer in one line and continue with B without waiting.
 3. A new ask needs no `analysis.md`. If the user is resuming an ask and `analysis.md` is not found (for example, a new chat), ask them to attach it before re-asking anything.
 4. If `analysis.md` exists, read the Progress line in Meta and resume from it. Skip every question the file or the data map already answers.
 
@@ -32,8 +32,8 @@ Clarification is the most important part of data work. Ask before you assume.
 1. Take the ask verbatim. Store it unchanged.
 2. Run rounds of questions covering: goal, the decision it feeds, question type, metric, population, time window, constraints, deadline, and audience (who reads the result: exec, product, data or mixed).
 3. **Never ask the same question twice in a session.** Before each round, list what is already answered: in the ask, in `analysis.md`, in the data map, and in earlier answers. A reworded question is the same question. If an answer was unclear, quote it and ask only about the unclear part.
-4. Propose the question type with its ceiling. Confirm it with the user.
-5. Choose the depth and propose it with a one-line reason: **quick**, **standard** or **deep**. Example: "Depth: standard, because the number feeds a budget decision but is not a test readout." The user can override.
+4. Propose the question type with its ceiling. Confirm it with the user. For an ask that wants a cause ("did X work", "prove", "impact of"), ask what comparison exists: a randomised holdout, an untreated group, a cut-off rule, or only a before and after. The answer decides whether a causal claim is reachable.
+5. Choose the depth after round 1 and propose it with a one-line reason: **quick**, **standard** or **deep**. If the depth is quick, stop asking: what is still unknown becomes an inline assumption. Example: "Depth: standard, because the number feeds a budget decision but is not a test readout." The user can override.
    - Quick: a small, low-risk ask, one number or one chart.
    - Standard: the usual ask.
    - Deep: high stakes, a decision with real cost, or a test readout.
@@ -48,15 +48,21 @@ Clarification is the most important part of data work. Ask before you assume.
 | Assumptions | Inline list | Table | Table, alternatives for every high-impact row |
 | Files | None | `analysis.md`, `readout.md` | Full analysis folder |
 
+The Files row covers the whole flow. This step writes `analysis.md` only. `readout.md` comes from `/run-analysis`.
+
 Stakeholder prep questions (deep): who else will read this, what will they push back on, what would change their mind, what is the cost of a wrong answer.
 
 ## Output
 
 - **Quick:** no files. Print the clarified question, depth and an inline assumption list. Suggest `/plan-analysis`, or just do the work if the path is obvious.
-- **Standard and deep:** create `data-work/analyses/<yyyy-mm-dd>-<slug>/analysis.md` from `analysis.template.md` (in this skill's folder). Fill Meta (including audience and the Progress line), Ask and Assumptions. Set status to `grilling`. Create `queries/` and `outputs/` for deep.
-Apply `run-or-hand-over` for saving. Chat app: see End.
+- **Standard and deep:** build `analysis.md` from `analysis.template.md` (in this skill's folder). Fill Meta (including audience and the Progress line), Ask and Assumptions. Set status to `grilling`.
+  - Coding agent: save it as `data-work/analyses/<yyyy-mm-dd>-<slug>/analysis.md`. Create `queries/` and `outputs/` for deep.
+  - Chat app: do not report a sandbox path as "saved". Hand the file over (see End).
+- Apply `run-or-hand-over` for saving.
 
 ## End (every flow step)
+
+Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, and name the next step.
 
 1. Update the Progress line in `analysis.md` Meta.
 2. Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app, even if you can write files in a sandbox.

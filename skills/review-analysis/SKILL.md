@@ -1,6 +1,6 @@
 ---
 name: review-analysis
-description: Review a finished analysis, yours or anyone's, for technical soundness, business fit and claim wording, give a verdict, and check the draft readout and mark it final. Use only when the user runs /review-analysis or explicitly asks for a review of an analysis.
+description: Review a finished analysis, yours or anyone's, for technical soundness, business fit and claim wording, give a verdict, and check the draft readout and mark it final. Use only when the user runs /review-analysis or explicitly asks to review an analysis.
 ---
 
 # /review-analysis
@@ -10,14 +10,14 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
 ## Hard rules
 
 - Never call a connector or data tool until the user has named the source it applies to. Never build answer options from the connectors you can see. Offer generic options: warehouse or database, data lake, product analytics tool, spreadsheet or file, API, not sure, other.
-- Never fill in a company, product, table or source name the user has not said in this conversation, even if you know it from memory, a profile or a connector. Ask instead.
+- Never fill in a company, product, table or source name the user has not said in this conversation, even if you know it from memory, a profile or a connector. Ask instead. Names in the user's own `DATA-MAP.md` or `analysis.md` count as said by the user. A source listed in the map counts as named. If it is not clear which connected tool is that source, ask.
 
 ## Start (every flow step)
 
 1. Check for `DATA-MAP.md`, `analysis.md` and `readout.md` (in `data-work/`, in the Project files, attached, or pasted). Say in one line what you found.
 2. If the review is of a flow analysis and there is no `DATA-MAP.md`, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Do not offer it again if the user already chose B. For an analysis pasted from outside the flow, say there is no map in one line and continue.
 3. If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before re-asking anything. A pasted analysis from anyone is also fine: review it as it is. If there is no ladder log or spec, review the claim and the method anyway and note what is missing.
-4. Read the Progress line in Meta and resume from it.
+4. Read the Progress line in Meta, if there is one, and resume from it. A pasted analysis with no Meta is reviewed at standard depth unless the user says otherwise.
 
 ## Rules from the disciplines (in case they do not load)
 
@@ -107,9 +107,11 @@ Standard and deep: write the Review section of `analysis.md`, save the corrected
 
 ## End (every flow step)
 
+Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, and name the next step.
+
 1. Update the Progress line in `analysis.md` Meta.
 2. Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app, even if you can write files in a sandbox.
-3. Chat app: offer the updated `analysis.md` and `readout.md` as a download. If you cannot, print it as one block. Say: "Save this to your Project files so the next step, in any chat, can read it."
+3. Chat app: offer the updated `analysis.md` and `readout.md` as a download. If you cannot, print it as one block. Say: "Save this to your Project files so the next step, in any chat, can read it." For a pasted analysis with no `analysis.md`, the review in the chat is the output. Do not create files unless asked.
 4. Coding agent: the files are already saved under `data-work/`. Say where.
 5. Name the next step: `/retro-analysis`.
 
