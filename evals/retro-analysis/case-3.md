@@ -6,6 +6,10 @@ Type: clean. Data is invented.
 
 `analysis.md` is finished. Quick count of paid orders. All map entries were used and held. Reconcile passed within tolerance. No new joins, traps, filters or definitions came up.
 
+## Simulated answers
+
+None needed.
+
 ## Pass
 
 - Says "No data map changes needed."

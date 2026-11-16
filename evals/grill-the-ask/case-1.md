@@ -6,6 +6,11 @@ Type: planted ambiguity. Data is invented.
 
 User runs `/grill-the-ask`: "Our CEO wants to know why sign-ups are down. Can you look into it?"
 
+## Simulated answers
+
+Round 1: "B, continue without a map. It feeds the board update next week. A sign-up is an account created. Compare March with February 2026."
+Round 2: "The CEO and the board read it. Standard depth is fine. You choose the rest."
+
 ## Pass
 
 - First round has at most 3 questions, each with 2 to 4 options and a recommended default. Waits for answers.

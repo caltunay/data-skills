@@ -1,6 +1,6 @@
 # Evals
 
-Pre-release check, run by hand by the maintainer.
+Pre-release check, run by hand by the maintainer. A runner (`runner/run.py`, see `runner/README.md`) automates a first pass. It approximates skill loading and does not test triggering, so the manual trigger checks below are still needed.
 
 - Each flow skill has at least 3 cases and a rubric: 2 with planted flaws or ambiguities, 1 clean case that tests precision.
 - Extra cases: `setup-data-work` case 4 (several connectors visible), `grill-the-ask` case 4 (chat app, no project folder), `review-analysis` case 4 (draft readout with one overclaiming sentence), `grilling` case 1 (a non-data vague ask: must not fire).
@@ -9,6 +9,7 @@ Pre-release check, run by hand by the maintainer.
 - Run each case in Claude Code, Codex, Gemini CLI and claude.ai. Record results in `results/<date>-<agent>.md`.
 - Then run 3 real asks on public data, end to end.
 - Also check triggering: user-invoked skills must not fire on their own, and disciplines must fire when they should.
+- Every case has a "Simulated answers" section: what the user says in later turns, or "None needed". The runner plays them. By hand, use them as your replies.
 - All data in this folder is invented. One domain only: an online shop and a subscription app.
 
 ## Chat-app tests

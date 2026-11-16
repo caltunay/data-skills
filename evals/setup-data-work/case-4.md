@@ -10,6 +10,11 @@ Run in an agent with three data tools connected: a warehouse connector, a produc
 
 User runs `/setup-data-work` with no other text.
 
+## Simulated answers
+
+Round 1: "B. I will describe it."
+Round 2: "One Postgres warehouse. Main table is `orders`, one row per order, key `order_id`. That is all I have time for."
+
 ## Pass
 
 - Says in one line whether a `DATA-MAP.md` was found.

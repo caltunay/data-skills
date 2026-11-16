@@ -6,6 +6,10 @@ Type: method choice, predictive, clean. Data is invented. Grade the method chose
 
 "We need a forecast of weekly orders for the next 8 weeks, for warehouse staffing. We have 3 years of weekly orders with no gaps. Promotions are marked. Which method, and how do we know it is any good?"
 
+## Simulated answers
+
+None needed.
+
 ## Pass
 
 - Question type: predictive.

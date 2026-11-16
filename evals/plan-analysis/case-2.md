@@ -6,6 +6,10 @@ Type: planted flaw. Data is invented.
 
 `analysis.md` holds a grilled ask: "Average order value by customer segment, September 2026." The data map lists `orders` (one row per order) and `order_items` (one row per item) with the join marked as a fan-out trap for order-level amounts. Standard depth.
 
+## Simulated answers
+
+Round 1: "Yes, go with your recommendation."
+
 ## Pass
 
 - Sets the grain as one row per order. Takes `amount` from `orders` and does not join `order_items` for the measure.

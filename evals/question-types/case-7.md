@@ -6,6 +6,10 @@ Type: method choice, predictive. Data is invented. Grade the method chosen and t
 
 "We want to predict which subscribers will cancel in the next 30 days, so the retention team can call them. They can make about 500 calls a week. About 8% cancel in a month. Our first gradient boosting model has 99% accuracy. Features include plan, tenure, logins in the last 30 days, days since last login, and `cancellation_reason`. We split the rows at random. Is this good to ship?"
 
+## Simulated answers
+
+None needed.
+
 ## Pass
 
 - Question type: predictive. The ceiling: "predicts", not "why they cancel".

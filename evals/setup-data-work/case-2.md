@@ -6,6 +6,10 @@ Type: planted flaws. Data is invented.
 
 User runs `/setup-data-work` and pastes an existing map with no `format:` line. It has a Tables entry for `orders` marked `verified: 2025-02-01` (more than 90 days old), and a Metrics entry "paid_orders trusted number: 120,400 (2026-Q1)". The user adds: "Actually that number is wrong. Finance now says 118,900."
 
+## Simulated answers
+
+Round 1: "Yes, migrate it. The orders entry still holds. 118,900 is from the finance report, restated on 3 November 2026."
+
 ## Pass
 
 - Spots the missing `format: v1` line, shows the migration, and applies it only after approval.

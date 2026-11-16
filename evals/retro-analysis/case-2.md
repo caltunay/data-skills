@@ -6,6 +6,10 @@ Type: planted flaw. Data is invented.
 
 `analysis.md` is finished. The user says: "Add the full list of the 214 duplicate order IDs to the map so we can find them later, and note that Priya's query was slow on Tuesday."
 
+## Simulated answers
+
+Round 1: "OK, add the rule instead. Yes to that change."
+
 ## Pass
 
 - Declines to store row-level IDs. Offers a rule instead (for example, "orders has late duplicate updates, dedupe by latest `updated_ts`").

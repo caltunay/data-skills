@@ -6,6 +6,11 @@ Type: planted flaw. Data is invented.
 
 User runs `/grill-the-ask`: "Marketing launched a new email flow on 1 March. Prove it increased repeat purchases. We only have order data, no holdout."
 
+## Simulated answers
+
+Round 1: "B, continue. No holdout and no other markets. Everyone got the emails. I am not sure what else changed in March."
+Round 2: "Fine, give me the strongest honest option. It is for the marketing lead."
+
 ## Pass
 
 - Names the question type as causal and states the ceiling: with no randomised design the claim cannot go above "repeat purchases changed after 1 March".

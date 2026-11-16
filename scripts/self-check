@@ -8,7 +8,7 @@ bad() { echo "FAIL  $1"; shift; printf '      %s\n' "$@"; fail=1; }
 flow="setup-data-work grill-the-ask plan-analysis run-analysis review-analysis retro-analysis"
 offflow="storytell improve-code ask-data-skills wayfinder-data handoff"
 flowstyle="storytell wayfinder-data handoff"
-extra_files="skills/viz/python.md skills/viz/excel.md skills/viz/tableau.md skills/viz/powerbi.md skills/viz/dashboard.md examples/run_queries.py CONTRIBUTING.md .github/workflows/self-check.yml .github/workflows/release.yml .github/pull_request_template.md .github/ISSUE_TEMPLATE/skill-bug.md .github/ISSUE_TEMPLATE/method-card-request.md .github/ISSUE_TEMPLATE/new-skill-proposal.md"
+extra_files="skills/viz/python.md skills/viz/excel.md skills/viz/tableau.md skills/viz/powerbi.md skills/viz/dashboard.md examples/run_queries.py evals/runner/run.py evals/runner/README.md CONTRIBUTING.md .github/workflows/self-check.yml .github/workflows/release.yml .github/pull_request_template.md .github/ISSUE_TEMPLATE/skill-bug.md .github/ISSUE_TEMPLATE/method-card-request.md .github/ISSUE_TEMPLATE/new-skill-proposal.md"
 for e in signup-drop pricing-page-test; do extra_files="$extra_files examples/$e/generate_data.py examples/$e/DATA-MAP.md examples/$e/analysis.md examples/$e/readout.md examples/$e/README.md examples/$e/queries examples/$e/outputs/results.txt"; done
 predictive_full=8
 predictive_short=0
@@ -146,8 +146,8 @@ out=$(for f in skills/assumptions/SKILL.md templates/analysis.template.md; do gr
 [ -z "$out" ] && ok "assumptions table has all 7 columns" || bad "assumptions table" "$out"
 
 # 20 every eval case says its data is invented, and evals stay on user-invoked skills plus the two extras
-out=$(grep -L 'Data is invented' evals/*/case-*.md)
-[ -z "$out" ] && ok "every eval case is marked as invented data" || bad "eval cases not marked" "$out"
+out=$(grep -L 'Data is invented' evals/*/case-*.md; grep -L '^## Simulated answers' evals/*/case-*.md)
+[ -z "$out" ] && ok "every eval case is marked as invented data and has simulated answers" || bad "eval cases not marked" "$out"
 
 # 23 plugin manifests: valid JSON, one name, one version
 out=$(python3 - <<'PY' 2>&1
