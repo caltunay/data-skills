@@ -544,3 +544,103 @@ Decide these, then log each choice and reason in `DECISIONS.md`:
 30. `question-types` covers all six types: one skill, a selector in `SKILL.md`, one file per type with method cards. Full cards for common methods, short cards plus a specialist-review flag for advanced ones. In v0.1, with method-choice evals.
 31. One neutral example domain: an invented online shop and subscription app. A private gitignored `.blocklist` is checked by `scripts/self-check`.
 32. `grilling` fires on data asks only. Descriptions are tuned so generic data asks do not trigger ours over built-in data skills.
+
+---
+
+## 20. v0.2 experimental
+
+Built on branch `v0.2`. Every new skill here is **experimental** until it has passed its evals. All section 3 hard rules apply.
+
+Rules for every new skill:
+- Frontmatter is `name` and `description` only.
+- User-invoked descriptions say "Use only when the user runs /<name> or explicitly asks to ...".
+- Flow-style skills (they read or write files in `data-work/`) open with the 4-step start from section 4 and end with the chat-app handoff from section 5.
+- Each new user-invoked skill has 3 eval cases (2 flawed, 1 clean) and a rubric.
+
+### 20.1 `/storytell` (user-invoked, off-flow)
+
+- Input: the final `readout.md` and `analysis.md`. If the readout is not final, it says so and suggests `/review-analysis` first.
+- Asks the audience (exec, product, data, mixed) and the format (doc, chat message, email, slide outline).
+- Writes `readout-<audience>.md` next to the readout.
+- Rules: answer first. Every number keeps its uncertainty. No claim above the ceiling recorded in `analysis.md`. Caveats in plain words. Exec version: no jargon, under 150 words before the appendix. Slide outline: at most 5 slides, each title states the takeaway, one chart suggestion per slide.
+- Calls: `question-types`, `viz`.
+
+### 20.2 `viz` (model-invoked data skill)
+
+- Applies when a chart is chosen, built or reviewed inside the flow.
+- `SKILL.md`: chart choice by question (trend, comparison, distribution, part of whole, relationship, funnel, cohort), and checks: the title states the takeaway; axes labelled with units; bars start at zero; uncertainty shown where it exists; no dual axes; colour-blind safe; no 3D; small multiples over cluttered legends; same scale when comparing.
+- Tool files: `python.md` (matplotlib, plotly), `excel.md`, `tableau.md`, `powerbi.md`, and `dashboard.md` (see 20.8). Excel, Tableau and Power BI run in hand-over mode.
+- Called by `/run-analysis` (charts in `outputs/`), `/review-analysis` (chart check) and `/storytell`.
+
+### 20.3 `/improve-code` (user-invoked, off-flow)
+
+- Input: SQL or Python, pasted or as a file path.
+- Order: understand intent (ask if unclear), then correctness (grain, join fan-out, filters, nulls, time zones, dedup), then style (sqlstyle.guide or PEP 8; team Conventions win), then performance (dialect-aware: partition filters, needed columns only, avoid repeated scans).
+- Surgical: change only what is needed. Show a diff. One line per change saying why.
+- Prove equivalence where behaviour should not change: before and after row counts and totals, as check queries through `run-or-hand-over`. If behaviour changes on purpose (a bug fix), say so and show the difference.
+- Calls: `shaping-data`, `validation-ladder`, `run-or-hand-over`, `data-map`.
+
+### 20.4 `/ask-data-skills` (user-invoked router)
+
+- Asks what the user is trying to do: one round, at most 3 questions.
+- Recommends one command, with one line why, and the next one after it.
+- Knows the full catalogue. Does not do the work itself.
+
+### 20.5 `/wayfinder-data` (user-invoked, off-flow)
+
+- For big, vague work (for example "build a metrics framework for the subscription app").
+- Writes `data-work/wayfinder/<slug>.md`: a list of decision items, each with options, a recommended default, status (open, decided), dependencies, and who decides.
+- Resolves items one at a time using `grilling`. Never resolves an item silently.
+- When the map is done, lists the analyses to run, each as a ready `/grill-the-ask` prompt.
+
+### 20.6 `/handoff` (user-invoked, off-flow)
+
+- Writes `handoff.md` in the analysis folder: where things stand (the Progress line), what is done, decisions made, open high-impact assumptions, the next step, files and their state, and how to resume in a fresh session.
+- For a colleague or a fresh session. Chat apps: offered as a download.
+
+### 20.7 Predictive cards upgrade
+
+- `question-types/predictive.md`: gradient boosting and calibration become full cards. New full card: classification metrics (precision, recall, ROC-AUC, PR-AUC, choosing a threshold by cost). The leakage card covers target leakage, time leakage and split by time. Feature importance is not causal.
+- 2 more method-choice eval cases, for predictive questions.
+
+### 20.8 Rest of the upstream inventory
+
+- Every "v1 backlog" item in `docs/upstream-map.md` is absorbed into an existing skill, built, or dropped with a reason. At most 4 new skills.
+- Built: `metric-design` (model-invoked data skill): define a metric or KPI with its formula, grain, owner, guardrails and a trusted number.
+- Absorbed: dashboards into `viz` (`dashboard.md`); charts into `viz`; reports and KPI readouts into `/storytell`; metric diagnostics into the exploratory method cards; routing into `/ask-data-skills`.
+- The Anthropic `data` plugin is Apache-2.0: reuse with attribution in `NOTICE`. The OpenAI `data-analytics` plugin is proprietary: ideas only, no text.
+
+### 20.9 Plugin manifests
+
+- Claude Code: `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`.
+- Codex: `.codex-plugin/plugin.json` and `.agents/plugins/marketplace.json`.
+- `docs/install.md` gives the install line for each.
+
+### 20.10 Worked examples
+
+- `examples/signup-drop/`: "Why did sign-ups drop in March?" for the invented subscription app. Descriptive, then exploratory, with the ceiling stated.
+- `examples/pricing-page-test/`: an A/B test on the shop's pricing page, with an SRM check, power, and a clean readout.
+- Each has invented data as small CSVs from a seeded script (`generate_data.py`), `DATA-MAP.md`, `analysis.md`, `readout.md` and `queries/`. Produced by following the skills in order, with the queries really run.
+
+### 20.11 GitHub Actions
+
+- `self-check.yml`: runs `scripts/self-check` on every pull request and push. If the repository secret `DATA_SKILLS_BLOCKLIST` exists, the job writes it to `.blocklist` first and never prints it.
+- `release.yml`: when a release is published, runs `scripts/package-zips` and uploads every ZIP as a release asset.
+
+### 20.12 Eval runner
+
+- `evals/runner/run.py`: Python standard library, plus the official Anthropic and OpenAI SDKs as optional imports.
+- Builds context from the skill's `SKILL.md` plus the files of the disciplines it calls. Sends the case input. Multi-turn cases use a "Simulated answers" section.
+- A judge prompt grades against the rubric: pass, partial or fail, with reasons. Writes `evals/results/<date>-<provider>-<model>.md`.
+- Keys from environment variables only. Never logged or stored. `--dry-run` prints what it would send and an estimated cost, with no API call. A real run prints the estimate and asks for confirmation.
+- It approximates skill loading and does not test triggering. Manual triggering tests are still needed.
+
+### 20.13 Contributor docs
+
+- `CONTRIBUTING.md`: how to add a skill or a method card, the neutral domain rule, the hard rules, running the self-check and evals, release steps.
+- `.github/ISSUE_TEMPLATE/`: skill bug, method card request, new skill proposal.
+- `.github/pull_request_template.md`: checklist.
+
+### 20.14 Catalogue after v0.2
+
+22 skills: the 15 from v0, plus user-invoked `storytell`, `improve-code`, `ask-data-skills`, `wayfinder-data`, `handoff`, and model-invoked `viz`, `metric-design`.

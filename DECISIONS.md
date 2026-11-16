@@ -34,6 +34,20 @@
 30. `question-types` covers all six types: one skill, a selector in `SKILL.md`, one file per type with method cards. Full cards for common methods, short cards plus a specialist-review flag for advanced ones. In v0.1, with method-choice evals.
 31. One neutral example domain: an invented online shop and subscription app. A private gitignored `.blocklist` is checked by `scripts/self-check`.
 32. `grilling` fires on data asks only. Descriptions are tuned so generic data asks do not trigger ours over built-in data skills.
+33. v0.2 is built on its own branch with its own pull request into `spec/v0`. Every new skill is marked experimental until it has passed its evals.
+34. `viz` is a model-invoked data skill, not a command: one core file for chart choice and checks, plus one file per tool. Excel, Tableau and Power BI run in hand-over mode.
+35. `/storytell` rewrites a final readout for one audience and format. It never raises a claim above the ceiling in `analysis.md`, and every number keeps its uncertainty.
+36. `/improve-code` works in a fixed order: intent, correctness, style, performance. Changes are surgical, shown as a diff, and proven equivalent with check queries unless a behaviour change is the point.
+37. `/ask-data-skills` only routes. It recommends one command and the next one. It never does the work.
+38. `/wayfinder-data` maps big, vague work as decision items and resolves them one at a time with the user. It ends with ready `/grill-the-ask` prompts.
+39. `/handoff` writes `handoff.md` so a colleague or a fresh session can resume from the Progress line.
+40. Predictive method cards: gradient boosting, classification metrics and calibration are full cards. Feature importance is never causal.
+41. Upstream backlog: every item is absorbed, built or dropped with a reason. One new skill, `metric-design`. Dashboards go into `viz`.
+42. Plugin manifests ship for Claude Code and Codex. The skills stay plain SKILL.md files, so every other install route still works.
+43. Two worked examples with seeded, invented data are the demo. Their queries are really run.
+44. CI runs the self-check on every pull request and push. The private blocklist comes from a repository secret. A published release attaches the ZIPs by itself.
+45. The eval runner approximates skill loading and grades with a judge model. It does not test triggering. Keys come from the environment only.
+46. Contributor docs and templates carry the hard rules, so outside contributions meet them by default.
 
 ## Build decisions
 
@@ -100,6 +114,10 @@ B38. Self-review (fix L). `docs/walkthrough.md` lists 33 ambiguities found by wa
 B39. Names in the user's own `DATA-MAP.md` or `analysis.md` count as said by the user, and a source listed in the map counts as named. Options: ask again in every chat, or trust the user's own files. Reason: the files are the user's record, and re-asking would break the "never ask twice" rule. If the matching connected tool is unclear, the skill asks.
 B40. The two descriptions that said "explicitly asks for a ..." now say "explicitly asks to ...", to match SPEC section 3 word for word.
 B41. `scripts/self-check` extended to 22 checks (fix M). New: naming rule and source rule present in skills, flow structure (start, end, progress, setup mode question), fallback restatements, method card fields and counts, 7-column table, eval cases marked invented, private blocklist, private files not tracked. The em dash check now covers `SPEC.md` too.
+### v0.2 build
+
+B42. Setup (v0.2 item 0). Branch `v0.2` from the finished `spec/v0`. SPEC section 20 describes the v0.2 items. Design decisions 33 to 46 appended. The brief lists 13 items; SPEC 20.14 adds the catalogue count.
+B43. "Flow-style" skill, as used in the v0.2 brief, means a skill that reads or writes files in `data-work/`: `/storytell`, `/wayfinder-data`, `/handoff`. They get the 4-step start and the chat-app end. `/improve-code` gets a lighter start (it looks for the data map only) and the chat-app end for any file it changes. `/ask-data-skills` is a router and gets neither. Options: give all five the full blocks, or only those that touch flow files. Reason: the start block asks for `analysis.md`, which a pasted query or a routing question does not have.
 
 ## Questions for Cenan
 
