@@ -99,6 +99,7 @@ B37. The non-data trigger case lives in `evals/grilling/`. Options: put it under
 B38. Self-review (fix L). `docs/walkthrough.md` lists 33 ambiguities found by walking every eval case through the 6 flow skills and `question-types`, each with its fix. Main ones: the setup offer no longer stalls a quick ask; `/plan-analysis` checks the method card before the user confirms a method; rung 5 and the reconcile step are one thing; a pasted analysis is reviewed at standard depth with no files created; the causal method selector has tie-breaks so one treated unit, a cut-off rule and self-selection do not land on difference-in-differences.
 B39. Names in the user's own `DATA-MAP.md` or `analysis.md` count as said by the user, and a source listed in the map counts as named. Options: ask again in every chat, or trust the user's own files. Reason: the files are the user's record, and re-asking would break the "never ask twice" rule. If the matching connected tool is unclear, the skill asks.
 B40. The two descriptions that said "explicitly asks for a ..." now say "explicitly asks to ...", to match SPEC section 3 word for word.
+B41. `scripts/self-check` extended to 22 checks (fix M). New: naming rule and source rule present in skills, flow structure (start, end, progress, setup mode question), fallback restatements, method card fields and counts, 7-column table, eval cases marked invented, private blocklist, private files not tracked. The em dash check now covers `SPEC.md` too.
 
 ## Questions for Cenan
 

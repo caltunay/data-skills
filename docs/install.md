@@ -38,7 +38,7 @@ Use the `npx` command and pick Copilot, or copy the skills into the folder Copil
 
 1. Build the ZIPs: run `scripts/package-zips`. One ZIP per skill appears in `dist/`.
 2. In claude.ai, open Settings, then Capabilities (or Skills), and upload each ZIP.
-3. Upload all 15. The flow skills call the others by name.
+3. Upload all of them. The flow skills call the others by name.
 4. Create a Project for your data work. Put your `DATA-MAP.md` in the Project files.
 
 ## ChatGPT
