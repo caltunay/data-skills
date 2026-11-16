@@ -65,7 +65,15 @@ Show aggregates by default. Ask before saving row-level data anywhere. Put chart
 
 - Standard and deep: update Results in `analysis.md` (ladder log, findings). Set status `running`, then `reviewed` is set by the review step.
 - Quick: print the answer, the one check and its result, the ceiling, and open assumptions. No file.
-- Chat app: print Results, offer a download.
+- Chat app: see End.
+
+## End (every flow step)
+
+1. Update the Progress line in `analysis.md` Meta.
+2. Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app, even if you can write files in a sandbox.
+3. Chat app: offer the updated `analysis.md` and `readout.md` as a download. If you cannot, print it as one block. Say: "Save this to your Project files so the next step, in any chat, can read it."
+4. Coding agent: the files are already saved under `data-work/`. Say where.
+5. Name the next step: `/review-analysis`.
 
 ## Done when
 

@@ -50,8 +50,10 @@ Use the `npx` command and pick Copilot, or copy the skills into the folder Copil
 
 ## Chat apps: how files work
 
-- Chat apps cannot write to your project. The analysis lives in the chat.
-- At the end you get `analysis.md` as a download, or as one block to copy.
+- A chat has no project folder, so the skills treat it as a chat app, even when it has a sandbox that can write files.
+- Every flow step ends by offering the updated `analysis.md` (and `readout.md` when it exists) as a download, or as one block to copy.
+- Save each download to your Project files. The next step, in any chat, reads it from there.
+- If a step cannot find `analysis.md`, it asks you to attach it before asking anything again.
 - `/retro-analysis` gives you a full updated `DATA-MAP.md`. Replace the Project file with it.
 
 ## First run

@@ -50,8 +50,16 @@ The data map should get better with every analysis. This is not a memory dump.
 ## Output
 
 - Coding agent: edit `data-work/DATA-MAP.md` in place with approved changes only.
-- Chat app: hand back the full updated `DATA-MAP.md` in one block, to replace the Project file.
+- Chat app: hand back the full updated `DATA-MAP.md` as a download, else in one block, to replace the Project file.
 - If the map is not `format: v1`, show the migration first and apply it only after approval.
+
+## End (every flow step)
+
+1. Update the Progress line in `analysis.md` Meta.
+2. Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app, even if you can write files in a sandbox.
+3. Chat app: offer the updated `analysis.md` (and `readout.md` when it exists) as a download. If you cannot, print it as one block. Say: "Save this to your Project files so the next step, in any chat, can read it."
+4. Coding agent: the files are already saved under `data-work/`. Say where.
+5. Name the next step: none. The flow is complete. In a chat app, also hand back the full updated `DATA-MAP.md` to replace the Project file.
 
 ## Depth
 

@@ -89,7 +89,15 @@ Quick: run steps 1, 2 and 5 only, in a few lines.
 
 ## Writing
 
-Standard and deep: write the Review section of `analysis.md` and set status `reviewed`. Chat app: print it and offer a download. Apply `run-or-hand-over`.
+Standard and deep: write the Review section of `analysis.md` and set status `reviewed`. Apply `run-or-hand-over` for saving. Chat app: see End.
+
+## End (every flow step)
+
+1. Update the Progress line in `analysis.md` Meta.
+2. Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app, even if you can write files in a sandbox.
+3. Chat app: offer the updated `analysis.md` and `readout.md` as a download. If you cannot, print it as one block. Say: "Save this to your Project files so the next step, in any chat, can read it."
+4. Coding agent: the files are already saved under `data-work/`. Say where.
+5. Name the next step: `/retro-analysis`.
 
 ## Plan revisions
 

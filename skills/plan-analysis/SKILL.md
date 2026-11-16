@@ -58,7 +58,15 @@ For experiments at deep depth, state the MDE, the power, the runtime and the uni
 
 - Write Plan and Analysis table spec into `analysis.md`. Set status `planned`.
 - Quick: print the one-line plan and success check. No file.
-- Chat app: print the sections and offer a download. Apply `run-or-hand-over`.
+- Apply `run-or-hand-over` for saving. Chat app: see End.
+
+## End (every flow step)
+
+1. Update the Progress line in `analysis.md` Meta.
+2. Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app, even if you can write files in a sandbox.
+3. Chat app: offer the updated `analysis.md` (and `readout.md` when it exists) as a download. If you cannot, print it as one block. Say: "Save this to your Project files so the next step, in any chat, can read it."
+4. Coding agent: the files are already saved under `data-work/`. Say where.
+5. Name the next step: `/run-analysis`.
 
 ## Plan revisions
 

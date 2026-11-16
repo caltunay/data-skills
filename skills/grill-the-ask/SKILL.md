@@ -53,9 +53,15 @@ Stakeholder prep questions (deep): who else will read this, what will they push 
 
 - **Quick:** no files. Print the clarified question, depth and an inline assumption list. Suggest `/plan-analysis`, or just do the work if the path is obvious.
 - **Standard and deep:** create `data-work/analyses/<yyyy-mm-dd>-<slug>/analysis.md` from `analysis.template.md` (in this skill's folder). Fill Meta, Ask and Assumptions. Set status to `grilling`. Create `queries/` and `outputs/` for deep.
-- **No file access:** print the filled sections in one block and offer them as a download.
+Apply `run-or-hand-over` for saving. Chat app: see End.
 
-Apply `run-or-hand-over` for saving.
+## End (every flow step)
+
+1. Update the Progress line in `analysis.md` Meta.
+2. Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app, even if you can write files in a sandbox.
+3. Chat app: offer the updated `analysis.md` (and `readout.md` when it exists) as a download. If you cannot, print it as one block. Say: "Save this to your Project files so the next step, in any chat, can read it."
+4. Coding agent: the files are already saved under `data-work/`. Say where.
+5. Name the next step: `/plan-analysis`.
 
 ## Done when
 
