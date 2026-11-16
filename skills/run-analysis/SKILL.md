@@ -28,7 +28,7 @@ Build from the spec. Trust nothing until it has climbed the ladder.
 - `stats-tests`: choose the test by data type and design. Report direction, magnitude and uncertainty. Correct for multiple comparisons.
 - `question-types`: word every claim at or below the ceiling. Descriptive and experiment method notes live in that skill.
 - `data-map`: read it before writing queries. Flag entries older than 90 days or contradicted by data, then ask.
-- `assumptions`: ask instead of assuming. When you must assume, add a row.
+- `assumptions`: ask instead of assuming. When you must assume, add a row. Standard and deep depth always show the full 7-column table (id, assumption, why unavoidable, likely alternatives, impact if wrong, how to check, status). Never drop columns.
 
 ## Steps
 
@@ -63,7 +63,7 @@ Show aggregates by default. Ask before saving row-level data anywhere. Put chart
 
 ## Output
 
-- Standard and deep: update Results in `analysis.md` (ladder log, findings). Set status `running`, then `reviewed` is set by the review step.
+- Standard and deep: update Results in `analysis.md` (ladder log, findings). This step sets status `running` when it starts and leaves it at `running`. Only `/review-analysis` sets `reviewed`.
 - Quick: print the answer, the one check and its result, the ceiling, and open assumptions. No file.
 - Chat app: see End.
 

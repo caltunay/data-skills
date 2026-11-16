@@ -21,7 +21,7 @@ Record decisions already made. Do not invent new ones.
 
 ## Rules from the disciplines (in case they do not load)
 
-- `assumptions`: every new assumption goes in the table. High-impact rows need 1 to 3 likely alternatives.
+- `assumptions`: every new assumption goes in the table. High-impact rows need 1 to 3 likely alternatives. Standard and deep depth always show the full 7-column table (id, assumption, why unavoidable, likely alternatives, impact if wrong, how to check, status). Never drop columns.
 - `question-types`: name the type and its claim ceiling. Choose a method that can reach the claim the decision needs. If it cannot, say so now. v0 branches: descriptive and experiment.
 - `shaping-data`: design the analysis table spec before any query, without reference to a tool. Grain first.
 - Easy solution first: try the simplest method that could answer the question.

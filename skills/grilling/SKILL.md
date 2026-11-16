@@ -13,7 +13,7 @@ Ask in rounds of at most 3 questions. Give each question 2 to 4 options and a re
 
 ## How to run a round
 
-1. Read what you already know: the ask, the data map if present, earlier answers. Never ask twice.
+1. Read what you already know: the ask, the data map if present, `analysis.md` if present, earlier answers. Never ask the same question twice in a session, even reworded.
 2. Pick the 3 questions whose answers would change the work the most.
 3. Write each question like this:
 
@@ -36,6 +36,7 @@ Ask in rounds of at most 3 questions. Give each question 2 to 4 options and a re
 6. Time window: dates, time zone, and whether the latest days are final.
 7. Constraints: tools, privacy, data access, people.
 8. Deadline: when, and why then.
+9. Audience: who reads the result (exec, product, data, mixed).
 
 ## Rules
 

@@ -19,7 +19,9 @@ Write every assumption in the assumptions table. High-impact rows need 1 to 3 li
 
 - Status is `open`, `confirmed` or `rejected`.
 - Ids run A1, A2, A3 and never get reused.
-- Alternatives are required for high-impact rows. Optional for low-impact rows.
+- Alternatives are required for high-impact rows. Optional for low-impact rows: write "n/a".
+- Standard and deep depth always show all 7 columns: id, assumption, why unavoidable, likely alternatives (1-3), impact if wrong, how to check, status. Never drop, merge or rename a column. An empty cell gets "n/a".
+- Only quick depth uses an inline list.
 
 ## Before you add a row
 
@@ -38,7 +40,7 @@ Write every assumption in the assumptions table. High-impact rows need 1 to 3 li
 - Write the assumption in the same turn it is made. Never after.
 - Update status when evidence arrives. Keep the row, do not delete it.
 - When results are reported, list every high-impact row still `open` next to the findings.
-- Depth: quick uses an inline list (one line per assumption). Standard uses the table. Deep uses the table with alternatives for every high-impact row, and a check for each.
+- Depth: quick uses an inline list (one line per assumption). Standard uses the full 7-column table. Deep uses the full 7-column table with alternatives for every high-impact row, and a check for each.
 
 ## Names and sources
 

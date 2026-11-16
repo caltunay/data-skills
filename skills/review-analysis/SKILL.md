@@ -22,7 +22,7 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
 ## Rules from the disciplines (in case they do not load)
 
 - `question-types`: name the type. Every claim is checked against its ceiling. No "caused" without a randomised experiment or a credible causal design that passed its checks.
-- `assumptions`: flag any high-impact row still `open` when results are reported. Alternatives are required for high-impact rows.
+- `assumptions`: flag any high-impact row still `open` when results are reported. Alternatives are required for high-impact rows. Standard and deep depth always show the full 7-column table (id, assumption, why unavoidable, likely alternatives, impact if wrong, how to check, status). Never drop columns.
 - `validation-ladder`: check the ladder log. Each rung has an expected result, an actual result and pass or fail. Reconcile to a trusted number.
 
 ## Steps
