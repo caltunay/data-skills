@@ -63,14 +63,14 @@ Use the `npx` command and pick Copilot, or copy the skills into the folder Copil
 
 ## claude.ai
 
-1. Build the ZIPs: run `scripts/package-zips`. One ZIP per skill appears in `dist/`.
+1. Get the ZIPs: download them from the latest release on GitHub (one ZIP per skill is attached to every release). Or build them: run `scripts/package-zips`, and one ZIP per skill appears in `dist/`.
 2. In claude.ai, open Settings, then Capabilities (or Skills), and upload each ZIP.
 3. Upload all of them. The flow skills call the others by name.
 4. Create a Project for your data work. Put your `DATA-MAP.md` in the Project files.
 
 ## ChatGPT
 
-1. Build the ZIPs with `scripts/package-zips` as above.
+1. Get the ZIPs from the latest release, or build them with `scripts/package-zips`, as above.
 2. Upload each ZIP where your ChatGPT plan supports skills.
 3. If your plan has no skill upload, paste the `SKILL.md` of the skill you need into a Project's instructions, or the chat itself.
 4. Put `DATA-MAP.md` in the Project files.
@@ -99,3 +99,9 @@ scripts/package-zips
 ```
 
 The ZIPs go in `dist/`, which is gitignored.
+
+## For maintainers: releases and checks
+
+- Create a release on GitHub. The ZIPs attach themselves. The `release` workflow builds one ZIP per skill and uploads each as a release asset.
+- The `self-check` workflow runs `scripts/self-check` on every pull request and push.
+- Private blocklist: add a repository secret named `DATA_SKILLS_BLOCKLIST` (Settings, Secrets and variables, Actions) with one word per line. The workflow writes it to a gitignored `.blocklist` inside the job and never prints it. Without the secret, that one check is skipped. See `CONTRIBUTING.md`.
