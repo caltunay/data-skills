@@ -1,0 +1,163 @@
+#!/usr/bin/env bash
+# Self-check for hard rules. Prints PASS or FAIL per check. Exit 1 on any failure.
+cd "$(dirname "$0")/.." || exit 1
+fail=0
+ok() { echo "PASS  $1"; }
+bad() { echo "FAIL  $1"; shift; printf '      %s\n' "$@"; fail=1; }
+
+flow="setup-data-work grill-the-ask plan-analysis run-analysis review-analysis retro-analysis"
+offflow=""
+flowstyle=""
+extra_files=""
+predictive_full=5
+predictive_short=2
+model="grilling assumptions validation-ladder question-types data-map run-or-hand-over shaping-data data-audit stats-tests"
+user="$flow $offflow"
+all="$user $model"
+qt="descriptive exploratory inferential predictive causal experiment mechanistic"
+dash=$(printf '\342\200\224')
+
+# 1 frontmatter only name and description
+out=$(for f in skills/*/SKILL.md; do
+  awk -v f="$f" 'NR==1&&$0!="---"{print f": no frontmatter"; exit}
+    NR>1&&$0=="---"{exit}
+    NR>1&&$0!~/^(name|description): /{print f": bad key: "$0}' "$f"
+  grep -q '^name: ' "$f" || echo "$f: no name"
+  grep -q '^description: ' "$f" || echo "$f: no description"
+done)
+[ -z "$out" ] && ok "frontmatter has only name and description" || bad "frontmatter" "$out"
+
+# 2 no links between skill folders
+out=$(grep -rnE '\.\./|skills/[a-z-]+/|\]\([^)]*SKILL\.md' skills)
+[ -z "$out" ] && ok "no links between skill folders" || bad "cross-skill paths" "$out"
+
+# 3 no em dashes
+out=$(grep -rlI "$dash" --exclude-dir=.git --exclude-dir=dist .)
+[ -z "$out" ] && ok "no em dashes" || bad "em dashes" "$out"
+
+# 4 reserved name
+word="data""folx"
+out=$(grep -rliI "$word" --exclude-dir=.git --exclude-dir=dist . | grep -vE '^./(SPEC|DECISIONS)\.md$')
+[ -z "$out" ] && ok "reserved name only in SPEC.md and DECISIONS.md" || bad "reserved name" "$out"
+
+# 5 no agent-specific tool names in skills
+out=$(grep -rnE '\b(Bash|Read|Write|Edit|Grep|Glob|Task|Agent|Skill|WebFetch|WebSearch|ToolSearch|AskUserQuestion|NotebookEdit) tool\b|mcp__|\buse the [A-Z][A-Za-z]+ tool' skills)
+[ -z "$out" ] && ok "no agent-specific tool names" || bad "tool names" "$out"
+
+# 6 user-invoked descriptions
+out=""
+for s in $user; do
+  grep -q "^description: .*Use only when the user runs /$s or explicitly asks to " "skills/$s/SKILL.md" || out="$out skills/$s/SKILL.md"
+done
+[ -z "$out" ] && ok "user-invoked descriptions say 'Use only when the user runs /<name> or explicitly asks to'" || bad "user-invoked descriptions" "$out"
+
+# 7 name matches folder
+out=$(for f in skills/*/SKILL.md; do d=$(basename "$(dirname "$f")"); grep -q "^name: $d\$" "$f" || echo "$f"; done)
+[ -z "$out" ] && ok "skill name matches folder" || bad "name mismatch" "$out"
+
+# 8 required files exist
+need="README.md LICENSE NOTICE SPEC.md DECISIONS.md templates/analysis.template.md templates/readout.template.md
+docs/install.md docs/upstream-map.md docs/walkthrough.md docs/self-check.md scripts/package-zips
+skills/grill-the-ask/analysis.template.md skills/run-analysis/readout.template.md skills/data-map/DATA-MAP.template.md
+skills/shaping-data/sql.md skills/shaping-data/python.md skills/shaping-data/excel.md skills/shaping-data/powerbi.md skills/shaping-data/tableau.md
+evals/README.md evals/results evals/grilling/case-1.md evals/grilling/rubric.md evals/question-types/rubric.md
+evals/setup-data-work/case-4.md evals/grill-the-ask/case-4.md evals/review-analysis/case-4.md"
+for t in $qt; do need="$need skills/question-types/$t.md"; done
+for s in $all; do need="$need skills/$s/SKILL.md"; done
+for s in $user; do need="$need evals/$s/case-1.md evals/$s/case-2.md evals/$s/case-3.md evals/$s/rubric.md"; done
+for n in 1 2 3 4 5 6; do need="$need evals/question-types/case-$n.md"; done
+need="$need $extra_files"
+out=$(for p in $need; do [ -e "$p" ] || echo "$p"; done)
+[ -z "$out" ] && ok "every required file exists" || bad "missing files" "$out"
+
+# 9 SKILL.md under 500 lines
+out=$(for f in skills/*/SKILL.md; do n=$(wc -l < "$f"); [ "$n" -ge 500 ] && echo "$f $n"; done)
+[ -z "$out" ] && ok "every SKILL.md under 500 lines" || bad "too long" "$out"
+
+# 10 template copies match
+cmp -s templates/analysis.template.md skills/grill-the-ask/analysis.template.md \
+  && cmp -s templates/readout.template.md skills/run-analysis/readout.template.md \
+  && ok "analysis and readout template copies match" || bad "template copies differ"
+
+# 11 skill list matches folders
+want=$(for s in $all; do echo "$s"; done | sort)
+have=$(for d in skills/*/; do basename "$d"; done | sort)
+[ "$want" = "$have" ] && ok "skill folders match the catalogue ($(echo "$have" | wc -l) skills)" || bad "skill folders differ from the catalogue" "$(diff <(echo "$want") <(echo "$have"))"
+
+# 12 no credentials-like strings
+out=$(grep -rnEiI '(api[_-]?key|secret|password|token)\s*[:=]\s*["'"'"']?[A-Za-z0-9_\-]{16,}|sk-[A-Za-z0-9]{20,}' --exclude-dir=.git --exclude-dir=dist . )
+[ -z "$out" ] && ok "no credentials" || bad "credentials" "$out"
+
+# 13 every skill holds the naming rule
+out=$(for s in $all; do grep -qE 'has not said in this conversation|has said in this conversation' "skills/$s/SKILL.md" || echo "skills/$s/SKILL.md"; done)
+[ -z "$out" ] && ok "every skill has the 'no names the user has not said' rule" || bad "naming rule missing" "$out"
+
+# 14 every user-invoked skill holds the source rule
+out=$(for s in $user; do grep -q 'until the user has named the source' "skills/$s/SKILL.md" || echo "skills/$s/SKILL.md"; done)
+[ -z "$out" ] && ok "every user-invoked skill has the 'name the source first' rule" || bad "source rule missing" "$out"
+
+# 15 flow skills: start block, end block, progress, chat app by situation
+out=$(for s in $flow $flowstyle; do f="skills/$s/SKILL.md"
+  grep -q '^## Start' "$f" || echo "$f: no Start section"
+  grep -q '^## End' "$f" || echo "$f: no End section"
+  grep -q 'no user project folder' "$f" || echo "$f: chat app not defined by situation"
+  grep -q 'Project files' "$f" || echo "$f: no Project files handoff"
+done
+for s in grill-the-ask plan-analysis run-analysis review-analysis retro-analysis; do f="skills/$s/SKILL.md"
+  grep -q 'Run `/setup-data-work` first' "$f" || echo "$f: no setup offer"
+  grep -q 'Progress line' "$f" || echo "$f: no Progress line"
+done
+grep -q 'How do you want to set up your data map?' skills/setup-data-work/SKILL.md || echo "setup-data-work: no setup mode question")
+[ -z "$out" ] && ok "flow skills have the start check, end handoff and progress line" || bad "flow structure" "$out"
+
+# 16 graceful fallback: each flow skill restates the disciplines it calls
+calls_setup="grilling data-map run-or-hand-over"
+calls_grill="grilling assumptions question-types data-map"
+calls_plan="assumptions question-types shaping-data"
+calls_run="validation-ladder run-or-hand-over shaping-data data-audit stats-tests question-types data-map assumptions"
+calls_review="question-types assumptions validation-ladder"
+calls_retro="data-map"
+out=$(chk() { f="skills/$1/SKILL.md"; shift; for d in "$@"; do grep -q "^- \`$d\`: " "$f" || echo "$f: does not restate $d"; done; }
+  chk setup-data-work $calls_setup; chk grill-the-ask $calls_grill; chk plan-analysis $calls_plan
+  chk run-analysis $calls_run; chk review-analysis $calls_review; chk retro-analysis $calls_retro)
+[ -z "$out" ] && ok "flow skills restate the core rule of each discipline they call" || bad "fallback rules" "$out"
+
+# 17 method cards: full cards have all 8 fields, short cards end with the specialist line
+out=$(for t in $qt; do awk -v f="skills/question-types/$t.md" '
+  function flush() { if (kind=="full") { n=split("When to use|Data needed|Key assumptions|Checks that must pass|Common failure|Claim allowed|Simplest version first|Tool notes",k,"|"); for(i=1;i<=n;i++) if (index(body,"**"k[i]":**")==0) print f": "name": missing "k[i] }
+    if (kind=="short") { if (index(body,"**When to use:**")==0||index(body,"**Key assumption:**")==0||index(body,"**Key check:**")==0||index(body,"**Claim allowed:**")==0) print f": "name": short card field missing"; if (index(body,"Get a specialist review before shipping.")==0) print f": "name": no specialist line" }
+    kind=""; body="" }
+  /^## /{flush(); name=$0; if ($0 ~ /^## Card: /) kind="full"; else if ($0 ~ /^## Short card: /) kind="short"; next}
+  {body=body "\n" $0}
+  END{flush()}' "skills/question-types/$t.md"; done
+grep -q 'Get a specialist review before shipping' skills/question-types/mechanistic.md || echo "mechanistic.md: no specialist line")
+[ -z "$out" ] && ok "method cards: full cards complete, short cards end with the specialist line" || bad "method cards" "$out"
+
+# 18 method catalogue counts (SPEC 10.2)
+out=$(cnt() { got=$(grep -c "^## $3: " "skills/question-types/$1.md"); [ "$got" -eq "$2" ] || echo "$1.md: $got '$3' sections, want $2"; }
+  cnt descriptive 9 Card; cnt exploratory 3 Card; cnt exploratory 2 "Short card"; cnt inferential 6 Card
+  cnt predictive "$predictive_full" Card; cnt predictive "$predictive_short" "Short card"; cnt causal 2 Card; cnt causal 5 "Short card"; cnt experiment 1 Card)
+[ -z "$out" ] && ok "method catalogue matches the spec" || bad "method catalogue" "$out"
+
+# 19 assumptions table: 7 columns wherever it appears
+hdr='| id | assumption | why unavoidable | likely alternatives (1-3) | impact if wrong | how to check | status |'
+out=$(for f in skills/assumptions/SKILL.md templates/analysis.template.md; do grep -qF "$hdr" "$f" || echo "$f"; done)
+[ -z "$out" ] && ok "assumptions table has all 7 columns" || bad "assumptions table" "$out"
+
+# 20 every eval case says its data is invented, and evals stay on user-invoked skills plus the two extras
+out=$(grep -L 'Data is invented' evals/*/case-*.md)
+[ -z "$out" ] && ok "every eval case is marked as invented data" || bad "eval cases not marked" "$out"
+
+# 21 private blocklist (gitignored .blocklist, one word per line)
+if [ -f .blocklist ]; then
+  out=$(grep -rnwiIF -f .blocklist --exclude-dir=.git --exclude=.blocklist . | cut -d: -f1,2)
+  [ -z "$out" ] && ok "private blocklist: no banned words" || bad "private blocklist match (file:line)" "$out"
+else
+  echo "SKIP  private blocklist (.blocklist not present)"
+fi
+
+# 22 private files are not tracked
+out=$(git ls-files 2>/dev/null | grep -E '(^|/)(\.blocklist|FIXES-v0\.1\.md|BUILD-v0\.2\.md)$')
+[ -z "$out" ] && ok "private files are not tracked" || bad "private files tracked" "$out"
+
+exit $fail

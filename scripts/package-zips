@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Build one ZIP per skill into dist/ for chat-app upload.
+set -euo pipefail
+
+root="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$root"
+
+# keep the copies of each template identical
+for pair in "analysis.template.md grill-the-ask" "readout.template.md run-analysis"; do
+  set -- $pair
+  if ! cmp -s "templates/$1" "skills/$2/$1"; then
+    echo "templates/$1 and skills/$2/$1 differ" >&2
+    exit 1
+  fi
+done
+
+rm -rf dist
+mkdir -p dist
+
+for dir in skills/*/; do
+  name="$(basename "$dir")"
+  if [ ! -f "$dir/SKILL.md" ]; then
+    echo "missing SKILL.md in $dir" >&2
+    exit 1
+  fi
+  (cd skills && zip -qr "../dist/$name.zip" "$name")
+  echo "dist/$name.zip"
+done
