@@ -75,7 +75,7 @@ Short card format (advanced methods): When to use, Key assumption, Key check, Cl
 | `descriptive.md` | counts and rates; means and medians; rolling windows; week-on-week and year-on-year; cohort tables; funnels; segment breakdowns; mix-shift decomposition; index to baseline | |
 | `exploratory.md` | segment scan; metric decomposition (driver tree); correlation | clustering; anomaly detection |
 | `inferential.md` | confidence intervals; t-test and Mann-Whitney; proportion and chi-square tests; bootstrap; regression for association; multiple-comparison correction | |
-| `predictive.md` | naive and seasonal-naive baselines; linear and logistic regression; forecasting (ETS, ARIMA); backtesting and cross-validation; leakage checks | gradient boosting; calibration |
+| `predictive.md` | naive and seasonal-naive baselines; linear and logistic regression; forecasting (ETS, ARIMA); backtesting and cross-validation; leakage checks; gradient boosting; classification metrics; calibration | |
 | `causal.md` | difference-in-differences; interrupted time series | regression discontinuity; synthetic control; instrumental variables; matching and weighting; uplift |
 | `experiment.md` | randomised experiment (A/B) | |
 | `mechanistic.md` | | one short note |

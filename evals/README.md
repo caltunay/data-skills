@@ -4,7 +4,7 @@ Pre-release check, run by hand by the maintainer.
 
 - Each flow skill has at least 3 cases and a rubric: 2 with planted flaws or ambiguities, 1 clean case that tests precision.
 - Extra cases: `setup-data-work` case 4 (several connectors visible), `grill-the-ask` case 4 (chat app, no project folder), `review-analysis` case 4 (draft readout with one overclaiming sentence), `grilling` case 1 (a non-data vague ask: must not fire).
-- `question-types` has 6 method-choice cases. They grade the method chosen and the checks named, not calculations.
+- `question-types` has 8 method-choice cases (6 causal, 2 predictive). They grade the method chosen and the checks named, not calculations.
 - Every flow rubric also checks: no connector call before the source is named, the data map check is announced, the chat-app download is offered, and no names the user did not say.
 - Run each case in Claude Code, Codex, Gemini CLI and claude.ai. Record results in `results/<date>-<agent>.md`.
 - Then run 3 real asks on public data, end to end.
