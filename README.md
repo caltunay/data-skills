@@ -86,7 +86,7 @@ data-work/
 
 ## Question types
 
-Descriptive and experiment branches are in v0. Causal designs without randomisation and ML come in v1.
+All six question types have method cards in the `question-types` skill: descriptive, exploratory, inferential, predictive, causal (with a method selector) and mechanistic. Each card covers when to use the method, its assumptions, the checks that must pass, the common failure and the claim allowed. Advanced methods get short cards that end with "Get a specialist review before shipping." ML beyond baselines comes in v1.
 
 ## Repo
 

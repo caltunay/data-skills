@@ -22,7 +22,7 @@ Record decisions already made. Do not invent new ones.
 ## Rules from the disciplines (in case they do not load)
 
 - `assumptions`: every new assumption goes in the table. High-impact rows need 1 to 3 likely alternatives. Standard and deep depth always show the full 7-column table (id, assumption, why unavoidable, likely alternatives, impact if wrong, how to check, status). Never drop columns.
-- `question-types`: name the type and its claim ceiling. Choose a method that can reach the claim the decision needs. If it cannot, say so now. v0 branches: descriptive and experiment.
+- `question-types`: name the type and its claim ceiling. Choose a method that can reach the claim the decision needs. If it cannot, say so now. One file per question type holds the method cards. For a causal question, go down the causal method selector: randomised test, then difference-in-differences, regression discontinuity, synthetic control, interrupted time series, instrumental variables, matching or weighting, uplift. If none fits, say so and offer the best descriptive path.
 - `shaping-data`: design the analysis table spec before any query, without reference to a tool. Grain first.
 - Easy solution first: try the simplest method that could answer the question.
 
@@ -31,8 +31,9 @@ Record decisions already made. Do not invent new ones.
 1. Confirm the question type and the decision. State the claim ceiling in one line.
 2. List the options (see depth table). For each: method, trade-offs, effort, and the strongest claim it can support.
 3. Recommend one. Say why in two lines. Confirm with the user.
-4. Write the **chosen plan**: the steps, in order.
-5. Write the **analysis table spec**:
+4. **Load the method card.** Open the `question-types` file for the question type and find the card for the chosen method. Check "When to use" and "Data needed" against what the user has. If the data does not fit the card, say so and go back to step 2. Start from the card's "Simplest version first". A short card means an advanced method: tell the user it needs a specialist review before shipping.
+5. Write the **chosen plan**: the method card by name, then the steps, in order.
+6. Write the **analysis table spec**:
    - grain (what one row means)
    - keys
    - measures and dimensions
@@ -41,8 +42,8 @@ Record decisions already made. Do not invent new ones.
    - tidy (long) or wide, and why
    - context columns
    - expected row count or range
-6. Set **success checks** up front: what must be true for the result to be trusted. Include the trusted number to reconcile to and the tolerance. Example: "Total paid orders within 1% of 120,400 (finance report)."
-7. Add any new assumptions to the table.
+7. Set **success checks** up front: what must be true for the result to be trusted. Include the trusted number to reconcile to and the tolerance. Example: "Total paid orders within 1% of 120,400 (finance report)." Copy every item under the card's "Checks that must pass" into the success checks.
+8. Add any new assumptions to the table. Each "Key assumption" on the card that the data cannot confirm becomes a row.
 
 ## Depth table
 

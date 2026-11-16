@@ -23,7 +23,7 @@ Clarification is the most important part of data work. Ask before you assume.
 
 - `grilling`: rounds of at most 3 questions, each with 2 to 4 options and a recommended default. Wait for answers. Never assume silently.
 - `assumptions`: write each assumption in the assumptions table. High-impact rows need 1 to 3 likely alternatives. Standard and deep depth always show the full 7-column table (id, assumption, why unavoidable, likely alternatives, impact if wrong, how to check, status). Never drop columns.
-- `question-types`: six types: descriptive, exploratory, inferential, predictive, causal, mechanistic. Each has a claim ceiling. No "caused" without a randomised experiment or a credible causal design.
+- `question-types`: six types: descriptive, exploratory, inferential, predictive, causal, mechanistic. Each has a claim ceiling. No "caused" without a randomised experiment or a credible causal design. A "why" question starts as descriptive or exploratory. It is causal only when a design fits. Say so when you propose the type.
 - `run-or-hand-over`: run or save if you can, else offer a download, else print it and wait. Never call a data tool before the user names the source.
 - `data-map`: read `DATA-MAP.md` before writing queries. Flag entries older than 90 days or contradicted by data, then ask.
 

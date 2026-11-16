@@ -1,6 +1,6 @@
 ---
 name: question-types
-description: Name the question type and apply its claim ceiling when framing, planning, writing claims or reviewing a data analysis. Holds method notes for descriptive and experiment questions. Applies whenever a conclusion is being worded.
+description: Name the question type of a data analysis, apply its claim ceiling, and pick the method card to use. Applies inside the data-skills flow when an analysis is framed, planned, run or reviewed, and whenever a conclusion from data is about to be worded as "caused", "drives", "predicts" or "proves".
 ---
 
 # Question types and claim ceilings
@@ -9,7 +9,7 @@ A claim never goes above what its method supports.
 
 ## Core rule
 
-Six question types, each with a ceiling. Name the type early. Word every claim at or below the ceiling. Say "caused" only with a randomised experiment or a credible causal design that passed its checks.
+Six question types, each with a ceiling. Name the type early. Word every claim at or below the ceiling. Say "caused" only with a randomised experiment or a credible causal design that passed its checks. One file per type holds that type's method cards. Load only the file for the type in use.
 
 ## The six types
 
@@ -22,9 +22,56 @@ Six question types, each with a ceiling. Name the type early. Word every claim a
 | Causal | What happens if we change X? | "caused", "effect of" only with a randomised experiment or a credible causal design that passed its checks | Causal language from observational data without a design |
 | Mechanistic | How exactly does it work? | Rarely reachable in business work. Flag it. | Most claims |
 
-## Pre-post with no control
+## Type selector
 
-At most: "Y changed after X". Not "X caused Y". Ask what else changed at the same time.
+Ask what the decision needs, then pick the lowest type that answers it.
+
+| The ask sounds like | Type | File |
+|---|---|---|
+| "How many", "what was", "how did it change", "where is it down" | Descriptive | `descriptive.md` |
+| "What is going on", "any patterns", "why is it down" with no design | Exploratory | `exploratory.md` |
+| "Is this difference real", "does it hold for all customers", survey or sample to population | Inferential | `inferential.md` |
+| "What will", "who is likely to", "forecast" | Predictive | `predictive.md` |
+| "Did X work", "what happens if we change X", "impact of" | Causal | `causal.md`, and `experiment.md` for a randomised test |
+| "How exactly does X lead to Y" | Mechanistic | `mechanistic.md` |
+
+A "why" question starts as descriptive, then exploratory. It becomes causal only when a design from the causal method selector fits. Say this to the user when you set the type.
+
+Exploratory outputs are hypotheses, never findings.
+
+## Causal method selector
+
+Go down the list. Take the first that fits. Then open `causal.md` (or `experiment.md`) and load that card.
+
+1. Randomised assignment? Use an A/B test: `experiment.md`.
+2. Rollout to some units, with a comparison group and a pre-period? Use difference-in-differences.
+3. Assignment by a cut-off on a score or threshold? Use regression discontinuity.
+4. One treated unit (a region, a market) and several untreated ones? Use synthetic control.
+5. One time series with a known change date and no comparison group? Use interrupted time series.
+6. A variable that moves treatment but not the outcome directly? Use instrumental variables.
+7. Observational data with rich pre-treatment covariates? Use matching or weighting.
+8. The question is who to treat, not whether it works? Use uplift.
+9. None fits? Say so. Give the ceiling the data supports. Offer the best descriptive path.
+
+Pre-post with no control and no long series: at most "Y changed after X". Not "X caused Y". Ask what else changed at the same time.
+
+## Method cards
+
+Plain models know what each method is. They fail at choosing the method, checking its assumptions and overclaiming. The cards cover exactly that.
+
+Full card format: When to use, Data needed, Key assumptions, Checks that must pass, Common failure, Claim allowed, Simplest version first, Tool notes.
+
+Short card format (advanced methods): When to use, Key assumption, Key check, Claim allowed. Every short card ends with "Get a specialist review before shipping." Treat that line as a requirement and repeat it to the user.
+
+| File | Full cards | Short cards |
+|---|---|---|
+| `descriptive.md` | counts and rates; means and medians; rolling windows; week-on-week and year-on-year; cohort tables; funnels; segment breakdowns; mix-shift decomposition; index to baseline | |
+| `exploratory.md` | segment scan; metric decomposition (driver tree); correlation | clustering; anomaly detection |
+| `inferential.md` | confidence intervals; t-test and Mann-Whitney; proportion and chi-square tests; bootstrap; regression for association; multiple-comparison correction | |
+| `predictive.md` | naive and seasonal-naive baselines; linear and logistic regression; forecasting (ETS, ARIMA); backtesting and cross-validation; leakage checks | gradient boosting; calibration |
+| `causal.md` | difference-in-differences; interrupted time series | regression discontinuity; synthetic control; instrumental variables; matching and weighting; uplift |
+| `experiment.md` | randomised experiment (A/B) | |
+| `mechanistic.md` | | one short note |
 
 ## Must-answer questions by type
 
@@ -37,22 +84,13 @@ Ask these before work starts, and check them in review.
 - Causal: what is the control? Was assignment random? What else changed at the same time?
 - Mechanistic: can the mechanism be observed directly, or only inferred? If only inferred, drop the claim.
 
-## Branches in v0
-
-Load only the file for the branch in use.
-
-- Descriptive questions (what happened, where, when, metric movements): read `descriptive.md` in this folder.
-- Experiment questions (A/B tests and other randomised tests): read `experiment.md` in this folder.
-
-Causal designs without randomisation (difference-in-differences, interrupted time series, matching) and machine learning are not in v0. If the ask needs one, say so, state the ceiling the available data supports, and offer the best descriptive or experiment path.
-
 ## Using it in each step
 
 - Grilling: confirm the type with the user. Write it into the Meta section of `analysis.md`.
-- Planning: choose a method that can reach the claim the decision needs. If the type cannot support the decision, say so now, not at the end.
-- Running: use the checks in the branch file.
-- Writing claims: every finding gets direction, magnitude, uncertainty, and the ceiling applied.
-- Reviewing: flag every sentence whose wording is above the ceiling, and quote it.
+- Planning: pick the method with the selectors above. Name the card in the plan. Copy its "Checks that must pass" into the success checks. If the type cannot support the decision, say so now, not at the end.
+- Running: load the card. Run every check under "Checks that must pass" and log pass or fail. A failed check lowers the claim allowed.
+- Writing claims: every finding gets direction, magnitude, uncertainty, and the ceiling applied. Use the card's "Claim allowed" wording.
+- Reviewing: check the analysis against the card's "Checks that must pass". Flag every sentence whose wording is above the ceiling, and quote it.
 
 ## Rule of thumb
 
