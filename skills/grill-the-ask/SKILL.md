@@ -12,9 +12,12 @@ Clarification is the most important part of data work. Ask before you assume.
 - Never call a connector or data tool until the user has named the source it applies to. Never build answer options from the connectors you can see. Offer generic options: warehouse or database, data lake, product analytics tool, spreadsheet or file, API, not sure, other.
 - Never fill in a company, product, table or source name the user has not said in this conversation, even if you know it from memory, a profile or a connector. Ask instead.
 
-## Read first
+## Start (every flow step)
 
-Read `analysis.md` if one exists for this ask (a fresh session must be able to resume without re-asking). Read `DATA-MAP.md` if present. Skip questions they already answer.
+1. Check for `DATA-MAP.md` and `analysis.md` (in `data-work/`, in the Project files, or attached). Say in one line what you found.
+2. If there is no `DATA-MAP.md`, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Wait for the choice.
+3. A new ask needs no `analysis.md`. If the user is resuming an ask and `analysis.md` is not found (for example, a new chat), ask them to attach it before re-asking anything.
+4. If `analysis.md` exists, read the Progress line in Meta and resume from it. Skip every question the file or the data map already answers.
 
 ## Rules from the disciplines (in case they do not load)
 

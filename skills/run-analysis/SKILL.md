@@ -12,9 +12,12 @@ Build from the spec. Trust nothing until it has climbed the ladder.
 - Never call a connector or data tool until the user has named the source it applies to. Never build answer options from the connectors you can see. Offer generic options: warehouse or database, data lake, product analytics tool, spreadsheet or file, API, not sure, other.
 - Never fill in a company, product, table or source name the user has not said in this conversation, even if you know it from memory, a profile or a connector. Ask instead.
 
-## Read first
+## Start (every flow step)
 
-Read `analysis.md` (Ask, Assumptions, Plan, Analysis table spec) and `DATA-MAP.md`. If the plan or spec is missing, say so and suggest `/plan-analysis`. At quick depth with no file, work from the one-line plan in the chat.
+1. Check for `DATA-MAP.md` and `analysis.md` (in `data-work/`, in the Project files, or attached). Say in one line what you found.
+2. If there is no `DATA-MAP.md`, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Wait for the choice. Do not offer it again if the user already chose B for this analysis.
+3. If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before re-asking anything. Quick depth has no file: work from the one-line plan in the chat. If the plan or the spec is missing, say so and suggest `/plan-analysis`.
+4. Read the Progress line in Meta and resume from it. Do not redo rungs the ladder log shows as passed. Then read Ask, Assumptions, Plan and Analysis table spec.
 
 ## Rules from the disciplines (in case they do not load)
 

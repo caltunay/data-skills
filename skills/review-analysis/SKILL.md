@@ -12,9 +12,12 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
 - Never call a connector or data tool until the user has named the source it applies to. Never build answer options from the connectors you can see. Offer generic options: warehouse or database, data lake, product analytics tool, spreadsheet or file, API, not sure, other.
 - Never fill in a company, product, table or source name the user has not said in this conversation, even if you know it from memory, a profile or a connector. Ask instead.
 
-## Read first
+## Start (every flow step)
 
-Read `analysis.md`, or the analysis pasted into the chat. If there is no ladder log or spec, review the claim and the method anyway and note what is missing.
+1. Check for `DATA-MAP.md`, `analysis.md` and `readout.md` (in `data-work/`, in the Project files, attached, or pasted). Say in one line what you found.
+2. If the review is of a flow analysis and there is no `DATA-MAP.md`, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Do not offer it again if the user already chose B. For an analysis pasted from outside the flow, say there is no map in one line and continue.
+3. If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before re-asking anything. A pasted analysis from anyone is also fine: review it as it is. If there is no ladder log or spec, review the claim and the method anyway and note what is missing.
+4. Read the Progress line in Meta and resume from it.
 
 ## Rules from the disciplines (in case they do not load)
 

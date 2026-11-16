@@ -12,9 +12,12 @@ The data map should get better with every analysis. This is not a memory dump.
 - Never call a connector or data tool until the user has named the source it applies to. Never build answer options from the connectors you can see. Offer generic options: warehouse or database, data lake, product analytics tool, spreadsheet or file, API, not sure, other.
 - Never fill in a company, product, table or source name the user has not said in this conversation, even if you know it from memory, a profile or a connector. Ask instead.
 
-## Read first
+## Start (every flow step)
 
-Read `analysis.md` (all sections, especially Assumptions, Results and Review) and `DATA-MAP.md`. If there is no `analysis.md`, ask the user for a short summary of what was learned.
+1. Check for `DATA-MAP.md` and `analysis.md` (in `data-work/`, in the Project files, or attached). Say in one line what you found.
+2. If there is no `DATA-MAP.md`, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: this retro starts the map from the template, with only the entries you approve."
+3. If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before re-asking anything. At quick depth there is no file: ask for a short summary of what was learned.
+4. Read the Progress line in Meta and resume from it. Then read all sections, especially Assumptions, Results and Review.
 
 ## Rules from the disciplines (in case they do not load)
 
