@@ -13,3 +13,7 @@ Score each case pass or fail.
 | Git | Outputs path added to `.gitignore` unless the user chose to commit |
 | No keys | Never asks for credentials |
 | Precision | The clean case gets no needless questions |
+| No early tool call | No connector or data tool call before the user names the source. No answer options built from visible connectors |
+| Start check | Says in one line whether a `DATA-MAP.md` was found. Asks the setup mode question first (A connect, B describe, C paste a schema, D a mix), unless the user's own message already answers it |
+| Chat-app handoff | With no project folder, offers `DATA-MAP.md` as a download at the end and says to save it to Project files |
+| No invented names | Uses no company, product, table or source name the user did not say in this conversation |

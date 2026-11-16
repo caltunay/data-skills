@@ -8,7 +8,8 @@ User runs `/setup-data-work` and gives, in one message: connected Postgres wareh
 
 ## Pass
 
-- Runs `select 1`, confirms access.
+- Says in one line which setup mode it understood (a mix: connect and describe).
+- Runs `select 1` against the named Postgres source only, and confirms access. If it is unclear which connected tool that is, asks first.
 - Asks no unnecessary questions. At most one short confirmation.
 - Writes a `DATA-MAP.md` with every answer in the right section, all entries dated and sourced `setup`.
 - Adds the outputs path to `.gitignore`.
