@@ -1,6 +1,6 @@
 ---
 name: validation-ladder
-description: Validate a query or analysis result step by step before trusting any number. Applies before reporting a figure, after building an analysis table, and when reviewing someone else's result. Climbs from one entity to a reconciled total.
+description: Climb the data-skills validation ladder (one entity, one entity-day, many entities, aggregates, reconcile to a trusted number) and log each rung. Applies inside the data-skills flow when /run-analysis builds an analysis table or /review-analysis checks a ladder log, or when the user asks to validate a result with the ladder. Not for writing a one-off query.
 ---
 
 # Validation ladder

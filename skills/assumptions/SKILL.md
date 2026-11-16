@@ -1,6 +1,6 @@
 ---
 name: assumptions
-description: Record an assumption in the assumptions table when one is about to be made in an analysis, with likely alternatives and impact. Applies whenever a definition, filter, date, population or method choice is not confirmed by the user or the data.
+description: Record an assumption in the assumptions table of analysis.md, with likely alternatives, impact and a way to check it. Applies inside the data-skills flow when a definition, filter, date, population or method choice in an analysis is not confirmed by the user or the data.
 ---
 
 # Assumptions

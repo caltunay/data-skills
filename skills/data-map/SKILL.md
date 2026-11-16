@@ -1,6 +1,6 @@
 ---
 name: data-map
-description: Read or update the team's DATA-MAP.md, the shared record of sources, tables, joins, metrics, rules, gotchas, glossary and conventions. Applies before writing any query, when a table or metric is named, and when a retro proposes changes.
+description: Read or update the team's DATA-MAP.md, the shared record of sources, tables, joins, metrics, rules, gotchas, glossary and conventions. Applies inside the data-skills flow, when a DATA-MAP.md file is present, or when the user mentions their data map. Stays silent when there is no map and no flow step is running.
 ---
 
 # Data map

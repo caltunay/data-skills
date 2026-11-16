@@ -1,6 +1,6 @@
 ---
 name: data-audit
-description: Audit a new table, file or extract before using it in an analysis. Applies when data is first loaded or queried, covering shape, missing values, duplicates, outliers, date coverage and validation against a trusted number.
+description: Audit a table, file or extract before an analysis in the data-skills flow relies on it: shape, missing values, duplicates, outliers, date coverage and a check against a trusted number, with every cleaning choice written down. Applies when /run-analysis first touches a source, or when the user asks for a data audit by name.
 ---
 
 # Data audit

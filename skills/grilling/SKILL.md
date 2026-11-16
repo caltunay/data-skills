@@ -1,11 +1,15 @@
 ---
 name: grilling
-description: Ask clarifying questions before any data work starts or when a step is ambiguous. Applies in the clarification steps of the data-skills flow, or when an ask is vague, has no decision attached, or has no metric or time window.
+description: Ask clarifying questions about a data ask (an analysis, metric, query, report or experiment) in rounds of at most 3, each with options and a recommended default. Applies in the clarification steps of the data-skills flow, or when a flow step meets an unclear definition, metric, population or time window. Not for non-data asks, and not for a data ask that is already specific.
 ---
 
 # Grilling
 
 Clarification is the most important part of data work. Ask before you assume.
+
+## When this applies
+
+Only for data asks: an analysis, a metric, a query, a report, an experiment. If the ask is not about data (a vague request to plan an offsite, write an email, fix a bug), this skill does not apply. Do not run rounds of questions from it.
 
 ## Core rule
 

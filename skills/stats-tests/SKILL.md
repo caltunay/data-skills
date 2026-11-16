@@ -1,6 +1,6 @@
 ---
 name: stats-tests
-description: Choose or interpret a statistical test or interval in a data analysis. Applies when comparing groups, testing a difference, sizing a sample, handling many comparisons, or reporting uncertainty and practical significance.
+description: Choose and interpret the statistical test or interval for an analysis in the data-skills flow: test choice by data type and design, power and MDE, multiple comparisons, practical versus statistical significance. Applies when /plan-analysis sizes a test, /run-analysis runs one, or /review-analysis checks one.
 ---
 
 # Stats tests

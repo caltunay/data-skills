@@ -44,4 +44,4 @@ Checked 2026-11-13. We read the licenses and skill descriptions. We copy no text
 
 ## Narrow descriptions
 
-Our descriptions name concrete situations and the flow. Flow skills say "Use only when the user runs /<name>". Disciplines are called by name inside the flow. This keeps ours from firing on the same generic ask as a built-in `analyze` or `explore-data`.
+Our descriptions name the data-skills flow, our own files (`analysis.md`, `DATA-MAP.md`) or the skill's own name. Flow skills say "Use only when the user runs /<name>". Disciplines are called by name inside the flow. A generic ask such as "write a SQL query for monthly sign-ups" should go to a built-in skill (`write-query`, `sql-queries`), not ours. `DECISIONS.md` B35 logs the before and after wording.

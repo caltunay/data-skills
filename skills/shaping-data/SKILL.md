@@ -1,6 +1,6 @@
 ---
 name: shaping-data
-description: Get data into shape for an analysis in SQL, Python, Excel, Power BI or Tableau. Applies when designing the analysis table or building it from sources, including grain, joins, filters and long vs wide layout.
+description: Design the analysis table spec (grain, keys, measures, filters, long or wide) and build it with join fan-out checks in SQL, Python, Excel, Power BI or Tableau. Applies inside the data-skills flow when /plan-analysis writes the spec or /run-analysis builds the table from it. Not for a one-off query request.
 ---
 
 # Shaping data
