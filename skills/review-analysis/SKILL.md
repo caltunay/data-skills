@@ -1,6 +1,6 @@
 ---
 name: review-analysis
-description: Review a finished analysis, yours or anyone's, for technical soundness, business fit and claim wording, and give a verdict. Use only when the user runs /review-analysis or explicitly asks for a review of an analysis.
+description: Review a finished analysis, yours or anyone's, for technical soundness, business fit and claim wording, give a verdict, and check the draft readout and mark it final. Use only when the user runs /review-analysis or explicitly asks for a review of an analysis.
 ---
 
 # /review-analysis
@@ -41,7 +41,7 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
    - Stats: is there an interval or test? Is the number practically big, not only significant?
    - Spec match: do the results match the analysis table spec (grain, filters, row count)?
    - Ladder: was each rung run and logged? Can one number be recomputed independently?
-   - Method notes: apply the branch notes in `question-types` (descriptive or experiment: SRM, power, peeking, novelty, mix shift).
+   - Method card: open the `question-types` file for the question type and find the card for the method used. Check the analysis against every item under "Checks that must pass". A check that was not run, or that failed, is an issue, and the claim allowed drops.
 4. **Business review.** Ask what leadership will ask.
    - Decision: what will be done differently because of this? If nothing, why was it run?
    - Size: the effect in money, users or orders per month. Big enough to act on?
@@ -56,15 +56,28 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
 5. **Claims check.** Quote every sentence whose wording is above the ceiling, and give the allowed wording.
 6. **Assumptions check.** List high-impact rows still `open`.
 7. **Leadership questions.** Write the 3 to 5 questions a sceptical leader will ask, with the best answer the analysis supports. Mark an answer "not supported yet" when it is.
-8. **Verdict:** `ready`, `ready with caveats`, or `needs rework`, with reasons.
+8. **Readout review.** If there is a draft `readout.md`, review it word by word (see below).
+9. **Verdict:** `ready`, `ready with caveats`, or `needs rework`, with reasons.
+
+## Readout review
+
+`/run-analysis` writes `readout.md` as a draft. This step makes it final.
+
+1. Read the readout one sentence at a time. For each sentence ask: is the wording at or below the claim ceiling? Does every number match Results and carry its uncertainty? Is every open high-impact assumption in Caveats?
+2. Fix each sentence that fails. Show the change as "was" and "now", with one line why. Example: was "The new page caused the drop." now "Conversion fell after the new page went live. This analysis cannot say why."
+3. Leave sentences that pass unchanged. Do not rewrite for taste.
+4. Check the layout: Answer in 2 lines, Key numbers with uncertainty, What it means, Caveats, Method in 3 lines, Link.
+5. If the verdict is `ready` or `ready with caveats`, set `Status: final` in `readout.md`. If the verdict is `needs rework`, leave it `Status: draft` and say what must happen first.
+6. No readout (quick depth, or a pasted analysis): check the pasted claims the same way. Do not create a readout unless asked.
 
 ## Depth table
 
 | | Quick | Standard | Deep |
 |---|---|---|---|
 | Review | Self-check against the claim ceiling | Technical plus business review | Full review plus leadership questions |
+| Readout | Short answer in chat, checked against the ceiling | `readout.md` checked and marked final | `readout.md` plus appendix, checked and marked final |
 
-Quick: run steps 1, 2 and 5 only, in a few lines.
+Quick: run steps 1, 2 and 5 only, in a few lines. Check the short answer given in the chat against the ceiling.
 
 ## Output format (scan-first)
 
@@ -78,6 +91,7 @@ Quick: run steps 1, 2 and 5 only, in a few lines.
    - Check: the exact query, split or calculation to run.
 
 4. Leadership questions with answers.
+5. Readout changes: each "was" and "now" pair, then the readout status (draft or final).
 
 ## Precision
 
@@ -89,7 +103,7 @@ Quick: run steps 1, 2 and 5 only, in a few lines.
 
 ## Writing
 
-Standard and deep: write the Review section of `analysis.md` and set status `reviewed`. Apply `run-or-hand-over` for saving. Chat app: see End.
+Standard and deep: write the Review section of `analysis.md`, save the corrected `readout.md` with its status, and set the analysis status `reviewed`. Apply `run-or-hand-over` for saving. Chat app: see End.
 
 ## End (every flow step)
 
@@ -105,4 +119,4 @@ If the review finds the plan cannot hold (for example, an experiment with no cle
 
 ## Done when
 
-A verdict is given. Next step: `/retro-analysis`.
+A verdict is given, and the readout is final or the blockers are listed. Next step: `/retro-analysis`.

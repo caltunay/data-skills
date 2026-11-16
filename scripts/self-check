@@ -60,7 +60,7 @@ out=$(for f in skills/*/SKILL.md; do n=$(wc -l < "$f"); [ "$n" -ge 500 ] && echo
 [ -z "$out" ] && ok "every SKILL.md under 500 lines" || bad "too long" "$out"
 
 # 10 template copies match
-cmp -s templates/analysis.template.md skills/grill-the-ask/analysis.template.md && ok "analysis template copies match" || bad "template copies differ"
+cmp -s templates/analysis.template.md skills/grill-the-ask/analysis.template.md && cmp -s templates/readout.template.md skills/run-analysis/readout.template.md && ok "analysis and readout template copies match" || bad "template copies differ"
 
 # 11 skill count
 n=$(ls -d skills/*/ | wc -l); [ "$n" -eq 15 ] && ok "15 skills" || bad "skill count is $n"

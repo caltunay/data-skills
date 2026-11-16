@@ -5,11 +5,14 @@ set -euo pipefail
 root="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$root"
 
-# keep the two copies of the analysis template identical
-if ! cmp -s templates/analysis.template.md skills/grill-the-ask/analysis.template.md; then
-  echo "templates/analysis.template.md and skills/grill-the-ask/analysis.template.md differ" >&2
-  exit 1
-fi
+# keep the copies of each template identical
+for pair in "analysis.template.md grill-the-ask" "readout.template.md run-analysis"; do
+  set -- $pair
+  if ! cmp -s "templates/$1" "skills/$2/$1"; then
+    echo "templates/$1 and skills/$2/$1 differ" >&2
+    exit 1
+  fi
+done
 
 rm -rf dist
 mkdir -p dist

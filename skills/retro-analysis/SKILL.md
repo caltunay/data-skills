@@ -39,7 +39,7 @@ The data map should get better with every analysis. This is not a memory dump.
 4. Show a diff (old and new text) for each change.
 5. The user approves each change: yes, no or edit. Do not apply unapproved changes.
 6. Apply the approved changes, with today's date as `verified` and `source: analyses/<slug>`.
-7. Record the proposals and the decisions in the Retro section of `analysis.md`. Set status `retro done`.
+7. Record the proposals and the decisions in the Retro section of `analysis.md`. Set status `retro done` and update the Progress line.
 
 ## Keep out
 

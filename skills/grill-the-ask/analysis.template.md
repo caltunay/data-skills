@@ -6,10 +6,12 @@ format: v1
 
 - Title:
 - Requester:
+- Audience: exec | product | data | mixed
 - Date:
 - Depth: quick | standard | deep
 - Question type: descriptive | exploratory | inferential | predictive | causal | mechanistic
 - Status: grilling | planned | running | reviewed | retro done
+- Progress: <step, where it stopped, what it waits for. Example: run step 3 of 7, waiting for Q3.1 paste>
 
 ## 2. Ask
 
@@ -26,7 +28,7 @@ format: v1
 |---|---|---|---|---|---|---|
 | A1 | | | | | | open |
 
-Status: open, confirmed or rejected. Alternatives are required for high-impact rows only.
+Status: open, confirmed or rejected. Alternatives are required for high-impact rows only. Always keep all 7 columns.
 
 ## 4. Plan
 
@@ -70,6 +72,13 @@ Status: open, confirmed or rejected. Alternatives are required for high-impact r
 | 4 aggregates | | | |
 | 5 reconcile | | | |
 
+### Method checks
+
+Method card used: <name>. Each item under "Checks that must pass": pass or fail.
+
+| check | pass or fail | note |
+|---|---|---|
+
 ### Findings
 
 Each finding: direction, magnitude, uncertainty, claim ceiling applied. Aggregates only unless the user approved saving row-level data.
@@ -80,6 +89,7 @@ Each finding: direction, magnitude, uncertainty, claim ceiling applied. Aggregat
 - Technical issues:
 - Business issues:
 - Leadership questions, with answers:
+- Readout: sentences changed, and why. Readout status: draft | final
 
 ## 8. Retro
 

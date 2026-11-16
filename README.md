@@ -19,9 +19,9 @@ Or upload the ZIPs in claude.ai and ChatGPT. See [docs/install.md](docs/install.
         |
         v
 /grill-the-ask -> /plan-analysis -> /run-analysis -> /review-analysis -> /retro-analysis
-                        ^                  |
-                        |__________________|
-                   plan revision entry (no restart)
+                        ^                  |                 |
+                        |__________________|                 |
+                   plan revision entry       draft readout.md -> final readout.md
 ```
 
 ## The 6 commands
@@ -31,8 +31,8 @@ Or upload the ZIPs in claude.ai and ChatGPT. See [docs/install.md](docs/install.
 | `/setup-data-work` | Tests data access, interviews you, writes `DATA-MAP.md` |
 | `/grill-the-ask` | Turns a vague ask into a clear question, with assumptions and a depth |
 | `/plan-analysis` | Options, a chosen plan, the analysis table spec, success checks |
-| `/run-analysis` | Builds the table, climbs the validation ladder, runs the method |
-| `/review-analysis` | Technical and business review, claim check, verdict |
+| `/run-analysis` | Builds the table, climbs the validation ladder, runs the method, drafts `readout.md` |
+| `/review-analysis` | Technical and business review, claim check, verdict. Checks the readout word by word and marks it final |
 | `/retro-analysis` | Proposes data map updates. You approve each one |
 
 ## What makes it different
@@ -56,7 +56,8 @@ Plain models already spot visible flaws. These skills add:
 | Plan | One line | 2 to 4 options | Plus power or MDE |
 | Ladder | One entity plus reconcile | Full | Full plus alternative specification |
 | Review | Self-check | Technical plus business | Plus leadership questions |
-| Files | None | `analysis.md` | Full analysis folder |
+| Readout | Short answer in chat | `readout.md` | `readout.md` plus appendix |
+| Files | None | `analysis.md`, `readout.md` | Full analysis folder |
 
 ## What is inside
 
@@ -77,7 +78,8 @@ data-work/
   DATA-MAP.md
   analyses/
     2026-11-13-signup-drop/
-      analysis.md
+      analysis.md     working notes, with a Progress line any new session resumes from
+      readout.md      stakeholder readout (draft, then final)
       queries/
       outputs/
 ```
@@ -89,7 +91,7 @@ Descriptive and experiment branches are in v0. Causal designs without randomisat
 ## Repo
 
 - `skills/` the skills
-- `templates/` the `analysis.md` template
+- `templates/` the `analysis.md` and `readout.md` templates
 - `evals/` test cases and rubrics
 - `docs/` install guide, upstream map, self-check
 - `SPEC.md` the spec, `DECISIONS.md` the decisions

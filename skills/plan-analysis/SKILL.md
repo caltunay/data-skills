@@ -50,13 +50,13 @@ Record decisions already made. Do not invent new ones.
 |---|---|---|---|
 | Plan | One line: method plus success check | 2 to 4 options, chosen plan | Options, chosen plan, power or MDE where relevant |
 | Assumptions | Inline list | Table | Table, alternatives for every high-impact row |
-| Files | None | `analysis.md` | Full analysis folder |
+| Files | None | `analysis.md`, `readout.md` | Full analysis folder |
 
 For experiments at deep depth, state the MDE, the power, the runtime and the unit of randomisation.
 
 ## Output
 
-- Write Plan and Analysis table spec into `analysis.md`. Set status `planned`.
+- Write Plan and Analysis table spec into `analysis.md`. Set status `planned` and update the Progress line.
 - Quick: print the one-line plan and success check. No file.
 - Apply `run-or-hand-over` for saving. Chat app: see End.
 

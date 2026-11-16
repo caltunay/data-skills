@@ -46,7 +46,7 @@ Clarification is the most important part of data work. Ask before you assume.
 |---|---|---|---|
 | Grill | 1 round, max 3 questions | Rounds until clear | Rounds until clear, plus stakeholder prep questions |
 | Assumptions | Inline list | Table | Table, alternatives for every high-impact row |
-| Files | None | `analysis.md` | Full analysis folder |
+| Files | None | `analysis.md`, `readout.md` | Full analysis folder |
 
 Stakeholder prep questions (deep): who else will read this, what will they push back on, what would change their mind, what is the cost of a wrong answer.
 
