@@ -16,7 +16,7 @@ Two lines. The answer first.
 |---|---|---|
 | | | |
 
-Every number carries its uncertainty: an interval, a tolerance, or "exact count for the period".
+At most 5 numbers. Every number carries its uncertainty: an interval, a tolerance, or "exact count for the period". Other numbers go to the Appendix.
 
 ## 3. What it means
 
@@ -29,8 +29,12 @@ What it means for the decision, and the recommendation.
 
 ## 5. Method
 
-Three lines: data, method, checks passed.
+Three lines: data, method, checks passed. Claim only what ran. Do not write "full validation ladder" unless every rung ran against an independent path and passed.
 
 ## 6. Link
 
 Working notes: `analysis.md`
+
+## 7. Appendix
+
+Numbers beyond the 5 key numbers, segment tables, the ladder summary. Optional at standard depth.

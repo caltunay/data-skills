@@ -58,7 +58,7 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
 5. **Independent recompute.** Recompute the 3 to 5 headline numbers by a route the analysis did not use (raw rows, or a separate query from the source tables). Spot-check 1 or 2 rungs of the ladder log. Show the numbers side by side. A gap above the tolerance is an issue. This step checks; it does not rebuild the analysis.
 6. **Claims check.** Quote every sentence whose wording is above the ceiling, and give the allowed wording.
 7. **Assumptions check.** List high-impact rows still `open`.
-8. **Leadership questions.** Write the 3 to 5 questions a sceptical leader will ask, with the best answer the analysis supports. Mark an answer "not supported yet" when it is.
+8. **Leadership questions.** Write the 3 to 5 questions a sceptical leader will ask, with the best answer the analysis supports. Mark an answer "not supported yet" when it is, and name the cheapest way to answer it (one query, a split, a short test, or a person to ask), with its rough effort.
 9. **Readout review.** If there is a draft `readout.md`, review it word by word (see below).
 10. **Verdict:** `ready`, `ready with caveats`, or `needs rework`, with reasons.
 
@@ -67,11 +67,12 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
 `/run-analysis` writes `readout.md` as a draft. This step makes it final.
 
 1. Read the readout one sentence at a time. For each sentence ask: is the wording at or below the claim ceiling? Does every number match Results and carry its uncertainty? Is every open high-impact assumption in Caveats?
-2. Fix each sentence that fails. Show the change as "was" and "now", with one line why. Example: was "The new page caused the drop." now "Conversion fell after the new page went live. This analysis cannot say why."
+2. Fix each sentence that fails. Show every change as a "was" and "now" pair, with one line why. No exceptions: a summary such as "tightened the wording" is not enough. Example: was "The new page caused the drop." now "Conversion fell after the new page went live. This analysis cannot say why."
 3. Leave sentences that pass unchanged. Do not rewrite for taste.
-4. Check the layout: Answer in 2 lines, Key numbers with uncertainty, What it means, Caveats, Method in 3 lines, Link.
-5. If the verdict is `ready` or `ready with caveats`, set `Status: final` in `readout.md`. If the verdict is `needs rework`, leave it `Status: draft` and say what must happen first.
-6. No readout (quick depth, or a pasted analysis): check the pasted claims the same way. Do not create a readout unless asked.
+4. Check the layout: Answer in 2 lines, Key numbers with uncertainty (at most 5; for an exec audience, move the rest to the Appendix), What it means, Caveats, Method in 3 lines, Link, Appendix. The readout must suit the audience in Meta.
+5. Check the Method section claims only what ran. Compare it with the ladder log and with step 5 of this review. If it says "full validation ladder" or names a check that was weaker than claimed, rewrite it to say exactly what ran.
+6. If the verdict is `ready` or `ready with caveats`, set `Status: final` in `readout.md`. If the verdict is `needs rework`, leave it `Status: draft` and say what must happen first.
+7. No readout (quick depth, or a pasted analysis): check the pasted claims the same way. Do not create a readout unless asked.
 
 ## Depth table
 
@@ -93,8 +94,8 @@ Quick: run steps 1, 2, 5 and 6 only, in a few lines. The recompute at quick dept
    - Why it matters: one line, with the size if computable from the numbers given.
    - Check: the exact query, split or calculation to run.
 
-4. Leadership questions with answers.
-5. Readout changes: each "was" and "now" pair, then the readout status (draft or final).
+4. Leadership questions with answers. Each "not supported yet" names the cheapest way to answer it.
+5. Readout changes: a "was" and "now" pair for every sentence changed, then the readout status (draft or final).
 
 ## Precision
 

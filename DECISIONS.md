@@ -58,6 +58,8 @@
 54. Period comparisons handle seasonality by default (the same weeks last year, or the same weekdays). A plain back-to-back comparison is allowed only with a flag that it ignores seasonality.
 55. The assumptions table holds only real assumptions. Claim rules go in a claim ceiling line in Meta. Impact is rated by size on the headline.
 56. The reconcile check names the count that must match the trusted number (raw or cleaned) and why. Every spec correction is a dated Plan revisions row. Requester and date in Meta are never blank.
+57. The readout has at most 5 key numbers, strict for an exec audience; the rest go to an Appendix. The default readout serves the audience set in grilling. `/storytell` is for other audiences and formats.
+58. The readout's Method section claims only what ran. The review shows every changed sentence as a "was" and "now" pair, and every "not supported yet" leadership answer names the cheapest way to answer it.
 
 ## Build decisions
 
@@ -170,6 +172,8 @@ B80. Assumptions hygiene (fix D, item 9). `assumptions` gained "What belongs in 
 B81. Reconcile count (fix D, item 10). `/plan-analysis` step 7 example now names the raw count and why. `/run-analysis` step 5 says which count is compared. The template's success checks carry the same reminder.
 B82. Plan revisions (fix D, item 11). `/run-analysis` gained a "Spec corrections" section, `/plan-analysis` and the template say every correction is a row. "(none)" followed by notes is named as wrong.
 B83. Meta (fix D, item 12). Requester and Date placeholders say "never blank". `/grill-the-ask` asks for the requester in round 1 when the ask does not say, accepts a role, and never guesses a name (SPEC section 3 rule). `/plan-analysis` step 1 fills them if an older file left them blank.
+B84. Readout limits (fix E, items 13 and 14). Both `readout.template.md` copies gained "At most 5 numbers", a Method line that bans "full validation ladder" unless every rung ran against an independent path, and a section 7 "Appendix". `/run-analysis` and `/review-analysis` check both. Options: cap at 5 for exec only, or for every audience. Reason: the brief names exec; the template says "at most 5" for all, strict for exec, because a long number table hurts any reader and the Appendix keeps the detail.
+B85. Review pairs and cheapest answers (fix E, items 15 and 16). "Every change as a was and now pair, no exceptions" in the readout review and the output format. Leadership questions name the cheapest way to answer (one query, a split, a short test, or a person to ask) with rough effort. Readout review steps renumbered (new step 5: Method check).
 
 ## Questions for Cenan
 

@@ -65,14 +65,15 @@ Set status `running`. Number the steps in the Progress line (step 1 of 7, and so
 
 ## Draft readout
 
-One layout. Wording adapts to the audience in Meta (exec: no jargon; data: method detail is welcome).
+One layout. Wording adapts to the audience set in grilling (Meta). The default readout serves that audience. `/storytell` is for other audiences and formats, not a fix for a readout that ignored its audience.
 
 1. **Answer** in 2 lines.
-2. **Key numbers**, each with its uncertainty.
+2. **Key numbers**, each with its uncertainty. At most 5. For an exec audience this limit is strict. Every other number goes to the Appendix.
 3. **What it means** and the recommendation.
 4. **Caveats:** open high-impact assumptions, and the claim ceiling in plain words.
-5. **Method** in 3 lines.
+5. **Method** in 3 lines. Claim only what ran: name the checks that passed, as they were run. Never write "full validation ladder" if a rung was skipped, failed, or compared only against the frame the table was built from.
 6. **Link** to `analysis.md`.
+7. **Appendix:** the other numbers, segment tables, the ladder summary.
 
 Every sentence stays at or below the claim ceiling. The draft is not final: `/review-analysis` checks it word by word and marks it final. Say so when you hand it over.
 

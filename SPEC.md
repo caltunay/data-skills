@@ -306,14 +306,15 @@ Designed before any query or code, without reference to a tool:
 
 ### 7.6 Readout (`readout.md`)
 
-The stakeholder-facing result. Plain markdown, ready to paste into Confluence, Notion or a doc. One layout; wording adapts to the audience set in grilling.
+The stakeholder-facing result. Plain markdown, ready to paste into Confluence, Notion or a doc. One layout; wording adapts to the audience set in grilling. The default readout respects that audience. `/storytell` is for other audiences and formats.
 
 1. **Answer** in 2 lines.
-2. **Key numbers**, each with its uncertainty.
+2. **Key numbers**, each with its uncertainty. At most 5 (strict for an exec audience). The rest go to the Appendix.
 3. **What it means** and the recommendation.
 4. **Caveats:** open high-impact assumptions, and the claim ceiling in plain words.
-5. **Method** in 3 lines.
+5. **Method** in 3 lines. Claims only what ran: no "full validation ladder" if the review found rungs weaker than that.
 6. **Link** to `analysis.md`.
+7. **Appendix:** other numbers, segment tables, the ladder summary.
 
 `/run-analysis` writes the draft. `/review-analysis` checks every sentence against the claim ceiling, fixes it, and marks it final. Quick depth: a short answer in the chat, no file.
 
@@ -444,6 +445,8 @@ Before each check, state the expected result. After it, record the actual result
 - **Business:** does it answer the decision? Is the effect practically meaningful? Guardrails, cost and risk, what a sceptical leader will ask.
 - **Claims:** every claim checked against the question-type ceiling.
 - **Assumptions:** any high-impact open row flagged.
+- **Leadership questions:** each answer marked "not supported yet" names the cheapest way to answer it.
+- **Readout:** every sentence the review changes is shown as a "was" and "now" pair.
 - **Verdict:** `ready`, `ready with caveats`, or `needs rework`, with the reasons.
 - **Precision matters:** if there are no material issues, say so plainly. Do not invent issues.
 - Reuse the review protocol, technical review, business review and methods files from `caltunay/datafolx` where they fit.
