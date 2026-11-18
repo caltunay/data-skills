@@ -180,6 +180,59 @@ out=$(for s in $offflow viz metric-design; do
 done)
 [ -z "$out" ] && ok "every v0.2 skill is marked experimental" || bad "experimental marks" "$out"
 
+# 25 every flow step ends with the go-ahead question
+out=$(for s in $flow; do f="skills/$s/SKILL.md"
+  grep -q '> Go ahead?' "$f" || echo "$f: no go-ahead question"
+  grep -qE '> A\) Yes, (run|close)' "$f" || echo "$f: no option A"
+  grep -q '> B) Change something' "$f" || echo "$f: no option B"
+  grep -qE '> C\) Add a ' "$f" || echo "$f: no option C"
+done)
+[ -z "$out" ] && ok "every flow skill ends with the go-ahead question" || bad "go-ahead question" "$out"
+
+# 26 validation-ladder lists the 8 floor checks, and no skill says quick skips them
+f=skills/validation-ladder/SKILL.md
+out=$(grep -q '^## Data-check floor (every depth)' "$f" || echo "$f: no floor section"
+  for k in 'Table audit' 'One real entity across tables' 'One day, all entities' 'Daily series across the full window' 'Join checks' 'Category totals sum to the overall total' 'Assumption checks' 'Reconcile to the trusted number'; do
+    grep -qF "**$k" "$f" || echo "$f: floor check missing: $k"; done
+  grep -rnE 'rungs? 1 and (rung )?5 only|Quick: rung 1|quick runs rung' skills SPEC.md)
+[ -z "$out" ] && ok "validation-ladder lists the 8 floor checks; quick never skips them" || bad "data-check floor" "$out"
+
+# 27 question-types/SKILL.md has a compact fallback line for every method card
+out=$(python3 - <<'PY'
+import re
+skill = open("skills/question-types/SKILL.md").read()
+if "## Compact cards" not in skill:
+    print("no Compact cards section"); raise SystemExit
+block = skill.split("## Compact cards", 1)[1].split("\n## ", 1)[0]
+rows = {}
+for part in re.split(r"\n### ", block)[1:]:
+    title = part.split("\n", 1)[0].strip().lower()
+    body = [l for l in part.splitlines() if l.startswith("| ") and not l.startswith("| method ")]
+    for l in body:
+        cells = [c.strip() for c in l.strip().strip("|").split("|")]
+        if len(cells) != 4 or not all(cells):
+            print(f"{title}: row without 4 filled cells: {cells[0]}")
+    rows[title] = len(body)
+def cards(t):
+    s = open(f"skills/question-types/{t}.md").read()
+    return len(re.findall(r"^## (Card|Short card): ", s, re.M))
+want = {"descriptive": cards("descriptive"), "exploratory": cards("exploratory"), "inferential": cards("inferential"),
+        "predictive": cards("predictive"), "causal and experiment": cards("causal") + cards("experiment"), "mechanistic": 1}
+for t, n in want.items():
+    if rows.get(t) != n:
+        print(f"{t}: {rows.get(t)} compact rows, {n} cards")
+PY
+)
+[ -z "$out" ] && ok "compact fallback line for every method card" || bad "compact cards" "$out"
+
+# 28 v0.3 templates: review pack, bold status, portable callouts, appendix
+out=$(grep -q '^## 9. Appendix: Review pack' templates/analysis.template.md || echo "analysis template: no Review pack"
+  grep -q '^\*\*Status: DRAFT\*\*' templates/readout.template.md || echo "readout template: no bold status"
+  for c in Answer Caveat Ask; do grep -q "^> \*\*$c:\*\*" templates/readout.template.md || echo "readout template: no $c callout"; done
+  [ "$(grep -c '^> \*\*' templates/readout.template.md)" -le 3 ] || echo "readout template: more than 3 callouts"
+  grep -q '^## 8. Appendix' templates/readout.template.md || echo "readout template: no Appendix")
+[ -z "$out" ] && ok "templates carry the review pack, bold status, at most 3 callouts and the appendix" || bad "v0.3 templates" "$out"
+
 # 21 private blocklist (gitignored .blocklist, one word per line)
 if [ -f .blocklist ]; then
   out=$(grep -rnwiIF -f .blocklist --exclude-dir=.git --exclude=.blocklist . | cut -d: -f1,2)

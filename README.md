@@ -71,7 +71,7 @@ Plain models already spot visible flaws. These skills add:
 
 - clarification before any work starts
 - explicit assumptions with likely alternatives
-- a validation ladder before any number is trusted
+- a data-check floor at every depth, then a validation ladder that tests the data against an independent path
 - claim ceilings tied to the question type
 - a review that can say "no material issues"
 - a data map that learns from every analysis
@@ -84,8 +84,8 @@ Plain models already spot visible flaws. These skills add:
 |---|---|---|---|
 | Grill | 1 round, max 3 questions | Rounds until clear | Plus stakeholder prep questions |
 | Plan | One line | 2 to 4 options | Plus power or MDE |
-| Ladder | One entity plus reconcile | Full | Full plus alternative specification |
-| Review | Self-check | Technical plus business | Plus leadership questions |
+| Ladder | Compact data-check floor | Full floor plus full ladder | Plus alternative specification |
+| Review | Self-check plus recompute | Technical plus business, best in a fresh chat | Plus leadership questions |
 | Readout | Short answer in chat | `readout.md` | `readout.md` plus appendix |
 | Files | None | `analysis.md`, `readout.md` | Full analysis folder |
 
@@ -98,7 +98,7 @@ Plain models already spot visible flaws. These skills add:
 
 ## Works with or without a data connection
 
-If your agent can run queries, it does. If not, it hands you numbered queries and waits for the paste. It never fails because a tool is missing.
+If your agent can run queries, it does. In a chat app with a code tool, attach your data files (CSV, Excel) and it loads them and runs the checks itself. Only with no code tool does it hand you numbered queries, in groups, and wait for the paste. In a chat app it creates each file and offers it as a download. Every step ends with a go-ahead question. It never fails because a tool is missing.
 
 ## Your files
 

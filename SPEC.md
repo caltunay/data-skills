@@ -708,3 +708,23 @@ Rules for every new skill:
 ### 20.14 Catalogue after v0.2
 
 22 skills: the 15 from v0, plus user-invoked `storytell`, `improve-code`, `ask-data-skills`, `wayfinder-data`, `handoff`, and model-invoked `viz`, `metric-design`.
+
+---
+
+## 21. v0.3 fix pass
+
+Found by a full manual run of the flow in claude.ai on the `examples/signup-drop` data. Built on branch `v0.2`. All section 3 hard rules apply. Decisions 47 to 64.
+
+| Area | Change | Where in this spec |
+|---|---|---|
+| Validation | Data-check floor at every depth (quick in compact form); rungs 2 to 4 test the data against an independent path; the review recomputes headline numbers | 2, 4 (depth), 11, 12 |
+| Running and files | Two questions: can I run things here (always try first; a code tool with attached files counts) and where do files persist (create and offer a download; print only if that fails); no manual file edits; compact method cards for chats without file access | 5 |
+| Every flow step | Fixed go-ahead question at the end, at every depth; every question has a real recommended default | 4 |
+| Grill and plan | Seasonality in period comparisons; only real assumptions in the table, claim rules in the ceiling, impact rated by size; reconcile names raw or cleaned count; one Plan revisions row per correction; requester and date never blank | 4, 6.1, 7.3, 7.5 |
+| Readout and review | At most 5 key numbers plus an Appendix; Method claims only what ran; "was" and "now" pairs; cheapest way to answer each open leadership question | 7.6, 12 |
+| Setup and retro | No git advice in chat apps; joins start `unverified`; one option per SQL dialect; Conventions hold style only; true reasons only | 7.2, 7.7, 8, 6.1 |
+| Fresh review, visuals, callouts | Files-only review, fresh context recommended; Review pack appendix in `analysis.md`; at most 3 charts with one annotation; portable callouts and a bold status label | 7.3, 7.6, 12 |
+| Evals | Rubric rows for the changes, four new cases, and a reference run summary | 15 |
+| Self-check | Checks 25 to 28: go-ahead question, floor checks, compact cards, template format | `docs/self-check.md` |
+
+App-specific readout exports (Confluence, Notion) are v0.4, in `/storytell`. Plugin version: `0.3.0`.

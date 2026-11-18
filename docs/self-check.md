@@ -1,6 +1,6 @@
 # Self-check
 
-Run with `scripts/self-check`. Last run: 2026-11-16, v0.2 build, with the private `.blocklist` present. Result: all pass (24 checks). It also runs on every pull request and push (`.github/workflows/self-check.yml`).
+Run with `scripts/self-check`. Last run: 2026-11-18, v0.3 fix pass, with the private `.blocklist` present. Result: all pass (28 checks). It also runs on every pull request and push (`.github/workflows/self-check.yml`).
 
 | # | Check |
 |---|---|
@@ -28,6 +28,10 @@ Run with `scripts/self-check`. Last run: 2026-11-16, v0.2 build, with the privat
 | 22 | Private files are not tracked by git |
 | 23 | The four plugin manifest files are valid JSON with one name and one version |
 | 24 | Every v0.2 skill is marked experimental in the README and in its own file |
+| 25 | Every flow skill ends with the go-ahead question (A, B and C) |
+| 26 | `validation-ladder` lists the 8 data-check floor checks, and no skill or SPEC line says quick depth skips them |
+| 27 | `question-types/SKILL.md` has a compact fallback row for every method card, with 4 filled cells |
+| 28 | The templates carry the Review pack, the bold status label, at most 3 callouts (Answer, Caveat, Ask) and the Appendix |
 
 ## Private blocklist
 
@@ -38,7 +42,8 @@ Run with `scripts/self-check`. Last run: 2026-11-16, v0.2 build, with the privat
 - Every eval case was walked through its skill. See `docs/walkthrough.md`.
 - `scripts/package-zips` builds one ZIP per skill into `dist/` (gitignored): 22 ZIPs.
 - `claude plugin validate .` passes for the plugin and the marketplace file.
-- Both worked examples were produced by running their queries. The eval runner was run in dry-run mode.
+- Both worked examples were produced by running their queries. The eval runner was run in dry-run mode (49 cases after v0.3).
+- v0.3: checks 25 to 28 were tested by breaking each rule once (a removed compact row, a renamed floor check, a missing go-ahead line); each failed as expected, then passed after the restore. The sign-up example queries were re-run; `outputs/results.txt` changed by additions only.
 
 ## Not checked (needs the maintainer)
 
