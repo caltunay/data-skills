@@ -22,14 +22,14 @@ Record decisions already made. Do not invent new ones.
 ## Rules from the disciplines (in case they do not load)
 
 - `assumptions`: every new assumption goes in the table. High-impact rows need 1 to 3 likely alternatives. Standard and deep depth always show the full 7-column table (id, assumption, why unavoidable, likely alternatives, impact if wrong, how to check, status). Never drop columns.
-- `question-types`: name the type and its claim ceiling. Choose a method that can reach the claim the decision needs. If it cannot, say so now. One file per question type holds the method cards. For a causal question, go down the causal method selector: randomised test, then difference-in-differences, regression discontinuity, synthetic control, interrupted time series, instrumental variables, matching or weighting, uplift. If none fits, say so and offer the best descriptive path.
+- `question-types`: name the type and its claim ceiling. Choose a method that can reach the claim the decision needs. If it cannot, say so now. One file per question type holds the method cards; the `question-types` skill holds a compact line per method as a fallback. Copy the card's checks into the success checks at plan time. For a causal question, go down the causal method selector: randomised test, then difference-in-differences, regression discontinuity, synthetic control, interrupted time series, instrumental variables, matching or weighting, uplift. If none fits, say so and offer the best descriptive path.
 - `shaping-data`: design the analysis table spec before any query, without reference to a tool. Grain first.
 - Easy solution first: try the simplest method that could answer the question.
 
 ## Steps
 
 1. Confirm the question type and the decision. State the claim ceiling in one line.
-2. **Load the method cards.** Open the `question-types` file for the question type. For each candidate method, check the card's "When to use" and "Data needed" against what the user has. Ask the user about the data. Do not query it. Drop candidates the data does not fit, and say why.
+2. **Load the method cards.** Open the `question-types` file for the question type. If it will not open (for example, a chat with no file access), use the compact cards in the `question-types` skill itself: one line each for when to use, checks that must pass, and claim allowed. For each candidate method, check the card's "When to use" and "Data needed" against what the user has. Ask the user about the data. Do not query it. Drop candidates the data does not fit, and say why.
 3. List the options that remain (see depth table). For each: method, trade-offs, effort, and the strongest claim it can support. Start from each card's "Simplest version first".
 4. Recommend one. Say why in two lines. Confirm with the user. A short card means an advanced method: tell the user it needs a specialist review before shipping.
    - If no method can reach the claim the decision needs, say so now. Lower the question type in Meta, add a dated row to Plan revisions (what changed, why), and state the new ceiling.
@@ -44,7 +44,7 @@ Record decisions already made. Do not invent new ones.
    - tidy (long) or wide, and why
    - context columns
    - expected row count or range
-7. Set **success checks** up front: what must be true for the result to be trusted. Include the trusted number to reconcile to and the tolerance. Example: "Total paid orders within 1% of 120,400 (finance report)." Copy every item under the card's "Checks that must pass" into the success checks.
+7. Set **success checks** up front: what must be true for the result to be trusted. Include the trusted number to reconcile to and the tolerance. Example: "Total paid orders within 1% of 120,400 (finance report)." Copy every item under the card's "Checks that must pass" into the success checks now, word for word. Never defer them to the run ("checks from the card" is not a success check). If the card file will not open, copy the line from the compact cards.
 8. Add any new assumptions to the table. Each "Key assumption" on the card that the data cannot confirm becomes a row.
 
 ## Depth table
@@ -70,8 +70,8 @@ For experiments at deep depth, state the MDE, the power, the runtime and the uni
 Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, and name the next step.
 
 1. Update the Progress line in `analysis.md` Meta.
-2. Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app, even if you can write files in a sandbox.
-3. Chat app: offer the updated `analysis.md` (and `readout.md` when it exists) as a download. If you cannot, print it as one block. Say: "Save this to your Project files so the next step, in any chat, can read it."
+2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
+3. Chat app: create the updated `analysis.md` (and `readout.md` when it exists) as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Save this to your Project files so the next step, in any chat, can read it."
 4. Coding agent: the files are already saved under `data-work/`. Say where.
 5. Name the next step: `/run-analysis`.
 

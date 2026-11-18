@@ -54,7 +54,7 @@ Read only the file for the tool in use.
 - Power BI: `powerbi.md`
 - A dashboard (several charts with filters): `dashboard.md`, then the tool file
 
-Excel, Tableau and Power BI always run in hand-over mode. Give numbered steps. The user builds the chart and pastes or describes what they see. Apply the `run-or-hand-over` skill. Core rule if it does not load: run or save if you can, else offer a download, else print it and wait.
+Excel, Tableau and Power BI always run in hand-over mode. Give numbered steps. The user builds the chart and pastes or describes what they see. Apply the `run-or-hand-over` skill. Core rule if it does not load: two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts (load them and run SQL with DuckDB or SQLite, or pandas). Hand over only when no code tool exists, and say so in one line. Where do files persist? In a chat app, create each file and offer it as a download; print it only if that fails. Never ask the user to edit a saved file by hand.
 
 ## Where charts go
 

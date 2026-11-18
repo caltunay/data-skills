@@ -139,17 +139,28 @@ Three environments, one behaviour:
 |---|---|---|
 | Coding agent with data connected | Runs them | Writes to `data-work/` |
 | Coding agent, no data connection | Hands them over, waits for the paste | Writes to `data-work/` |
-| Chat app (claude.ai, ChatGPT) | Hands them over, waits for the paste | Offers a download, else prints a block to copy |
+| Chat app with a code tool and attached data files | Loads the files and runs the checks (DuckDB, SQLite or pandas) | Creates the file, offers a download |
+| Chat app, data in a source with no connection | Hands them over, waits for the paste | Creates the file, offers a download |
+| Chat app with no code tool | Hands them over, says so in one line | Prints a block to copy |
 
-The `run-or-hand-over` discipline defines this. **Rule:** run it or save it if you can; otherwise offer a download; otherwise print it and wait. Never fail because a tool is missing.
+The `run-or-hand-over` discipline defines this. It asks two separate questions.
 
-**What counts as a chat app:** decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), behave as a chat app, even if you can write files in a sandbox.
+- **Can I run things here?** Always try first. A code tool or sandbox with attached files counts: load them and run SQL (DuckDB or SQLite) or pandas. Only hand over when no code tool exists, and say so in one line. Never say "I can't run code" when a code tool exists.
+- **Where do files persist?** In a chat app, create each file in the sandbox and offer it as a download. Print it as a block only if creating the file fails. Never say "I can't save files" when a download can be made.
 
-**Chat-app handoff:** at the end of every flow step, offer the updated `analysis.md` (and `readout.md` when it exists) as a download, else print it as one block. Tell the user to save it to their Project files so the next step, in any chat, can read it.
+Never fail because a tool is missing.
+
+**What counts as a chat app:** decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), it is a chat app. This decides where files persist, not whether the agent can run checks.
+
+**Chat-app handoff:** at the end of every flow step, create the updated `analysis.md` (and `readout.md` when it exists) as files and offer them as downloads; print one block only if that fails. Tell the user to save them to their Project files so the next step, in any chat, can read them.
+
+**No manual file edits:** after the user confirms something, never ask them to edit a saved file by hand. Hand back the updated file.
+
+**Method cards without file access:** `question-types/SKILL.md` holds a compact line per method (when to use, checks that must pass, claim allowed), so the cards work even when the type files cannot be opened. `/plan-analysis` copies the card's checks into the success checks at plan time and never defers them.
 
 **Progress tracker:** `analysis.md` Meta keeps one line, for example `Progress: run step 3 of 7, waiting for Q3.1 paste`. Every step updates it. Any new session resumes from it.
 
-Copy-paste form for queries: numbered (`Q2.1`, `Q2.2`), each with one purpose line, the expected result stated before it runs, and "Paste the result here." Keep each check query small.
+Copy-paste form for queries: numbered (`Q2.1`, `Q2.2`), each with one purpose line, the expected result stated before it runs, and "Paste the result here." Keep each check query small. Batch several checks into numbered groups so the user pastes once per group.
 
 ---
 
@@ -175,7 +186,7 @@ Copy-paste form for queries: numbered (`Q2.1`, `Q2.2`), each with one purpose li
 | `validation-ladder` | Before trusting any query or analysis result | One entity -> one entity-day -> many entities -> aggregates -> reconcile to a trusted number. State the expected result before each rung. |
 | `question-types` | Framing, planning, choosing a method, writing claims, reviewing | Six question types and their claim ceilings. `SKILL.md` holds the type selector and the causal method selector. One file per type holds that type's method cards (section 10). Load only the file for the type in use. |
 | `data-map` | Reading or updating `DATA-MAP.md` | Outside the flow, stay silent if there is no map. Read it before writing queries. Flag entries older than 90 days or contradicted by data, then ask. Updates only through approved retro changes. Check the format version and offer a migration if old. |
-| `run-or-hand-over` | Any query to run or file to save | Run or save if you can, else offer a download, else print it and wait. Numbered queries in copy-paste form. Never call a data tool before the user names the source. |
+| `run-or-hand-over` | Any query to run or file to save | Two questions. Can I run it here? Always try first; a code tool with attached files counts. Where do files persist? In a chat app, create the file and offer a download; print only if that fails. Numbered queries in copy-paste form, batched in groups. Never call a data tool before the user names the source. |
 
 ### 6.3 Data skills (model-invoked, v0; our own versions)
 
@@ -212,7 +223,7 @@ All user-owned files live in the user's own project, never in the skills repo. U
 ```
 
 - **Coding agents:** the skills write here.
-- **Chat users:** keep `DATA-MAP.md`, `analysis.md` and `readout.md` in the chat app's Project files. Each flow step offers the updated files as downloads at its end. `/retro-analysis` hands back a full updated `DATA-MAP.md` to replace the Project file.
+- **Chat users:** keep `DATA-MAP.md`, `analysis.md` and `readout.md` in the chat app's Project files. Each flow step creates the updated files and offers them as downloads at its end. `/retro-analysis` hands back a full updated `DATA-MAP.md` to replace the Project file. The user never edits a saved file by hand.
 - **Quick depth:** no files.
 - **No raw chat transcripts are stored.** `analysis.md` is the record.
 

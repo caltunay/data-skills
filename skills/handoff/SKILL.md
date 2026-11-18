@@ -27,7 +27,7 @@ Experimental (v0.2).
 
 - `assumptions`: list every high-impact row still `open`, with its alternatives and how to check it.
 - `question-types`: state the question type and its claim ceiling, so the next person does not overclaim.
-- `run-or-hand-over`: run or save if you can, else offer a download, else print it and wait.
+- `run-or-hand-over`: two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts (load them and run SQL with DuckDB or SQLite, or pandas). Hand over only when no code tool exists, and say so in one line. Where do files persist? In a chat app, create each file and offer it as a download; print it only if that fails. Never ask the user to edit a saved file by hand.
 
 ## Steps
 
@@ -82,8 +82,8 @@ Keep it to about one page. Link to `analysis.md` for detail. Do not copy it.
 ## End (every flow step)
 
 1. Add the handoff to the Progress line in `analysis.md` Meta, for example `Progress: run step 3 of 7, waiting for Q3.1 paste; handoff written 2026-11-16`. Do not change the step it points to.
-2. Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app, even if you can write files in a sandbox.
-3. Chat app: offer `handoff.md` as a download, with `analysis.md` (and `readout.md` when it exists). If you cannot, print each as one block. Say: "Save these to your Project files, or send them together to your colleague."
+2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
+3. Chat app: create `handoff.md`, `analysis.md` (and `readout.md` when it exists) as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Save these to your Project files, or send them together to your colleague."
 4. Coding agent: `handoff.md` is saved in the analysis folder. Say where.
 5. Name the next step: the command in section 5 of the handoff.
 

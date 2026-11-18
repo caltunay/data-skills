@@ -23,7 +23,7 @@ Run once per team or project. Target: under 20 minutes. Partial answers are fine
 
 - `grilling`: rounds of at most 3 questions, each with 2 to 4 options and a recommended default. Wait for answers. Never assume silently.
 - `data-map`: one file, fixed sections, `format: v1` on line 1. Every entry has `verified: YYYY-MM-DD` and `source: setup`. Flag entries older than 90 days or contradicted by data, then ask. Show a migration before applying it. The template is `DATA-MAP.template.md` in the `data-map` skill.
-- `run-or-hand-over`: run or save if you can, else offer a download, else print it and wait. Never fail because a tool is missing. Never call a data tool before the user names the source.
+- `run-or-hand-over`: two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts (load them and run SQL with DuckDB or SQLite, or pandas). Hand over only when no code tool exists, and say so in one line. Where do files persist? In a chat app, create each file and offer it as a download; print it only if that fails. Never ask the user to edit a saved file by hand. Never fail because a tool is missing. Never call a data tool before the user names the source.
 
 ## Steps
 
@@ -54,7 +54,7 @@ Optional line: "If you have a web search or docs lookup tool, check the current 
 
 ## End
 
-- Chat app (no user project folder: no `data-work/` and no repo, even if you can write files in a sandbox): offer the full `DATA-MAP.md` as a download. If you cannot, print it as one block. Tell the user to save it to their Project files so every later step, in any chat, can read it.
+- Chat app (no user project folder: no `data-work/` and no repo): create the full `DATA-MAP.md` as a file and offer it as a download. Print it as one block only if creating the file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Tell the user to save it to their Project files so every later step, in any chat, can read it.
 - Name the next step: `/grill-the-ask` with the first ask.
 
 ## Depth

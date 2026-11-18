@@ -32,7 +32,7 @@ For work too big for one `/grill-the-ask`: "build a metrics framework for the su
 - `question-types`: six question types, each with a claim ceiling. Name the type of each analysis you list.
 - `metric-design` (experimental): a metric needs a formula, a grain, a population, an owner, guardrails and a trusted number.
 - `data-map`: read `DATA-MAP.md` first. Flag entries older than 90 days or contradicted by data, then ask.
-- `run-or-hand-over`: run or save if you can, else offer a download, else print it and wait.
+- `run-or-hand-over`: two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts (load them and run SQL with DuckDB or SQLite, or pandas). Hand over only when no code tool exists, and say so in one line. Where do files persist? In a chat app, create each file and offer it as a download; print it only if that fails. Never ask the user to edit a saved file by hand.
 
 ## Steps
 
@@ -101,8 +101,8 @@ Example ready prompt: `/grill-the-ask Monthly churn rate for the subscription ap
 ## End (every flow step)
 
 1. Update the Progress line in the wayfinder file.
-2. Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app, even if you can write files in a sandbox.
-3. Chat app: offer the wayfinder file as a download. If you cannot, print it as one block. Say: "Save this to your Project files so the next session, in any chat, can read it."
+2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
+3. Chat app: create the wayfinder file and offer it as a download. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Save this to your Project files so the next session, in any chat, can read it."
 4. Coding agent: the file is saved under `data-work/wayfinder/`. Say where.
 5. Name the next step: the next open item, or the first `/grill-the-ask` prompt.
 

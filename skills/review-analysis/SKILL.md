@@ -42,7 +42,7 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
    - Stats: is there an interval or test? Is the number practically big, not only significant?
    - Spec match: do the results match the analysis table spec (grain, filters, row count)?
    - Floor and ladder: did the data-check floor run (table audit, one entity across tables, one day, daily series, joins, category totals, assumption checks, reconcile)? Was each rung run and logged? Does each of rungs 2 to 4 compare against an independent path? A rung that compares the table with the frame it was built from tested only the aggregation: report it as weaker than logged.
-   - Method card: open the `question-types` file for the question type and find the card for the method used. Check the analysis against every item under "Checks that must pass". A check that was not run, or that failed, is an issue, and the claim allowed drops.
+   - Method card: open the `question-types` file for the question type and find the card for the method used (if the file will not open, use the compact cards in the `question-types` skill). Check the analysis against every item under "Checks that must pass". A check that was not run, or that failed, is an issue, and the claim allowed drops.
    - Charts: if the analysis or the readout has charts, apply the `viz` checks to each. Report only the fails.
 4. **Business review.** Ask what leadership will ask.
    - Decision: what will be done differently because of this? If nothing, why was it run?
@@ -113,8 +113,8 @@ Standard and deep: write the Review section of `analysis.md`, save the corrected
 Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, and name the next step.
 
 1. Update the Progress line in `analysis.md` Meta.
-2. Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app, even if you can write files in a sandbox.
-3. Chat app: offer the updated `analysis.md` and `readout.md` as a download. If you cannot, print it as one block. Say: "Save this to your Project files so the next step, in any chat, can read it." For a pasted analysis with no `analysis.md`, the review in the chat is the output. Do not create files unless asked.
+2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
+3. Chat app: create the updated `analysis.md` and `readout.md` as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Save this to your Project files so the next step, in any chat, can read it." For a pasted analysis with no `analysis.md`, the review in the chat is the output. Do not create files unless asked.
 4. Coding agent: the files are already saved under `data-work/`. Say where.
 5. Name the next step: `/retro-analysis`.
 

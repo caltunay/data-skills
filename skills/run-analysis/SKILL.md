@@ -33,11 +33,11 @@ When you stop, say what you are waiting for and set the Progress line, for examp
 ## Rules from the disciplines (in case they do not load)
 
 - `validation-ladder`: the data-check floor runs at every depth, quick included (table audit, one real entity across tables, one day, daily series, join checks, category totals, assumption checks, reconcile). Then one entity, one entity-day, many entities, aggregates, reconcile to a trusted number. State the expected result before each check. Record actual and pass or fail. Rungs 2 to 4 compare against an independent path (raw rows or a separate query), never against the frame the table was built from.
-- `run-or-hand-over`: run or save if you can, else offer a download, else print it and wait. Numbered queries (`Q2.1`), one purpose line, expected result first, "Paste the result here." Never call a data tool before the user names the source.
+- `run-or-hand-over`: two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts (load them and run SQL with DuckDB or SQLite, or pandas). Hand over only when no code tool exists, and say so in one line. Where do files persist? In a chat app, create each file and offer it as a download; print it only if that fails. Never ask the user to edit a saved file by hand. Numbered queries (`Q2.1`), one purpose line, expected result first, "Paste the result here." Never call a data tool before the user names the source.
 - `shaping-data`: grain first. Count rows before and after every join. Apply filters from the data map. Named steps.
 - `data-audit`: check shape, nulls, duplicates, outliers, date coverage (with the daily series), and validate against a trusted number. Write cleaning choices down.
 - `stats-tests`: choose the test by data type and design. Report direction, magnitude and uncertainty. Correct for multiple comparisons.
-- `question-types`: word every claim at or below the ceiling. One file per question type holds the method cards. Load the card for the chosen method and apply its "Checks that must pass". No "caused" without a randomised experiment or a credible causal design that passed its checks.
+- `question-types`: word every claim at or below the ceiling. One file per question type holds the method cards. Load the card for the chosen method and apply its "Checks that must pass" (the plan's success checks hold a copy; the compact cards in the `question-types` skill are the fallback). No "caused" without a randomised experiment or a credible causal design that passed its checks.
 - `data-map`: read it before writing queries. Flag entries older than 90 days or contradicted by data, then ask.
 - `viz` (experimental): choose the chart by the question. The title states the takeaway, axes carry units, bars start at zero, uncertainty is shown, no dual axes, no 3D, colour-blind safe, same scale when comparing.
 - `assumptions`: ask instead of assuming. When you must assume, add a row. Standard and deep depth always show the full 7-column table (id, assumption, why unavoidable, likely alternatives, impact if wrong, how to check, status). Never drop columns.
@@ -109,8 +109,8 @@ Show aggregates by default. Ask before saving row-level data anywhere. Put chart
 Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, and name the next step.
 
 1. Update the Progress line in `analysis.md` Meta, for example `Progress: run done, draft readout written, next /review-analysis`.
-2. Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app, even if you can write files in a sandbox.
-3. Chat app: offer the updated `analysis.md` and `readout.md` as downloads. If you cannot, print each as one block. Say: "Save these to your Project files so the next step, in any chat, can read them."
+2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
+3. Chat app: create the updated `analysis.md` and `readout.md` as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Save these to your Project files so the next step, in any chat, can read them."
 4. Coding agent: the files are already saved under `data-work/`. Say where.
 5. Name the next step: `/review-analysis`.
 
