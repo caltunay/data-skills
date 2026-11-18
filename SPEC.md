@@ -271,9 +271,10 @@ First line: `format: v1`. Sections, filled by step:
 3. **Assumptions:** table, see 7.5. *(grill, then any step)*
 4. **Plan:** options considered, chosen plan, success checks (the method card's checks copied in at plan time; the reconcile check says whether the raw or the cleaned count must match the trusted number, and why). **Plan revisions** log: date, what changed, why, one row per correction. *(plan)*
 5. **Analysis table spec:** see 7.4. *(plan)*
-6. **Results:** ladder log (each rung: expected, actual, pass or fail), findings as direction, magnitude, uncertainty, and the claim ceiling applied. Aggregates only by default. *(run)*
+6. **Results:** ladder log (the floor checks, then each rung: expected, actual, pass or fail), findings as direction, magnitude, uncertainty, and the claim ceiling applied. Aggregates only by default. *(run)*
 7. **Review:** verdict, technical issues, business issues, leadership questions with answers. *(review)*
 8. **Retro:** proposed data map changes and which were accepted. *(retro)*
+9. **Appendix: Review pack:** for each headline number, the exact SQL or Python that produced it and its data source. In chat apps `queries/` does not persist, so this is how a fresh reviewer sees the code. *(run)*
 
 Every skill reads `analysis.md` first, so a fresh session can pick up without re-asking.
 
@@ -306,15 +307,21 @@ Designed before any query or code, without reference to a tool:
 
 ### 7.6 Readout (`readout.md`)
 
-The stakeholder-facing result. Plain markdown, ready to paste into Confluence, Notion or a doc. One layout; wording adapts to the audience set in grilling. The default readout respects that audience. `/storytell` is for other audiences and formats.
+The stakeholder-facing result. Portable markdown, ready to paste into Confluence, Notion or a doc, with no app-specific macros. One layout; wording adapts to the audience set in grilling. The default readout respects that audience. `/storytell` is for other audiences and formats. App-specific exports (Confluence, Notion) are v0.4, in `/storytell`.
 
 1. **Answer** in 2 lines.
 2. **Key numbers**, each with its uncertainty. At most 5 (strict for an exec audience). The rest go to the Appendix.
-3. **What it means** and the recommendation.
-4. **Caveats:** open high-impact assumptions, and the claim ceiling in plain words.
-5. **Method** in 3 lines. Claims only what ran: no "full validation ladder" if the review found rungs weaker than that.
-6. **Link** to `analysis.md`.
-7. **Appendix:** other numbers, segment tables, the ladder summary.
+3. **Charts** (the `viz` rules): at most 3 in an exec readout; each title states the takeaway; one annotation on the key moment (for example, a marker on the day a step happened). Charts replace number rows where they say the same thing. Charts are image files in `outputs/` (offered as downloads in chat apps), linked from the readout with alt text. Hand-over mode gives the chart spec plus ready-to-run code.
+4. **What it means** and the recommendation.
+5. **Caveats:** open high-impact assumptions, and the claim ceiling in plain words.
+6. **Method** in 3 lines. Claims only what ran: no "full validation ladder" if the review found rungs weaker than that.
+7. **Link** to `analysis.md`.
+8. **Appendix:** other numbers, segment tables, the ladder summary.
+
+Formatting:
+- Callouts are blockquotes with a bold label: `> **Answer:** ...`, `> **Caveat:** ...`, `> **Ask:** ...`. At most 3 per readout.
+- Status is a bold label at the top: `**Status: DRAFT**` or `**Status: FINAL**`.
+- Bold only for the one takeaway per section.
 
 `/run-analysis` writes the draft. `/review-analysis` checks every sentence against the claim ceiling, fixes it, and marks it final. Quick depth: a short answer in the chat, no file.
 
@@ -448,6 +455,7 @@ Before each check, state the expected result. After it, record the actual result
 - **Leadership questions:** each answer marked "not supported yet" names the cheapest way to answer it.
 - **Readout:** every sentence the review changes is shown as a "was" and "now" pair.
 - **Verdict:** `ready`, `ready with caveats`, or `needs rework`, with the reasons.
+- **Fresh context:** the review works from the files only (`analysis.md`, `readout.md`, `DATA-MAP.md`, the data), never from chat memory. If the agent can start a subagent with fresh context, it may run the review there, passing only the files; this is optional and never relied on (section 3). Otherwise, at standard and deep depth, the go-ahead question at the end of `/run-analysis` recommends: "Start `/review-analysis` in a new chat. In a Claude or ChatGPT Project, save the data, `DATA-MAP.md`, `analysis.md` and `readout.md` to the Project files first, then open a new chat in that Project; nothing needs attaching." A same-chat review stays allowed, with the files-only stance. Quick depth: a same-chat review is fine.
 - **Precision matters:** if there are no material issues, say so plainly. Do not invent issues.
 - Reuse the review protocol, technical review, business review and methods files from `caltunay/datafolx` where they fit.
 

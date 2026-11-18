@@ -103,9 +103,23 @@ Each finding: direction, magnitude, uncertainty, claim ceiling applied. Aggregat
 - Technical issues:
 - Business issues:
 - Leadership questions, with answers:
-- Readout: sentences changed, and why. Readout status: draft | final
+- Independent recompute: each headline number, the route used, the value, and the gap.
+- Readout: every sentence changed, as a "was" and "now" pair, and why. Readout status: DRAFT | FINAL
 
 ## 8. Retro
 
 | proposed data map change | accepted (yes or no) |
 |---|---|
+
+## 9. Appendix: Review pack
+
+For each headline number: the exact SQL or Python that produced it, and its data source. In a chat app `queries/` does not persist, so this is how a fresh reviewer sees the code.
+
+### <headline number 1>: <value>
+
+- Source: <table or file, filters, period>
+- Code:
+
+```sql
+-- the exact query or script that produced the number
+```

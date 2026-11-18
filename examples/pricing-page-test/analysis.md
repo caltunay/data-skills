@@ -142,7 +142,9 @@ Open high-impact assumptions next to these findings: none.
   3. "Will it last?" Not known. Week 2 was weaker than week 1. A 5% holdout for four weeks will show it.
   4. "Should we ship to mobile only?" No. That pattern was found by slicing. Test it if it matters.
   5. "Could the test be broken?" The checks that catch a broken test passed: the split, the visitor counts against the platform, and the fixed design.
-- Readout: sentences changed, and why. Readout status: final
+- Readout: every sentence changed, as a "was" and "now" pair, and why. Readout status: FINAL
+  - v0.3 re-review: was "Checks passed: ..., validation ladder, ..." now "Checks passed: ..., ladder rungs 1 to 5 as logged in `analysis.md`, ... The deep-depth alternative specification was not run." Why: the Method line claimed a full ladder at deep depth, but one deep check did not run.
+  - v0.3 re-review: was a key numbers table with 8 rows. now: 5 rows, the week and return-rate rows in the Appendix. Why: at most 5 key numbers.
   - was: "The new page lifts conversion by 16%." now: "+1.65 points (+16% relative)", with its interval. Why: a relative lift alone hides the size and the uncertainty.
   - was: "The new page works best on mobile." now: "The gain appeared on mobile (+2.8 points) and not on desktop (0.0). This was found by slicing after the test, so it is a pattern to test, not a result." Why: a slice is exploratory.
   - was: "It also raises revenue per visitor by 0.70." now: "Revenue per visitor leaned up, but the test cannot confirm a revenue gain." Why: the interval includes zero.
@@ -157,3 +159,36 @@ Open high-impact assumptions next to these findings: none.
 | Rules: analyse a test at the unit it was randomised on | yes |
 | Metrics: trusted visitor counts per arm from the experiment platform | yes |
 | Metrics: "the new page lifts conversion by 1.65 points" as a trusted number | no: a test result with a wide interval is not a reference value |
+
+## 9. Appendix: Review pack
+
+The code behind each headline number. Every query file is in `queries/`; results are in `outputs/results.txt` and `outputs/stats.txt`.
+
+### Conversion by arm (control 10.15%, variant 11.79%)
+
+- Source: `visitor_outcomes`, one row per external visitor, built by `q1-3b-outcomes-view.sql` from `assignments` and `orders`, 2 to 15 February 2026.
+- Code: `q2-2-primary-metric.sql`
+
+```sql
+select
+    arm
+  , count(*)                                   as visitors
+  , sum(converted)                             as converters
+  , round(sum(converted) * 100.0 / count(*), 2) as conversion_pct
+from
+    visitor_outcomes
+where true
+group by 1
+order by 1
+;
+```
+
+### Effect (+1.65 points, 95% interval +0.22 to +3.07) and split (p = 0.59)
+
+- Source: the counts above and `q2-1-srm-counts.sql`.
+- Code: `stats.py` (two-proportion test, normal approximation, standard library only).
+
+### Revenue per visitor (5.17 to 5.87)
+
+- Source: `visitor_outcomes`.
+- Code: `q2-4-guardrails.sql`, interval in `stats.py`.

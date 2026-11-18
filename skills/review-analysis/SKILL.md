@@ -19,11 +19,21 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
 3. If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before re-asking anything. A pasted analysis from anyone is also fine: review it as it is. If there is no ladder log or spec, review the claim and the method anyway and note what is missing.
 4. Read the Progress line in Meta, if there is one, and resume from it. A pasted analysis with no Meta is reviewed at standard depth unless the user says otherwise.
 
+## Fresh context: review from the files only
+
+A review in the same context as the analysis is biased by it. Review from the files only: `analysis.md`, `readout.md`, `DATA-MAP.md` and the data. Never from chat memory. If the chat holds something the files do not, it does not count until it is in a file.
+
+- If you can start a subagent with fresh context, you may run the review there, passing only those files. This is optional: never rely on it.
+- At standard and deep depth, the best route is a new chat. In a Claude or ChatGPT Project, the data, `DATA-MAP.md`, `analysis.md` and `readout.md` sit in the Project files, so a new chat in that Project needs nothing attached.
+- A same-chat review is allowed. Keep the files-only stance: re-read the files, do not lean on what was said earlier.
+- Quick depth: a same-chat review is fine.
+- The review always recomputes the 3 to 5 headline numbers by an independent route and spot-checks 1 or 2 rungs (step 5). It checks; it does not rebuild the analysis. Use the code in the "Appendix: Review pack" of `analysis.md` to see how each number was made, then compute it another way.
+
 ## Rules from the disciplines (in case they do not load)
 
 - `question-types`: name the type. Every claim is checked against its ceiling. No "caused" without a randomised experiment or a credible causal design that passed its checks.
 - `assumptions`: flag any high-impact row still `open` when results are reported. Alternatives are required for high-impact rows. Standard and deep depth always show the full 7-column table (id, assumption, why unavoidable, likely alternatives, impact if wrong, how to check, status). Never drop columns.
-- `viz` (experimental): for each chart, check that the title states a takeaway at or below the ceiling, axes carry units, bars start at zero, uncertainty is shown, there are no dual axes and no 3D, colours are colour-blind safe, and compared panels share a scale.
+- `viz` (experimental): for each chart, check that the title states a takeaway at or below the ceiling, axes carry units, bars start at zero, uncertainty is shown, there are no dual axes and no 3D, colours are colour-blind safe, and compared panels share a scale. In a readout: at most 3 charts for exec, one annotation on the key moment, image files linked with alt text.
 - `validation-ladder`: check the ladder log. The data-check floor ran at every depth. Each check and rung has an expected result, an actual result and pass or fail. Rungs 2 to 4 compare against an independent path (raw rows or a separate query), not the frame the table was built from. Reconcile to a trusted number.
 
 ## Steps
@@ -44,6 +54,7 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
    - Floor and ladder: did the data-check floor run (table audit, one entity across tables, one day, daily series, joins, category totals, assumption checks, reconcile)? Was each rung run and logged? Does each of rungs 2 to 4 compare against an independent path? A rung that compares the table with the frame it was built from tested only the aggregation: report it as weaker than logged.
    - Method card: open the `question-types` file for the question type and find the card for the method used (if the file will not open, use the compact cards in the `question-types` skill). Check the analysis against every item under "Checks that must pass". A check that was not run, or that failed, is an issue, and the claim allowed drops.
    - Charts: if the analysis or the readout has charts, apply the `viz` checks to each. Report only the fails.
+   - Review pack: does the "Appendix: Review pack" hold the exact code and source for each headline number? A missing entry is an issue: the number cannot be traced.
 4. **Business review.** Ask what leadership will ask.
    - Decision: what will be done differently because of this? If nothing, why was it run?
    - Size: the effect in money, users or orders per month. Big enough to act on?
@@ -69,9 +80,9 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
 1. Read the readout one sentence at a time. For each sentence ask: is the wording at or below the claim ceiling? Does every number match Results and carry its uncertainty? Is every open high-impact assumption in Caveats?
 2. Fix each sentence that fails. Show every change as a "was" and "now" pair, with one line why. No exceptions: a summary such as "tightened the wording" is not enough. Example: was "The new page caused the drop." now "Conversion fell after the new page went live. This analysis cannot say why."
 3. Leave sentences that pass unchanged. Do not rewrite for taste.
-4. Check the layout: Answer in 2 lines, Key numbers with uncertainty (at most 5; for an exec audience, move the rest to the Appendix), What it means, Caveats, Method in 3 lines, Link, Appendix. The readout must suit the audience in Meta.
+4. Check the layout: Answer in 2 lines, Key numbers with uncertainty (at most 5; for an exec audience, move the rest to the Appendix), Charts (at most 3 for exec, each title a takeaway, one annotation, linked image with alt text), What it means, Caveats, Method in 3 lines, Link, Appendix. The readout must suit the audience in Meta. Portable markdown only: at most 3 callouts as blockquotes with a bold label (`> **Answer:**`, `> **Caveat:**`, `> **Ask:**`), bold only for the one takeaway per section, no app-specific macros.
 5. Check the Method section claims only what ran. Compare it with the ladder log and with step 5 of this review. If it says "full validation ladder" or names a check that was weaker than claimed, rewrite it to say exactly what ran.
-6. If the verdict is `ready` or `ready with caveats`, set `Status: final` in `readout.md`. If the verdict is `needs rework`, leave it `Status: draft` and say what must happen first.
+6. If the verdict is `ready` or `ready with caveats`, set the status line in `readout.md` to `**Status: FINAL**`. If the verdict is `needs rework`, leave it `**Status: DRAFT**` and say what must happen first.
 7. No readout (quick depth, or a pasted analysis): check the pasted claims the same way. Do not create a readout unless asked.
 
 ## Depth table

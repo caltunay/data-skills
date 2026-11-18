@@ -21,8 +21,8 @@ Experimental (v0.2).
 2. No `DATA-MAP.md` is fine here: this step does not need it. Say so in the same line. Do not offer setup.
 3. If `readout.md` or `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before asking anything else. A readout pasted from outside the flow is fine: then ask for the question type or the claim ceiling if the paste does not state it.
 4. Read the Progress line in Meta and the readout's `Status`.
-   - `Status: final`: continue.
-   - `Status: draft`, or no status: say "This readout is not final. It has not been checked against the claim ceiling." Suggest `/review-analysis` first. Continue only if the user says to, and then mark the output `Status: draft, from an unreviewed readout`.
+   - `**Status: FINAL**` (or the older `Status: final`): continue.
+   - `**Status: DRAFT**` (or the older `Status: draft`), or no status: say "This readout is not final. It has not been checked against the claim ceiling." Suggest `/review-analysis` first. Continue only if the user says to, and then mark the output `Status: draft, from an unreviewed readout`.
 
 ## Rules from the disciplines (in case they do not load)
 

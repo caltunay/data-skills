@@ -95,6 +95,7 @@ Method cards: counts and rates; week-on-week with like-for-like periods; segment
 | rung | expected | actual | pass or fail |
 |---|---|---|---|
 | 0 audit (Q0.1) | About 3,500 rows, 1 Jan to 31 Mar, no null keys | 3,582 rows, 3,542 distinct ids, dates as expected, no nulls, 66 test rows | pass, with a flag: rows exceed distinct ids by 40 |
+| F4 daily series (Q0.2, added in v0.3) | 90 days, no zero day, no single-day spike | 90 days, 1 Jan to 31 Mar, lowest day 21, highest 56. No gap or zero day | pass |
 | 1 one entity (Q1.1) | Sign-up 101005: one row, paid_search, mobile, monthly, GB, 24 Jan 21:32:27 | As expected | pass |
 | 2 one entity-day (Q1.2) | Rows before midnight UTC on 1 March fall in February, later rows in March | 1 row at 22:06 in February, 7 rows from 00:44 in March | pass |
 | 3 many entities (Q1.3) | No `signup_id` with more than one row | 40 ids with 2 rows each | **fail** |
@@ -147,10 +148,14 @@ Open high-impact assumptions next to these findings: A4.
   3. "Is this just the season?" Cannot be checked: no 2025 data. A seasonal dip across the board is not what the data shows, since four of five channels held.
   4. "How sure are the numbers?" The counts are exact and agree with the growth dashboard within 0.4%.
   5. "What should we do?" Look at paid social first. Decide whether a spend test is worth running before the Q2 split.
-- Readout: sentences changed, and why. Readout status: final
+- Independent recompute (Q4.1, from the raw table, without `signups_clean`): Jan 1,330, Feb 1,175, Mar 973; paid social per day 15.32 and 5.42. Same as Q1.4 and Q3.1. No gap.
+- Spot-check of the ladder: rung 4 (Q1.4) summed `signups_clean`, the table it was checking, so it tested the aggregation only. Q4.1 above covers the data. The readout Method line says so.
+- Readout: every sentence changed, as a "was" and "now" pair, and why. Readout status: FINAL
   - was: "The fall was driven by paid social." now: "Almost all of the fall is in one channel, paid social." Why: "driven by" is above the exploratory ceiling.
   - was: "Sign-ups fell 17% in March." now: "down 17%. Per day the fall was 25%, because March is three days longer." Why: the total alone understates the fall.
   - was: "The spend cut explains the timing." now: "That timing is a lead worth following, not a proven cause." Why: causal wording with no design.
+  - was: "Checks passed: all five rungs of the validation ladder, after one failed rung was fixed." now: "Checks passed: daily series with no gaps or zero days; rungs 1 to 3 on raw rows (...); rung 4 summed the cleaned table and the review recomputed the headline numbers from the raw table, with no gap; ..." Why: the Method line claimed more than ran (v0.3 re-review).
+  - was: a key numbers table with 7 rows. now: 5 rows, the other 2 in the Appendix, and a chart for the weekly step. Why: an exec readout has at most 5 key numbers (v0.3).
 
 ## 8. Retro
 
@@ -163,3 +168,52 @@ Open high-impact assumptions next to these findings: A4.
 | Metrics: new trusted number, 972 sign-ups for March 2026 | yes |
 | Joins: aggregate `signups` before joining to `daily_spend` | yes |
 | Glossary: "paid social sign-ups fell because of the spend cut" | no: not a fact the data supports |
+
+## 9. Appendix: Review pack
+
+The code behind each headline number. Every query file is in `queries/`; results are in `outputs/results.txt`.
+
+### Sign-ups per month (February 1,175; March 973) and per day (41.96; 31.39)
+
+- Source: `signups`, January to March 2026, test accounts out, latest row per `signup_id` (`signups_clean`, built by `q1-3c-clean-view.sql`).
+- Code: `q1-4-aggregates.sql`
+
+```sql
+select
+    signup_month
+  , count(*)                                        as signups
+  , count(distinct signup_date)                     as days_with_signups
+  , round(count(*) * 1.0 / count(distinct signup_date), 2) as signups_per_day
+from
+    signups_clean
+where true
+group by 1
+order by 1
+;
+```
+
+### Paid social per day (15.32 to 5.42) and share of the fall (93.6%)
+
+- Source: `signups_clean`, February and March 2026.
+- Code: `q3-1-scan-channel.sql`. Recomputed from the raw table in `q4-1-review-recompute-from-raw.sql`:
+
+```sql
+select
+    substr(signup_ts, 1, 7)                                                as signup_month
+  , count(distinct signup_id)                                              as signups
+  , count(distinct case when channel = 'paid_social' then signup_id end)   as paid_social_signups
+  , round(count(distinct case when channel = 'paid_social' then signup_id end) * 1.0
+        / count(distinct substr(signup_ts, 1, 10)), 2)                     as paid_social_per_day
+from
+    signups
+where true
+    and is_test = 0
+group by 1
+order by 1
+;
+```
+
+### Reconcile to the growth dashboard (gaps 0.30%, 0.34%, 0.10%)
+
+- Source: `signups_clean` against `dashboard_monthly`. The cleaned count is compared: the dashboard counts sign-ups, not rows, so duplicate rows and test accounts must be out first.
+- Code: `q1-5-reconcile.sql`.

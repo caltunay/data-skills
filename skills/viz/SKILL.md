@@ -62,6 +62,15 @@ Excel, Tableau and Power BI always run in hand-over mode. Give numbered steps. T
 - Charts show aggregates. Ask before a chart exposes row-level data (one point per customer with an identifier).
 - In a chat app, offer the chart as a download and say where it belongs.
 
+## Charts in a readout
+
+- At most 3 charts in an exec readout. Fewer is fine.
+- Each title states the takeaway (check 1).
+- One annotation on the key moment, for example a marker and a short label on the day a step happened. Only one, so it stands out.
+- A chart replaces number rows that say the same thing. This keeps the readout to at most 5 key numbers.
+- Charts are image files (PNG or SVG) in `outputs/`, linked from the readout with alt text that states what the chart shows and its takeaway: `![Daily sign-ups, with the step down on 2 March marked](outputs/signups-daily.png)`. In a chat app, create the image and offer it as a download.
+- Hand-over mode (no code tool, or Excel, Tableau or Power BI): give the chart spec (chart type, data, title, annotation, axes) plus ready-to-run code or numbered build steps.
+
 ## Reviewing a chart
 
 For each chart: name the question it answers, then go down the 12 checks. Report only the fails, each with the fix. If all pass, say "Chart checks pass". Do not invent issues. Do not restyle for taste.

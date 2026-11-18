@@ -39,12 +39,12 @@ When you stop, say what you are waiting for and set the Progress line, for examp
 - `stats-tests`: choose the test by data type and design. Report direction, magnitude and uncertainty. Correct for multiple comparisons.
 - `question-types`: word every claim at or below the ceiling. One file per question type holds the method cards. Load the card for the chosen method and apply its "Checks that must pass" (the plan's success checks hold a copy; the compact cards in the `question-types` skill are the fallback). No "caused" without a randomised experiment or a credible causal design that passed its checks.
 - `data-map`: read it before writing queries. Flag entries older than 90 days or contradicted by data, then ask.
-- `viz` (experimental): choose the chart by the question. The title states the takeaway, axes carry units, bars start at zero, uncertainty is shown, no dual axes, no 3D, colour-blind safe, same scale when comparing.
+- `viz` (experimental): choose the chart by the question. The title states the takeaway, axes carry units, bars start at zero, uncertainty is shown, no dual axes, no 3D, colour-blind safe, same scale when comparing. In a readout: at most 3 charts for exec, one annotation on the key moment, saved as image files in `outputs/` and linked with alt text.
 - `assumptions`: ask instead of assuming. When you must assume, add a row. Standard and deep depth always show the full 7-column table (id, assumption, why unavoidable, likely alternatives, impact if wrong, how to check, status). Never drop columns.
 
 ## Steps
 
-Set status `running`. Number the steps in the Progress line (step 1 of 7, and so on). Quick depth runs the compact floor (step 1), the query, and step 5, then gives the short answer. No step 7. The floor is never skipped.
+Set status `running`. Number the steps in the Progress line (step 1 of 8, and so on). Quick depth runs the compact floor (step 1), the query, and step 5, then gives the short answer. No steps 7 and 8. The floor is never skipped.
 
 1. **Data-check floor** for every table used (apply `data-audit` and `validation-ladder`). Each check states its expected result first:
    1. Table audit: row count; distinct keys against rows (duplicates); null rate of every column used; min and max dates (coverage, future dates); distinct values of every category column used (flag unexpected labels).
@@ -61,7 +61,8 @@ Set status `running`. Number the steps in the Progress line (step 1 of 7, and so
 4. **Run the method.** Open the `question-types` file for the question type and load the method card named in the plan. Apply every item under "Checks that must pass" and log each as pass or fail in Results. If a check fails, the claim allowed drops: say to what.
 5. **Reconcile (rung 5).** Compare the headline number to the trusted number from the plan. Say which count is compared (raw or cleaned) and why: a trusted number made before your cleaning matches the raw count. Compute the gap and compare it with the stated tolerance. Above tolerance: record rung 5 as fail, do not report the number as final, and test likely causes one small check at a time. Never explain a gap with an untested story.
 6. **Write findings.** Each finding gets direction, magnitude, uncertainty, and the claim ceiling applied. Update assumption statuses as evidence arrives. List high-impact rows still `open` beside the findings.
-7. **Draft the readout.** Write `readout.md` next to `analysis.md`, from `readout.template.md` in this skill's folder. Mark it `Status: draft`.
+7. **Write the review pack.** In the "Appendix: Review pack" section of `analysis.md`, for each headline number: the exact SQL or Python that produced it, and its data source (table or file, filters, period). In a chat app `queries/` does not persist, so this is how a fresh reviewer sees the code.
+8. **Draft the readout.** Write `readout.md` next to `analysis.md`, from `readout.template.md` in this skill's folder. Set the status line to `**Status: DRAFT**`.
 
 ## Draft readout
 
@@ -69,11 +70,18 @@ One layout. Wording adapts to the audience set in grilling (Meta). The default r
 
 1. **Answer** in 2 lines.
 2. **Key numbers**, each with its uncertainty. At most 5. For an exec audience this limit is strict. Every other number goes to the Appendix.
-3. **What it means** and the recommendation.
-4. **Caveats:** open high-impact assumptions, and the claim ceiling in plain words.
-5. **Method** in 3 lines. Claim only what ran: name the checks that passed, as they were run. Never write "full validation ladder" if a rung was skipped, failed, or compared only against the frame the table was built from.
-6. **Link** to `analysis.md`.
-7. **Appendix:** the other numbers, segment tables, the ladder summary.
+3. **Charts** (apply `viz`). At most 3 in an exec readout. Each title states the takeaway. One annotation on the key moment (for example, a marker on the day a step happened). A chart replaces number rows that say the same thing, which keeps the 5-number limit. Charts are image files in `outputs/` (in a chat app, created and offered as downloads), linked from the readout with alt text. In hand-over mode, give the chart spec plus ready-to-run code. No chart is fine when a number says it better.
+4. **What it means** and the recommendation.
+5. **Caveats:** open high-impact assumptions, and the claim ceiling in plain words.
+6. **Method** in 3 lines. Claim only what ran: name the checks that passed, as they were run. Never write "full validation ladder" if a rung was skipped, failed, or compared only against the frame the table was built from.
+7. **Link** to `analysis.md`.
+8. **Appendix:** the other numbers, segment tables, the ladder summary.
+
+Portable markdown only, no app-specific macros:
+
+- Callouts are blockquotes with a bold label: `> **Answer:** ...`, `> **Caveat:** ...`, `> **Ask:** ...`. At most 3 in the whole readout, so they stand out.
+- The status is a bold label at the top: `**Status: DRAFT**` or `**Status: FINAL**`.
+- Bold only the one takeaway per section.
 
 Every sentence stays at or below the claim ceiling. The draft is not final: `/review-analysis` checks it word by word and marks it final. Say so when you hand it over.
 
@@ -101,11 +109,11 @@ Examples: no clean control group, a metric that is not available, a sample ratio
 
 ## Data safety
 
-Show aggregates by default. Ask before saving row-level data anywhere. Put charts and tables in `outputs/` only when asked or when the plan names one. Apply the `viz` skill to every chart before saving it. Never store credentials.
+Show aggregates by default. Ask before saving row-level data anywhere. Put charts and tables in `outputs/` only when asked, when the plan names one, or when the readout uses one. Apply the `viz` skill to every chart before saving it. Never store credentials.
 
 ## Output
 
-- Standard and deep: update Results in `analysis.md` (ladder log, method checks, findings) and write the draft `readout.md`. This step sets status `running` when it starts and leaves it at `running`. Only `/review-analysis` sets `reviewed`.
+- Standard and deep: update Results in `analysis.md` (ladder log, method checks, findings), write the Review pack appendix, and write the draft `readout.md`. This step sets status `running` when it starts and leaves it at `running`. Only `/review-analysis` sets `reviewed`.
 - Quick: print the answer, the compact floor table, the ceiling, and open assumptions. No file.
 - Apply `run-or-hand-over` for saving. Chat app: see End.
 
@@ -124,11 +132,13 @@ Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, an
    > B) Change something (say what)
    > C) Add a check, segment or question
 
+   At standard and deep depth, A recommends a fresh review, because a review in the same context is biased by it: "A) Yes: start `/review-analysis` in a new chat (recommended). In a Claude or ChatGPT Project, save the data, `DATA-MAP.md`, `analysis.md` and `readout.md` to the Project files first, then open a new chat in that Project; nothing needs attaching." If you can start a subagent with fresh context, you may run the review there instead, passing only those files. This is optional: never rely on it. A same-chat review stays allowed. Quick depth: a same-chat review is fine.
+
    Wait for the answer. A means start the next step. B or C means make the change in this step, hand back the updated file, and ask again.
 
 ## Done when
 
-The goal is met: the ladder is complete for the depth, the success checks pass (or a gap is explained and logged), findings are written with the ceiling applied, and the draft readout is written.
+The goal is met: the floor and the ladder are complete for the depth, the success checks pass (or a gap is explained and logged), findings are written with the ceiling applied, the review pack holds the code for each headline number, and the draft readout is written.
 
 ## Do not
 
