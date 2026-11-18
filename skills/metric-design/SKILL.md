@@ -35,7 +35,7 @@ Fill one per metric. Ask the user for each line you cannot fill from what they s
 
 ## Choices that hide in common metrics
 
-Ask about each one that applies. Give 2 to 4 options and a recommended default.
+Ask about each one that applies. Give 2 to 4 options and one real recommended default, never a hedge.
 
 - **Active:** paid and not cancelled, or used the product in the last N days? Which N?
 - **Churn:** counted on the cancellation request date or the date access ends? Is a pause churn? Is a downgrade churn? Rate over subscribers at the start of the period, or the average?

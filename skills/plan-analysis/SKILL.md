@@ -73,7 +73,14 @@ Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, an
 2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
 3. Chat app: create the updated `analysis.md` (and `readout.md` when it exists) as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Save this to your Project files so the next step, in any chat, can read it."
 4. Coding agent: the files are already saved under `data-work/`. Say where.
-5. Name the next step: `/run-analysis`.
+5. End with the go-ahead question, at every depth, quick included. Use this fixed form:
+
+   > Go ahead?
+   > A) Yes, run `/run-analysis` (recommended)
+   > B) Change something (say what)
+   > C) Add a check, segment or question
+
+   Wait for the answer. A means start the next step. B or C means make the change in this step, hand back the updated file, and ask again.
 
 ## Plan revisions
 

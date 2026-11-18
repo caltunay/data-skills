@@ -99,6 +99,21 @@ Inspired by `mattpocock/skills` (structure, flow, user-invoked vs model-invoked)
 3. If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before re-asking anything.
 4. Read the Progress line and resume from it.
 
+### Every flow step ends the same way
+
+At every depth, quick included, each flow step ends with a go-ahead question in a fixed form, adapted to the step:
+
+> Go ahead?
+> A) Yes, run `<next command>`
+> B) Change something (say what)
+> C) Add a check, segment or question
+
+B or C means the step makes the change, hands back the updated file, and asks again. `/retro-analysis` adapts A to close the analysis and start the next ask.
+
+### Every question has a real default
+
+Every question in every step has one real recommended default with a one-line reason. No hedges such as "C if unknown". The deadline question gets a default too.
+
 ### Goal-driven run
 
 `/run-analysis` states its goal at the start: "Done when the success checks in the plan pass and a draft readout is written." It then keeps working step after step, and stops only to wait for a paste or an answer. This needs no agent-specific goal feature.
@@ -181,7 +196,7 @@ Copy-paste form for queries: numbered (`Q2.1`, `Q2.2`), each with one purpose li
 
 | Skill | Applies when | Core rule (restate in each caller) |
 |---|---|---|
-| `grilling` | Clarification of a data ask only (analysis, metric, query, report, experiment). Never fires on non-data asks. | Rounds of at most 3 questions, each with 2 to 4 options and a recommended default. Wait for answers. Never assume silently. |
+| `grilling` | Clarification of a data ask only (analysis, metric, query, report, experiment). Never fires on non-data asks. | Rounds of at most 3 questions, each with 2 to 4 options and one real recommended default (never a hedge, the deadline included). Wait for answers. Never assume silently. |
 | `assumptions` | An assumption is about to be made | Write it in the assumptions table. High-impact rows need 1 to 3 likely alternatives. |
 | `validation-ladder` | Before trusting any query or analysis result | One entity -> one entity-day -> many entities -> aggregates -> reconcile to a trusted number. State the expected result before each rung. |
 | `question-types` | Framing, planning, choosing a method, writing claims, reviewing | Six question types and their claim ceilings. `SKILL.md` holds the type selector and the causal method selector. One file per type holds that type's method cards (section 10). Load only the file for the type in use. |

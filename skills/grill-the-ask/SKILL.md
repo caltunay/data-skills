@@ -21,7 +21,7 @@ Clarification is the most important part of data work. Ask before you assume.
 
 ## Rules from the disciplines (in case they do not load)
 
-- `grilling`: rounds of at most 3 questions, each with 2 to 4 options and a recommended default. Wait for answers. Never assume silently.
+- `grilling`: rounds of at most 3 questions, each with 2 to 4 options and one real recommended default (never a hedge such as "C if unknown"). Wait for answers. Never assume silently.
 - `assumptions`: write each assumption in the assumptions table. High-impact rows need 1 to 3 likely alternatives. Standard and deep depth always show the full 7-column table (id, assumption, why unavoidable, likely alternatives, impact if wrong, how to check, status). Never drop columns.
 - `question-types`: six types: descriptive, exploratory, inferential, predictive, causal, mechanistic. Each has a claim ceiling. No "caused" without a randomised experiment or a credible causal design. A "why" question starts as descriptive or exploratory. It is causal only when a design fits. Say so when you propose the type.
 - `run-or-hand-over`: two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts (load them and run SQL with DuckDB or SQLite, or pandas). Hand over only when no code tool exists, and say so in one line. Where do files persist? In a chat app, create each file and offer it as a download; print it only if that fails. Never ask the user to edit a saved file by hand. Never call a data tool before the user names the source.
@@ -30,7 +30,7 @@ Clarification is the most important part of data work. Ask before you assume.
 ## Steps
 
 1. Take the ask verbatim. Store it unchanged.
-2. Run rounds of questions covering: goal, the decision it feeds, question type, metric, population, time window, constraints, deadline, and audience (who reads the result: exec, product, data or mixed).
+2. Run rounds of questions, each with options and one real recommended default (never a hedge, the deadline included), covering: goal, the decision it feeds, question type, metric, population, time window, constraints, deadline, and audience (who reads the result: exec, product, data or mixed).
 3. **Never ask the same question twice in a session.** Before each round, list what is already answered: in the ask, in `analysis.md`, in the data map, and in earlier answers. A reworded question is the same question. If an answer was unclear, quote it and ask only about the unclear part.
 4. Propose the question type with its ceiling. Confirm it with the user. For an ask that wants a cause ("did X work", "prove", "impact of"), ask what comparison exists: a randomised holdout, an untreated group, a cut-off rule, or only a before and after. The answer decides whether a causal claim is reachable.
 5. Choose the depth after round 1 and propose it with a one-line reason: **quick**, **standard** or **deep**. If the depth is quick, stop asking: what is still unknown becomes an inline assumption. Example: "Depth: standard, because the number feeds a budget decision but is not a test readout." The user can override.
@@ -68,7 +68,14 @@ Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, an
 2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
 3. Chat app: create the updated `analysis.md` (and `readout.md` when it exists) as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Save this to your Project files so the next step, in any chat, can read it."
 4. Coding agent: the files are already saved under `data-work/`. Say where.
-5. Name the next step: `/plan-analysis`.
+5. End with the go-ahead question, at every depth, quick included. Use this fixed form:
+
+   > Go ahead?
+   > A) Yes, run `/plan-analysis` (recommended)
+   > B) Change something (say what)
+   > C) Add a check, segment or question
+
+   Wait for the answer. A means start the next step. B or C means make the change in this step, hand back the updated file, and ask again.
 
 ## Done when
 

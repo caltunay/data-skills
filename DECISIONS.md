@@ -53,6 +53,8 @@
 49. `run-or-hand-over` asks two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts. Where do files persist? In a chat app, create each file and offer it as a download; print only if that fails. Being in a chat app never means "I can't run code".
 50. After the user confirms something, the skill hands back the updated file. It never asks the user to edit a saved file by hand.
 51. `question-types/SKILL.md` holds a compact line per method (when to use, checks that must pass, claim allowed), so the method cards work without file access. `/plan-analysis` copies the checks into the success checks at plan time.
+52. Every flow step ends with the same go-ahead question at every depth: A) yes, run the next command; B) change something; C) add a check, segment or question.
+53. Every question has one real recommended default with a reason. No hedges, and no question without a default, the deadline included.
 
 ## Build decisions
 
@@ -158,6 +160,8 @@ B73. Running and files (fix B, item 3). `run-or-hand-over` replaced "Which envir
 B74. Downloads first (fix B, item 3). Every End block now says "create ... as files and offer them as downloads. Print one block only if creating a file fails". Options: keep "offer a download, else print", or make file creation the default. Reason: the old order let an agent print a block when it could have made a file.
 B75. No manual edits (fix B, item 4). Added to `run-or-hand-over`, every flow and flow-style End block, `setup-data-work` and `retro-analysis` output. `docs/install.md` says the same in plain words.
 B76. Compact cards (fix B, item 5). One table per type file in `question-types/SKILL.md`, one row per method (37 rows: 9, 5, 6, 8, 8 causal and A/B, 1 mechanistic), columns "when to use", "checks that must pass", "claim allowed". Options: three lines per method, or a table row with three cells. Reason: a row keeps each field to one line and the file to 179 lines. The checks were copied in short form from each card's numbered list, not invented. `/plan-analysis` and `/run-analysis` and `/review-analysis` point to the compact cards when the type file will not open.
+B77. Go-ahead question (fix C, item 6). Added as the last End step in the 6 flow skills. A is marked "(recommended)". B or C keeps the user in the same step: the change is made, the updated file is handed back, and the question is asked again. `/retro-analysis` adapts A to "close this analysis, run `/grill-the-ask` for the next ask" and C to "add a map entry". `/setup-data-work` adapts B and C to the map. Options: also add it to `/storytell`, `/wayfinder-data` and `/handoff`. Reason: the brief names flow steps; the three off-flow skills keep their "name the next step" line, so the scope stays as asked.
+B78. Real defaults (fix C, item 7). `grilling` now requires "(recommended: reason)" on every question and bans hedges by example ("C if unknown", "depends", "your call"). The deadline item carries its own line, with a worked default. Every skill that restates `grilling` says "one real recommended default (never a hedge)". `metric-design` and `/improve-code` say the same.
 
 ## Questions for Cenan
 

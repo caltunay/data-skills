@@ -27,7 +27,7 @@ For work too big for one `/grill-the-ask`: "build a metrics framework for the su
 
 ## Rules from the disciplines (in case they do not load)
 
-- `grilling`: rounds of at most 3 questions, each with 2 to 4 options and a recommended default. Wait for answers. Never assume silently. Never ask the same question twice.
+- `grilling`: rounds of at most 3 questions, each with 2 to 4 options and one real recommended default (never a hedge such as "C if unknown"). Wait for answers. Never assume silently. Never ask the same question twice.
 - `assumptions`: when something must be assumed, write it down with likely alternatives and the impact if wrong.
 - `question-types`: six question types, each with a claim ceiling. Name the type of each analysis you list.
 - `metric-design` (experimental): a metric needs a formula, a grain, a population, an owner, guardrails and a trusted number.

@@ -35,7 +35,7 @@ Do the four passes in this order. Do not start a later pass while an earlier one
 ### 1. Intent
 
 - Say in one or two lines what the code is meant to produce: the grain of the output, the measures, the period.
-- If you cannot tell, ask (one round, at most 3 questions, each with options and a recommended default). Do not guess the intent and then "fix" the code toward your guess.
+- If you cannot tell, ask (one round, at most 3 questions, each with options and one real recommended default). Do not guess the intent and then "fix" the code toward your guess.
 - Ask the dialect or the library if the code and the map do not show it.
 
 ### 2. Correctness

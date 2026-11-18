@@ -61,7 +61,15 @@ Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, an
 2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
 3. Chat app: create the updated `analysis.md` (and `readout.md` when it exists) as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Save this to your Project files so the next step, in any chat, can read it."
 4. Coding agent: the files are already saved under `data-work/`. Say where.
-5. Name the next step: none. The flow is complete. In a chat app, also hand back the full updated `DATA-MAP.md` to replace the Project file.
+5. In a chat app, also hand back the full updated `DATA-MAP.md` to replace the Project file.
+6. The flow is complete. End with the go-ahead question, at every depth, quick included, adapted to this last step:
+
+   > Go ahead?
+   > A) Yes, close this analysis. Run `/grill-the-ask` for the next ask (recommended)
+   > B) Change something (say what)
+   > C) Add a map entry, a check or a question
+
+   Wait for the answer. B or C means make the change, hand back the updated file, and ask again.
 
 ## Depth
 
