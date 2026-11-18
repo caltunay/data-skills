@@ -6,6 +6,10 @@ Type: method choice. Data is invented. Grade the method chosen and the checks na
 
 "Customers who spent 200 or more last year got a loyalty discount automatically. Customers below 200 did not. Did the discount increase orders this year?"
 
+## Simulated answers
+
+None needed.
+
 ## Pass
 
 - Question type: causal.

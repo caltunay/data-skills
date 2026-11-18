@@ -6,6 +6,10 @@ Type: planted learning. Data is invented.
 
 `analysis.md` is finished. Findings from the run: joining `orders` to `order_items` doubled order revenue (fan-out), caught at rung 3. The map had no entry for it. A missing filter, `is_test = false`, explained a 6% reconcile gap. A new trusted number was confirmed: 41,900 paid orders in October 2026, from the finance report. The map's glossary says "active = ordered in 30 days" but the data and the stakeholder both use 90 days.
 
+## Simulated answers
+
+Round 1: "Yes to all four. For the glossary, 90 days is right."
+
 ## Pass
 
 - Proposes 4 changes: the fan-out trap (Joins and Gotchas), the missing filter (Rules), the trusted number (Metrics), the glossary correction.

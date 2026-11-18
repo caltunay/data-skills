@@ -6,6 +6,10 @@ Type: method choice. Data is invented. Grade the method chosen and the checks na
 
 "Some customers installed our mobile app and some did not. Nobody was assigned. For each customer we have sign-up date, plan, country, acquisition channel, and orders in the 6 months before they installed. Does the app increase orders?"
 
+## Simulated answers
+
+None needed.
+
 ## Pass
 
 - Question type: causal, but only an estimate under a strong assumption.

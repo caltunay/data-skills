@@ -21,24 +21,26 @@ Clarification is the most important part of data work. Ask before you assume.
 
 ## Rules from the disciplines (in case they do not load)
 
-- `grilling`: rounds of at most 3 questions, each with 2 to 4 options and a recommended default. Wait for answers. Never assume silently.
-- `assumptions`: write each assumption in the assumptions table. High-impact rows need 1 to 3 likely alternatives. Standard and deep depth always show the full 7-column table (id, assumption, why unavoidable, likely alternatives, impact if wrong, how to check, status). Never drop columns.
+- `grilling`: rounds of at most 3 questions, each with 2 to 4 options and one real recommended default (never a hedge such as "C if unknown"). Wait for answers. Never assume silently.
+- `assumptions`: write each assumption in the assumptions table. Only real assumptions: claim rules go in the ceiling. Rate impact honestly: anything that moves the headline by about 5% or more is High (a month-length difference of about 10% is never Low). High-impact rows need 1 to 3 likely alternatives. Standard and deep depth always show the full 7-column table (id, assumption, why unavoidable, likely alternatives, impact if wrong, how to check, status). Never drop columns.
 - `question-types`: six types: descriptive, exploratory, inferential, predictive, causal, mechanistic. Each has a claim ceiling. No "caused" without a randomised experiment or a credible causal design. A "why" question starts as descriptive or exploratory. It is causal only when a design fits. Say so when you propose the type.
-- `run-or-hand-over`: run or save if you can, else offer a download, else print it and wait. Never call a data tool before the user names the source.
+- `run-or-hand-over`: two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts (load them and run SQL with DuckDB or SQLite, or pandas). Hand over only when no code tool exists, and say so in one line. Where do files persist? In a chat app, create each file and offer it as a download; print it only if that fails. Never ask the user to edit a saved file by hand. Never call a data tool before the user names the source.
 - `data-map`: read `DATA-MAP.md` before writing queries. Flag entries older than 90 days or contradicted by data, then ask.
 
 ## Steps
 
 1. Take the ask verbatim. Store it unchanged.
-2. Run rounds of questions covering: goal, the decision it feeds, question type, metric, population, time window, constraints, deadline, and audience (who reads the result: exec, product, data or mixed).
+2. Run rounds of questions, each with options and one real recommended default (never a hedge, the deadline included), covering: goal, the decision it feeds, requester, question type, metric, population, time window (and the comparison window, see step 5), constraints, deadline, and audience (who reads the result: exec, product, data or mixed).
 3. **Never ask the same question twice in a session.** Before each round, list what is already answered: in the ask, in `analysis.md`, in the data map, and in earlier answers. A reworded question is the same question. If an answer was unclear, quote it and ask only about the unclear part.
 4. Propose the question type with its ceiling. Confirm it with the user. For an ask that wants a cause ("did X work", "prove", "impact of"), ask what comparison exists: a randomised holdout, an untreated group, a cut-off rule, or only a before and after. The answer decides whether a causal claim is reachable.
-5. Choose the depth after round 1 and propose it with a one-line reason: **quick**, **standard** or **deep**. If the depth is quick, stop asking: what is still unknown becomes an inline assumption. Example: "Depth: standard, because the number feeds a budget decision but is not a test readout." The user can override.
+5. **Comparison windows and seasonality.** When the ask compares periods ("down this month", "last 30 days against the 30 before"), recommend a comparison that handles seasonality: the same weeks last year, or the same weekdays in both windows. If you recommend a plain back-to-back comparison (for example, because there is no year of history), flag in the option itself that it ignores seasonality, and what that could hide (a holiday, a month-end, a 28-day against a 31-day month).
+6. Choose the depth after round 1 and propose it with a one-line reason: **quick**, **standard** or **deep**. If the depth is quick, stop asking: what is still unknown becomes an inline assumption. Example: "Depth: standard, because the number feeds a budget decision but is not a test readout." The user can override.
    - Quick: a small, low-risk ask, one number or one chart.
    - Standard: the usual ask.
    - Deep: high stakes, a decision with real cost, or a test readout.
-6. Write down every assumption you have to make. At standard and deep depth, show the full 7-column assumptions table.
-7. Restate the clarified question in one or two sentences. Ask the user to confirm it.
+7. Write down every assumption you have to make. At standard and deep depth, show the full 7-column assumptions table. Only real assumptions go in the table: a choice that could be wrong and that the work depends on. Claim rules ("spend is a hypothesis, not a cause") are not assumptions: they go in the claim ceiling line in Meta. Rate impact by size, honestly (see the `assumptions` rule below).
+8. Fill Meta in full. Requester and Date are never blank: Requester is the person or role the user names (ask in round 1 if the ask does not say; a role is fine, and never guess a name). Date is today. Also fill the claim ceiling in one line.
+9. Restate the clarified question in one or two sentences. Ask the user to confirm it.
 
 ## Depth table
 
@@ -65,14 +67,21 @@ Stakeholder prep questions (deep): who else will read this, what will they push 
 Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, and name the next step.
 
 1. Update the Progress line in `analysis.md` Meta.
-2. Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app, even if you can write files in a sandbox.
-3. Chat app: offer the updated `analysis.md` (and `readout.md` when it exists) as a download. If you cannot, print it as one block. Say: "Save this to your Project files so the next step, in any chat, can read it."
+2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
+3. Chat app: create the updated `analysis.md` (and `readout.md` when it exists) as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Save this to your Project files so the next step, in any chat, can read it."
 4. Coding agent: the files are already saved under `data-work/`. Say where.
-5. Name the next step: `/plan-analysis`.
+5. End with the go-ahead question, at every depth, quick included. Use this fixed form:
+
+   > Go ahead?
+   > A) Yes, run `/plan-analysis` (recommended)
+   > B) Change something (say what)
+   > C) Add a check, segment or question
+
+   Wait for the answer. A means start the next step. B or C means make the change in this step, hand back the updated file, and ask again.
 
 ## Done when
 
-The clarified question, question type, audience, depth (with its reason) and assumptions are written, and the user confirmed them. Then name the next step: `/plan-analysis`.
+The clarified question, question type, claim ceiling, requester, date, audience, depth (with its reason) and assumptions are written, and the user confirmed them. Then name the next step: `/plan-analysis`.
 
 ## Do not
 

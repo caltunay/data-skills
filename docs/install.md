@@ -12,15 +12,42 @@ Pick your agent when asked. This copies the skills into the agent's skills folde
 
 ## Claude Code
 
-```bash
-npx skills add caltunay/data-skills
+As a plugin, in one line inside Claude Code (version 2.1.275 or later):
+
+```
+/plugin install data-skills --marketplace caltunay/data-skills
 ```
 
-Or copy the folders in `skills/` into `~/.claude/skills/` (all projects) or `.claude/skills/` (one project).
+Or in two steps from your shell:
+
+```bash
+claude plugin marketplace add caltunay/data-skills
+```
+
+```bash
+claude plugin install data-skills@data-skills
+```
+
+Installed as a plugin, the commands carry the plugin name: `/data-skills:grill-the-ask`, `/data-skills:plan-analysis`, and so on. They are the same commands.
+
+Without the plugin: `npx skills add caltunay/data-skills`, or copy the folders in `skills/` into `~/.claude/skills/` (all projects) or `.claude/skills/` (one project). Then the commands have no prefix.
+
+The manifests are `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`. Check them with `claude plugin validate .`.
 
 ## Codex
 
-Copy the folders in `skills/` into your Codex skills folder (for example `~/.codex/skills/` or `.agents/skills/`). Check the current Codex docs for the exact folder. Or use the `npx` command and pick Codex.
+The repo ships a Codex plugin manifest (`.codex-plugin/plugin.json`) and a marketplace file (`.agents/plugins/marketplace.json`), in the same shape as the plugins in the public `openai/plugins` repo.
+
+1. Add this repo as a plugin marketplace in Codex.
+2. Install `data-skills` from it.
+
+The likely one-line form is below. It was not verified from the build session, because the Codex docs site was not reachable. Check `codex plugin --help` or the current Codex docs if it fails.
+
+```bash
+codex plugin marketplace add caltunay/data-skills
+```
+
+Without the plugin: use the `npx` command and pick Codex, or copy the folders in `skills/` into your Codex skills folder (for example `~/.codex/skills/` or `.agents/skills/`). Check the current Codex docs for the exact folder.
 
 ## Gemini CLI
 
@@ -36,22 +63,24 @@ Use the `npx` command and pick Copilot, or copy the skills into the folder Copil
 
 ## claude.ai
 
-1. Build the ZIPs: run `scripts/package-zips`. One ZIP per skill appears in `dist/`.
+1. Get the ZIPs: download them from the latest release on GitHub (one ZIP per skill is attached to every release). Or build them: run `scripts/package-zips`, and one ZIP per skill appears in `dist/`.
 2. In claude.ai, open Settings, then Capabilities (or Skills), and upload each ZIP.
 3. Upload all of them. The flow skills call the others by name.
 4. Create a Project for your data work. Put your `DATA-MAP.md` in the Project files.
 
 ## ChatGPT
 
-1. Build the ZIPs with `scripts/package-zips` as above.
+1. Get the ZIPs from the latest release, or build them with `scripts/package-zips`, as above.
 2. Upload each ZIP where your ChatGPT plan supports skills.
 3. If your plan has no skill upload, paste the `SKILL.md` of the skill you need into a Project's instructions, or the chat itself.
 4. Put `DATA-MAP.md` in the Project files.
 
 ## Chat apps: how files work
 
-- A chat has no project folder, so the skills treat it as a chat app, even when it has a sandbox that can write files.
-- Every flow step ends by offering the updated `analysis.md` (and `readout.md` when it exists) as a download, or as one block to copy.
+- A chat has no project folder, so the skills treat it as a chat app for files.
+- Running is a separate question. If the chat has a code tool and you attach data files (CSV, Excel), the skills load them and run the checks themselves (DuckDB, SQLite or pandas). They hand queries over only when there is no code tool, and say so.
+- Every flow step ends by creating the updated `analysis.md` (and `readout.md` when it exists) as files and offering them as downloads. A block to copy is the fallback only if a file cannot be made.
+- You never edit a saved file by hand. After you confirm a change, the skill hands back the updated file.
 - Save each download to your Project files. The next step, in any chat, reads it from there.
 - If a step cannot find `analysis.md`, it asks you to attach it before asking anything again.
 - `/retro-analysis` gives you a full updated `DATA-MAP.md`. Replace the Project file with it.
@@ -72,3 +101,9 @@ scripts/package-zips
 ```
 
 The ZIPs go in `dist/`, which is gitignored.
+
+## For maintainers: releases and checks
+
+- Create a release on GitHub. The ZIPs attach themselves. The `release` workflow builds one ZIP per skill and uploads each as a release asset.
+- The `self-check` workflow runs `scripts/self-check` on every pull request and push.
+- Private blocklist: add a repository secret named `DATA_SKILLS_BLOCKLIST` (Settings, Secrets and variables, Actions) with one word per line. The workflow writes it to a gitignored `.blocklist` inside the job and never prints it. Without the secret, that one check is skipped. See `CONTRIBUTING.md`.

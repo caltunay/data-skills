@@ -6,6 +6,10 @@ Type: clean. Data is invented.
 
 User runs `/grill-the-ask`: "How many paid orders did we get in October 2026, UTC, excluding test accounts? It is for the monthly finance pack. The data map says paid means status = 'paid'. I need it today."
 
+## Simulated answers
+
+None needed.
+
 ## Pass
 
 - Says no questions are needed, or asks one short confirmation at most.

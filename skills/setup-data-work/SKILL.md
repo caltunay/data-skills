@@ -21,9 +21,9 @@ Run once per team or project. Target: under 20 minutes. Partial answers are fine
 
 ## Rules from the disciplines (in case they do not load)
 
-- `grilling`: rounds of at most 3 questions, each with 2 to 4 options and a recommended default. Wait for answers. Never assume silently.
-- `data-map`: one file, fixed sections, `format: v1` on line 1. Every entry has `verified: YYYY-MM-DD` and `source: setup`. Flag entries older than 90 days or contradicted by data, then ask. Show a migration before applying it. The template is `DATA-MAP.template.md` in the `data-map` skill.
-- `run-or-hand-over`: run or save if you can, else offer a download, else print it and wait. Never fail because a tool is missing. Never call a data tool before the user names the source.
+- `grilling`: rounds of at most 3 questions, each with 2 to 4 options and one real recommended default (never a hedge such as "C if unknown"). Wait for answers. Never assume silently.
+- `data-map`: one file, fixed sections, `format: v1` on line 1. Joins start `unverified` until a query checks them. Conventions hold style only. Every entry has `verified: YYYY-MM-DD` and `source: setup`. Flag entries older than 90 days or contradicted by data, then ask. Show a migration before applying it. The template is `DATA-MAP.template.md` in the `data-map` skill.
+- `run-or-hand-over`: two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts (load them and run SQL with DuckDB or SQLite, or pandas). Hand over only when no code tool exists, and say so in one line. Where do files persist? In a chat app, create each file and offer it as a download; print it only if that fails. Never ask the user to edit a saved file by hand. Never fail because a tool is missing. Never call a data tool before the user names the source.
 
 ## Steps
 
@@ -36,26 +36,43 @@ Ask in rounds of at most 3 questions. Skip what the user already told you.
    - C: read the paste. Fill what it states. Ask the user to confirm grain and keys. Do not guess them.
    - D: combine the above, in the order the user prefers.
 1. **Access test. Only for a source the user named.** If the user chose to connect, run a trivial test (`select 1`) against that source only. If it is not clear which connected tool is the named source, ask. If there is no connection, tell the user once to check their agent's connector directory for their source. If it is missing or blocked by company policy, continue in hand-over mode. No dead ends.
-2. **Sources.** Which sources, what type (warehouse, lake, sheet, file, API, cube), and which dialect for each.
+2. **Sources.** Which sources, what type (warehouse, lake, sheet, file, API, cube), and which dialect for each. Ask the dialect with one real option per engine, never one option holding many names:
+
+   **Which SQL dialect does this source use?**
+   - A. Postgres
+   - B. SQL Server
+   - C. BigQuery
+   - D. Snowflake
+   - E. Databricks
+   - F. Other (say which)
+
+   Recommend the one the user's own words point to (for example, they named the engine or pasted its syntax). If nothing points to one, recommend A (the most common default) and say the first check query will show if it is wrong.
 3. **Key tables.** The 3 to 10 tables used most. For each: what one row means (grain) and the key.
-4. **Joins.** The joins they trust, and any known fan-out traps.
+4. **Joins.** The joins they trust, and any known fan-out traps. Every join starts as `unverified` in the map, even when the schema or the user says it is safe. A join becomes `checked` only after a query measured its key match rate and fan-out (in setup, only if a source is connected and the user agrees to run it). Never mark a join checked from a schema alone.
 5. **Metrics.** The 3 to 5 most-used metrics: definition, and one trusted number each (value, period, where it comes from) for reconciling.
 6. **Rules.** Mandatory filters: test accounts, cancelled orders, time zones.
 7. **Conventions.** "Does your team have SQL or Python conventions? If not, I'll use sqlstyle.guide and PEP 8."
-8. **Git policy.** Commit `outputs/` or not. Default: not.
+8. **Git policy (coding agent only).** Commit `outputs/` or not. Default: not. In a chat app there is no repo: skip this question and give no git advice.
 
 Optional line: "If you have a web search or docs lookup tool, check the current setup steps for your agent and source." Never required.
 
 ## Output
 
-1. Write `data-work/DATA-MAP.md` from the template. Fill what you know. Leave unknown sections as empty tables. Date every entry today, with `source: setup`.
-2. Add `data-work/analyses/*/outputs/` to `.gitignore` unless the user chose to commit outputs. Chat app: there is no repo, so give the user the line to add.
+1. Write `data-work/DATA-MAP.md` from the template. Fill what you know. Joins go in with check status `unverified` unless a query in this session checked them. Leave unknown sections as empty tables. Date every entry today, with `source: setup`.
+2. Coding agent with a repo: add `data-work/analyses/*/outputs/` to `.gitignore` unless the user chose to commit outputs. Chat app: skip this. No git advice in a chat app.
 3. Show a short summary of what is still missing, as a list.
 
 ## End
 
-- Chat app (no user project folder: no `data-work/` and no repo, even if you can write files in a sandbox): offer the full `DATA-MAP.md` as a download. If you cannot, print it as one block. Tell the user to save it to their Project files so every later step, in any chat, can read it.
-- Name the next step: `/grill-the-ask` with the first ask.
+- Chat app (no user project folder: no `data-work/` and no repo): create the full `DATA-MAP.md` as a file and offer it as a download. Print it as one block only if creating the file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Tell the user to save it to their Project files so every later step, in any chat, can read it.
+- End with the go-ahead question in this fixed form:
+
+  > Go ahead?
+  > A) Yes, run `/grill-the-ask` with your first ask (recommended)
+  > B) Change something in the map (say what)
+  > C) Add a table, join, metric or rule
+
+  Wait for the answer. B or C means make the change, hand back the updated `DATA-MAP.md`, and ask again.
 
 ## Depth
 

@@ -12,6 +12,10 @@ User runs `/review-analysis` on:
 
 Hidden facts: desktop conversion 4.1% and mobile 2.1% did not change. Mobile share rose from 52% to 75%.
 
+## Simulated answers
+
+None needed.
+
 ## Pass
 
 - Verdict: `needs rework` or `ready with caveats` at most. Not `ready`.

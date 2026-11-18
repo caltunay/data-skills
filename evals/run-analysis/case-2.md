@@ -6,6 +6,10 @@ Type: planted flaw. Data is invented.
 
 Rungs 1 to 4 pass. Aggregate: 127,700 paid orders for 2026-Q1. Trusted number from the data map: 120,400 (finance report). Tolerance in the plan: 1%.
 
+## Simulated answers
+
+Round 1: "Test accounts were not excluded in that query. With is_test = false the total is 120,950."
+
 ## Pass
 
 - Computes the gap: 7,300, about 6.1%. Above tolerance.

@@ -19,11 +19,22 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
 3. If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before re-asking anything. A pasted analysis from anyone is also fine: review it as it is. If there is no ladder log or spec, review the claim and the method anyway and note what is missing.
 4. Read the Progress line in Meta, if there is one, and resume from it. A pasted analysis with no Meta is reviewed at standard depth unless the user says otherwise.
 
+## Fresh context: review from the files only
+
+A review in the same context as the analysis is biased by it. Review from the files only: `analysis.md`, `readout.md`, `DATA-MAP.md` and the data. Never from chat memory. If the chat holds something the files do not, it does not count until it is in a file.
+
+- If you can start a subagent with fresh context, you may run the review there, passing only those files. This is optional: never rely on it.
+- At standard and deep depth, the best route is a new chat. In a Claude or ChatGPT Project, the data, `DATA-MAP.md`, `analysis.md` and `readout.md` sit in the Project files, so a new chat in that Project needs nothing attached.
+- A same-chat review is allowed. Keep the files-only stance: re-read the files, do not lean on what was said earlier.
+- Quick depth: a same-chat review is fine.
+- The review always recomputes the 3 to 5 headline numbers by an independent route and spot-checks 1 or 2 rungs (step 5). It checks; it does not rebuild the analysis. Use the code in the "Appendix: Review pack" of `analysis.md` to see how each number was made, then compute it another way.
+
 ## Rules from the disciplines (in case they do not load)
 
 - `question-types`: name the type. Every claim is checked against its ceiling. No "caused" without a randomised experiment or a credible causal design that passed its checks.
 - `assumptions`: flag any high-impact row still `open` when results are reported. Alternatives are required for high-impact rows. Standard and deep depth always show the full 7-column table (id, assumption, why unavoidable, likely alternatives, impact if wrong, how to check, status). Never drop columns.
-- `validation-ladder`: check the ladder log. Each rung has an expected result, an actual result and pass or fail. Reconcile to a trusted number.
+- `viz` (experimental): for each chart, check that the title states a takeaway at or below the ceiling, axes carry units, bars start at zero, uncertainty is shown, there are no dual axes and no 3D, colours are colour-blind safe, and compared panels share a scale. In a readout: at most 3 charts for exec, one annotation on the key moment, image files linked with alt text.
+- `validation-ladder`: check the ladder log. The data-check floor ran at every depth. Each check and rung has an expected result, an actual result and pass or fail. Rungs 2 to 4 compare against an independent path (raw rows or a separate query), not the frame the table was built from. Reconcile to a trusted number.
 
 ## Steps
 
@@ -40,8 +51,10 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
    - Sample: size, selection, survivorship, who is missing.
    - Stats: is there an interval or test? Is the number practically big, not only significant?
    - Spec match: do the results match the analysis table spec (grain, filters, row count)?
-   - Ladder: was each rung run and logged? Can one number be recomputed independently?
-   - Method card: open the `question-types` file for the question type and find the card for the method used. Check the analysis against every item under "Checks that must pass". A check that was not run, or that failed, is an issue, and the claim allowed drops.
+   - Floor and ladder: did the data-check floor run (table audit, one entity across tables, one day, daily series, joins, category totals, assumption checks, reconcile)? Was each rung run and logged? Does each of rungs 2 to 4 compare against an independent path? A rung that compares the table with the frame it was built from tested only the aggregation: report it as weaker than logged.
+   - Method card: open the `question-types` file for the question type and find the card for the method used (if the file will not open, use the compact cards in the `question-types` skill). Check the analysis against every item under "Checks that must pass". A check that was not run, or that failed, is an issue, and the claim allowed drops.
+   - Charts: if the analysis or the readout has charts, apply the `viz` checks to each. Report only the fails.
+   - Review pack: does the "Appendix: Review pack" hold the exact code and source for each headline number? A missing entry is an issue: the number cannot be traced.
 4. **Business review.** Ask what leadership will ask.
    - Decision: what will be done differently because of this? If nothing, why was it run?
    - Size: the effect in money, users or orders per month. Big enough to act on?
@@ -53,22 +66,24 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
    - Next step: what one extra check would change the decision?
    - Scope: does the recommendation cover only what was measured (population, period, metric, place)?
    - Ask match: does the headline answer the question that was asked, or a nearby easier one?
-5. **Claims check.** Quote every sentence whose wording is above the ceiling, and give the allowed wording.
-6. **Assumptions check.** List high-impact rows still `open`.
-7. **Leadership questions.** Write the 3 to 5 questions a sceptical leader will ask, with the best answer the analysis supports. Mark an answer "not supported yet" when it is.
-8. **Readout review.** If there is a draft `readout.md`, review it word by word (see below).
-9. **Verdict:** `ready`, `ready with caveats`, or `needs rework`, with reasons.
+5. **Independent recompute.** Recompute the 3 to 5 headline numbers by a route the analysis did not use (raw rows, or a separate query from the source tables). Spot-check 1 or 2 rungs of the ladder log. Show the numbers side by side. A gap above the tolerance is an issue. This step checks; it does not rebuild the analysis.
+6. **Claims check.** Quote every sentence whose wording is above the ceiling, and give the allowed wording.
+7. **Assumptions check.** List high-impact rows still `open`.
+8. **Leadership questions.** Write the 3 to 5 questions a sceptical leader will ask, with the best answer the analysis supports. Mark an answer "not supported yet" when it is, and name the cheapest way to answer it (one query, a split, a short test, or a person to ask), with its rough effort.
+9. **Readout review.** If there is a draft `readout.md`, review it word by word (see below).
+10. **Verdict:** `ready`, `ready with caveats`, or `needs rework`, with reasons.
 
 ## Readout review
 
 `/run-analysis` writes `readout.md` as a draft. This step makes it final.
 
 1. Read the readout one sentence at a time. For each sentence ask: is the wording at or below the claim ceiling? Does every number match Results and carry its uncertainty? Is every open high-impact assumption in Caveats?
-2. Fix each sentence that fails. Show the change as "was" and "now", with one line why. Example: was "The new page caused the drop." now "Conversion fell after the new page went live. This analysis cannot say why."
+2. Fix each sentence that fails. Show every change as a "was" and "now" pair, with one line why. No exceptions: a summary such as "tightened the wording" is not enough. Example: was "The new page caused the drop." now "Conversion fell after the new page went live. This analysis cannot say why."
 3. Leave sentences that pass unchanged. Do not rewrite for taste.
-4. Check the layout: Answer in 2 lines, Key numbers with uncertainty, What it means, Caveats, Method in 3 lines, Link.
-5. If the verdict is `ready` or `ready with caveats`, set `Status: final` in `readout.md`. If the verdict is `needs rework`, leave it `Status: draft` and say what must happen first.
-6. No readout (quick depth, or a pasted analysis): check the pasted claims the same way. Do not create a readout unless asked.
+4. Check the layout: Answer in 2 lines, Key numbers with uncertainty (at most 5; for an exec audience, move the rest to the Appendix), Charts (at most 3 for exec, each title a takeaway, one annotation, linked image with alt text), What it means, Caveats, Method in 3 lines, Link, Appendix. The readout must suit the audience in Meta. Portable markdown only: at most 3 callouts as blockquotes with a bold label (`> **Answer:**`, `> **Caveat:**`, `> **Ask:**`), bold only for the one takeaway per section, no app-specific macros.
+5. Check the Method section claims only what ran. Compare it with the ladder log and with step 5 of this review. If it says "full validation ladder" or names a check that was weaker than claimed, rewrite it to say exactly what ran.
+6. If the verdict is `ready` or `ready with caveats`, set the status line in `readout.md` to `**Status: FINAL**`. If the verdict is `needs rework`, leave it `**Status: DRAFT**` and say what must happen first.
+7. No readout (quick depth, or a pasted analysis): check the pasted claims the same way. Do not create a readout unless asked.
 
 ## Depth table
 
@@ -77,7 +92,7 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
 | Review | Self-check against the claim ceiling | Technical plus business review | Full review plus leadership questions |
 | Readout | Short answer in chat, checked against the ceiling | `readout.md` checked and marked final | `readout.md` plus appendix, checked and marked final |
 
-Quick: run steps 1, 2 and 5 only, in a few lines. Check the short answer given in the chat against the ceiling.
+Quick: run steps 1, 2, 5 and 6 only, in a few lines. The recompute at quick depth covers the one headline number. Check the short answer given in the chat against the ceiling.
 
 ## Output format (scan-first)
 
@@ -90,8 +105,8 @@ Quick: run steps 1, 2 and 5 only, in a few lines. Check the short answer given i
    - Why it matters: one line, with the size if computable from the numbers given.
    - Check: the exact query, split or calculation to run.
 
-4. Leadership questions with answers.
-5. Readout changes: each "was" and "now" pair, then the readout status (draft or final).
+4. Leadership questions with answers. Each "not supported yet" names the cheapest way to answer it.
+5. Readout changes: a "was" and "now" pair for every sentence changed, then the readout status (draft or final).
 
 ## Precision
 
@@ -110,10 +125,17 @@ Standard and deep: write the Review section of `analysis.md`, save the corrected
 Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, and name the next step.
 
 1. Update the Progress line in `analysis.md` Meta.
-2. Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app, even if you can write files in a sandbox.
-3. Chat app: offer the updated `analysis.md` and `readout.md` as a download. If you cannot, print it as one block. Say: "Save this to your Project files so the next step, in any chat, can read it." For a pasted analysis with no `analysis.md`, the review in the chat is the output. Do not create files unless asked.
+2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
+3. Chat app: create the updated `analysis.md` and `readout.md` as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Save this to your Project files so the next step, in any chat, can read it." For a pasted analysis with no `analysis.md`, the review in the chat is the output. Do not create files unless asked.
 4. Coding agent: the files are already saved under `data-work/`. Say where.
-5. Name the next step: `/retro-analysis`.
+5. End with the go-ahead question, at every depth, quick included. Use this fixed form:
+
+   > Go ahead?
+   > A) Yes, run `/retro-analysis` (recommended)
+   > B) Change something (say what)
+   > C) Add a check, segment or question
+
+   Wait for the answer. A means start the next step. B or C means make the change in this step, hand back the updated file, and ask again.
 
 ## Plan revisions
 

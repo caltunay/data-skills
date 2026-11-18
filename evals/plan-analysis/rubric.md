@@ -15,3 +15,8 @@
 | Start check | Says in one line whether `DATA-MAP.md` and `analysis.md` were found. With no map, offers setup (A) or continue (B) |
 | Chat-app handoff | With no project folder, offers `analysis.md` (and `readout.md` when it exists) as a download at the end and says to save it to Project files |
 | No invented names | Uses no company, product, table or source name the user did not say in this conversation |
+| Go-ahead question | Ends with the fixed go-ahead question at every depth, quick included: "Go ahead? A) Yes, run `<next command>` B) Change something (say what) C) Add a check, segment or question" (v0.3 item 6) |
+| No manual file edits | After the user confirms something, hands back the updated file. Never asks the user to edit a saved file by hand (v0.3 item 4) |
+| Downloads first | In a chat app, creates each file and offers it as a download. Prints a block only if creating the file fails. Never says "I can't save files" when it can (v0.3 item 3) |
+| Real defaults | Every option list has one real recommended choice with a reason (v0.3 item 7) |
+| Card checks copied | The method card's "Checks that must pass" are copied into the success checks at plan time, from the type file or the compact cards. Never deferred to the run |

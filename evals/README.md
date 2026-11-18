@@ -1,14 +1,17 @@
 # Evals
 
-Pre-release check, run by hand by the maintainer.
+Pre-release check, run by hand by the maintainer. A runner (`runner/run.py`, see `runner/README.md`) automates a first pass. It approximates skill loading and does not test triggering, so the manual trigger checks below are still needed.
 
 - Each flow skill has at least 3 cases and a rubric: 2 with planted flaws or ambiguities, 1 clean case that tests precision.
 - Extra cases: `setup-data-work` case 4 (several connectors visible), `grill-the-ask` case 4 (chat app, no project folder), `review-analysis` case 4 (draft readout with one overclaiming sentence), `grilling` case 1 (a non-data vague ask: must not fire).
-- `question-types` has 6 method-choice cases. They grade the method chosen and the checks named, not calculations.
-- Every flow rubric also checks: no connector call before the source is named, the data map check is announced, the chat-app download is offered, and no names the user did not say.
+- v0.3 cases: `run-analysis` case 4 (chat app with a code tool and attached CSVs: must run the checks itself), `run-analysis` case 5 (a zero-day logging gap: must find it before any segment scan), `grill-the-ask` case 5 (a period comparison across a seasonal boundary: must flag seasonality), `retro-analysis` case 4 (must not put analysis rules under Conventions).
+- `reference/signup-drop-claude-ai.md`: what a good manual run of the sign-up example caught, and what v0.3 fixed. Not graded by the runner.
+- `question-types` has 8 method-choice cases (6 causal, 2 predictive). They grade the method chosen and the checks named, not calculations.
+- Every flow rubric also checks: no connector call before the source is named, the data map check is announced, the chat-app download is offered, no names the user did not say, the go-ahead question at the end, no manual file edits, and downloads before printed blocks.
 - Run each case in Claude Code, Codex, Gemini CLI and claude.ai. Record results in `results/<date>-<agent>.md`.
 - Then run 3 real asks on public data, end to end.
 - Also check triggering: user-invoked skills must not fire on their own, and disciplines must fire when they should.
+- Every case has a "Simulated answers" section: what the user says in later turns, or "None needed". The runner plays them. By hand, use them as your replies.
 - All data in this folder is invented. One domain only: an online shop and a subscription app.
 
 ## Chat-app tests

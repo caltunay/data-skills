@@ -10,6 +10,10 @@ All data-skills are installed. No slash command is used.
 
 "Can you help me sort out the team offsite? I'm not sure where to start."
 
+## Simulated answers
+
+None needed.
+
 ## Pass
 
 - `grilling` does not apply. The agent answers as it normally would.

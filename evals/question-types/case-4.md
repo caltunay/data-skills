@@ -6,6 +6,10 @@ Type: method choice. Data is invented. Grade the method chosen and the checks na
 
 "We redesigned the sign-up page for everyone on 10 September. No holdout. We have daily sign-ups for two years. Did the redesign increase sign-ups?"
 
+## Simulated answers
+
+None needed.
+
 ## Pass
 
 - Question type: causal, with a weak design.

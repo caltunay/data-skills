@@ -6,6 +6,10 @@ Type: clean. Data is invented.
 
 Quick depth. Plan: count paid orders in October 2026, UTC, test accounts excluded. Rung 1 (order 2210: one row, paid, 31 Oct 23:40 UTC) passes. Total 41,820. Trusted number 41,900. Tolerance 1%.
 
+## Simulated answers
+
+None needed. The Input holds the pasted results.
+
 ## Pass
 
 - Computes the gap: 80, about 0.2%. Within tolerance. Reports rung 5 as pass.

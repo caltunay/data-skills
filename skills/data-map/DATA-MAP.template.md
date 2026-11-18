@@ -21,10 +21,12 @@ Type: warehouse, lake, sheet, file, API, cube. Access mode: connected or hand-ov
 
 ## 3. Joins
 
-| left | right | keys | safe or trap | note | verified | source |
-|---|---|---|---|---|---|---|
-| orders | customers | orders.customer_id = customers.customer_id | safe | many to one | 2026-01-01 | setup |
-| orders | order_items | order_id | trap | one to many. Fans out order-level amounts | 2026-01-01 | setup |
+| left | right | keys | safe or trap | note | check status | verified | source |
+|---|---|---|---|---|---|---|---|
+| orders | customers | orders.customer_id = customers.customer_id | safe | many to one | unverified | 2026-01-01 | setup |
+| orders | order_items | order_id | trap | one to many. Fans out order-level amounts | unverified | 2026-01-01 | setup |
+
+Check status: every join starts as `unverified`, even when the schema or the user says it is safe. It becomes `checked` only after a query measured the key match rate and the fan-out, and the note says what the query found.
 
 ## 4. Metrics
 
