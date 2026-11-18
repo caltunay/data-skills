@@ -48,6 +48,8 @@
 44. CI runs the self-check on every pull request and push. The private blocklist comes from a repository secret. A published release attaches the ZIPs by itself.
 45. The eval runner approximates skill loading and grades with a judge model. It does not test triggering. Keys come from the environment only.
 46. Contributor docs and templates carry the hard rules, so outside contributions meet them by default.
+47. Validation has a data-check floor at every depth, quick included: table audit, one real entity across tables, one day, the daily series, join checks, category totals, assumption checks and the reconcile. Quick gets a compact form, never a skip. The daily series runs before any segment scan on a drop.
+48. Ladder rungs 2 to 4 test the data against an independent path (raw rows or a separate query), never the frame the table was built from. The review recomputes the headline numbers by an independent route as a standard step.
 
 ## Build decisions
 
@@ -143,6 +145,12 @@ B65. Runner defaults. Anthropic default model is `claude-opus-5-5`; OpenAI needs
 B66. Runner safety. Keys are read by the SDKs from the environment; the script never touches them. `--dry-run` sends nothing. A real run prints the estimate and needs the word "yes" (or `--yes`). A full dry run today: 45 cases, 68 user turns.
 B67. Every eval case now has a "Simulated answers" section (the user's later turns, or "None needed"). Self-check 20 tests for it. The runner was tested in dry-run mode only: this session has no API key, so no real run was made and `evals/results/` is still empty.
 B68. Finish (v0.2). The README marks all seven v0.2 skills **experimental** in one section, and each of their files carries "Experimental (v0.2)." Self-check 24 tests both. The self-check now runs 24 checks and covers every new skill, the examples, the runner, the workflows, the templates and the manifests.
+### v0.3 fix pass
+
+B69. Setup (v0.3). Work stays on branch `v0.2`. Design decisions 47 onward, build decisions B69 onward. `FIXES-v0.3.md` added to `.gitignore` and to the self-check list of private files. `.blocklist` created in the session only.
+B70. Floor and ladder (fix A, items 1 and 2). The floor (8 checks) sits in front of the ladder. Options: merge the floor into the 5 rungs, or keep both. Reason: the floor checks the source tables, the rungs check the built table; merging hid the source checks at quick depth, which is the exact gap the manual run found. At quick depth, floor checks 2, 3 and 8 stand in for rungs 1, 2 and 5, so no work is done twice. The ladder log in `analysis.template.md` gains rows F1 to F7, and rung 5 is F8. SPEC section 11 is split into 11.1 (floor) and 11.2 (rungs).
+B71. Hand-over batching (fix A, item 1). Check queries are grouped (G1, G2) with one paste per group; each query keeps its own number, purpose line and expected result. Options: one big union query, or groups of small ones. Reason: small queries stay readable and a failure points at one check.
+B72. Review recompute (fix A, item 2). `/review-analysis` gained step 5, "Independent recompute", at every depth (quick: the one headline number). Later steps were renumbered.
 
 ## Questions for Cenan
 

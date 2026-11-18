@@ -1,6 +1,8 @@
-# data-skills: spec (v0.1)
+# data-skills: spec (v0.3)
 
 v0.1 adds: connector rules, data map check, chat-app handoff, readout, progress tracker, method cards for all question types, neutral example domain. See section 19, decisions 21 to 32.
+
+v0.2 adds the experimental skills in section 20. v0.3 is a fix pass from a full manual run: see section 21 and decisions 47 onward.
 
 - Repo: `caltunay/data-skills`
 - License: MIT, unless an upstream license we borrow from requires otherwise.
@@ -32,7 +34,7 @@ Inspired by `mattpocock/skills` (structure, flow, user-invoked vs model-invoked)
 1. **Clarify first.** Clarification is the most important part of DSA work. Ask before you assume.
 2. **Assume as little as possible.** When an assumption is unavoidable, state it, and give the most likely alternatives and their impact.
 3. **Epicycle at every step.** Set an expectation, collect information, compare the expectation to the data, revise.
-4. **Validation ladder.** One entity, then one entity-day, then many entities, then aggregates, then reconcile to a trusted number. Never jump straight to the final query.
+4. **Validation ladder.** A data-check floor at every depth, then one entity, one entity-day, many entities, aggregates, and reconcile to a trusted number. Every check tests the data against an independent path. Never jump straight to the final query.
 5. **Claim ceilings.** A claim never goes above what its method supports. No "caused" without a causal design.
 6. **Easy solution first.** Try the simplest method that could answer the question.
 7. **Simplicity and surgical changes.** Minimum code. Touch only what you must.
@@ -122,7 +124,7 @@ When `/run-analysis` or `/review-analysis` finds the plan cannot hold (for examp
 | Grill | 1 round, max 3 questions | Rounds until clear | Rounds until clear, plus stakeholder prep questions |
 | Assumptions | Inline list | Table | Table, alternatives for every high-impact row |
 | Plan | One line: method + success check | 2 to 4 options, chosen plan | Options, chosen plan, power or MDE where relevant |
-| Ladder | One entity check + reconcile | Full ladder | Full ladder + alternative specification |
+| Ladder | Compact data-check floor (never skipped) | Full floor + full ladder | Full floor + full ladder + alternative specification |
 | Review | Self-check against claim ceiling | Technical + business review | Full review + leadership questions |
 | Readout | Short answer in chat | `readout.md` | `readout.md` plus appendix |
 | Files | None | `analysis.md`, `readout.md` | Full analysis folder |
@@ -378,19 +380,39 @@ Exploratory outputs are hypotheses, never findings.
 
 ## 11. Validation ladder
 
-1. **One entity:** follow one customer, order or account end to end. Check every column by hand.
-2. **One entity-day:** one entity over one day or period. Check the time logic.
-3. **Many entities:** a small sample. Check duplicates, nulls and join fan-out (row counts before and after each join).
-4. **Aggregates:** the full query. Check totals, distributions and edge periods.
+### 11.1 Data-check floor (every depth)
+
+Quick depth gets a compact version (one small query per check, results in one table) but never skips it. Each check states its expected result first.
+
+1. **Table audit** for each table used: row count; distinct keys vs rows (duplicates); null rate of every column used; min and max dates (coverage, future dates); distinct values of every category column used (flag unexpected labels).
+2. **One real entity across tables:** pick a specific id and show its rows in every table used. Check the values make sense (for example, sign-up before first order).
+3. **One day, all entities:** the total for one day, in a plausible range.
+4. **Daily series across the full window:** gaps, spikes, zero days. Mandatory for any "X dropped" question, before any segment scan, because a logging break is the most common cause of a drop.
+5. **Join checks:** row counts before and after each join, key match rate (orphans), fan-out.
+6. **Category totals** sum to the overall total.
+7. **Assumption checks:** every assumption a query can test gets one (for example, an hour-of-day distribution for a time zone assumption).
+8. **Reconcile** to the trusted number, saying whether the raw or the cleaned count should match, and why.
+
+In hand-over mode, batch the checks into numbered groups so the user pastes once per group, not once per query.
+
+### 11.2 Ladder rungs (standard and deep)
+
+1. **One entity:** follow one customer, order or account end to end. Check every column by hand against its raw rows.
+2. **One entity-day:** recompute one entity's value for one day or period from the raw rows and compare. Check the time logic.
+3. **Many entities:** a sample of 10 to 100. Recompute each from the source with a separate query and compare. Check duplicates, nulls and join fan-out (row counts before and after each join).
+4. **Aggregates:** compute the headline totals a second way, from the source tables without the analysis table, and compare. Check distributions and edge periods.
 5. **Reconcile:** compare to a trusted number from `DATA-MAP.md` or the stakeholder. Explain any gap above a stated tolerance.
 
-Before each rung, state the expected result. After it, record the actual result and pass or fail in `analysis.md`. Quick depth runs rung 1 and rung 5 only.
+Rungs 2 to 4 must test the data, not only the aggregation. A rung that compares the analysis table with the frame it was built from is not a pass.
+
+Before each check, state the expected result. After it, record the actual result and pass or fail in `analysis.md`. Quick depth runs the compact floor; its checks 2, 3 and 8 stand in for rungs 1, 2 and 5. Standard runs the full floor and all five rungs. Deep adds an alternative specification.
 
 ---
 
 ## 12. Review standard (`/review-analysis`)
 
 - **Technical:** data, joins, filters, method, tests, ladder log, analysis table spec match, uncertainty.
+- **Independent recompute (every depth):** recompute the 3 to 5 headline numbers by a route the analysis did not use, and spot-check 1 or 2 rungs. The review checks; it does not rebuild the analysis.
 - **Business:** does it answer the decision? Is the effect practically meaningful? Guardrails, cost and risk, what a sceptical leader will ask.
 - **Claims:** every claim checked against the question-type ceiling.
 - **Assumptions:** any high-impact open row flagged.

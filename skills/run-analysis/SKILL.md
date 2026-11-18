@@ -32,10 +32,10 @@ When you stop, say what you are waiting for and set the Progress line, for examp
 
 ## Rules from the disciplines (in case they do not load)
 
-- `validation-ladder`: one entity, one entity-day, many entities, aggregates, reconcile to a trusted number. State the expected result before each rung. Record actual and pass or fail.
+- `validation-ladder`: the data-check floor runs at every depth, quick included (table audit, one real entity across tables, one day, daily series, join checks, category totals, assumption checks, reconcile). Then one entity, one entity-day, many entities, aggregates, reconcile to a trusted number. State the expected result before each check. Record actual and pass or fail. Rungs 2 to 4 compare against an independent path (raw rows or a separate query), never against the frame the table was built from.
 - `run-or-hand-over`: run or save if you can, else offer a download, else print it and wait. Numbered queries (`Q2.1`), one purpose line, expected result first, "Paste the result here." Never call a data tool before the user names the source.
 - `shaping-data`: grain first. Count rows before and after every join. Apply filters from the data map. Named steps.
-- `data-audit`: check shape, nulls, duplicates, outliers, date coverage, and validate against a trusted number. Write cleaning choices down.
+- `data-audit`: check shape, nulls, duplicates, outliers, date coverage (with the daily series), and validate against a trusted number. Write cleaning choices down.
 - `stats-tests`: choose the test by data type and design. Report direction, magnitude and uncertainty. Correct for multiple comparisons.
 - `question-types`: word every claim at or below the ceiling. One file per question type holds the method cards. Load the card for the chosen method and apply its "Checks that must pass". No "caused" without a randomised experiment or a credible causal design that passed its checks.
 - `data-map`: read it before writing queries. Flag entries older than 90 days or contradicted by data, then ask.
@@ -44,11 +44,20 @@ When you stop, say what you are waiting for and set the Progress line, for examp
 
 ## Steps
 
-Set status `running`. Number the steps in the Progress line (step 1 of 7, and so on). Quick depth runs rung 1, the query, and step 5, then gives the short answer. No step 7.
+Set status `running`. Number the steps in the Progress line (step 1 of 7, and so on). Quick depth runs the compact floor (step 1), the query, and step 5, then gives the short answer. No step 7. The floor is never skipped.
 
-1. **Audit** each new table or extract (apply `data-audit`).
+1. **Data-check floor** for every table used (apply `data-audit` and `validation-ladder`). Each check states its expected result first:
+   1. Table audit: row count; distinct keys against rows (duplicates); null rate of every column used; min and max dates (coverage, future dates); distinct values of every category column used (flag unexpected labels).
+   2. One real entity across tables: pick a specific id and show its rows in every table used. Do the values make sense (for example, sign-up before first order)?
+   3. One day, all entities: the total for one day, in a plausible range.
+   4. Daily series across the full window: gaps, spikes, zero days. For any "X dropped" question this is mandatory and runs before any segment scan. A logging break is the most common cause of a drop.
+   5. Join checks: row counts before and after each join, key match rate (orphans), fan-out.
+   6. Category totals sum to the overall total.
+   7. Assumption checks: every assumption a query can test gets one (for example, an hour-of-day distribution for a time zone assumption).
+   8. Reconcile to the trusted number (done in step 5).
+   Quick depth: the same checks in compact form, one small query each, results in one table. In hand-over mode, batch the checks into numbered groups so the user pastes once per group, not once per query.
 2. **Build** the analysis table from the spec, using the tool file in `shaping-data` for the tool in use. Save queries as numbered files in `queries/` (`q1-1-one-entity.sql`, `q1-2-one-entity-day.sql`, and so on).
-3. **Climb the ladder, rungs 1 to 4.** Before each rung, write the expected result. Run the check. Write the actual and pass or fail. A fail means find the cause before going up. If the fix needs a choice (for example, a rule for duplicates), propose it, add an assumption row, and ask.
+3. **Climb the ladder, rungs 1 to 4.** Before each rung, write the expected result. Run the check. Write the actual and pass or fail. Rungs 2 to 4 test the data, not only the aggregation: recompute from raw rows or with a separate query that does not use the analysis table or the frame it was built from, and compare. A fail means find the cause before going up. If the fix needs a choice (for example, a rule for duplicates), propose it, add an assumption row, and ask.
 4. **Run the method.** Open the `question-types` file for the question type and load the method card named in the plan. Apply every item under "Checks that must pass" and log each as pass or fail in Results. If a check fails, the claim allowed drops: say to what.
 5. **Reconcile (rung 5).** Compare the headline number to the trusted number from the plan. Compute the gap and compare it with the stated tolerance. Above tolerance: record rung 5 as fail, do not report the number as final, and test likely causes one small check at a time. Never explain a gap with an untested story.
 6. **Write findings.** Each finding gets direction, magnitude, uncertainty, and the claim ceiling applied. Update assumption statuses as evidence arrives. List high-impact rows still `open` beside the findings.
@@ -71,7 +80,7 @@ Every sentence stays at or below the claim ceiling. The draft is not final: `/re
 
 | | Quick | Standard | Deep |
 |---|---|---|---|
-| Ladder | One entity check plus reconcile | Full ladder | Full ladder plus alternative specification |
+| Ladder | Compact data-check floor (never skipped) | Full floor plus full ladder | Full floor, full ladder, plus alternative specification |
 | Readout | Short answer in chat | `readout.md` | `readout.md` plus appendix |
 | Files | None | `analysis.md`, `readout.md` | Full analysis folder |
 
@@ -92,7 +101,7 @@ Show aggregates by default. Ask before saving row-level data anywhere. Put chart
 ## Output
 
 - Standard and deep: update Results in `analysis.md` (ladder log, method checks, findings) and write the draft `readout.md`. This step sets status `running` when it starts and leaves it at `running`. Only `/review-analysis` sets `reviewed`.
-- Quick: print the answer, the one check and its result, the ceiling, and open assumptions. No file.
+- Quick: print the answer, the compact floor table, the ceiling, and open assumptions. No file.
 - Apply `run-or-hand-over` for saving. Chat app: see End.
 
 ## End (every flow step)
@@ -113,6 +122,8 @@ The goal is met: the ladder is complete for the depth, the success checks pass (
 
 - Do not jump to the final query.
 - Do not report a number that failed a rung.
+- Do not skip the data-check floor, at any depth.
+- Do not run a segment scan on a drop before the daily series check.
 - Do not write causal wording without a causal design.
 - Do not clean data silently.
 - Do not stop between steps unless you are waiting for a paste or an answer.

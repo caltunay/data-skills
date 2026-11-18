@@ -24,7 +24,7 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
 - `question-types`: name the type. Every claim is checked against its ceiling. No "caused" without a randomised experiment or a credible causal design that passed its checks.
 - `assumptions`: flag any high-impact row still `open` when results are reported. Alternatives are required for high-impact rows. Standard and deep depth always show the full 7-column table (id, assumption, why unavoidable, likely alternatives, impact if wrong, how to check, status). Never drop columns.
 - `viz` (experimental): for each chart, check that the title states a takeaway at or below the ceiling, axes carry units, bars start at zero, uncertainty is shown, there are no dual axes and no 3D, colours are colour-blind safe, and compared panels share a scale.
-- `validation-ladder`: check the ladder log. Each rung has an expected result, an actual result and pass or fail. Reconcile to a trusted number.
+- `validation-ladder`: check the ladder log. The data-check floor ran at every depth. Each check and rung has an expected result, an actual result and pass or fail. Rungs 2 to 4 compare against an independent path (raw rows or a separate query), not the frame the table was built from. Reconcile to a trusted number.
 
 ## Steps
 
@@ -41,7 +41,7 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
    - Sample: size, selection, survivorship, who is missing.
    - Stats: is there an interval or test? Is the number practically big, not only significant?
    - Spec match: do the results match the analysis table spec (grain, filters, row count)?
-   - Ladder: was each rung run and logged? Can one number be recomputed independently?
+   - Floor and ladder: did the data-check floor run (table audit, one entity across tables, one day, daily series, joins, category totals, assumption checks, reconcile)? Was each rung run and logged? Does each of rungs 2 to 4 compare against an independent path? A rung that compares the table with the frame it was built from tested only the aggregation: report it as weaker than logged.
    - Method card: open the `question-types` file for the question type and find the card for the method used. Check the analysis against every item under "Checks that must pass". A check that was not run, or that failed, is an issue, and the claim allowed drops.
    - Charts: if the analysis or the readout has charts, apply the `viz` checks to each. Report only the fails.
 4. **Business review.** Ask what leadership will ask.
@@ -55,11 +55,12 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
    - Next step: what one extra check would change the decision?
    - Scope: does the recommendation cover only what was measured (population, period, metric, place)?
    - Ask match: does the headline answer the question that was asked, or a nearby easier one?
-5. **Claims check.** Quote every sentence whose wording is above the ceiling, and give the allowed wording.
-6. **Assumptions check.** List high-impact rows still `open`.
-7. **Leadership questions.** Write the 3 to 5 questions a sceptical leader will ask, with the best answer the analysis supports. Mark an answer "not supported yet" when it is.
-8. **Readout review.** If there is a draft `readout.md`, review it word by word (see below).
-9. **Verdict:** `ready`, `ready with caveats`, or `needs rework`, with reasons.
+5. **Independent recompute.** Recompute the 3 to 5 headline numbers by a route the analysis did not use (raw rows, or a separate query from the source tables). Spot-check 1 or 2 rungs of the ladder log. Show the numbers side by side. A gap above the tolerance is an issue. This step checks; it does not rebuild the analysis.
+6. **Claims check.** Quote every sentence whose wording is above the ceiling, and give the allowed wording.
+7. **Assumptions check.** List high-impact rows still `open`.
+8. **Leadership questions.** Write the 3 to 5 questions a sceptical leader will ask, with the best answer the analysis supports. Mark an answer "not supported yet" when it is.
+9. **Readout review.** If there is a draft `readout.md`, review it word by word (see below).
+10. **Verdict:** `ready`, `ready with caveats`, or `needs rework`, with reasons.
 
 ## Readout review
 
@@ -79,7 +80,7 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
 | Review | Self-check against the claim ceiling | Technical plus business review | Full review plus leadership questions |
 | Readout | Short answer in chat, checked against the ceiling | `readout.md` checked and marked final | `readout.md` plus appendix, checked and marked final |
 
-Quick: run steps 1, 2 and 5 only, in a few lines. Check the short answer given in the chat against the ceiling.
+Quick: run steps 1, 2, 5 and 6 only, in a few lines. The recompute at quick depth covers the one headline number. Check the short answer given in the chat against the ceiling.
 
 ## Output format (scan-first)
 

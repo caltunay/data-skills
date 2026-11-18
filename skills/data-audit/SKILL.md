@@ -21,7 +21,7 @@ Inventory the source, check its shape, nulls, duplicates, outliers and dates, an
 6. **Cardinality.** Distinct count per column. Is the key unique? Does a low-cardinality column have unexpected values?
 7. **Duplicates.** On the key, and on the whole row. Decide the rule for which to keep.
 8. **Outliers.** Min, max, percentiles. Negative amounts, future dates, impossible values. Check before removing. An outlier can be the story.
-9. **Date coverage.** First and last date, gaps, partial first or last periods, late-arriving data. Time zone.
+9. **Date coverage.** First and last date, gaps, partial first or last periods, late-arriving data. Time zone. Plot or list the daily series across the full window: a zero day or a gap is often a logging break, not a real change.
 10. **Distribution.** Counts by category, a histogram for numbers. Look for spikes and cliffs.
 11. **External validation.** Compare a total with a trusted number from the data map or the stakeholder. State the tolerance. Explain gaps above it.
 
@@ -43,13 +43,17 @@ A short table: check, what you found, what you did about it.
 
 ## Running the checks
 
-Give small, numbered check queries with the expected result stated first. Apply the `run-or-hand-over` skill when the user must run them. Apply the `validation-ladder` skill for the order of checks on a built table.
+Give small, numbered check queries with the expected result stated first. Apply the `run-or-hand-over` skill when the user must run them. In hand-over mode, batch them into numbered groups so the user pastes once per group, not once per query. Apply the `validation-ladder` skill for the order of checks on a built table.
+
+## Floor at every depth
+
+The data-check floor from the `validation-ladder` skill runs at every depth, quick included. Its first check is this audit in short form, for each table used: row count; distinct keys against rows (duplicates); null rate of every column used; min and max dates (coverage, future dates); distinct values of every category column used (flag unexpected labels). Then: one real entity across tables, one day for all entities, the daily series across the full window (gaps, spikes, zero days), join checks, category totals against the overall total, a check for every testable assumption, and the reconcile. State the expected result first for each.
 
 ## Depth
 
-- Quick: shape, a look at rows, and the external validation only.
-- Standard: the full checklist.
-- Deep: the full checklist plus a second extract or source to cross-check.
+- Quick: the compact floor (one small query per check, results in one table). Never skipped.
+- Standard: the full checklist above plus the floor.
+- Deep: the full checklist and the floor, plus a second extract or source to cross-check.
 
 ## Names and sources
 

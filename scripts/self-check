@@ -189,7 +189,7 @@ else
 fi
 
 # 22 private files are not tracked
-out=$(git ls-files 2>/dev/null | grep -E '(^|/)(\.blocklist|FIXES-v0\.1\.md|BUILD-v0\.2\.md)$')
+out=$(git ls-files 2>/dev/null | grep -E '(^|/)(\.blocklist|FIXES-v0\.1\.md|BUILD-v0\.2\.md|FIXES-v0\.3\.md)$')
 [ -z "$out" ] && ok "private files are not tracked" || bad "private files tracked" "$out"
 
 exit $fail

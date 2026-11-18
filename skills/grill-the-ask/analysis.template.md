@@ -64,13 +64,22 @@ Status: open, confirmed or rejected. Alternatives are required for high-impact r
 
 ### Ladder log
 
-| rung | expected | actual | pass or fail |
+Data-check floor first (every depth), then the rungs. Rungs 2 to 4 compare against an independent path (raw rows or a separate query).
+
+| check | expected | actual | pass or fail |
 |---|---|---|---|
+| F1 table audit (rows, duplicate keys, nulls, date range, category labels) | | | |
+| F2 one real entity across tables | | | |
+| F3 one day, all entities | | | |
+| F4 daily series (gaps, spikes, zero days) | | | |
+| F5 join checks (row counts, match rate, fan-out) | | | |
+| F6 category totals sum to overall | | | |
+| F7 assumption checks | | | |
 | 1 one entity | | | |
 | 2 one entity-day | | | |
 | 3 many entities | | | |
 | 4 aggregates | | | |
-| 5 reconcile | | | |
+| 5 reconcile (F8): raw or cleaned count, and why | | | |
 
 ### Method checks
 
