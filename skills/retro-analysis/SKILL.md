@@ -21,7 +21,7 @@ The data map should get better with every analysis. This is not a memory dump.
 
 ## Rules from the disciplines (in case they do not load)
 
-- `data-map`: change the map only through approved retro changes. Each entry has `verified: YYYY-MM-DD` and `source: analyses/<slug>`. Flag entries older than 90 days or contradicted by data, then ask. Check the format version and offer a migration if old.
+- `data-map`: change the map only through approved retro changes. Conventions hold style only; analysis rules go in Rules or Gotchas; no duplicates across sections. Each entry has `verified: YYYY-MM-DD` and `source: analyses/<slug>`. Flag entries older than 90 days or contradicted by data, then ask. Check the format version and offer a migration if old.
 
 ## Steps
 
@@ -33,19 +33,25 @@ The data map should get better with every analysis. This is not a memory dump.
    - a new **trusted number** (value, period, where it comes from)
    - a **gotcha** from a mistake that cost time
    - a **glossary** term
-   - a **convention** the team settled
+   - a **convention** the team settled (style only: SQL, Python, naming)
+   - a join that this run **checked** by query: propose changing its status from `unverified` to `checked`, with what the query found
 2. Check existing entries: did the data contradict any? Is any older than 90 days and re-confirmed by this work? Propose updating its `verified` date.
-3. Propose changes as a short numbered list. Each one: section, the exact entry, why it is worth keeping.
-4. Show a diff (old and new text) for each change.
-5. The user approves each change: yes, no or edit. Do not apply unapproved changes.
-6. Apply the approved changes, with today's date as `verified` and `source: analyses/<slug>`.
-7. Record the proposals and the decisions in the Retro section of `analysis.md`. Set status `retro done` and update the Progress line.
+3. Put each entry in the right section:
+   - Conventions hold style only: SQL style, Python style, naming. Nothing else.
+   - Analysis rules (a filter, an exclusion, a dedup rule, a time zone rule) go in Rules. Mistakes and traps go in Gotchas.
+   - One fact goes in one section. No duplicate entries across sections. If a fact fits two, pick one and leave the other out.
+4. Propose changes as a short numbered list. Each one: section, the exact entry, and why it is worth keeping. The reason must be true for this run: quote the line in `analysis.md` that shows it (a failed rung, a Plan revisions row, a review issue). If nothing in this run shows it cost time or changed a number, do not say it did.
+5. Show a diff (old and new text) for each change.
+6. The user approves each change: yes, no or edit. Do not apply unapproved changes.
+7. Apply the approved changes, with today's date as `verified` and `source: analyses/<slug>`.
+8. Record the proposals and the decisions in the Retro section of `analysis.md`. Set status `retro done` and update the Progress line.
 
 ## Keep out
 
 - One-off details of a single analysis.
 - Row-level data, credentials, personal data.
 - Opinions. Entries are facts the data supports.
+- Reasons that did not happen in this run. "This cost a rung" only if the ladder log shows a failed rung for it.
 
 ## Output
 

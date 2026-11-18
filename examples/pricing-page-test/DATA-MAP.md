@@ -21,9 +21,9 @@ Entries older than 90 days, or contradicted by data, must be re-confirmed before
 
 ## 3. Joins
 
-| left | right | keys | safe or trap | note | verified | source |
-|---|---|---|---|---|---|---|
-| assignments | orders | visitor_id | trap | one to many. 166 of 961 ordering visitors have more than one order. Aggregate orders to the visitor first | 2026-02-25 | analyses/2026-02-24-pricing-page-test |
+| left | right | keys | safe or trap | note | check status | verified | source |
+|---|---|---|---|---|---|---|---|
+| assignments | orders | visitor_id | trap | one to many. 166 of 961 ordering visitors have more than one order. Aggregate orders to the visitor first | checked | 2026-02-25 | analyses/2026-02-24-pricing-page-test |
 
 ## 4. Metrics
 

@@ -18,7 +18,7 @@ Outside the flow, stay silent if there is no map. Read it before writing queries
 1. Open `DATA-MAP.md` if it exists. The map is optional and partial.
    - **Inside the flow** (a flow command is running): say in one line whether a map was found. If there is none, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Offer it once per analysis.
    - **Outside the flow:** if there is no map, stay silent. Do not mention the map, and do not suggest setup.
-2. Use these sections: Sources (dialect, access mode), Tables (grain, keys), Joins (safe joins and fan-out traps), Metrics (definitions, trusted numbers), Rules (mandatory filters), Gotchas, Glossary, Conventions.
+2. Use these sections: Sources (dialect, access mode), Tables (grain, keys), Joins (safe joins and fan-out traps, each with a check status: `unverified` until a query measured its match rate and fan-out, then `checked`), Metrics (definitions, trusted numbers), Rules (mandatory filters), Gotchas, Glossary, Conventions (style only: SQL, Python, naming; analysis rules go in Rules or Gotchas).
 3. Apply Rules filters in every query. Say which ones you applied.
 4. Use Conventions over the default styles.
 

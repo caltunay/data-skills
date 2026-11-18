@@ -60,6 +60,8 @@
 56. The reconcile check names the count that must match the trusted number (raw or cleaned) and why. Every spec correction is a dated Plan revisions row. Requester and date in Meta are never blank.
 57. The readout has at most 5 key numbers, strict for an exec audience; the rest go to an Appendix. The default readout serves the audience set in grilling. `/storytell` is for other audiences and formats.
 58. The readout's Method section claims only what ran. The review shows every changed sentence as a "was" and "now" pair, and every "not supported yet" leadership answer names the cheapest way to answer it.
+59. Setup gives no git advice in chat apps. Every join in the data map starts `unverified` until a query checks it. The dialect question offers one real option per engine.
+60. Retro puts each entry in the right section: Conventions hold style only, analysis rules go in Rules or Gotchas, and nothing is duplicated. Every reason it gives must be true for this run.
 
 ## Build decisions
 
@@ -174,6 +176,8 @@ B82. Plan revisions (fix D, item 11). `/run-analysis` gained a "Spec corrections
 B83. Meta (fix D, item 12). Requester and Date placeholders say "never blank". `/grill-the-ask` asks for the requester in round 1 when the ask does not say, accepts a role, and never guesses a name (SPEC section 3 rule). `/plan-analysis` step 1 fills them if an older file left them blank.
 B84. Readout limits (fix E, items 13 and 14). Both `readout.template.md` copies gained "At most 5 numbers", a Method line that bans "full validation ladder" unless every rung ran against an independent path, and a section 7 "Appendix". `/run-analysis` and `/review-analysis` check both. Options: cap at 5 for exec only, or for every audience. Reason: the brief names exec; the template says "at most 5" for all, strict for exec, because a long number table hurts any reader and the Appendix keeps the detail.
 B85. Review pairs and cheapest answers (fix E, items 15 and 16). "Every change as a was and now pair, no exceptions" in the readout review and the output format. Leadership questions name the cheapest way to answer (one query, a split, a short test, or a person to ask) with rough effort. Readout review steps renumbered (new step 5: Method check).
+B86. Setup (fix F, items 17 to 19). Git policy question and the `.gitignore` step are coding-agent only; the chat-app line that handed over a `.gitignore` entry was removed. The Joins table in `DATA-MAP.template.md` gained a "check status" column (`unverified` or `checked`); both example maps were updated and their joins marked `checked`, because each was measured by a query in its analysis. Options: reuse the `verified` date column, or add a status. Reason: `verified` is a date of confirmation by anyone; the brief needs proof by query. Format line stays `format: v1`; a map with no status column is read as all `unverified`, so no migration is forced. The dialect question lists A to F (Postgres, SQL Server, BigQuery, Snowflake, Databricks, other). Default: the engine the user's words point to, else A, with the first check query as the safety net (fix C, item 7 needs a real default).
+B87. Retro (fix F, items 20 and 21). New step 3 sorts entries into sections (Conventions style only; rules to Rules; traps to Gotchas; one fact, one section). Step 4 requires each reason to quote the line in `analysis.md` that shows it. A checked join can move from `unverified` to `checked`. `data-map` restates the section rule.
 
 ## Questions for Cenan
 

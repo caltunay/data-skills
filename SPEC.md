@@ -190,7 +190,7 @@ Copy-paste form for queries: numbered (`Q2.1`, `Q2.2`), each with one purpose li
 | `/plan-analysis` | User runs it after grilling | `analysis.md` | 2 to 4 options with trade-offs, then the chosen plan. Writes the analysis table spec. Sets success checks. Records decisions already made; does not invent new ones. | `analysis.md`: Plan, Analysis table spec | assumptions, question-types, shaping-data |
 | `/run-analysis` | User runs it after the plan | `analysis.md`, `DATA-MAP.md` | Builds the analysis table from the spec, climbing the validation ladder. States the expected result before each query. Audits the data. Runs the method for the question type. Asks instead of assuming. Adds plan revisions when needed. States its goal up front and keeps going until it is met. Writes a draft readout. | `analysis.md`: Results, Progress; `readout.md` (draft); `queries/`; `outputs/` | validation-ladder, run-or-hand-over, shaping-data, data-audit, stats-tests, question-types, data-map, assumptions |
 | `/review-analysis` | User runs it on a finished analysis (theirs or anyone's) | `analysis.md` or any pasted analysis | Technical review and business review. Checks claims against the ceiling. Checks assumption status. Gives a verdict. Writes questions leadership will ask, with answers. Says "no material issues" when that is true. Reviews the draft readout word by word, fixes claims above the ceiling, and marks it final. | `analysis.md`: Review; `readout.md` (final) | question-types, assumptions, validation-ladder |
-| `/retro-analysis` | User runs it at the end | `analysis.md`, `DATA-MAP.md` | Proposes dated changes to the data map: new joins, traps, filters, definitions, trusted numbers, gotchas. Shows a diff. The user approves each change. Not a memory dump. | `DATA-MAP.md` (approved changes only) | data-map |
+| `/retro-analysis` | User runs it at the end | `analysis.md`, `DATA-MAP.md` | Proposes dated changes to the data map: new joins, traps, filters, definitions, trusted numbers, gotchas. Puts each in the right section (Conventions are style only) with no duplicates. Each reason must be true for this run, shown by a line in `analysis.md`. Shows a diff. The user approves each change. Not a memory dump. | `DATA-MAP.md` (approved changes only) | data-map |
 
 ### 6.2 Disciplines (model-invoked, v0)
 
@@ -249,12 +249,12 @@ One file with fixed sections. The first line is the format version: `format: v1`
 Sections:
 1. **Sources:** name, type (warehouse, lake, sheet, file, API, cube), dialect (Postgres, SQL Server, BigQuery, Snowflake...), access mode (connected or hand-over).
 2. **Tables:** table, what one row means (grain), primary key, key columns, notes.
-3. **Joins:** safe joins with keys, fan-out traps.
+3. **Joins:** safe joins with keys, fan-out traps, and a check status: `unverified` until a query checks the join, then `checked`.
 4. **Metrics:** canonical definition, logic, trusted numbers (value, period, where it comes from).
 5. **Rules:** mandatory filters, business rules, exclusions.
 6. **Gotchas:** past mistakes and how to avoid them.
 7. **Glossary:** business terms and what they map to in the data.
-8. **Conventions:** SQL style, Python style, team overrides of the defaults.
+8. **Conventions:** style only: SQL style, Python style, naming, team overrides of the defaults. Analysis rules go in Rules or Gotchas. No entry appears in two sections.
 
 Every entry carries `verified: YYYY-MM-DD` and `source: setup` or `source: analyses/<slug>`.
 
@@ -321,7 +321,7 @@ The stakeholder-facing result. Plain markdown, ready to paste into Confluence, N
 ### 7.7 Data safety
 
 - `/run-analysis` shows aggregates by default and asks before saving row-level data anywhere.
-- `/setup-data-work` asks whether `outputs/` should be committed. The default adds `data-work/analyses/*/outputs/` to `.gitignore`.
+- `/setup-data-work` asks whether `outputs/` should be committed, in coding agents only. The default adds `data-work/analyses/*/outputs/` to `.gitignore`. Chat apps get no git advice.
 
 ---
 
@@ -331,13 +331,13 @@ Rounds of max 3 questions. Partial answers are fine; the map grows through retro
 
 0. **Setup mode (always first, before touching any tool):** "How do you want to set up your data map? A) Connect: I list the data tools you have connected and you pick one or none. B) Describe it in your own words. C) Paste a schema: table list, CREATE statements, dbt file or doc. D) A mix."
 1. **Access test (only for a source the user named):** if the user chose to connect, run a trivial test (`select 1`) against that source only. If no, tell the user once to check their agent's connector directory for their source; if it is missing or blocked by company policy, continue in hand-over mode. No dead ends.
-2. **Sources:** which sources, type, and dialect for each.
+2. **Sources:** which sources, type, and dialect for each. The dialect question offers one real option per engine: Postgres, SQL Server, BigQuery, Snowflake, Databricks, other. Never one option holding many names.
 3. **Key tables:** the 3 to 10 tables used most, grain and keys for each.
-4. **Joins:** the joins they trust, and any known fan-out traps.
+4. **Joins:** the joins they trust, and any known fan-out traps. Every join starts as `unverified` until a query checks its match rate and fan-out. Never mark a join trusted from a schema alone.
 5. **Metrics:** the 3 to 5 most-used metrics, their definitions, and one trusted number each (for reconciling).
 6. **Rules:** mandatory filters (test accounts, cancelled orders, time zones).
 7. **Conventions:** "Does your team have SQL or Python conventions? If not, I'll use sqlstyle.guide and PEP 8."
-8. **Git policy:** commit `outputs/` or not (default: not).
+8. **Git policy (coding agents only):** commit `outputs/` or not (default: not). No git advice in chat apps.
 
 Then write `DATA-MAP.md` and show a short summary of what is still missing.
 
