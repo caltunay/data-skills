@@ -28,7 +28,7 @@ Record decisions already made. Do not invent new ones.
 
 ## Steps
 
-1. Confirm the question type and the decision. State the claim ceiling in one line.
+1. Confirm the question type and the decision. State the claim ceiling in one line. Check Meta: Requester and Date are filled. If not, fill them now (ask for the requester if it is unknown).
 2. **Load the method cards.** Open the `question-types` file for the question type. If it will not open (for example, a chat with no file access), use the compact cards in the `question-types` skill itself: one line each for when to use, checks that must pass, and claim allowed. For each candidate method, check the card's "When to use" and "Data needed" against what the user has. Ask the user about the data. Do not query it. Drop candidates the data does not fit, and say why.
 3. List the options that remain (see depth table). For each: method, trade-offs, effort, and the strongest claim it can support. Start from each card's "Simplest version first".
 4. Recommend one. Say why in two lines. Confirm with the user. A short card means an advanced method: tell the user it needs a specialist review before shipping.
@@ -38,13 +38,13 @@ Record decisions already made. Do not invent new ones.
    - grain (what one row means)
    - keys
    - measures and dimensions
-   - time column and window
+   - time column and window, and the comparison window. If periods are compared, use one that handles seasonality (the same weeks last year, or the same weekdays) or write in the plan that it does not
    - filters and exclusions (from the Rules section of `DATA-MAP.md`)
    - joins: use the safe joins in the map, and name every fan-out trap the spec must avoid
    - tidy (long) or wide, and why
    - context columns
    - expected row count or range
-7. Set **success checks** up front: what must be true for the result to be trusted. Include the trusted number to reconcile to and the tolerance. Example: "Total paid orders within 1% of 120,400 (finance report)." Copy every item under the card's "Checks that must pass" into the success checks now, word for word. Never defer them to the run ("checks from the card" is not a success check). If the card file will not open, copy the line from the compact cards.
+7. Set **success checks** up front: what must be true for the result to be trusted. Include the trusted number to reconcile to and the tolerance. Say which count must match it, raw or cleaned, and why. Example: "Raw paid orders within 1% of 120,400 (finance report), because the report counts before our dedup." Copy every item under the card's "Checks that must pass" into the success checks now, word for word. Never defer them to the run ("checks from the card" is not a success check). If the card file will not open, copy the line from the compact cards.
 8. Add any new assumptions to the table. Each "Key assumption" on the card that the data cannot confirm becomes a row.
 
 ## Depth table
@@ -84,7 +84,7 @@ Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, an
 
 ## Plan revisions
 
-When this step or a later step finds the plan cannot hold, add a dated row to the Plan revisions log: date, what changed, why. When the user comes back here after a revision, read the log, change only what the revision touches, and keep the rest of the plan. No restart.
+When this step or a later step finds the plan cannot hold, or a spec item was wrong (for example, "6 channels expected, 5 found"), add a dated row to the Plan revisions log: date, what changed, why. Every correction is a row. Never write "(none)" and then add notes below it. When the user comes back here after a revision, read the log, change only what the revision touches, and keep the rest of the plan. No restart.
 
 ## Done when
 

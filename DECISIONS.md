@@ -55,6 +55,9 @@
 51. `question-types/SKILL.md` holds a compact line per method (when to use, checks that must pass, claim allowed), so the method cards work without file access. `/plan-analysis` copies the checks into the success checks at plan time.
 52. Every flow step ends with the same go-ahead question at every depth: A) yes, run the next command; B) change something; C) add a check, segment or question.
 53. Every question has one real recommended default with a reason. No hedges, and no question without a default, the deadline included.
+54. Period comparisons handle seasonality by default (the same weeks last year, or the same weekdays). A plain back-to-back comparison is allowed only with a flag that it ignores seasonality.
+55. The assumptions table holds only real assumptions. Claim rules go in a claim ceiling line in Meta. Impact is rated by size on the headline.
+56. The reconcile check names the count that must match the trusted number (raw or cleaned) and why. Every spec correction is a dated Plan revisions row. Requester and date in Meta are never blank.
 
 ## Build decisions
 
@@ -162,6 +165,11 @@ B75. No manual edits (fix B, item 4). Added to `run-or-hand-over`, every flow an
 B76. Compact cards (fix B, item 5). One table per type file in `question-types/SKILL.md`, one row per method (37 rows: 9, 5, 6, 8, 8 causal and A/B, 1 mechanistic), columns "when to use", "checks that must pass", "claim allowed". Options: three lines per method, or a table row with three cells. Reason: a row keeps each field to one line and the file to 179 lines. The checks were copied in short form from each card's numbered list, not invented. `/plan-analysis` and `/run-analysis` and `/review-analysis` point to the compact cards when the type file will not open.
 B77. Go-ahead question (fix C, item 6). Added as the last End step in the 6 flow skills. A is marked "(recommended)". B or C keeps the user in the same step: the change is made, the updated file is handed back, and the question is asked again. `/retro-analysis` adapts A to "close this analysis, run `/grill-the-ask` for the next ask" and C to "add a map entry". `/setup-data-work` adapts B and C to the map. Options: also add it to `/storytell`, `/wayfinder-data` and `/handoff`. Reason: the brief names flow steps; the three off-flow skills keep their "name the next step" line, so the scope stays as asked.
 B78. Real defaults (fix C, item 7). `grilling` now requires "(recommended: reason)" on every question and bans hedges by example ("C if unknown", "depends", "your call"). The deadline item carries its own line, with a worked default. Every skill that restates `grilling` says "one real recommended default (never a hedge)". `metric-design` and `/improve-code` say the same.
+B79. Seasonality (fix D, item 8). New step 5 in `/grill-the-ask`, a line in `grilling` item 6, and a comparison-window line in the `/plan-analysis` spec. The flag must sit in the option itself, so a user who accepts the default sees it.
+B80. Assumptions hygiene (fix D, item 9). `assumptions` gained "What belongs in the table" and a worked impact example. Options for the 31-against-28-day case: Medium as the brief's floor, or High by the existing 5% rule. Reason: the existing rule already makes it High; the text says High and "never lower than Medium", so both rules hold. `analysis.template.md` (both copies) gained a "Claim ceiling" line in Meta to hold claim rules.
+B81. Reconcile count (fix D, item 10). `/plan-analysis` step 7 example now names the raw count and why. `/run-analysis` step 5 says which count is compared. The template's success checks carry the same reminder.
+B82. Plan revisions (fix D, item 11). `/run-analysis` gained a "Spec corrections" section, `/plan-analysis` and the template say every correction is a row. "(none)" followed by notes is named as wrong.
+B83. Meta (fix D, item 12). Requester and Date placeholders say "never blank". `/grill-the-ask` asks for the requester in round 1 when the ask does not say, accepts a role, and never guesses a name (SPEC section 3 rule). `/plan-analysis` step 1 fills them if an older file left them blank.
 
 ## Questions for Cenan
 

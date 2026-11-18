@@ -59,7 +59,7 @@ Set status `running`. Number the steps in the Progress line (step 1 of 7, and so
 2. **Build** the analysis table from the spec, using the tool file in `shaping-data` for the tool in use. Save queries as numbered files in `queries/` (`q1-1-one-entity.sql`, `q1-2-one-entity-day.sql`, and so on).
 3. **Climb the ladder, rungs 1 to 4.** Before each rung, write the expected result. Run the check. Write the actual and pass or fail. Rungs 2 to 4 test the data, not only the aggregation: recompute from raw rows or with a separate query that does not use the analysis table or the frame it was built from, and compare. A fail means find the cause before going up. If the fix needs a choice (for example, a rule for duplicates), propose it, add an assumption row, and ask.
 4. **Run the method.** Open the `question-types` file for the question type and load the method card named in the plan. Apply every item under "Checks that must pass" and log each as pass or fail in Results. If a check fails, the claim allowed drops: say to what.
-5. **Reconcile (rung 5).** Compare the headline number to the trusted number from the plan. Compute the gap and compare it with the stated tolerance. Above tolerance: record rung 5 as fail, do not report the number as final, and test likely causes one small check at a time. Never explain a gap with an untested story.
+5. **Reconcile (rung 5).** Compare the headline number to the trusted number from the plan. Say which count is compared (raw or cleaned) and why: a trusted number made before your cleaning matches the raw count. Compute the gap and compare it with the stated tolerance. Above tolerance: record rung 5 as fail, do not report the number as final, and test likely causes one small check at a time. Never explain a gap with an untested story.
 6. **Write findings.** Each finding gets direction, magnitude, uncertainty, and the claim ceiling applied. Update assumption statuses as evidence arrives. List high-impact rows still `open` beside the findings.
 7. **Draft the readout.** Write `readout.md` next to `analysis.md`, from `readout.template.md` in this skill's folder. Mark it `Status: draft`.
 
@@ -89,6 +89,10 @@ Deep: rebuild the result with one different specification (another filter, join 
 ## Ask, do not assume
 
 If a definition, filter, date or population is unclear, ask (a round of at most 3 questions). If you cannot ask now, add an assumption row and carry on.
+
+## Spec corrections
+
+Every correction to the plan or the spec found while running is a dated row in the Plan revisions log, even a small one (for example, "6 channels expected, 5 found"; "expected about 40,000 rows, found 38,950"). Never write "(none)" and then add notes below it.
 
 ## When the plan cannot hold
 

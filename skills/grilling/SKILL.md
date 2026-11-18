@@ -37,7 +37,7 @@ Ask in rounds of at most 3 questions. Give each question 2 to 4 options and one 
 3. Question type: what happened, what patterns, does it hold, what will happen, what if we change X, how does it work?
 4. Metric: exact definition, and who counts in numerator and denominator.
 5. Population: who or what is in scope, and what is excluded.
-6. Time window: dates, time zone, and whether the latest days are final.
+6. Time window: dates, time zone, and whether the latest days are final. When periods are compared, recommend a comparison that handles seasonality (the same weeks last year, or the same weekdays), or flag that the recommended option ignores it.
 7. Constraints: tools, privacy, data access, people.
 8. Deadline: when, and why then. Recommend a real option, as for every other question.
 9. Audience: who reads the result (exec, product, data, mixed).

@@ -128,7 +128,7 @@ One main flow. `/grill-the-ask` and `/plan-analysis` set the **question type**. 
 
 ### Cycling back
 
-When `/run-analysis` or `/review-analysis` finds the plan cannot hold (for example, an experiment with no clean control), it does not push on. It adds a dated entry to the **Plan revisions** log in `analysis.md`, states what changed and why, and continues from the right step.
+When `/run-analysis` or `/review-analysis` finds the plan cannot hold (for example, an experiment with no clean control), it does not push on. It adds a dated entry to the **Plan revisions** log in `analysis.md`, states what changed and why, and continues from the right step. Every spec correction found during the run (for example, "6 channels expected, 5 found") is also a dated row. No "(none)" line followed by notes.
 
 ### Depth
 
@@ -186,7 +186,7 @@ Copy-paste form for queries: numbered (`Q2.1`, `Q2.2`), each with one purpose li
 | Skill | Trigger | Inputs | Does | Writes | Calls |
 |---|---|---|---|---|---|
 | `/setup-data-work` | User runs it, once per team or project | Nothing, or an existing `DATA-MAP.md` | First asks how the user wants to set up the map (section 8). Tests access only against a source the user named. Points to the agent's connector directory if there is none. Interviews the user. Can be partial; the map fills in over time. Target: under 20 minutes. | `data-work/DATA-MAP.md`, `.gitignore` entry | grilling, data-map, run-or-hand-over |
-| `/grill-the-ask` | User runs it with a stakeholder ask | The ask, `DATA-MAP.md` if present | Rounds of max 3 questions, each with options and a recommended default. Covers goal, the decision it feeds, question type, metric, population, time window, constraints, deadline, and who reads the result (audience). Sets the depth with a one-line reason. Never asks the same question twice. | `analysis.md`: Meta, Ask, Assumptions | grilling, assumptions, question-types, data-map |
+| `/grill-the-ask` | User runs it with a stakeholder ask | The ask, `DATA-MAP.md` if present | Rounds of max 3 questions, each with options and a recommended default. Covers goal, the decision it feeds, requester, question type, metric, population, time window, constraints, deadline, and who reads the result (audience). When periods are compared, recommends a comparison that handles seasonality (year on year, or the same weekdays), or flags that the recommended option ignores it. Sets the depth with a one-line reason. Never asks the same question twice. | `analysis.md`: Meta, Ask, Assumptions | grilling, assumptions, question-types, data-map |
 | `/plan-analysis` | User runs it after grilling | `analysis.md` | 2 to 4 options with trade-offs, then the chosen plan. Writes the analysis table spec. Sets success checks. Records decisions already made; does not invent new ones. | `analysis.md`: Plan, Analysis table spec | assumptions, question-types, shaping-data |
 | `/run-analysis` | User runs it after the plan | `analysis.md`, `DATA-MAP.md` | Builds the analysis table from the spec, climbing the validation ladder. States the expected result before each query. Audits the data. Runs the method for the question type. Asks instead of assuming. Adds plan revisions when needed. States its goal up front and keeps going until it is met. Writes a draft readout. | `analysis.md`: Results, Progress; `readout.md` (draft); `queries/`; `outputs/` | validation-ladder, run-or-hand-over, shaping-data, data-audit, stats-tests, question-types, data-map, assumptions |
 | `/review-analysis` | User runs it on a finished analysis (theirs or anyone's) | `analysis.md` or any pasted analysis | Technical review and business review. Checks claims against the ceiling. Checks assumption status. Gives a verdict. Writes questions leadership will ask, with answers. Says "no material issues" when that is true. Reviews the draft readout word by word, fixes claims above the ceiling, and marks it final. | `analysis.md`: Review; `readout.md` (final) | question-types, assumptions, validation-ladder |
@@ -266,10 +266,10 @@ Shared by the team: committed to git where there is a repo, so every retro impro
 
 First line: `format: v1`. Sections, filled by step:
 
-1. **Meta:** title, requester, audience, date, depth, question type, status, progress line.
+1. **Meta:** title, requester, audience, date, depth, question type, claim ceiling, status, progress line. Requester (a person or role the user names) and date are never blank.
 2. **Ask:** the original ask verbatim, the clarified question, the decision it feeds, constraints, deadline. *(grill)*
 3. **Assumptions:** table, see 7.5. *(grill, then any step)*
-4. **Plan:** options considered, chosen plan, success checks. **Plan revisions** log: date, what changed, why. *(plan)*
+4. **Plan:** options considered, chosen plan, success checks (the method card's checks copied in at plan time; the reconcile check says whether the raw or the cleaned count must match the trusted number, and why). **Plan revisions** log: date, what changed, why, one row per correction. *(plan)*
 5. **Analysis table spec:** see 7.4. *(plan)*
 6. **Results:** ladder log (each rung: expected, actual, pass or fail), findings as direction, magnitude, uncertainty, and the claim ceiling applied. Aggregates only by default. *(run)*
 7. **Review:** verdict, technical issues, business issues, leadership questions with answers. *(review)*
@@ -301,6 +301,8 @@ Designed before any query or code, without reference to a tool:
 - Alternatives are required for high-impact rows only.
 - Standard and deep depth always show all 7 columns. Never drop columns. Only quick depth uses an inline list.
 - `/review-analysis` flags any high-impact row still `open` when results are reported.
+- Only real assumptions go in the table. Claim rules ("spend is a hypothesis, not a cause") go in the claim ceiling line in Meta.
+- Rate impact by size: about 5% or more on the headline is High. A month-length difference that moves a headline by about 10% is never below Medium.
 
 ### 7.6 Readout (`readout.md`)
 

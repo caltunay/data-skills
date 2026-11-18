@@ -5,11 +5,12 @@ format: v1
 ## 1. Meta
 
 - Title:
-- Requester:
+- Requester: <person or role the user named; never blank>
 - Audience: exec | product | data | mixed
-- Date:
+- Date: <YYYY-MM-DD; never blank>
 - Depth: quick | standard | deep
 - Question type: descriptive | exploratory | inferential | predictive | causal | mechanistic
+- Claim ceiling: <one line: the strongest wording allowed, and claim rules such as "X is a lead, not a cause">
 - Status: grilling | planned | running | reviewed | retro done
 - Progress: <step, where it stopped, what it waits for. Example: run step 3 of 7, waiting for Q3.1 paste>
 
@@ -41,9 +42,13 @@ Status: open, confirmed or rejected. Alternatives are required for high-impact r
 
 ### Success checks
 
+Copy every "Checks that must pass" item of the method card here, word for word. The reconcile check says which count must match the trusted number (raw or cleaned) and why.
+
 -
 
 ### Plan revisions
+
+Every spec correction found in any step is a dated row (for example, "6 channels expected, 5 found"). Notes about changes go in rows, never under a "(none)" line.
 
 | date | what changed | why |
 |---|---|---|
