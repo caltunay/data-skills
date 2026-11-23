@@ -30,6 +30,17 @@ Codex also has a plugin manifest. Or upload the ZIPs in claude.ai and ChatGPT. S
                    plan revision entry       draft readout.md -> final readout.md
 ```
 
+## Which command do I start with?
+
+| The ask looks like | Use |
+|---|---|
+| A project: several questions, unknowns, weeks of work | `/wayfinder-data` |
+| A design with no data needed yet (experiment, measurement) | `/wayfinder-data` (fast path) |
+| One question with a decision attached | `/grill-the-ask` and the flow |
+| Not sure | `/ask-data-skills` |
+
+`/grill-the-ask` sends project-sized asks and design asks to `/wayfinder-data` with one line why.
+
 ## The 6 commands
 
 | Command | Does |

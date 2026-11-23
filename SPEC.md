@@ -684,6 +684,16 @@ Rules for every new skill:
 - Asks what the user is trying to do: one round, at most 3 questions.
 - Recommends one command, with one line why, and the next one after it.
 - Knows the full catalogue. Does not do the work itself.
+- **Routing guide (v0.4).** The same table sits in the README and in this skill. Self-check tests both.
+
+| The ask looks like | Use |
+|---|---|
+| A project: several questions, unknowns, weeks of work | `/wayfinder-data` |
+| A design with no data needed yet (experiment, measurement) | `/wayfinder-data` (fast path) |
+| One question with a decision attached | `/grill-the-ask` and the flow |
+| Not sure | `/ask-data-skills` |
+
+`/grill-the-ask` sends project-sized asks and design asks to `/wayfinder-data` with one line why.
 
 ### 20.5 `/wayfinder-data` (user-invoked, off-flow)
 

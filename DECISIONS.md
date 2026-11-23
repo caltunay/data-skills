@@ -79,6 +79,7 @@
 75. Skills find `data-work/` in the current folder, then upward. A team map can sit above project maps. The nearest map wins for conflicts and the skill says which one it read. Setup asks how the user organises work.
 76. `/wayfinder-data` also handles design asks (an experiment, a metric). A single design item takes a fast path with no project map. The outputs are `experiment-spec.md` and `metric-spec.md`.
 77. A spec never holds an invented number. Baselines, targets and benchmarks come from the user or the data map, or are marked "to confirm". A proxy is a guess until a check shows it tracks the true metric, and the spec says how to check.
+78. One routing guide, in the README and in `/ask-data-skills`: a project or a design goes to `/wayfinder-data`, one question with a decision goes to `/grill-the-ask`, unsure goes to `/ask-data-skills`. `/grill-the-ask` sends project-sized and design asks to `/wayfinder-data` with one line why.
 
 ## Build decisions
 
@@ -225,6 +226,8 @@ B111. The hypothesis tree is part of `/plan-analysis`, not a new skill. Reason: 
 B112. Where the two spec templates live. Options: only in `templates/`, only in the skill folder, or both. Chosen: both, byte-identical, as for the analysis and readout templates. Reason: a ZIP holds only one skill folder, so a chat-app user needs the copy inside it. `scripts/package-zips` and self-check 10 compare the copies.
 B113. The experiment spec has its own section for open items. Reason: a design often waits on one number from another person, and the spec should say who.
 B114. `/wayfinder-data` keeps its name and gains the design role. Options: a new skill for designs, or one skill. Chosen: one skill. Reason: the brief says design asks live inside wayfinder, and a second command would blur the routing guide.
+B115. The routing guide is in the README near the top, before the command table, so a new user sees it first. `/ask-data-skills` keeps its longer routing table below the guide and gained a design row, a "design" option in its question and two tie-breaks.
+B116. `/ask-data-skills` option letters changed: E is now "big and vague, or a project", F is "design an experiment or define a measure", G is "not sure". Reason: a design ask needs its own answer, and the old F had no other user.
 
 ## Questions for Cenan
 
