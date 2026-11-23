@@ -16,7 +16,7 @@ Claude Code, as a plugin:
 /plugin install data-skills --marketplace caltunay/data-skills
 ```
 
-Codex also has a plugin manifest. Or upload the ZIPs in claude.ai and ChatGPT. See [docs/install.md](docs/install.md).
+Codex also has a plugin manifest. Or upload the ZIPs in claude.ai and ChatGPT. See [docs/install.md](docs/install.md). Where your files live, in a coding agent or a chat Project: [docs/where-to-run.md](docs/where-to-run.md).
 
 ## The flow
 
@@ -66,7 +66,7 @@ Every skill in this section is **experimental** until it has passed its evals. E
 | Command | Status | Does |
 |---|---|---|
 | `/ask-data-skills` | **experimental** | Tells you which command to run, why, and what comes after it |
-| `/wayfinder-data` | **experimental** | Maps big, vague work as decision items, settles them one at a time, and ends with ready `/grill-the-ask` prompts |
+| `/wayfinder-data` | **experimental** | Maps big, vague work as decision items, settles them one at a time, and ends with ready `/grill-the-ask` prompts. Also designs an experiment or a metric (`experiment-spec.md`, `metric-spec.md`) with no project map |
 | `/storytell` | **experimental** | Turns a final readout into an exec, product or data version, as a doc, chat message, email or slide outline. Never raises a claim |
 | `/improve-code` | **experimental** | Reviews SQL or Python in order: intent, correctness, style, performance. Shows a diff and proves the result did not change |
 | `/handoff` | **experimental** | Writes `handoff.md` so a colleague or a fresh session can pick the analysis up |
@@ -94,10 +94,10 @@ Plain models already spot visible flaws. These skills add:
 | | Quick | Standard | Deep |
 |---|---|---|---|
 | Grill | 1 round, max 3 questions | Rounds until clear | Plus stakeholder prep questions |
-| Plan | One line | 2 to 4 options | Plus power or MDE |
+| Plan | One line, flat hypotheses | Hypothesis tree, 2 to 4 options | Plus power or MDE |
 | Ladder | Compact data-check floor | Full floor plus full ladder | Plus alternative specification |
 | Review | Self-check plus recompute | Technical plus business, best in a fresh chat | Plus leadership questions |
-| Readout | Short answer in chat | `readout.md` | `readout.md` plus appendix |
+| Readout | Short answer in chat | `readout.md` and `readout.docx` | Plus appendix |
 | Files | None | `analysis.md`, `readout.md` | Full analysis folder |
 
 ## What is inside
@@ -113,7 +113,7 @@ If your agent can run queries, it does. In a chat app with a code tool, attach y
 
 ## Your files
 
-Everything lives in `data-work/` in your own project. The skills never write into this repo.
+Everything lives in `data-work/` in your own project. The skills never write into this repo. In a chat app, use one Project per team or area and one chat per analysis. See [docs/where-to-run.md](docs/where-to-run.md).
 
 ```
 data-work/
@@ -121,7 +121,8 @@ data-work/
   analyses/
     2026-11-13-signup-drop/
       analysis.md     working notes, with a Progress line any new session resumes from
-      readout.md      stakeholder readout (draft, then final)
+      readout.md      stakeholder readout (skeleton, draft, then final)
+      readout.docx    the same text with the charts, for Word and Google Docs
       queries/
       outputs/
 ```

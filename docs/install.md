@@ -107,3 +107,7 @@ The ZIPs go in `dist/`, which is gitignored.
 - Create a release on GitHub. The ZIPs attach themselves. The `release` workflow builds one ZIP per skill and uploads each as a release asset.
 - The `self-check` workflow runs `scripts/self-check` on every pull request and push.
 - Private blocklist: add a repository secret named `DATA_SKILLS_BLOCKLIST` (Settings, Secrets and variables, Actions) with one word per line. The workflow writes it to a gitignored `.blocklist` inside the job and never prints it. Without the secret, that one check is skipped. See `CONTRIBUTING.md`.
+
+## Where your files live
+
+See [where-to-run.md](where-to-run.md): `data-work/` in a coding agent, or one Project per team or area in a chat app, with the instructions block `/setup-data-work` writes for you.

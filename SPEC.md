@@ -344,6 +344,14 @@ Formatting:
 - `/run-analysis` shows aggregates by default and asks before saving row-level data anywhere.
 - `/setup-data-work` asks whether `outputs/` should be committed, in coding agents only. The default adds `data-work/analyses/*/outputs/` to `.gitignore`. Chat apps get no git advice.
 
+### 7.8 Chat-first storage and surfaces
+
+- **Workspace.** In chat apps, one Claude or ChatGPT Project per team or area, and one chat per analysis. `/setup-data-work` ends by writing a short block to paste into the Project's instructions, for example: "Read DATA-MAP.md before any data work. Use the data-skills commands. Save updated files back to the Project files."
+- **Stable names and versions.** Fixed names: `DATA-MAP.md`, `analysis-<slug>.md`, `readout-<slug>.md` (and `readout-<slug>.docx`). A coding agent keeps `analysis.md` and `readout.md` inside the analysis folder. Every file starts with `format:` and `updated: YYYY-MM-DD HH:MM`. Skills hand back the whole file and say "Replace the old one in your Project files." If two copies exist, the skill uses the newest `updated:` and says so.
+- **Optional save to a document tool.** Ask once, generically: "Hand files to you as downloads, or save them to a document tool you use (for example a drive, a wiki or a notes app)?" Use only a tool the user names, never one picked from visible connectors. Never required. The answer is the `Files` line in Meta.
+- **Surface guide.** `docs/where-to-run.md`, linked from the README: coding agents (`data-work/` in the repo, files saved automatically, commit `DATA-MAP.md` so the team shares it); chat apps (a Project per team or area, the instructions block, files replaced by hand or saved to a document tool).
+- **A new project, or a new Project, on the same data.** Carry over `DATA-MAP.md` and the Project instructions block. Start a fresh map only for entirely different data sources. When no map is found, `/setup-data-work` and `data-map` first ask: "Do you have a DATA-MAP.md from another project on the same data? Attach or copy it in." Only then do they offer a fresh setup.
+
 ### 7.9 Hypotheses and the readout skeleton
 
 **Hypothesis tree.** `/plan-analysis` at standard and deep depth writes it before the method options: H1, H2 and so on, each with children (H1.1, H1.2, then H1.2.1). At most 3 levels and about 12 nodes. For each node: what finding would support it, what would refute it, and which child it leads to. The user picks the paths to follow; the rest are `parked`. Quick depth: a flat list of up to 3 hypotheses, in the chat.
@@ -570,6 +578,7 @@ data-skills/
   docs/
     install.md         Claude Code, Codex, Gemini CLI, Cursor, Copilot, claude.ai, ChatGPT
     upstream-map.md
+    where-to-run.md    coding agents and chat Projects: where files live (v0.4)
   scripts/
     package-zips       one ZIP per skill for chat-app upload
 ```

@@ -80,6 +80,10 @@
 76. `/wayfinder-data` also handles design asks (an experiment, a metric). A single design item takes a fast path with no project map. The outputs are `experiment-spec.md` and `metric-spec.md`.
 77. A spec never holds an invented number. Baselines, targets and benchmarks come from the user or the data map, or are marked "to confirm". A proxy is a guess until a check shows it tracks the true metric, and the spec says how to check.
 78. One routing guide, in the README and in `/ask-data-skills`: a project or a design goes to `/wayfinder-data`, one question with a decision goes to `/grill-the-ask`, unsure goes to `/ask-data-skills`. `/grill-the-ask` sends project-sized and design asks to `/wayfinder-data` with one line why.
+79. In chat apps the workspace is one Project per team or area and one chat per analysis, set up by a short instructions block that `/setup-data-work` writes.
+80. Files have stable names and a version line: `DATA-MAP.md`, `analysis-<slug>.md`, `readout-<slug>.md`, each starting with `format:` and `updated:`. Whole files are handed back and replace the old copy. The newest `updated:` wins when two copies exist.
+81. Saving to a document tool is optional, asked once and generically, and only for a tool the user names. Downloads stay the default.
+82. A new project on the same data carries the map over. A fresh map is for different data sources only. Every step with no map asks for an existing one first.
 
 ## Build decisions
 
@@ -228,6 +232,9 @@ B113. The experiment spec has its own section for open items. Reason: a design o
 B114. `/wayfinder-data` keeps its name and gains the design role. Options: a new skill for designs, or one skill. Chosen: one skill. Reason: the brief says design asks live inside wayfinder, and a second command would blur the routing guide.
 B115. The routing guide is in the README near the top, before the command table, so a new user sees it first. `/ask-data-skills` keeps its longer routing table below the guide and gained a design row, a "design" option in its question and two tie-breaks.
 B116. `/ask-data-skills` option letters changed: E is now "big and vague, or a project", F is "design an experiment or define a measure", G is "not sure". Reason: a design ask needs its own answer, and the old F had no other user.
+B117. `docs/where-to-run.md` is new and short (about 40 lines). It holds the surface guide and the carry-over rule. The README, `docs/install.md` and the SPEC point to it.
+B118. The `updated:` timestamp has no time zone. Options: add UTC, or keep the brief's `YYYY-MM-DD HH:MM`. Chosen: keep the brief's form. Reason: it only has to order two copies of one file made by one user.
+B119. The document-tool question is asked in setup (step 13) and in `/grill-the-ask` round 1 when no earlier answer is visible, in chat apps only. It is not asked in every step. The answer sits in Meta as `Files`.
 
 ## Questions for Cenan
 
