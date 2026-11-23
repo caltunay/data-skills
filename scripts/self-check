@@ -62,7 +62,10 @@ docs/install.md docs/upstream-map.md docs/walkthrough.md docs/self-check.md scri
 skills/grill-the-ask/analysis.template.md skills/run-analysis/readout.template.md skills/data-map/DATA-MAP.template.md
 skills/shaping-data/sql.md skills/shaping-data/python.md skills/shaping-data/excel.md skills/shaping-data/powerbi.md skills/shaping-data/tableau.md
 evals/README.md evals/results evals/grilling/case-1.md evals/grilling/rubric.md evals/question-types/rubric.md
-evals/setup-data-work/case-4.md evals/grill-the-ask/case-4.md evals/review-analysis/case-4.md"
+evals/setup-data-work/case-4.md evals/grill-the-ask/case-4.md evals/review-analysis/case-4.md
+docs/where-to-run.md templates/experiment-spec.template.md templates/metric-spec.template.md
+skills/wayfinder-data/experiment-spec.template.md skills/wayfinder-data/metric-spec.template.md
+evals/grill-the-ask/case-6.md evals/grill-the-ask/case-7.md evals/plan-analysis/case-4.md evals/wayfinder-data/case-4.md evals/wayfinder-data/case-5.md evals/setup-data-work/case-5.md"
 for t in $qt; do need="$need skills/question-types/$t.md"; done
 for s in $all; do need="$need skills/$s/SKILL.md"; done
 for s in $user; do need="$need evals/$s/case-1.md evals/$s/case-2.md evals/$s/case-3.md evals/$s/rubric.md"; done
@@ -78,7 +81,9 @@ out=$(for f in skills/*/SKILL.md; do n=$(wc -l < "$f"); [ "$n" -ge 500 ] && echo
 # 10 template copies match
 cmp -s templates/analysis.template.md skills/grill-the-ask/analysis.template.md \
   && cmp -s templates/readout.template.md skills/run-analysis/readout.template.md \
-  && ok "analysis and readout template copies match" || bad "template copies differ"
+  && cmp -s templates/experiment-spec.template.md skills/wayfinder-data/experiment-spec.template.md \
+  && cmp -s templates/metric-spec.template.md skills/wayfinder-data/metric-spec.template.md \
+  && ok "analysis, readout, experiment spec and metric spec template copies match" || bad "template copies differ"
 
 # 11 skill list matches folders
 want=$(for s in $all; do echo "$s"; done | sort)
@@ -233,6 +238,49 @@ out=$(grep -q '^## 11. Appendix: Review pack' templates/analysis.template.md || 
   [ "$(grep -c '^> \*\*' templates/readout.template.md)" -le 3 ] || echo "readout template: more than 3 callouts"
   grep -q '^## 8. Appendix' templates/readout.template.md || echo "readout template: no Appendix")
 [ -z "$out" ] && ok "templates carry the review pack, bold status, at most 3 callouts and the appendix" || bad "v0.3 templates" "$out"
+
+# 29 v0.4 analysis template: Decisions and Hypotheses sections, Meta lines
+out=$(for h in '^## 9. Decisions' '^## 10. Hypotheses' '^- Setup choice:' '^- Goal link:' '^- Files:'; do
+    grep -q "$h" templates/analysis.template.md || echo "analysis template: missing $h"; done)
+[ -z "$out" ] && ok "analysis template has Decisions, Hypotheses, Setup choice, Goal link and Files" || bad "v0.4 analysis template" "$out"
+
+# 30 v0.4 data map template: Goals, Funnels and Key queries sections
+out=$(for h in '^## 9. Goals' '^## 10. Funnels' '^## 11. Key queries'; do
+    grep -q "$h" skills/data-map/DATA-MAP.template.md || echo "map template: missing $h"; done)
+[ -z "$out" ] && ok "data map template has Goals, Funnels and Key queries" || bad "v0.4 map template" "$out"
+
+# 31 every template carries format: and updated: lines
+out=$(for f in templates/*.template.md skills/data-map/DATA-MAP.template.md skills/wayfinder-data/*.template.md skills/grill-the-ask/analysis.template.md skills/run-analysis/readout.template.md; do
+    [ "$(sed -n 1p "$f")" = "format: v1" ] || echo "$f: line 1 is not format: v1"
+    sed -n 2p "$f" | grep -qE '^updated: YYYY-MM-DD HH:MM$' || echo "$f: line 2 is not the updated: line"; done)
+[ -z "$out" ] && ok "every template starts with format: and updated:" || bad "template version lines" "$out"
+
+# 32 both spec templates hold their required fields
+out=$(for k in 'Hypothesis' 'Unit of randomisation' 'Feature gate or assignment' 'Primary metric' 'Guardrails' 'MDE' 'Power' 'Runtime' 'Seasonality' 'SRM check plan' 'Decision rule'; do
+    grep -qi "$k" templates/experiment-spec.template.md || echo "experiment spec: missing $k"; done
+  for k in 'Definition' 'Formula' 'Grain' 'Population' 'Data source' 'proxies' 'check' 'Benchmark or target' 'Owner'; do
+    grep -qi "$k" templates/metric-spec.template.md || echo "metric spec: missing $k"; done)
+[ -z "$out" ] && ok "experiment spec and metric spec templates hold the required fields" || bad "spec templates" "$out"
+
+# 33 routing table in the README and in ask-data-skills
+out=$(for f in README.md skills/ask-data-skills/SKILL.md; do
+    grep -qF '| The ask looks like | Use |' "$f" || echo "$f: no routing guide header"
+    grep -qF '| A project: several questions, unknowns, weeks of work | `/wayfinder-data` |' "$f" || echo "$f: project row missing"
+    grep -qF '| A design with no data needed yet (experiment, measurement) | `/wayfinder-data` (fast path) |' "$f" || echo "$f: design row missing"
+    grep -qF '| One question with a decision attached | `/grill-the-ask` and the flow |' "$f" || echo "$f: one-question row missing"
+    grep -qF '| Not sure | `/ask-data-skills` |' "$f" || echo "$f: not-sure row missing"; done)
+[ -z "$out" ] && ok "routing guide is in the README and in ask-data-skills" || bad "routing guide" "$out"
+
+# 34 retro never offers setup, and the stuck and no-analysis rules are in place
+out=$(grep -q 'Never offer `/setup-data-work` here' skills/retro-analysis/SKILL.md || echo "retro-analysis: no never-offer-setup rule"
+  grep -q 'one question at a time until it is clear' skills/grilling/SKILL.md || echo "grilling: no stuck rule"
+  grep -q 'Never analyse in this step' skills/grill-the-ask/SKILL.md || echo "grill-the-ask: no no-analysis rule"
+  grep -q 'Hypothesis tree' skills/plan-analysis/SKILL.md || echo "plan-analysis: no hypothesis tree"
+  grep -q 'Status: SKELETON' skills/plan-analysis/SKILL.md || echo "plan-analysis: no skeleton status"
+  grep -q 'readout.docx' skills/run-analysis/SKILL.md || echo "run-analysis: no readout.docx"
+  grep -q 'readout.docx' skills/review-analysis/SKILL.md || echo "review-analysis: no readout.docx"
+  grep -q 'Replace the old one in your Project files' skills/run-or-hand-over/SKILL.md || echo "run-or-hand-over: no replace wording")
+[ -z "$out" ] && ok "v0.4 rules are in the skills (retro, stuck, no analysis, tree, skeleton, docx, replace)" || bad "v0.4 rules" "$out"
 
 # 21 private blocklist (gitignored .blocklist, one word per line)
 if [ -f .blocklist ]; then

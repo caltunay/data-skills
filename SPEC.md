@@ -317,7 +317,7 @@ Designed before any query or code, without reference to a tool:
 
 ### 7.6 Readout (`readout.md`)
 
-The stakeholder-facing result. Portable markdown, ready to paste into Confluence, Notion or a doc, with no app-specific macros. One layout; wording adapts to the audience set in grilling. The default readout respects that audience. `/storytell` is for other audiences and formats. App-specific exports (Confluence, Notion) are v0.4, in `/storytell`.
+The stakeholder-facing result. Portable markdown, ready to paste into Confluence, Notion or a doc, with no app-specific macros. One layout; wording adapts to the audience set in grilling. The default readout respects that audience. `/storytell` is for other audiences and formats. App-specific exports (Confluence, Notion) are a later release, in `/storytell`. The `.docx` copy (below) covers Word and Google Docs.
 
 1. **Answer** in 2 lines.
 2. **Key numbers**, each with its uncertainty. At most 5 (strict for an exec audience). The rest go to the Appendix.
@@ -789,4 +789,30 @@ Found by a full manual run of the flow in claude.ai on the `examples/signup-drop
 | Evals | Rubric rows for the changes, four new cases, and a reference run summary | 15 |
 | Self-check | Checks 25 to 28: go-ahead question, floor checks, compact cards, template format | `docs/self-check.md` |
 
-App-specific readout exports (Confluence, Notion) are v0.4, in `/storytell`. Plugin version: `0.3.0`.
+App-specific readout exports (Confluence, Notion) moved to a later release. Plugin version: `0.3.0` at the end of v0.3.
+
+---
+
+## 22. v0.4 fix pass and core features
+
+Built from the v0.3 live run in claude.ai (all steps passed) and a design round on routing, design asks and chat-first use. Branch `v0.4`. All section 3 hard rules apply. Decisions 65 to 83. Plugin version: `0.4.0`.
+
+| Area | Change | Where in this spec |
+|---|---|---|
+| Readout | `readout.md` stays the source; `readout.docx` is built from it with the charts embedded; the review rebuilds it. No code tool: `.md` plus chart code | 7.1, 7.6 |
+| Grill | Never analyses: with files it notes columns, possible duplicates, date range only. No early finding in options or the claim line | 6.1 |
+| Decisions log | Decisions section in `analysis.md`: every question and answer word for word; answers echoed back after each round | 7.3 |
+| Setup choice | A or B recorded in Meta and never re-offered. `/retro-analysis` never offers setup | 4, 6.1, 7.3 |
+| Retro map layout | One entry per source; grain under Tables; the template's table layout | 7.2, 6.1 |
+| Hypothesis tree | `/plan-analysis` writes H1, H1.1, ... with support and refute conditions before the method options; statuses in `analysis.md`; run updates, review checks. At most 3 levels and about 12 nodes. Quick: a flat list of up to 3 | 4, 7.3, 7.9 |
+| Stuck rule | A conflicting or senseless answer is named plainly and the skill asks one question at a time | 7.9, `grilling` |
+| Strategy context | Setup asks for goals; map section Goals; the grill links the ask to a goal and records it in Meta | 7.2, 8 |
+| Funnels and key queries | Map sections Funnels and Key queries; setup asks; retro proposes additions | 7.2, 8 |
+| Readout skeleton | Optional at standard and deep, placeholders only, `Status: SKELETON`, replaced by the run | 7.6, 7.9 |
+| Where files live | Setup asks how work is organised; skills look for `data-work/` in the current folder, then upward; the nearest map wins and is named | 7.1, 8 |
+| Design items | `/wayfinder-data` writes `experiment-spec.md` or `metric-spec.md`; fast path for a single design; the grill sends design asks there | 20.5 |
+| Routing | A routing guide in the README and in `/ask-data-skills` | 20.4 |
+| Chat-first storage | Project per team or area, one chat per analysis; the instructions block; stable names and `updated:` lines; whole files replace old ones; optional document tool | 7.8, 8 |
+| Surface guide | `docs/where-to-run.md`; carry the map over to a new project on the same data; ask for an existing map first | 7.8 |
+| Evals | Rubric rows for items 2, 3, 6, 7, 10, 15 and the new features; seven new cases | 15 |
+| Self-check | Checks 29 to 34: Decisions and Hypotheses, map sections, `updated:` lines, spec templates, routing guide, v0.4 rules | `docs/self-check.md` |

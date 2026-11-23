@@ -240,6 +240,9 @@ B120. Chat-app tests move from incognito to normal chats. Source: the v0.4 brief
 B121. Rubric rows for item 15 (stable names) were added to the six flow rubrics and setup. Rows for items 2, 3 and 7 went to the grill rubric, item 6 and 10 to plan, run and review, as the brief says "the relevant flow skill rubrics".
 B122. A seventh new case, `ask-data-skills` case 4 (design ask routing), was added beyond the six the brief lists. Reason: the routing change should have one test.
 B123. The eval runner was run in dry-run mode only (56 cases found). This session has no API key.
+B124. Self-check (v0.4, item 20). Six new checks, 29 to 34: Decisions and Hypotheses sections and the three new Meta lines; Goals, Funnels and Key queries; `format:` and `updated:` on every template; the two spec templates and their fields; the routing table in the README and in `ask-data-skills`; and the v0.4 rules by phrase (retro never offers setup, the stuck rule, no analysis in the grill, the tree, the skeleton, the `.docx`, the replace wording). Check 15 no longer requires the setup offer in `retro-analysis`, and now requires its never-offer rule. Check 28 looks for `## 11. Appendix`. Each new check was tested by breaking it once; it failed, then passed after the restore.
+B125. The plugin version went from 0.3.0 to 0.4.0 in both manifests. SPEC section 21 and section 7.6 no longer say app-specific exports are v0.4: the brief did not include them, so they move to a later release.
+B126. `.blocklist` was created from the brief and the check ran with it present. The word list matched nothing, so no text was changed for it.
 
 ## Questions for Cenan
 

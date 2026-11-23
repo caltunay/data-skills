@@ -32,6 +32,12 @@ Run with `scripts/self-check`. Last run: 2026-11-18, v0.3 fix pass, with the pri
 | 26 | `validation-ladder` lists the 8 data-check floor checks, and no skill or SPEC line says quick depth skips them |
 | 27 | `question-types/SKILL.md` has a compact fallback row for every method card, with 4 filled cells |
 | 28 | The templates carry the Review pack, the bold status label, at most 3 callouts (Answer, Caveat, Ask) and the Appendix |
+| 29 | The analysis template has Decisions, Hypotheses, Setup choice, Goal link and Files |
+| 30 | The data map template has Goals, Funnels and Key queries |
+| 31 | Every template starts with `format: v1` and an `updated:` line |
+| 32 | The experiment spec and metric spec templates hold their required fields |
+| 33 | The routing guide is in the README and in `ask-data-skills` |
+| 34 | The v0.4 rules are in the skills: retro never offers setup, the stuck rule, no analysis in the grill, the hypothesis tree, the skeleton, the `.docx`, the replace wording |
 
 ## Private blocklist
 
@@ -43,6 +49,7 @@ Run with `scripts/self-check`. Last run: 2026-11-18, v0.3 fix pass, with the pri
 - `scripts/package-zips` builds one ZIP per skill into `dist/` (gitignored): 22 ZIPs.
 - `claude plugin validate .` passes for the plugin and the marketplace file.
 - Both worked examples were produced by running their queries. The eval runner was run in dry-run mode (56 cases after v0.4).
+- v0.4: checks 29 to 34 were added. Each needs the template copies to match, so `scripts/package-zips` and check 10 compare the two spec templates too.
 - v0.3: checks 25 to 28 were tested by breaking each rule once (a removed compact row, a renamed floor check, a missing go-ahead line); each failed as expected, then passed after the restore. The sign-up example queries were re-run; `outputs/results.txt` changed by additions only.
 
 ## Not checked (needs the maintainer)
