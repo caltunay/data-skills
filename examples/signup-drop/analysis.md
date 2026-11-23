@@ -169,7 +169,7 @@ Open high-impact assumptions next to these findings: A4.
 | Joins: aggregate `signups` before joining to `daily_spend` | yes |
 | Glossary: "paid social sign-ups fell because of the spend cut" | no: not a fact the data supports |
 
-## 9. Appendix: Review pack
+## 11. Appendix: Review pack
 
 The code behind each headline number. Every query file is in `queries/`; results are in `outputs/results.txt`.
 

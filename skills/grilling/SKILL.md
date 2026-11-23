@@ -46,6 +46,9 @@ Ask in rounds of at most 3 questions. Give each question 2 to 4 options and one 
 
 - Skip anything already answered or visible in the data map.
 - Every question has one real recommended default, marked "(recommended: reason)". No hedges such as "C if unknown", "depends" or "your call". No question without one, the deadline included. If you know little, recommend the option that is safest for the decision and say why. Example for a deadline: "A. No fixed date, normal turnaround (recommended: the ask names no meeting or launch)".
+- If an answer conflicts with an earlier one, contradicts the data map, or does not make sense, say so plainly ("This does not fit X because Y"). Switch to one question at a time until it is clear. Then return to rounds.
+- After each round, echo the user's answers back exactly, in their own words, before moving on. Never paraphrase: "this week" is not "later".
+- Do not analyse while grilling. Note only what attached files contain (columns, possible duplicates, date range). Never early findings. Do not put an observed pattern in an option.
 - If the user says "you choose", take the recommended default and record it as an assumption.
 - If the user answers only some questions, ask the rest next round. Do not guess.
 - Ask about the most uncertain thing first, not the easiest.

@@ -20,14 +20,14 @@ For work too big for one `/grill-the-ask`: "build a metrics framework for the su
 
 ## Start (every flow step)
 
-1. Check for `DATA-MAP.md` and for an existing wayfinder file `data-work/wayfinder/<slug>.md` (in `data-work/`, in the Project files, or attached). Say in one line what you found. This step needs no `analysis.md`.
+1. Check for `DATA-MAP.md` and for an existing wayfinder file `data-work/wayfinder/<slug>.md` (in `data-work/` in the current folder, then upward; in the Project files; or attached). Say in one line what you found, and which map you read. A team map can sit above project maps: the nearest map wins for conflicts. This step needs no `analysis.md`.
 2. If there is no `DATA-MAP.md`, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Wait for the choice.
 3. If the user is resuming and the wayfinder file is not found (for example, a new chat), ask them to attach it before asking anything else.
 4. If a wayfinder file exists, read its Progress line and resume from it. Do not reopen decided items unless the user asks.
 
 ## Rules from the disciplines (in case they do not load)
 
-- `grilling`: rounds of at most 3 questions, each with 2 to 4 options and one real recommended default (never a hedge such as "C if unknown"). Wait for answers. Never assume silently. Never ask the same question twice.
+- `grilling`: rounds of at most 3 questions, each with 2 to 4 options and one real recommended default (never a hedge such as "C if unknown"). Wait for answers. Never assume silently. When an answer conflicts with an earlier one or the data map, or does not make sense, say so plainly and ask one question at a time until it is clear. Never ask the same question twice.
 - `assumptions`: when something must be assumed, write it down with likely alternatives and the impact if wrong.
 - `question-types`: six question types, each with a claim ceiling. Name the type of each analysis you list.
 - `metric-design` (experimental): a metric needs a formula, a grain, a population, an owner, guardrails and a trusted number.

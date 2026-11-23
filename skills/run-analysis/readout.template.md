@@ -1,4 +1,5 @@
 format: v1
+updated: YYYY-MM-DD HH:MM
 
 # Readout: <title>
 
@@ -7,7 +8,7 @@ format: v1
 Audience: exec | product | data | mixed
 Date:
 
-<!-- Portable markdown only: no app-specific macros. At most 3 callouts in the whole readout, as blockquotes with a bold label (Answer, Caveat, Ask). Bold only the one takeaway per section. The status line is DRAFT until /review-analysis sets it to FINAL. -->
+<!-- Portable markdown only: no app-specific macros. At most 3 callouts in the whole readout, as blockquotes with a bold label (Answer, Caveat, Ask). Bold only the one takeaway per section. The status line is SKELETON (placeholders only, from /plan-analysis), then DRAFT (from /run-analysis), then FINAL (set by /review-analysis). A readout.docx is built from this text with the charts embedded: edit this file, then rebuild the .docx. -->
 
 ## 1. Answer
 

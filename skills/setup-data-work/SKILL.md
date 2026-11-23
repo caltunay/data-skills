@@ -15,13 +15,13 @@ Run once per team or project. Target: under 20 minutes. Partial answers are fine
 
 ## Start
 
-1. Check for `DATA-MAP.md` (in `data-work/`, in the Project files, or pasted). Say in one line what you found. This step needs no `analysis.md`.
+1. Check for `DATA-MAP.md` (in `data-work/` in the current folder, then upward; in the Project files; or pasted). Say in one line what you found, and which map you read. A team map can sit above project maps: the nearest map wins for conflicts. This step needs no `analysis.md`.
 2. If a map exists, read it. Check its format line and stale entries (see the `data-map` rule below). Offer to extend it. Do not start from zero. Step 0 still applies to anything new: ask how the user wants to add it.
 3. If there is no map, say so and go to step 0.
 
 ## Rules from the disciplines (in case they do not load)
 
-- `grilling`: rounds of at most 3 questions, each with 2 to 4 options and one real recommended default (never a hedge such as "C if unknown"). Wait for answers. Never assume silently.
+- `grilling`: rounds of at most 3 questions, each with 2 to 4 options and one real recommended default (never a hedge such as "C if unknown"). Wait for answers. Never assume silently. When an answer conflicts with an earlier one or the data map, or does not make sense, say so plainly and ask one question at a time until it is clear.
 - `data-map`: one file, fixed sections, `format: v1` on line 1. Joins start `unverified` until a query checks them. Conventions hold style only. Every entry has `verified: YYYY-MM-DD` and `source: setup`. Flag entries older than 90 days or contradicted by data, then ask. Show a migration before applying it. The template is `DATA-MAP.template.md` in the `data-map` skill.
 - `run-or-hand-over`: two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts (load them and run SQL with DuckDB or SQLite, or pandas). Hand over only when no code tool exists, and say so in one line. Where do files persist? In a chat app, create each file and offer it as a download; print it only if that fails. Never ask the user to edit a saved file by hand. Never fail because a tool is missing. Never call a data tool before the user names the source.
 

@@ -105,9 +105,10 @@ out=$(for s in $flow $flowstyle; do f="skills/$s/SKILL.md"
   grep -q 'Project files' "$f" || echo "$f: no Project files handoff"
 done
 for s in grill-the-ask plan-analysis run-analysis review-analysis retro-analysis; do f="skills/$s/SKILL.md"
-  grep -q 'Run `/setup-data-work` first' "$f" || echo "$f: no setup offer"
+  [ "$s" = retro-analysis ] || grep -q 'Run `/setup-data-work` first' "$f" || echo "$f: no setup offer"
   grep -q 'Progress line' "$f" || echo "$f: no Progress line"
 done
+grep -q 'Never offer `/setup-data-work` here' skills/retro-analysis/SKILL.md || echo "retro-analysis: must say it never offers setup"
 grep -q 'How do you want to set up your data map?' skills/setup-data-work/SKILL.md || echo "setup-data-work: no setup mode question")
 [ -z "$out" ] && ok "flow skills have the start check, end handoff and progress line" || bad "flow structure" "$out"
 
@@ -226,7 +227,7 @@ PY
 [ -z "$out" ] && ok "compact fallback line for every method card" || bad "compact cards" "$out"
 
 # 28 v0.3 templates: review pack, bold status, portable callouts, appendix
-out=$(grep -q '^## 9. Appendix: Review pack' templates/analysis.template.md || echo "analysis template: no Review pack"
+out=$(grep -q '^## 11. Appendix: Review pack' templates/analysis.template.md || echo "analysis template: no Review pack"
   grep -q '^\*\*Status: DRAFT\*\*' templates/readout.template.md || echo "readout template: no bold status"
   for c in Answer Caveat Ask; do grep -q "^> \*\*$c:\*\*" templates/readout.template.md || echo "readout template: no $c callout"; done
   [ "$(grep -c '^> \*\*' templates/readout.template.md)" -le 3 ] || echo "readout template: more than 3 callouts"
@@ -242,7 +243,7 @@ else
 fi
 
 # 22 private files are not tracked
-out=$(git ls-files 2>/dev/null | grep -E '(^|/)(\.blocklist|FIXES-v0\.1\.md|BUILD-v0\.2\.md|FIXES-v0\.3\.md)$')
+out=$(git ls-files 2>/dev/null | grep -E '(^|/)(\.blocklist|FIXES-v0\.1\.md|BUILD-v0\.2\.md|FIXES-v0\.3\.md|FIXES-v0\.4\.md)$')
 [ -z "$out" ] && ok "private files are not tracked" || bad "private files tracked" "$out"
 
 exit $fail

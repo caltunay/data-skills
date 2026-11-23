@@ -1,8 +1,8 @@
-# data-skills: spec (v0.3)
+# data-skills: spec (v0.4)
 
 v0.1 adds: connector rules, data map check, chat-app handoff, readout, progress tracker, method cards for all question types, neutral example domain. See section 19, decisions 21 to 32.
 
-v0.2 adds the experimental skills in section 20. v0.3 is a fix pass from a full manual run: see section 21 and decisions 47 onward.
+v0.2 adds the experimental skills in section 20. v0.3 is a fix pass from a full manual run: see section 21 and decisions 47 onward. v0.4 fixes the v0.3 live run and adds a hypothesis tree, strategy context, design asks, routing and chat-first storage: see section 22 and decisions 65 onward.
 
 - Repo: `caltunay/data-skills`
 - License: MIT, unless an upstream license we borrow from requires otherwise.
@@ -95,9 +95,10 @@ Inspired by `mattpocock/skills` (structure, flow, user-invoked vs model-invoked)
 ### Every flow step starts the same way
 
 1. Check for `DATA-MAP.md` and `analysis.md`. Say in one line what was found.
-2. If there is no `DATA-MAP.md`, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map."
-3. If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before re-asking anything.
-4. Read the Progress line and resume from it.
+2. Look for `data-work/` in the current folder, then upward. If more than one map is found, the nearest one wins for conflicts. Say which map you read.
+3. If there is no `DATA-MAP.md`, first ask: "Do you have a DATA-MAP.md from another project on the same data? Attach or copy it in." If not, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Record the choice in Meta as `Setup choice`. Never offer setup again once it is set. `/retro-analysis` never offers setup: it builds the map itself.
+4. If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before re-asking anything.
+5. Read the Progress line and resume from it.
 
 ### Every flow step ends the same way
 
@@ -232,13 +233,14 @@ All user-owned files live in the user's own project, never in the skills repo. U
   analyses/
     2026-11-13-signup-drop/
       analysis.md     working notes
-      readout.md      stakeholder readout (draft, then final)
+      readout.md      stakeholder readout (source; skeleton, draft, then final)
+      readout.docx    the same text with charts embedded, for Word and Google Docs
       queries/        numbered ladder steps (q1-1-one-entity.sql ...)
       outputs/        charts, tables, notebooks
 ```
 
 - **Coding agents:** the skills write here.
-- **Chat users:** keep `DATA-MAP.md`, `analysis.md` and `readout.md` in the chat app's Project files. Each flow step creates the updated files and offers them as downloads at its end. `/retro-analysis` hands back a full updated `DATA-MAP.md` to replace the Project file. The user never edits a saved file by hand.
+- **Chat users:** keep `DATA-MAP.md`, `analysis-<slug>.md` and `readout-<slug>.md` in the chat app's Project files (see section 7.8). Each flow step creates the updated files and offers them as downloads at its end. `/retro-analysis` hands back a full updated `DATA-MAP.md` to replace the Project file. The user never edits a saved file by hand.
 - **Quick depth:** no files.
 - **No raw chat transcripts are stored.** `analysis.md` is the record.
 
@@ -264,9 +266,9 @@ Shared by the team: committed to git where there is a repo, so every retro impro
 
 ### 7.3 `analysis.md`
 
-First line: `format: v1`. Sections, filled by step:
+First line: `format: v1`. Second line: `updated: YYYY-MM-DD HH:MM`. Sections, filled by step:
 
-1. **Meta:** title, requester, audience, date, depth, question type, claim ceiling, status, progress line. Requester (a person or role the user names) and date are never blank.
+1. **Meta:** title, requester, audience, date, depth, question type, claim ceiling, status, progress line, setup choice (A, B or map found; setup is never offered again once set), goal link (the goal in the map's Goals section the ask serves), files (download, or a document tool the user named). Requester (a person or role the user names) and date are never blank.
 2. **Ask:** the original ask verbatim, the clarified question, the decision it feeds, constraints, deadline. *(grill)*
 3. **Assumptions:** table, see 7.5. *(grill, then any step)*
 4. **Plan:** options considered, chosen plan, success checks (the method card's checks copied in at plan time; the reconcile check says whether the raw or the cleaned count must match the trusted number, and why). **Plan revisions** log: date, what changed, why, one row per correction. *(plan)*
@@ -274,7 +276,9 @@ First line: `format: v1`. Sections, filled by step:
 6. **Results:** ladder log (the floor checks, then each rung: expected, actual, pass or fail), findings as direction, magnitude, uncertainty, and the claim ceiling applied. Aggregates only by default. *(run)*
 7. **Review:** verdict, technical issues, business issues, leadership questions with answers. *(review)*
 8. **Retro:** proposed data map changes and which were accepted. *(retro)*
-9. **Appendix: Review pack:** for each headline number, the exact SQL or Python that produced it and its data source. In chat apps `queries/` does not persist, so this is how a fresh reviewer sees the code. *(run)*
+9. **Decisions:** every question and the user's answer, word for word, per round. After each round the skill echoes the answers back exactly before moving on. *(every step that asks)*
+10. **Hypotheses:** the hypothesis tree with a status per node (section 7.9). *(plan, updated by run, checked by review)*
+11. **Appendix: Review pack:** for each headline number, the exact SQL or Python that produced it and its data source. In chat apps `queries/` does not persist, so this is how a fresh reviewer sees the code. *(run)*
 
 Every skill reads `analysis.md` first, so a fresh session can pick up without re-asking.
 
@@ -324,6 +328,10 @@ Formatting:
 - Bold only for the one takeaway per section.
 
 `/run-analysis` writes the draft. `/review-analysis` checks every sentence against the claim ceiling, fixes it, and marks it final. Quick depth: a short answer in the chat, no file.
+
+**Word and Google Docs copy.** `readout.md` is the source. `/run-analysis` also produces `readout.docx` from the same text with the charts embedded, using whatever document library the sandbox has. `/review-analysis` edits `readout.md`, then rebuilds the `.docx`. Nobody edits the `.docx` by hand. With no code tool: `readout.md` plus the chart code only. `/storytell` makes a `.docx` for its doc and email formats.
+
+**Status line values:** `SKELETON` (placeholders only, from `/plan-analysis`, section 7.9), `DRAFT`, `FINAL`.
 
 ### 7.7 Data safety
 

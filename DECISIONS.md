@@ -66,6 +66,11 @@
 62. `analysis.md` carries a Review pack appendix with the exact code and data source of each headline number, so a fresh reviewer can see the code in a chat app.
 63. Readout visuals follow the `viz` rules: at most 3 charts for exec, a takeaway title, one annotation, image files linked with alt text, and a chart replaces number rows that say the same thing.
 64. Readouts use portable markdown: callouts as bold-labelled blockquotes (Answer, Caveat, Ask), at most 3; the status as a bold label (`**Status: DRAFT**`, `**Status: FINAL**`); bold only for one takeaway per section. App-specific exports are v0.4, in `/storytell`.
+65. The readout has one source, `readout.md`, and a `.docx` built from the same text with the charts embedded. The review edits the `.md` and rebuilds the `.docx`. With no code tool, the `.md` plus the chart code is the output.
+66. `/grill-the-ask` never analyses. With files attached it notes only what they contain (columns, possible duplicates, date range). An early finding anchors the whole analysis.
+67. `analysis.md` has a Decisions section: every question and answer, word for word, per round, echoed back exactly before moving on. A paraphrase ("this week" written as "later") is a data error.
+68. The setup choice (A, B or map found) is written to Meta and setup is never offered again once it is set. `/retro-analysis` never offers setup: it builds the map itself.
+69. The retro map follows the template layout: one entry per source, grain and key facts under Tables, table rows and never loose bullets.
 
 ## Build decisions
 
@@ -192,6 +197,16 @@ B94. Reference case (fix G, item 24). `evals/reference/signup-drop-claude-ai.md`
 B95. Self-check (fix H, item 25). Four new checks: 25 go-ahead question (the `> Go ahead?` line and options A, B and C in each of the 6 flow skills); 26 the 8 floor checks by name in `validation-ladder`, plus a grep that fails on any "quick runs rung 1 and 5" wording in skills or SPEC; 27 the compact card rows per type equal the card count in each type file, each row with 4 filled cells; 28 the template format (Review pack, bold status, at most 3 callouts, Appendix). Each was tested by breaking it once. With `.blocklist` present: 28 checks, all pass.
 B96. Plugin version bumped from 0.2.0 to 0.3.0 in both manifests. Options: keep 0.2.0 on the `v0.2` branch, or bump. Reason: B57 says a set version pins users until it changes, so the v0.3 skill changes need a new version to reach plugin users.
 B97. SPEC section 21 summarises v0.3 and points to the sections each fix changed. The title line now says v0.3. Sections 4, 5, 6.1, 6.2, 7.2, 7.3, 7.5, 7.6, 7.7, 8, 11, 12 and 15 were edited in place, so the spec reads as one current document.
+
+### v0.4 build
+
+B98. Setup (v0.4). Branch `v0.4` from `main`. `FIXES-v0.4.md` was added to `.gitignore` and to the self-check list of private files, next to the earlier briefs. `.blocklist` was created from the brief and is not tracked. Design decisions 65 onward, build decisions B98 onward.
+B99. Section numbers in `analysis.md`. Options: renumber so the Appendix stays last, or append the new sections after the Appendix. Chosen: Decisions is 9, Hypotheses is 10, the Review pack appendix moves to 11. Reason: an appendix belongs last. Both examples were renumbered. Self-check 28 tests `## 11. Appendix`.
+B100. Meta gained three lines: `Setup choice`, `Goal link`, `Files`. Options: one combined line, or one per fact. Chosen: one per fact, so each skill can read and write one value.
+B101. Readout `.docx` for `/storytell`. Options: always, never, or for the doc and email formats only. Chosen: doc and email only. Reason: a chat message and a slide outline are not documents.
+B102. Retro still asks for an existing map first ("Do you have a DATA-MAP.md from another project on the same data?"), because extending a map beats building a second one. It never offers setup.
+B103. Every flow skill, not only setup and `data-map`, asks for an existing map before offering setup. Options: only setup and `data-map` (the brief's text), or all flow starts. Chosen: all flow starts. Reason: a new chat in a Project often meets a step other than setup first, and a second map would then start.
+B104. Chat-app save line. The old line "Save this to your Project files" became "Replace the old one in your Project files" (or "Save this ..." when the file is new), plus a naming rule: `analysis-<slug>.md`, `readout-<slug>.md`, `format:` and `updated:` lines, the whole file, newest `updated:` wins.
 
 ## Questions for Cenan
 

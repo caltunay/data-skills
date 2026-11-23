@@ -160,7 +160,7 @@ Open high-impact assumptions next to these findings: none.
 | Metrics: trusted visitor counts per arm from the experiment platform | yes |
 | Metrics: "the new page lifts conversion by 1.65 points" as a trusted number | no: a test result with a wide interval is not a reference value |
 
-## 9. Appendix: Review pack
+## 11. Appendix: Review pack
 
 The code behind each headline number. Every query file is in `queries/`; results are in `outputs/results.txt` and `outputs/stats.txt`.
 
