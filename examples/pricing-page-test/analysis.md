@@ -1,4 +1,5 @@
 format: v1
+updated: 2026-02-24 09:00
 
 # Analysis: did the new pricing page increase orders?
 
@@ -14,6 +15,9 @@ Invented example. Every number below comes from `outputs/results.txt` and `outpu
 - Question type: causal (randomised experiment)
 - Status: retro done
 - Progress: retro done, 5 data map changes accepted. Readout final.
+- Setup choice: A (ran `/setup-data-work`)
+- Goal link: target, lift order conversion on the shop
+- Files: download
 
 ## 2. Ask
 
@@ -159,6 +163,31 @@ Open high-impact assumptions next to these findings: none.
 | Rules: analyse a test at the unit it was randomised on | yes |
 | Metrics: trusted visitor counts per arm from the experiment platform | yes |
 | Metrics: "the new page lifts conversion by 1.65 points" as a trusted number | no: a test result with a wide interval is not a reference value |
+
+## 9. Decisions
+
+### Round 1 (2026-01-20)
+
+| # | question | user's answer (verbatim) |
+|---|---|---|
+| 1 | What does "works" mean? | "More visitors place a paid order within 7 days." |
+| 2 | What is the unit of assignment? | "The visitor." |
+| 3 | What is the smallest effect worth shipping? | "Two points of conversion." |
+
+### Round 2 (2026-01-20)
+
+| # | question | user's answer (verbatim) |
+|---|---|---|
+| 1 | Which guardrails? | "Revenue per visitor and return rate." |
+| 2 | Who reads the result? | "The product team." |
+
+## 10. Hypotheses
+
+| id | hypothesis | would support it | would refute it | leads to | status |
+|---|---|---|---|---|---|
+| H1 | The new layout raises 7-day conversion | Variant conversion above control, interval above zero | Interval includes zero or below | H1.1 | supported (+1.65 points, interval +0.22 to +3.07) |
+| H1.1 | The gain holds in both weeks | Both weekly differences above zero | A weekly difference at or below zero | none | open (week 2 weaker, +0.59, interval includes zero) |
+| H2 | The gain appears on mobile only | Mobile difference above zero, desktop near zero | Both devices move together | none | parked (one exploratory slice, a pattern to test) |
 
 ## 11. Appendix: Review pack
 

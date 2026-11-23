@@ -1,4 +1,5 @@
 format: v1
+updated: 2026-04-07 09:00
 
 # Readout: sign-ups in March 2026
 

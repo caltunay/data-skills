@@ -139,6 +139,7 @@ When `/run-analysis` or `/review-analysis` finds the plan cannot hold (for examp
 |---|---|---|---|
 | Grill | 1 round, max 3 questions | Rounds until clear | Rounds until clear, plus stakeholder prep questions |
 | Assumptions | Inline list | Table | Table, alternatives for every high-impact row |
+| Hypotheses | Flat list, up to 3 | Tree, at most 3 levels and about 12 nodes | Same as standard |
 | Plan | One line: method + success check | 2 to 4 options, chosen plan | Options, chosen plan, power or MDE where relevant |
 | Ladder | Compact data-check floor (never skipped) | Full floor + full ladder | Full floor + full ladder + alternative specification |
 | Review | Self-check against claim ceiling | Technical + business review | Full review + leadership questions |
@@ -186,12 +187,12 @@ Copy-paste form for queries: numbered (`Q2.1`, `Q2.2`), each with one purpose li
 
 | Skill | Trigger | Inputs | Does | Writes | Calls |
 |---|---|---|---|---|---|
-| `/setup-data-work` | User runs it, once per team or project | Nothing, or an existing `DATA-MAP.md` | First asks how the user wants to set up the map (section 8). Tests access only against a source the user named. Points to the agent's connector directory if there is none. Interviews the user. Can be partial; the map fills in over time. Target: under 20 minutes. | `data-work/DATA-MAP.md`, `.gitignore` entry | grilling, data-map, run-or-hand-over |
-| `/grill-the-ask` | User runs it with a stakeholder ask | The ask, `DATA-MAP.md` if present | Rounds of max 3 questions, each with options and a recommended default. Covers goal, the decision it feeds, requester, question type, metric, population, time window, constraints, deadline, and who reads the result (audience). When periods are compared, recommends a comparison that handles seasonality (year on year, or the same weekdays), or flags that the recommended option ignores it. Sets the depth with a one-line reason. Never asks the same question twice. | `analysis.md`: Meta, Ask, Assumptions | grilling, assumptions, question-types, data-map |
-| `/plan-analysis` | User runs it after grilling | `analysis.md` | 2 to 4 options with trade-offs, then the chosen plan. Writes the analysis table spec. Sets success checks. Records decisions already made; does not invent new ones. | `analysis.md`: Plan, Analysis table spec | assumptions, question-types, shaping-data |
-| `/run-analysis` | User runs it after the plan | `analysis.md`, `DATA-MAP.md` | Builds the analysis table from the spec, climbing the validation ladder. States the expected result before each query. Audits the data. Runs the method for the question type. Asks instead of assuming. Adds plan revisions when needed. States its goal up front and keeps going until it is met. Writes a draft readout. | `analysis.md`: Results, Progress; `readout.md` (draft); `queries/`; `outputs/` | validation-ladder, run-or-hand-over, shaping-data, data-audit, stats-tests, question-types, data-map, assumptions |
-| `/review-analysis` | User runs it on a finished analysis (theirs or anyone's) | `analysis.md` or any pasted analysis | Technical review and business review. Checks claims against the ceiling. Checks assumption status. Gives a verdict. Writes questions leadership will ask, with answers. Says "no material issues" when that is true. Reviews the draft readout word by word, fixes claims above the ceiling, and marks it final. | `analysis.md`: Review; `readout.md` (final) | question-types, assumptions, validation-ladder |
-| `/retro-analysis` | User runs it at the end | `analysis.md`, `DATA-MAP.md` | Proposes dated changes to the data map: new joins, traps, filters, definitions, trusted numbers, gotchas. Puts each in the right section (Conventions are style only) with no duplicates. Each reason must be true for this run, shown by a line in `analysis.md`. Shows a diff. The user approves each change. Not a memory dump. | `DATA-MAP.md` (approved changes only) | data-map |
+| `/setup-data-work` | User runs it, once per team or project | Nothing, or an existing `DATA-MAP.md` | First asks for a map from another project on the same data, then asks how the user wants to set up the map (section 8). Tests access only against a source the user named. Points to the agent's connector directory if there is none. Interviews the user, including goals, funnels, key queries and how the team organises its files. In a chat app ends with a block to paste into the Project instructions. Can be partial; the map fills in over time. Target: under 20 minutes. | `data-work/DATA-MAP.md`, `.gitignore` entry | grilling, data-map, run-or-hand-over |
+| `/grill-the-ask` | User runs it with a stakeholder ask | The ask, `DATA-MAP.md` if present | Rounds of max 3 questions, each with options and a recommended default. Covers goal, the decision it feeds, requester, question type, metric, population, time window, constraints, deadline, and who reads the result (audience). When periods are compared, recommends a comparison that handles seasonality (year on year, or the same weekdays), or flags that the recommended option ignores it. Sets the depth with a one-line reason. Never asks the same question twice. Never analyses: with files attached it notes only columns, possible duplicates and the date range. Logs every answer word for word in Decisions and echoes it back. On a conflicting or senseless answer, says so and asks one question at a time. Asks how the ask links to a goal. Sends design asks and project-sized asks to `/wayfinder-data` with one line why. | `analysis.md`: Meta, Ask, Decisions, Assumptions | grilling, assumptions, question-types, data-map |
+| `/plan-analysis` | User runs it after grilling | `analysis.md` | Writes a hypothesis tree (section 7.9) before the method options. 2 to 4 options with trade-offs, then the chosen plan. Writes the analysis table spec. Sets success checks. Optionally drafts a readout skeleton with placeholders only. Records decisions already made; does not invent new ones. | `analysis.md`: Hypotheses, Plan, Analysis table spec; `readout.md` (skeleton, optional) | assumptions, question-types, shaping-data |
+| `/run-analysis` | User runs it after the plan | `analysis.md`, `DATA-MAP.md` | Builds the analysis table from the spec, climbing the validation ladder. States the expected result before each query. Audits the data. Runs the method for the question type. Asks instead of assuming. Adds plan revisions when needed. States its goal up front and keeps going until it is met. Updates hypothesis statuses. Writes a draft readout (replacing any skeleton) and a `.docx` copy. | `analysis.md`: Results, Hypotheses, Progress; `readout.md` (draft); `readout.docx`; `queries/`; `outputs/` | validation-ladder, run-or-hand-over, shaping-data, data-audit, stats-tests, question-types, data-map, assumptions |
+| `/review-analysis` | User runs it on a finished analysis (theirs or anyone's) | `analysis.md` or any pasted analysis | Technical review and business review. Checks claims against the ceiling. Checks assumption status. Gives a verdict. Writes questions leadership will ask, with answers. Says "no material issues" when that is true. Checks the hypothesis statuses and the decisions log. Reviews the draft readout word by word, fixes claims above the ceiling, marks it final and rebuilds the `.docx`. | `analysis.md`: Review; `readout.md` (final); `readout.docx` | question-types, assumptions, validation-ladder |
+| `/retro-analysis` | User runs it at the end | `analysis.md`, `DATA-MAP.md` | Proposes dated changes to the data map: new joins, traps, filters, definitions, trusted numbers, gotchas. Puts each in the right section (Conventions are style only) with no duplicates. Each reason must be true for this run, shown by a line in `analysis.md`. Shows a diff. The user approves each change. Proposes additions to Funnels and Key queries. One entry per source; grain under Tables. Never offers setup: it builds the map itself. Not a memory dump. | `DATA-MAP.md` (approved changes only) | data-map |
 
 ### 6.2 Disciplines (model-invoked, v0)
 
@@ -239,14 +240,14 @@ All user-owned files live in the user's own project, never in the skills repo. U
       outputs/        charts, tables, notebooks
 ```
 
-- **Coding agents:** the skills write here.
+- **Coding agents:** the skills write here. They look for `data-work/` in the current folder, then upward. A team map can sit above project maps. The nearest map wins for conflicts, and the skill says which map it read.
 - **Chat users:** keep `DATA-MAP.md`, `analysis-<slug>.md` and `readout-<slug>.md` in the chat app's Project files (see section 7.8). Each flow step creates the updated files and offers them as downloads at its end. `/retro-analysis` hands back a full updated `DATA-MAP.md` to replace the Project file. The user never edits a saved file by hand.
 - **Quick depth:** no files.
 - **No raw chat transcripts are stored.** `analysis.md` is the record.
 
 ### 7.2 `DATA-MAP.md`
 
-One file with fixed sections. The first line is the format version: `format: v1`. When a skill finds an older format, it offers a migration and shows the changes first.
+One file with fixed sections. The first line is the format version: `format: v1`. The second line is `updated: YYYY-MM-DD HH:MM`, set to now at every change. When a skill finds an older format, it offers a migration and shows the changes first. A v1 map that lacks the Goals, Funnels or Key queries sections is still valid: the sections are added as empty tables at the next update.
 
 Sections:
 1. **Sources:** name, type (warehouse, lake, sheet, file, API, cube), dialect (Postgres, SQL Server, BigQuery, Snowflake...), access mode (connected or hand-over).
@@ -257,6 +258,11 @@ Sections:
 6. **Gotchas:** past mistakes and how to avoid them.
 7. **Glossary:** business terms and what they map to in the data.
 8. **Conventions:** style only: SQL style, Python style, naming, team overrides of the defaults. Analysis rules go in Rules or Gotchas. No entry appears in two sections.
+9. **Goals:** mission, north star metric, target metrics, each with a horizon (this quarter, this year, 3 years). `/grill-the-ask` asks how an ask links to a goal and records it in Meta.
+10. **Funnels:** one row per step: the funnel, the step, its event or table, and the step definition.
+11. **Key queries:** 3 to 5 reusable queries: name, what it returns, when to use it, the query. `/retro-analysis` proposes additions to Funnels and Key queries.
+
+Sources hold one entry per source. Grain and key facts go under Tables. Every section is a table with the template's columns, never loose bullets (Conventions is the one list).
 
 Every entry carries `verified: YYYY-MM-DD` and `source: setup` or `source: analyses/<slug>`.
 
@@ -338,6 +344,20 @@ Formatting:
 - `/run-analysis` shows aggregates by default and asks before saving row-level data anywhere.
 - `/setup-data-work` asks whether `outputs/` should be committed, in coding agents only. The default adds `data-work/analyses/*/outputs/` to `.gitignore`. Chat apps get no git advice.
 
+### 7.9 Hypotheses and the readout skeleton
+
+**Hypothesis tree.** `/plan-analysis` at standard and deep depth writes it before the method options: H1, H2 and so on, each with children (H1.1, H1.2, then H1.2.1). At most 3 levels and about 12 nodes. For each node: what finding would support it, what would refute it, and which child it leads to. The user picks the paths to follow; the rest are `parked`. Quick depth: a flat list of up to 3 hypotheses, in the chat.
+
+| id | hypothesis | would support it | would refute it | leads to | status |
+|---|---|---|---|---|---|
+| H1 | Sign-ups fell because of one channel | One channel falls far more than the others | All channels fall by a similar share | H1.1, H1.2 | open |
+
+Status: `open`, `supported`, `refuted` or `parked`. `/run-analysis` updates it, naming the result that shows it. `/review-analysis` checks that every node has a status, that `supported` and `refuted` nodes have a result behind them, and that no `open` or `parked` node is worded as a finding.
+
+**Readout skeleton.** Optional at standard and deep depth, in `/plan-analysis`. It drafts `readout.md` with placeholders only (XX%, [segment]), never an invented number, to check that the story would answer the decision. Status line `**Status: SKELETON**`. `/run-analysis` replaces it. `/review-analysis` and `/storytell` refuse to treat it as a result.
+
+**Stuck rule.** When an answer conflicts with an earlier one, contradicts the data map, or does not make sense, the skill says so plainly ("This does not fit X because Y") and asks one question at a time until it is clear. Then it returns to rounds.
+
 ---
 
 ## 8. Onboarding: `/setup-data-work`
@@ -350,11 +370,18 @@ Rounds of max 3 questions. Partial answers are fine; the map grows through retro
 3. **Key tables:** the 3 to 10 tables used most, grain and keys for each.
 4. **Joins:** the joins they trust, and any known fan-out traps. Every join starts as `unverified` until a query checks its match rate and fan-out. Never mark a join trusted from a schema alone.
 5. **Metrics:** the 3 to 5 most-used metrics, their definitions, and one trusted number each (for reconciling).
-6. **Rules:** mandatory filters (test accounts, cancelled orders, time zones).
-7. **Conventions:** "Does your team have SQL or Python conventions? If not, I'll use sqlstyle.guide and PEP 8."
-8. **Git policy (coding agents only):** commit `outputs/` or not (default: not). No git advice in chat apps.
+6. **Goals:** the mission, the north star metric, the target metrics and the horizon of each (this quarter, this year, 3 years). Written to the Goals section.
+7. **Funnels:** the main funnels: each step, the event or table that marks it, and the step definition. Written to the Funnels section.
+8. **Key queries:** 3 to 5 reusable queries, what each returns and when to use it. Written to the Key queries section.
+9. **Rules:** mandatory filters (test accounts, cancelled orders, time zones).
+10. **Conventions:** "Does your team have SQL or Python conventions? If not, I'll use sqlstyle.guide and PEP 8."
+11. **Where the files live:** "A) One repo with a folder per project. B) A repo per project. C) A team repo. D) Chat Projects." Skills look for `data-work/` in the current folder, then upward. A team map can sit above project maps: the nearest map wins for conflicts, and the skill says which map it read. For chat apps, recommend one Project per team or area and one chat per analysis (section 7.8).
+12. **Git policy (coding agents only):** commit `outputs/` or not (default: not). No git advice in chat apps.
+13. **Save to a document tool (chat apps, ask once):** "Hand files to you as downloads, or save them to a document tool you use (for example a drive, a wiki or a notes app)?" Only a tool the user names. Never required.
 
-Then write `DATA-MAP.md` and show a short summary of what is still missing.
+Before step 0, when no map is found: "Do you have a DATA-MAP.md from another project on the same data? Attach or copy it in." If yes, extend it. Start a fresh map only for entirely different data sources.
+
+Then write `DATA-MAP.md` and show a short summary of what is still missing. In a chat app, end with the Project instructions block (section 7.8).
 
 ---
 

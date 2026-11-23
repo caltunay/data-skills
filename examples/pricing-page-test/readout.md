@@ -1,4 +1,5 @@
 format: v1
+updated: 2026-02-24 09:00
 
 # Readout: pricing page test, February 2026
 

@@ -1,4 +1,5 @@
 format: v1
+updated: 2026-04-07 09:00
 
 # Data map
 
@@ -60,3 +61,24 @@ Entries older than 90 days, or contradicted by data, must be re-confirmed before
 - SQL style: sqlstyle.guide defaults, with lowercase keywords, leading commas, `where true`, CTEs and full table names.
 - Python style: PEP 8.
 - Team overrides: none yet.
+
+## 9. Goals
+
+| level | goal | metric | horizon | verified | source |
+|---|---|---|---|---|---|
+| north star | Grow active subscribers | active_subscribers | this year | 2026-04-02 | setup |
+| target | Lift monthly sign-ups | monthly sign-ups | this quarter | 2026-04-02 | setup |
+
+## 10. Funnels
+
+| funnel | step | event or table | step definition | verified | source |
+|---|---|---|---|---|---|
+| sign-up | 1 account created | signups | One row per `signup_id`, test accounts out | 2026-04-02 | setup |
+
+Only the last step of the funnel is in this example data.
+
+## 11. Key queries
+
+| name | what it returns | when to use it | query | verified | source |
+|---|---|---|---|---|---|
+| daily_signups | Sign-ups per day, one row per `signup_id`, test accounts out | First check of any "sign-ups dropped" ask | see `queries/q0-2-daily-series.sql` | 2026-04-02 | setup |

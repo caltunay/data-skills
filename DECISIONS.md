@@ -71,6 +71,12 @@
 67. `analysis.md` has a Decisions section: every question and answer, word for word, per round, echoed back exactly before moving on. A paraphrase ("this week" written as "later") is a data error.
 68. The setup choice (A, B or map found) is written to Meta and setup is never offered again once it is set. `/retro-analysis` never offers setup: it builds the map itself.
 69. The retro map follows the template layout: one entry per source, grain and key facts under Tables, table rows and never loose bullets.
+70. `/plan-analysis` writes a hypothesis tree before the method options (standard and deep): support and refute conditions per node, at most 3 levels and about 12 nodes. The user picks the paths. Status per node is kept in `analysis.md` and checked by the review. Quick depth keeps a flat list of up to 3.
+71. When an answer conflicts with an earlier one, contradicts the data map, or makes no sense, the skill says so plainly and asks one question at a time until it is clear, then returns to rounds.
+72. The data map holds the organisation's goals (mission, north star, targets, horizon). `/grill-the-ask` links the ask to a goal when one exists and records it in Meta.
+73. The data map holds Funnels and Key queries (3 to 5). Setup asks for both. Retro proposes additions.
+74. The readout skeleton is optional. It uses placeholders only and never an invented number. It exists to test the story against the decision before any work.
+75. Skills find `data-work/` in the current folder, then upward. A team map can sit above project maps. The nearest map wins for conflicts and the skill says which one it read. Setup asks how the user organises work.
 
 ## Build decisions
 
@@ -207,6 +213,13 @@ B101. Readout `.docx` for `/storytell`. Options: always, never, or for the doc a
 B102. Retro still asks for an existing map first ("Do you have a DATA-MAP.md from another project on the same data?"), because extending a map beats building a second one. It never offers setup.
 B103. Every flow skill, not only setup and `data-map`, asks for an existing map before offering setup. Options: only setup and `data-map` (the brief's text), or all flow starts. Chosen: all flow starts. Reason: a new chat in a Project often meets a step other than setup first, and a second map would then start.
 B104. Chat-app save line. The old line "Save this to your Project files" became "Replace the old one in your Project files" (or "Save this ..." when the file is new), plus a naming rule: `analysis-<slug>.md`, `readout-<slug>.md`, `format:` and `updated:` lines, the whole file, newest `updated:` wins.
+B105. Hypotheses live in `analysis.md` as section 10, as a table with a status column. Options: a separate file, or a section. Chosen: a section. Reason: one file keeps the fresh-review rule simple.
+B106. A plain measurement ask ("how many") has one hypothesis, the expected range. Options: skip the tree for such asks, or always write one. Chosen: always write one, kept to one node. Reason: the refute condition doubles as a sanity check.
+B107. The new data map sections are appended as 9, 10, 11 (Goals, Funnels, Key queries), not inserted. Reason: existing maps and the retro diffs keep their section numbers. A v1 map without them stays valid.
+B108. The map keeps `format: v1`. Options: bump to v2 for the new sections and the `updated:` line, or stay on v1. Chosen: stay on v1. Reason: both are additions, nothing is removed or renamed, and a v2 migration prompt on every old map is noise.
+B109. The two example maps and analyses were brought to v0.4 with invented but consistent rows: Goals, Funnels, Key queries, Decisions, Hypotheses, and `updated:` lines. The Decisions answers are invented to match each example's Ask.
+B110. Setup grew from 8 to 13 steps. Options: cut older steps, or keep all and say partial answers are fine. Chosen: keep all. The setup still asks in rounds of at most 3 and stops when the user stops.
+B111. The hypothesis tree is part of `/plan-analysis`, not a new skill. Reason: SPEC section 3 keeps the catalogue small, and no other step builds one.
 
 ## Questions for Cenan
 
