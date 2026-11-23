@@ -77,6 +77,8 @@
 73. The data map holds Funnels and Key queries (3 to 5). Setup asks for both. Retro proposes additions.
 74. The readout skeleton is optional. It uses placeholders only and never an invented number. It exists to test the story against the decision before any work.
 75. Skills find `data-work/` in the current folder, then upward. A team map can sit above project maps. The nearest map wins for conflicts and the skill says which one it read. Setup asks how the user organises work.
+76. `/wayfinder-data` also handles design asks (an experiment, a metric). A single design item takes a fast path with no project map. The outputs are `experiment-spec.md` and `metric-spec.md`.
+77. A spec never holds an invented number. Baselines, targets and benchmarks come from the user or the data map, or are marked "to confirm". A proxy is a guess until a check shows it tracks the true metric, and the spec says how to check.
 
 ## Build decisions
 
@@ -220,6 +222,9 @@ B108. The map keeps `format: v1`. Options: bump to v2 for the new sections and t
 B109. The two example maps and analyses were brought to v0.4 with invented but consistent rows: Goals, Funnels, Key queries, Decisions, Hypotheses, and `updated:` lines. The Decisions answers are invented to match each example's Ask.
 B110. Setup grew from 8 to 13 steps. Options: cut older steps, or keep all and say partial answers are fine. Chosen: keep all. The setup still asks in rounds of at most 3 and stops when the user stops.
 B111. The hypothesis tree is part of `/plan-analysis`, not a new skill. Reason: SPEC section 3 keeps the catalogue small, and no other step builds one.
+B112. Where the two spec templates live. Options: only in `templates/`, only in the skill folder, or both. Chosen: both, byte-identical, as for the analysis and readout templates. Reason: a ZIP holds only one skill folder, so a chat-app user needs the copy inside it. `scripts/package-zips` and self-check 10 compare the copies.
+B113. The experiment spec has its own section for open items. Reason: a design often waits on one number from another person, and the spec should say who.
+B114. `/wayfinder-data` keeps its name and gains the design role. Options: a new skill for designs, or one skill. Chosen: one skill. Reason: the brief says design asks live inside wayfinder, and a second command would blur the routing guide.
 
 ## Questions for Cenan
 

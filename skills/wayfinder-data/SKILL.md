@@ -1,6 +1,6 @@
 ---
 name: wayfinder-data
-description: Map big, vague data work as a list of decision items, resolve them one at a time with the user, and end with ready prompts for the analyses to run. Use only when the user runs /wayfinder-data or explicitly asks to map out or break down a large, ambiguous piece of data work.
+description: Map big, vague data work as a list of decision items, resolve them one at a time with the user, and end with ready prompts for the analyses to run. Also handles asks that need a design, not data (design an A/B test, define how to measure something) by writing an experiment spec or a metric spec. Use only when the user runs /wayfinder-data or explicitly asks to map out or break down a large, ambiguous piece of data work, or to design an experiment or a metric.
 ---
 
 # /wayfinder-data
@@ -9,7 +9,9 @@ Big work is a set of decisions. Find them, order them, settle them one at a time
 
 Experimental (v0.2).
 
-For work too big for one `/grill-the-ask`: "build a metrics framework for the subscription app", "work out what we should measure for the new loyalty scheme", "plan this quarter's analysis of returns".
+Two kinds of ask come here. First, work too big for one `/grill-the-ask`: "build a metrics framework for the subscription app", "work out what we should measure for the new loyalty scheme", "plan this quarter's analysis of returns".
+
+Second, asks that need a design and no data yet: "design an A/B test for the new pricing page", "define how we measure customer health". These end in a spec file, not an analysis.
 
 ## Hard rules
 
@@ -31,11 +33,14 @@ For work too big for one `/grill-the-ask`: "build a metrics framework for the su
 - `assumptions`: when something must be assumed, write it down with likely alternatives and the impact if wrong.
 - `question-types`: six question types, each with a claim ceiling. Name the type of each analysis you list.
 - `metric-design` (experimental): a metric needs a formula, a grain, a population, an owner, guardrails and a trusted number.
+- `stats-tests`: size an experiment with a baseline, an MDE, power and a significance level. Fix the primary metric and the runtime in advance. One primary metric; extra metrics get a correction or the label exploratory.
+- `experiment` card (in `question-types`): randomise a unit, hold the split fixed, check the sample ratio, no peeking, full weekly cycles, guardrails, one decision rule written before the test.
 - `data-map`: read `DATA-MAP.md` first. Flag entries older than 90 days or contradicted by data, then ask.
 - `run-or-hand-over`: two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts (load them and run SQL with DuckDB or SQLite, or pandas). Hand over only when no code tool exists, and say so in one line. Where do files persist? In a chat app, create each file and offer it as a download; print it only if that fails. Never ask the user to edit a saved file by hand.
 
 ## Steps
 
+0. **Fast path for a single design item.** If the whole ask is one design item ("design an A/B test for X", "define how we measure Y"), skip the decision map and the project file. Go straight to the spec: an experiment spec for a test, a metric spec for a measure. Do one framing round (at most 3 questions), then fill the template one section at a time with the user (see "Design items"). Do not make the user sit through a project map for a single design. If the ask turns out to hold several designs or analyses, say so and switch to the full map.
 1. **Take the work verbatim.** Store it unchanged.
 2. **One framing round** (at most 3 questions): what outcome is wanted, who it is for, and by when. Skip what is already known.
 3. **Draft the map.** List the decision items: every choice that must be made before the work can be done well. Aim for 5 to 12. Fewer than 4 means this is one analysis: say so and suggest `/grill-the-ask` instead. For each item write:
@@ -55,6 +60,21 @@ For work too big for one `/grill-the-ask`: "build a metrics framework for the su
    Update the Progress line after every item.
 7. **Stop when** every item is `decided`, or the only open items wait on other people. Do not push the user through all of them in one sitting if they want to stop: the file holds the state.
 8. **List the analyses to run.** When the map is done (or far enough), write "Analyses to run": each as a ready prompt the user can paste, in dependency order. Each prompt carries the decisions that scope it, so `/grill-the-ask` does not have to re-ask them. Say which analyses are blocked by an open item.
+
+## Design items
+
+An item in a map can be a design item (an experiment or a metric to define). So can a whole fast-path ask. The output is a spec file, from the templates in this skill's folder: `experiment-spec.template.md` and `metric-spec.template.md`.
+
+- **`experiment-spec.md`:** hypothesis, unit of randomisation, feature gate or assignment, primary metric, guardrails, MDE, power, runtime, seasonality, SRM check plan, decision rule. Use the `experiment` card in `question-types` for the checks, `stats-tests` for the sample size and MDE, and `metric-design` for the primary metric if it is not yet defined.
+- **`metric-spec.md`:** definition, formula, grain, population, data source or what must be collected, candidate proxies and how to check they track the true metric, a benchmark or target and where it comes from, owner. Use `metric-design`.
+
+Rules for both:
+
+- Go one section at a time. Each question has one real recommended default. Log answers word for word and echo them back.
+- Never invent a number. Baselines, targets and benchmarks come from the user, the data map or a stated calculation. If missing, write "to confirm" and who can supply it. Do not look one up from memory and present it as theirs.
+- A proxy is a guess until a check shows it tracks the true metric. The spec says how to check, with data that holds both, and the check result stays `not run` until someone runs it. Running it is a `/grill-the-ask` analysis, not this step.
+- A power or sample size is a calculation: show the inputs and the formula. Do not do the arithmetic in your head.
+- Experiment spec and metric spec end with open items: what is still to confirm, with who and by when.
 
 ## The wayfinder file
 
@@ -83,6 +103,10 @@ format: v1
 | id | assumption | why unavoidable | likely alternatives (1-3) | impact if wrong | how to check | status |
 |---|---|---|---|---|---|---|
 
+## Specs to write
+
+- <experiment-spec.md or metric-spec.md, and the item it settles>
+
 ## Analyses to run
 
 1. `/grill-the-ask <ready prompt>` (question type: <type>; depends on: W1, W3)
@@ -100,19 +124,21 @@ Example ready prompt: `/grill-the-ask Monthly churn rate for the subscription ap
 
 ## End (every flow step)
 
-1. Update the Progress line in the wayfinder file.
+1. Update the Progress line in the wayfinder file (if there is one).
 2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
 3. Chat app: create the wayfinder file and offer it as a download. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Save this to your Project files so the next session, in any chat, can read it."
 4. Coding agent: the file is saved under `data-work/wayfinder/`. Say where.
-5. Name the next step: the next open item, or the first `/grill-the-ask` prompt.
+5. Name the next step: the next open item, or the first `/grill-the-ask` prompt. For a fast-path spec, the next step is to share the spec for sign-off, then `/grill-the-ask` for the analysis that will read the test out.
+6. Files: `experiment-spec.md` or `metric-spec.md` (and the wayfinder file when there is a map). Start each with `format: v1` and `updated: YYYY-MM-DD HH:MM`. In a chat app, hand back the whole file and say "Replace the old one in your Project files."
 
 ## Done when
 
-Every item is decided or waits on a named role, and the analyses to run are listed as ready prompts.
+Every item is decided or waits on a named role, and the analyses to run are listed as ready prompts. For a fast-path ask: the spec is filled and its open items are named.
 
 ## Do not
 
 - Do not decide for the user without telling them.
 - Do not start any of the analyses.
 - Do not invent owners, teams or deadlines.
-- Do not turn one clear ask into a map. Send it to `/grill-the-ask`.
+- Do not turn one clear data question into a map. Send it to `/grill-the-ask`. A single design item is not a map either: take the fast path.
+- Do not run any test or query. A spec says what to run.

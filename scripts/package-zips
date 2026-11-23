@@ -6,7 +6,7 @@ root="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$root"
 
 # keep the copies of each template identical
-for pair in "analysis.template.md grill-the-ask" "readout.template.md run-analysis"; do
+for pair in "analysis.template.md grill-the-ask" "readout.template.md run-analysis" "experiment-spec.template.md wayfinder-data" "metric-spec.template.md wayfinder-data"; do
   set -- $pair
   if ! cmp -s "templates/$1" "skills/$2/$1"; then
     echo "templates/$1 and skills/$2/$1 differ" >&2

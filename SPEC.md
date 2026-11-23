@@ -563,7 +563,7 @@ data-skills/
     data-audit/SKILL.md
     stats-tests/SKILL.md
   templates/
-    analysis.template.md
+    analysis.template.md, readout.template.md, experiment-spec.template.md, metric-spec.template.md
   evals/
     <skill>/case-1.md, case-2.md, case-3.md, rubric.md
     results/
@@ -691,6 +691,12 @@ Rules for every new skill:
 - Writes `data-work/wayfinder/<slug>.md`: a list of decision items, each with options, a recommended default, status (open, decided), dependencies, and who decides.
 - Resolves items one at a time using `grilling`. Never resolves an item silently.
 - When the map is done, lists the analyses to run, each as a ready `/grill-the-ask` prompt.
+- **Design items (v0.4).** Also handles asks that need a design, not data: "design an A/B test", "define how we measure X". The output is a spec file, from templates in the skill folder and in `templates/`:
+  - `experiment-spec.md`: hypothesis, unit of randomisation, feature gate or assignment, primary metric, guardrails, MDE, power, runtime, seasonality, SRM check plan, decision rule.
+  - `metric-spec.md`: definition, formula, grain, population, data source or what must be collected, candidate proxies and how to check they track the true metric, a benchmark or target and where it comes from, owner.
+  - Uses the `experiment` card, `stats-tests` and `metric-design`. Never invents a number: baselines, targets and benchmarks come from the user or the data map, or stay "to confirm".
+  - **Fast path:** when the whole ask is one design item, it skips the decision map and goes straight to that spec.
+  - `/grill-the-ask` sends design asks and project-sized asks to `/wayfinder-data` with one line why.
 
 ### 20.6 `/handoff` (user-invoked, off-flow)
 
