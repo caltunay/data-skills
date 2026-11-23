@@ -1,0 +1,125 @@
+=== q0-1-audit-assignments.sql
+-- Q0.1  Purpose: audit the shape of assignments. Expect: about 7,400 rows, one per visitor, 2 to 15 Feb 2026, two arms.
+row_count | distinct_visitors | first_assigned_ts   | last_assigned_ts    | arms | internal_visitors | blank_values
+----------|-------------------|---------------------|---------------------|------|-------------------|-------------
+7506      | 7506              | 2026-02-02 00:00:08 | 2026-02-15 23:59:45 | 2    | 109               | 0
+(1 rows)
+
+=== q0-2-audit-orders.sql
+-- Q0.2  Purpose: audit the shape of orders. Expect: order_id unique, statuses paid and cancelled, no negative amounts.
+row_count | distinct_orders | visitors_with_orders | paid_orders | cancelled_orders | first_order_ts      | last_order_ts       | min_amount | max_amount
+----------|-----------------|----------------------|-------------|------------------|---------------------|---------------------|------------|-----------
+1128      | 1128            | 961                  | 1049        | 79               | 2026-02-02 02:52:15 | 2026-02-27 04:51:57 | 8.04       | 167.18
+(1 rows)
+
+=== q1-1-one-entity.sql
+-- Q1.1  Rung 1, one entity. Purpose: follow visitor 500060 end to end, assignment and orders.
+-- Expect: one assignment row (variant, mobile, 2 Feb 09:19:51, not internal) and two paid orders, 34.09 and 42.47, both inside 7 days.
+visitor_id | arm     | device | assigned_ts         | is_internal | order_id | order_ts            | status | amount | days_after_assignment
+-----------|---------|--------|---------------------|-------------|----------|---------------------|--------|--------|----------------------
+500060     | variant | mobile | 2026-02-02 09:19:51 | 0           | 900008   | 2026-02-03 06:34:41 | paid   | 34.09  | 0.89
+500060     | variant | mobile | 2026-02-02 09:19:51 | 0           | 900009   | 2026-02-04 13:35:48 | paid   | 42.47  | 2.18
+(2 rows)
+
+=== q1-2-one-entity-day.sql
+-- Q1.2  Rung 2, one entity-day. Purpose: check the 7-day window on two visitors near its edge.
+-- Expect: visitor 502836 has an order 6.85 days after assignment: inside. Visitor 504088 ordered 7.23 days after: outside.
+visitor_id | assigned_ts         | order_ts            | status | days_after_assignment | window_check  
+-----------|---------------------|---------------------|--------|-----------------------|---------------
+502836     | 2026-02-06 22:01:59 | 2026-02-10 06:15:31 | paid   | 3.34                  | inside window
+502836     | 2026-02-06 22:01:59 | 2026-02-13 18:24:09 | paid   | 6.85                  | inside window
+504088     | 2026-02-09 07:35:35 | 2026-02-16 13:08:42 | paid   | 7.23                  | outside window
+(3 rows)
+
+=== q1-3-many-entities-fan-out.sql
+-- Q1.3  Rung 3, many entities. Purpose: is visitor_id unique in assignments, and does a join to orders fan out?
+-- Expect: assignments is unique. The join returns more rows than visitors with orders, because some visitors order twice.
+assignment_rows | distinct_visitors | rows_after_join_to_orders | visitors_with_any_order | visitors_with_more_than_one_order
+----------------|-------------------|---------------------------|-------------------------|----------------------------------
+7506            | 7506              | 1128                      | 961                     | 166
+(1 rows)
+
+=== q1-3b-outcomes-view.sql
+-- Q1.3b  Purpose: build visitor_outcomes, one row per visitor, by aggregating orders to the visitor before joining.
+-- Paid orders only, inside 7 days of assignment. Internal visitors excluded.
+-- Expect: one row per external visitor. Row count = assignments less internal visitors.
+external_visitors | rows_in_view | distinct_visitors_in_view
+------------------|--------------|--------------------------
+7397              | 7397         | 7397
+(1 rows)
+
+=== q1-3c-check-view-on-known-visitors.sql
+-- Q1.3c  Purpose: check visitor_outcomes on the three visitors followed by hand in Q1.1 and Q1.2.
+-- Expect: 500060 converted with 2 paid orders and revenue 76.56. 502836 converted with 2 paid orders (both seen in Q1.2) and revenue 89.00. 504088 not converted.
+visitor_id | arm     | converted | paid_orders | revenue
+-----------|---------|-----------|-------------|--------
+500060     | variant | 1         | 2           | 76.56
+502836     | variant | 1         | 2           | 89
+504088     | variant | 0         | 0           | 0
+(3 rows)
+
+=== q1-4-aggregates.sql
+-- Q1.4  Rung 4, aggregates. Purpose: visitors per arm and per day. Expect: 14 days, every day has both arms, no empty day.
+arm     | visitors | days | first_day  | last_day   | converters | paid_orders
+--------|----------|------|------------|------------|------------|------------
+control | 3675     | 14   | 2026-02-02 | 2026-02-15 | 373        | 440
+variant | 3722     | 14   | 2026-02-02 | 2026-02-15 | 439        | 537
+(2 rows)
+
+=== q1-5-reconcile.sql
+-- Q1.5  Rung 5, reconcile. Purpose: compare visitors per arm with the experiment platform's exposure counts.
+-- The platform counts internal visitors too, so compare before the internal filter. Expect: within the 0.5% tolerance in the plan.
+arm     | our_count | platform_count | gap
+--------|-----------|----------------|----
+control | 3727      | 3727           | 0
+variant | 3779      | 3779           | 0
+(2 rows)
+
+=== q2-1-srm-counts.sql
+-- Q2.1  Method card check 1: sample ratio mismatch. Purpose: external visitors per arm against the planned 50/50 split.
+-- Expect: close to 50/50. The chi-square test is computed in stats.py. p < 0.001 would mean the test is broken.
+arm     | visitors | share_pct
+--------|----------|----------
+control | 3675     | 49.68
+variant | 3722     | 50.32
+(2 rows)
+
+=== q2-2-primary-metric.sql
+-- Q2.2  Primary metric, fixed before the test: share of visitors with a paid order within 7 days of assignment.
+-- Analysed per visitor, the unit of randomisation. Expect: unknown. The interval and test are computed in stats.py.
+arm     | visitors | converters | conversion_pct
+--------|----------|------------|---------------
+control | 3675     | 373        | 10.15
+variant | 3722     | 439        | 11.79
+(2 rows)
+
+=== q2-3-effect-by-week.sql
+-- Q2.3  Method card check 9: novelty. Purpose: conversion by arm in each full test week.
+-- Expect: if the effect is real and not a novelty spike, the gap has the same sign in both weeks.
+test_week | arm     | visitors | converters | conversion_pct
+----------|---------|----------|------------|---------------
+week 1    | control | 1849     | 187        | 10.11
+week 1    | variant | 1885     | 241        | 12.79
+week 2    | control | 1826     | 186        | 10.19
+week 2    | variant | 1837     | 198        | 10.78
+(4 rows)
+
+=== q2-4-guardrails.sql
+-- Q2.4  Method card check 8: guardrails, fixed before the test. Purpose: revenue per visitor, order value and return rate by arm.
+-- Expect: order value and return rate are not worse in the variant. Intervals are computed in stats.py.
+arm     | visitors | revenue_per_visitor | mean_squared_revenue | paid_orders | average_order_value | returned_orders | return_rate_pct
+--------|----------|---------------------|----------------------|-------------|---------------------|-----------------|----------------
+control | 3675     | 5.166               | 344.684              | 440         | 43.15               | 38              | 8.64
+variant | 3722     | 5.869               | 395.44               | 537         | 40.68               | 41              | 7.64
+(2 rows)
+
+=== q2-5-by-device-exploratory.sql
+-- Q2.5  Exploratory only. Purpose: conversion by arm and device. Not a result: found by slicing, one of 1 slice looked at.
+-- Expect: unknown. Any difference between devices is a hypothesis for a later test.
+device  | arm     | visitors | converters | conversion_pct
+--------|---------|----------|------------|---------------
+desktop | control | 1472     | 160        | 10.87
+desktop | variant | 1522     | 165        | 10.84
+mobile  | control | 2203     | 213        | 9.67
+mobile  | variant | 2200     | 274        | 12.45
+(4 rows)

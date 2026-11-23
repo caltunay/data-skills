@@ -1,0 +1,38 @@
+name: self-check
+
+on:
+  pull_request:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  self-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Optional private word list. The secret holds one word per line.
+      # It is written to a gitignored file and never printed.
+      # Pull requests from forks get no secrets, so the check is skipped there.
+      - name: Write the private blocklist, if the secret exists
+        env:
+          DATA_SKILLS_BLOCKLIST: ${{ secrets.DATA_SKILLS_BLOCKLIST }}
+        run: |
+          if [ -n "$DATA_SKILLS_BLOCKLIST" ]; then
+            printf '%s\n' "$DATA_SKILLS_BLOCKLIST" > .blocklist
+            echo "Private blocklist written."
+          else
+            echo "No blocklist secret. The private word check will be skipped."
+          fi
+
+      - name: Run the self-check
+        run: scripts/self-check
+
+      - name: Check that the ZIPs build
+        run: scripts/package-zips
+
+      - name: Remove the private blocklist
+        if: always()
+        run: rm -f .blocklist

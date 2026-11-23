@@ -1,0 +1,14 @@
+{
+  "name": "data-skills",
+  "displayName": "Data Skills",
+  "version": "0.3.0",
+  "description": "Skills that make your AI agent work like a senior data scientist: clarify first, validate every step, never overclaim.",
+  "author": {
+    "name": "caltunay",
+    "url": "https://github.com/caltunay"
+  },
+  "homepage": "https://github.com/caltunay/data-skills",
+  "repository": "https://github.com/caltunay/data-skills",
+  "license": "MIT",
+  "keywords": ["data-science", "analytics", "sql", "statistics", "experiments", "data-analysis"]
+}
