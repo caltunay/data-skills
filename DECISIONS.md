@@ -255,3 +255,6 @@ Q4. SPEC section 3 style rule now says "active verbs" so the private word check 
 Q5. Add a plugin icon (square PNG, 512 px or more) for the Claude Code plugin listing? It can be set only once. Default: no icon for now (A: leave, B: you supply one).
 Q6. The Codex one-line install command in `docs/install.md` is unverified (docs site not reachable). Can you run `codex plugin --help` once and confirm or correct it? Default: keep it, marked unverified (A: keep, B: remove the command).
 Q7. The pricing page example reports a real but awkward result (effect below the planned size, weaker second week). Keep it, or regenerate with a seed that gives a cleaner win? Default: keep it (A: keep, B: cleaner seed).
+
+Q8. Chat-app evals moved from incognito to normal chats, as the v0.4 brief says. Default: yes (A: normal chats, B: back to incognito for the old cases).
+Q9. The worked examples got invented Decisions and Hypotheses rows to match the v0.4 template. Default: keep (A: keep, B: re-run them in a live chat and replace).
