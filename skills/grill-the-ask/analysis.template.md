@@ -5,11 +5,12 @@ format: v1
 ## 1. Meta
 
 - Title:
-- Requester:
+- Requester: <person or role the user named; never blank>
 - Audience: exec | product | data | mixed
-- Date:
+- Date: <YYYY-MM-DD; never blank>
 - Depth: quick | standard | deep
 - Question type: descriptive | exploratory | inferential | predictive | causal | mechanistic
+- Claim ceiling: <one line: the strongest wording allowed, and claim rules such as "X is a lead, not a cause">
 - Status: grilling | planned | running | reviewed | retro done
 - Progress: <step, where it stopped, what it waits for. Example: run step 3 of 7, waiting for Q3.1 paste>
 
@@ -41,9 +42,13 @@ Status: open, confirmed or rejected. Alternatives are required for high-impact r
 
 ### Success checks
 
+Copy every "Checks that must pass" item of the method card here, word for word. The reconcile check says which count must match the trusted number (raw or cleaned) and why.
+
 -
 
 ### Plan revisions
+
+Every spec correction found in any step is a dated row (for example, "6 channels expected, 5 found"). Notes about changes go in rows, never under a "(none)" line.
 
 | date | what changed | why |
 |---|---|---|
@@ -64,13 +69,22 @@ Status: open, confirmed or rejected. Alternatives are required for high-impact r
 
 ### Ladder log
 
-| rung | expected | actual | pass or fail |
+Data-check floor first (every depth), then the rungs. Rungs 2 to 4 compare against an independent path (raw rows or a separate query).
+
+| check | expected | actual | pass or fail |
 |---|---|---|---|
+| F1 table audit (rows, duplicate keys, nulls, date range, category labels) | | | |
+| F2 one real entity across tables | | | |
+| F3 one day, all entities | | | |
+| F4 daily series (gaps, spikes, zero days) | | | |
+| F5 join checks (row counts, match rate, fan-out) | | | |
+| F6 category totals sum to overall | | | |
+| F7 assumption checks | | | |
 | 1 one entity | | | |
 | 2 one entity-day | | | |
 | 3 many entities | | | |
 | 4 aggregates | | | |
-| 5 reconcile | | | |
+| 5 reconcile (F8): raw or cleaned count, and why | | | |
 
 ### Method checks
 
@@ -89,9 +103,23 @@ Each finding: direction, magnitude, uncertainty, claim ceiling applied. Aggregat
 - Technical issues:
 - Business issues:
 - Leadership questions, with answers:
-- Readout: sentences changed, and why. Readout status: draft | final
+- Independent recompute: each headline number, the route used, the value, and the gap.
+- Readout: every sentence changed, as a "was" and "now" pair, and why. Readout status: DRAFT | FINAL
 
 ## 8. Retro
 
 | proposed data map change | accepted (yes or no) |
 |---|---|
+
+## 9. Appendix: Review pack
+
+For each headline number: the exact SQL or Python that produced it, and its data source. In a chat app `queries/` does not persist, so this is how a fresh reviewer sees the code.
+
+### <headline number 1>: <value>
+
+- Source: <table or file, filters, period>
+- Code:
+
+```sql
+-- the exact query or script that produced the number
+```

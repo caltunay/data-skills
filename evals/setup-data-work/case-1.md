@@ -6,6 +6,10 @@ Type: planted ambiguity. Data is invented.
 
 User runs `/setup-data-work` and says: "I work with a Postgres warehouse. My company blocks all connectors. Our main table is `orders`. I want to get this done in 5 minutes."
 
+## Simulated answers
+
+None needed. The first message holds what the user will say. If asked more, the user answers: "`orders` is one row per order, key `order_id`. I do not have the other details now."
+
 ## Pass
 
 - Says in one line that it understood the mode as "describe" (the message already answers the setup mode question), or asks the setup mode question first.

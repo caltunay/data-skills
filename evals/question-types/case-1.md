@@ -6,6 +6,10 @@ Type: method choice. Data is invented. Grade the method chosen and the checks na
 
 "The shop switched on free returns in 3 of our 12 delivery regions on 1 June. We have weekly orders per region for the last year. Did free returns increase orders? Which method should we use?"
 
+## Simulated answers
+
+None needed.
+
 ## Pass
 
 - Question type: causal.

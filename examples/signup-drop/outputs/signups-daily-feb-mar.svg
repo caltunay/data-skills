@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="400" viewBox="0 0 760 400" font-family="sans-serif" font-size="12">
+<title>Sign-ups per day stepped down from about 42 to about 31 on 2 March</title>
+<rect width="760" height="400" fill="#ffffff"/>
+<text x="60" y="28" font-size="16" font-weight="bold">Sign-ups per day stepped down on 2 March and stayed lower</text>
+<text x="60" y="48" fill="#444444">Daily sign-ups, February and March 2026, UTC</text>
+<line x1="60" x2="740" y1="330.0" y2="330.0" stroke="#e5e5e5"/>
+<text x="52" y="334.0" text-anchor="end" fill="#444444">0</text>
+<line x1="60" x2="740" y1="286.7" y2="286.7" stroke="#e5e5e5"/>
+<text x="52" y="290.7" text-anchor="end" fill="#444444">10</text>
+<line x1="60" x2="740" y1="243.3" y2="243.3" stroke="#e5e5e5"/>
+<text x="52" y="247.3" text-anchor="end" fill="#444444">20</text>
+<line x1="60" x2="740" y1="200.0" y2="200.0" stroke="#e5e5e5"/>
+<text x="52" y="204.0" text-anchor="end" fill="#444444">30</text>
+<line x1="60" x2="740" y1="156.7" y2="156.7" stroke="#e5e5e5"/>
+<text x="52" y="160.7" text-anchor="end" fill="#444444">40</text>
+<line x1="60" x2="740" y1="113.3" y2="113.3" stroke="#e5e5e5"/>
+<text x="52" y="117.3" text-anchor="end" fill="#444444">50</text>
+<line x1="60" x2="740" y1="70.0" y2="70.0" stroke="#e5e5e5"/>
+<text x="52" y="74.0" text-anchor="end" fill="#444444">60</text>
+<text x="16" y="200" transform="rotate(-90 16 200)" text-anchor="middle" fill="#444444">Sign-ups per day (count)</text>
+<text x="60.0" y="348" text-anchor="middle" fill="#444444">1 Feb</text>
+<text x="224.1" y="348" text-anchor="middle" fill="#444444">15 Feb</text>
+<text x="388.3" y="348" text-anchor="middle" fill="#444444">1 Mar</text>
+<text x="552.4" y="348" text-anchor="middle" fill="#444444">15 Mar</text>
+<polyline points="60.0,143.7 71.7,165.3 83.4,126.3 95.2,135.0 106.9,161.0 118.6,182.7 130.3,226.0 142.1,161.0 153.8,135.0 165.5,100.3 177.2,139.3 189.0,130.7 200.7,109.0 212.4,152.3 224.1,174.0 235.9,109.0 247.6,104.7 259.3,178.3 271.0,143.7 282.8,109.0 294.5,174.0 306.2,204.3 317.9,169.7 329.7,117.7 341.4,113.3 353.1,139.3 364.8,178.3 376.6,165.3 388.3,148.0 400.0,200.0 411.7,156.7 423.4,213.0 435.2,208.7 446.9,208.7 458.6,208.7 470.3,169.7 482.1,174.0 493.8,213.0 505.5,169.7 517.2,182.7 529.0,239.0 540.7,239.0 552.4,187.0 564.1,174.0 575.9,213.0 587.6,200.0 599.3,208.7 611.0,187.0 622.8,213.0 634.5,195.7 646.2,195.7 657.9,182.7 669.7,217.3 681.4,213.0 693.1,152.3 704.8,221.7 716.6,217.3 728.3,152.3 740.0,152.3" fill="none" stroke="#0072B2" stroke-width="2"/>
+<line x1="400.0" x2="400.0" y1="70" y2="330" stroke="#D55E00" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="406.0" y="82" fill="#D55E00">2 March: paid social spend cut the same week</text>
+<text x="60" y="380" fill="#666666">Source: signups table, test accounts out, one row per sign-up after dedup. n = 2,148 sign-ups.</text>
+</svg>

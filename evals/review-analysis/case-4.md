@@ -15,6 +15,10 @@ The draft `readout.md` says:
 > **Caveats.** This analysis describes what happened. It does not test why.
 > **Method.** Sign-ups counted by account creation date, UTC, test accounts excluded. Split by acquisition channel. Validated on the ladder and reconciled.
 
+## Simulated answers
+
+None needed.
+
 ## Pass
 
 - Reads the readout sentence by sentence.

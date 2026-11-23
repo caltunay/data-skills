@@ -6,6 +6,10 @@ Type: method choice. Data is invented. Grade the method chosen and the checks na
 
 "We launched the subscription app's family plan in one country only, on 1 March. We have monthly sign-ups for that country and for 14 other countries, 3 years back. What was the effect on sign-ups?"
 
+## Simulated answers
+
+None needed.
+
 ## Pass
 
 - Question type: causal.

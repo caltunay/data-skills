@@ -29,11 +29,21 @@ Write every assumption in the assumptions table. High-impact rows need 1 to 3 li
 2. Can the data answer it? Run a small check first.
 3. Is it already in the data map? Use that entry.
 
+## What belongs in the table
+
+- Only real assumptions: a definition, filter, date, population or method choice that could be wrong and that the work depends on.
+- Claim rules are not assumptions. "Spend is a hypothesis, not a cause" or "this cannot show why" go in the claim ceiling (Meta in `analysis.md`), not in the table.
+- Known facts are not assumptions. If the data or the user confirmed it, it is a fact or a rule.
+
 ## Impact levels
+
+Rate by the size of the effect on the headline, not by how comfortable the assumption feels.
 
 - High: could change the headline number by about 5% or more, flip a conclusion, or change who is in scope.
 - Medium: changes a detail or a segment, not the headline.
 - Low: cosmetic or negligible.
+
+Example: comparing a 31-day month with a 28-day month moves a monthly total by about 10%. That is High by the rule above, and never lower than Medium.
 
 ## Rules
 

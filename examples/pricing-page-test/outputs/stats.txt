@@ -1,0 +1,33 @@
+1. Sample ratio mismatch (planned 50/50)
+   control 3675, variant 3722, expected 3698.5 each
+   chi-square = 0.299 (1 df), p = 0.585
+   pass: no sign of a mismatch
+
+2. Power (fixed before the test: baseline 10%, MDE 2.0 points, alpha 5%, power 80%)
+   planned per arm (rule of thumb 16 x p x (1 - p) / delta^2) = 3600
+   achieved per arm: control 3675, variant 3722
+   smallest effect detectable at the achieved size = 1.96 points
+   pass
+
+3. Primary metric: paid order within 7 days of assignment, per visitor
+   control 373/3675 = 10.15%   variant 439/3722 = 11.79%
+   difference = +1.65 points, 95% interval +0.22 to +3.07
+   relative lift = +16.2%
+   z = 2.26, p = 0.024
+
+4. Effect by test week (novelty check)
+   week 1: +2.67 points, 95% interval +0.63 to +4.71
+   week 2: +0.59 points, 95% interval -1.39 to +2.58
+   week 2 minus week 1 = -2.08 points, z = -1.43, p = 0.152
+   Same sign in both weeks. The two weeks do not differ clearly.
+
+5. Guardrails (fixed before the test: stop if clearly worse, that is, the whole 95% interval on the bad side)
+   revenue per visitor: control 5.17, variant 5.87, difference +0.70, 95% interval -0.14 to +1.54 (normal approximation)
+   pass: not clearly lower
+   return rate (per paid order): control 8.64%, variant 7.64%, difference -1.00 points, 95% interval -4.46 to +2.45
+   pass: not clearly higher
+   average order value (context, not tested): control 43.15, variant 40.68
+
+6. By device. Exploratory: found by slicing, not a result
+   desktop: -0.03 points, 95% interval -2.26 to +2.20
+   mobile: +2.79 points, 95% interval +0.93 to +4.64

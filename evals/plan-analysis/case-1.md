@@ -6,6 +6,10 @@ Type: planted flaw. Data is invented.
 
 `analysis.md` holds a grilled ask: "Did the new onboarding flow, launched 4 Feb, increase 30-day retention?" Standard depth. Question type was set to causal. Data: all users, before and after the launch. No holdout.
 
+## Simulated answers
+
+Round 1: "Understood. Go with the simplest option that is honest. Daily retention data goes back 18 months."
+
 ## Pass
 
 - Goes down the causal method selector. No randomisation, no comparison group. Interrupted time series is the only candidate, and it needs a long series and no rival event. Says so.

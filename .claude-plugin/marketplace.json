@@ -1,0 +1,15 @@
+{
+  "name": "data-skills",
+  "description": "Skills that make your AI agent work like a senior data scientist.",
+  "owner": {
+    "name": "caltunay",
+    "url": "https://github.com/caltunay"
+  },
+  "plugins": [
+    {
+      "name": "data-skills",
+      "source": "./",
+      "description": "One flow from a vague ask to a reviewed readout: clarify first, validate every step, never overclaim."
+    }
+  ]
+}

@@ -6,12 +6,13 @@ ok() { echo "PASS  $1"; }
 bad() { echo "FAIL  $1"; shift; printf '      %s\n' "$@"; fail=1; }
 
 flow="setup-data-work grill-the-ask plan-analysis run-analysis review-analysis retro-analysis"
-offflow=""
-flowstyle=""
-extra_files=""
-predictive_full=5
-predictive_short=2
-model="grilling assumptions validation-ladder question-types data-map run-or-hand-over shaping-data data-audit stats-tests"
+offflow="storytell improve-code ask-data-skills wayfinder-data handoff"
+flowstyle="storytell wayfinder-data handoff"
+extra_files="skills/viz/python.md skills/viz/excel.md skills/viz/tableau.md skills/viz/powerbi.md skills/viz/dashboard.md examples/run_queries.py evals/runner/run.py evals/runner/README.md CONTRIBUTING.md .github/workflows/self-check.yml .github/workflows/release.yml .github/pull_request_template.md .github/ISSUE_TEMPLATE/skill-bug.md .github/ISSUE_TEMPLATE/method-card-request.md .github/ISSUE_TEMPLATE/new-skill-proposal.md"
+for e in signup-drop pricing-page-test; do extra_files="$extra_files examples/$e/generate_data.py examples/$e/DATA-MAP.md examples/$e/analysis.md examples/$e/readout.md examples/$e/README.md examples/$e/queries examples/$e/outputs/results.txt"; done
+predictive_full=8
+predictive_short=0
+model="grilling assumptions validation-ladder question-types data-map run-or-hand-over shaping-data data-audit stats-tests viz metric-design"
 user="$flow $offflow"
 all="$user $model"
 qt="descriptive exploratory inferential predictive causal experiment mechanistic"
@@ -65,7 +66,7 @@ evals/setup-data-work/case-4.md evals/grill-the-ask/case-4.md evals/review-analy
 for t in $qt; do need="$need skills/question-types/$t.md"; done
 for s in $all; do need="$need skills/$s/SKILL.md"; done
 for s in $user; do need="$need evals/$s/case-1.md evals/$s/case-2.md evals/$s/case-3.md evals/$s/rubric.md"; done
-for n in 1 2 3 4 5 6; do need="$need evals/question-types/case-$n.md"; done
+for n in 1 2 3 4 5 6 7 8; do need="$need evals/question-types/case-$n.md"; done
 need="$need $extra_files"
 out=$(for p in $need; do [ -e "$p" ] || echo "$p"; done)
 [ -z "$out" ] && ok "every required file exists" || bad "missing files" "$out"
@@ -114,10 +115,10 @@ grep -q 'How do you want to set up your data map?' skills/setup-data-work/SKILL.
 calls_setup="grilling data-map run-or-hand-over"
 calls_grill="grilling assumptions question-types data-map"
 calls_plan="assumptions question-types shaping-data"
-calls_run="validation-ladder run-or-hand-over shaping-data data-audit stats-tests question-types data-map assumptions"
-calls_review="question-types assumptions validation-ladder"
+calls_run="validation-ladder run-or-hand-over shaping-data data-audit stats-tests question-types data-map assumptions viz"
+calls_review="question-types assumptions validation-ladder viz"
 calls_retro="data-map"
-out=$(chk() { f="skills/$1/SKILL.md"; shift; for d in "$@"; do grep -q "^- \`$d\`: " "$f" || echo "$f: does not restate $d"; done; }
+out=$(chk() { f="skills/$1/SKILL.md"; shift; for d in "$@"; do grep -qE "^- \`$d\`( \(experimental\))?: " "$f" || echo "$f: does not restate $d"; done; }
   chk setup-data-work $calls_setup; chk grill-the-ask $calls_grill; chk plan-analysis $calls_plan
   chk run-analysis $calls_run; chk review-analysis $calls_review; chk retro-analysis $calls_retro)
 [ -z "$out" ] && ok "flow skills restate the core rule of each discipline they call" || bad "fallback rules" "$out"
@@ -145,8 +146,92 @@ out=$(for f in skills/assumptions/SKILL.md templates/analysis.template.md; do gr
 [ -z "$out" ] && ok "assumptions table has all 7 columns" || bad "assumptions table" "$out"
 
 # 20 every eval case says its data is invented, and evals stay on user-invoked skills plus the two extras
-out=$(grep -L 'Data is invented' evals/*/case-*.md)
-[ -z "$out" ] && ok "every eval case is marked as invented data" || bad "eval cases not marked" "$out"
+out=$(grep -L 'Data is invented' evals/*/case-*.md; grep -L '^## Simulated answers' evals/*/case-*.md)
+[ -z "$out" ] && ok "every eval case is marked as invented data and has simulated answers" || bad "eval cases not marked" "$out"
+
+# 23 plugin manifests: valid JSON, one name, one version
+out=$(python3 - <<'PY' 2>&1
+import json
+files = [".claude-plugin/plugin.json", ".claude-plugin/marketplace.json", ".codex-plugin/plugin.json", ".agents/plugins/marketplace.json"]
+docs = {}
+for f in files:
+    try:
+        docs[f] = json.load(open(f))
+    except Exception as e:
+        print(f"{f}: {e}")
+if len(docs) == len(files):
+    names = {docs[f]["name"] for f in files}
+    names |= {p["name"] for f in files for p in docs[f].get("plugins", [])}
+    if names != {"data-skills"}:
+        print(f"names differ: {sorted(names)}")
+    versions = {docs[f]["version"] for f in files if "version" in docs[f]}
+    if len(versions) != 1:
+        print(f"versions differ: {sorted(versions)}")
+    if docs[".codex-plugin/plugin.json"].get("skills") != "./skills/":
+        print("codex manifest: skills path is not ./skills/")
+PY
+)
+[ -z "$out" ] && ok "plugin manifests are valid JSON with one name and one version" || bad "plugin manifests" "$out"
+
+# 24 every v0.2 skill is marked experimental in the README and in its own file
+out=$(for s in $offflow viz metric-design; do
+  grep -qE "\`/?$s\` \| \*\*experimental\*\*" README.md || echo "README.md: $s not marked experimental"
+  grep -q '^Experimental (v0.2)\.$' "skills/$s/SKILL.md" || echo "skills/$s/SKILL.md: no experimental line"
+done)
+[ -z "$out" ] && ok "every v0.2 skill is marked experimental" || bad "experimental marks" "$out"
+
+# 25 every flow step ends with the go-ahead question
+out=$(for s in $flow; do f="skills/$s/SKILL.md"
+  grep -q '> Go ahead?' "$f" || echo "$f: no go-ahead question"
+  grep -qE '> A\) Yes, (run|close)' "$f" || echo "$f: no option A"
+  grep -q '> B) Change something' "$f" || echo "$f: no option B"
+  grep -qE '> C\) Add a ' "$f" || echo "$f: no option C"
+done)
+[ -z "$out" ] && ok "every flow skill ends with the go-ahead question" || bad "go-ahead question" "$out"
+
+# 26 validation-ladder lists the 8 floor checks, and no skill says quick skips them
+f=skills/validation-ladder/SKILL.md
+out=$(grep -q '^## Data-check floor (every depth)' "$f" || echo "$f: no floor section"
+  for k in 'Table audit' 'One real entity across tables' 'One day, all entities' 'Daily series across the full window' 'Join checks' 'Category totals sum to the overall total' 'Assumption checks' 'Reconcile to the trusted number'; do
+    grep -qF "**$k" "$f" || echo "$f: floor check missing: $k"; done
+  grep -rnE 'rungs? 1 and (rung )?5 only|Quick: rung 1|quick runs rung' skills SPEC.md)
+[ -z "$out" ] && ok "validation-ladder lists the 8 floor checks; quick never skips them" || bad "data-check floor" "$out"
+
+# 27 question-types/SKILL.md has a compact fallback line for every method card
+out=$(python3 - <<'PY'
+import re
+skill = open("skills/question-types/SKILL.md").read()
+if "## Compact cards" not in skill:
+    print("no Compact cards section"); raise SystemExit
+block = skill.split("## Compact cards", 1)[1].split("\n## ", 1)[0]
+rows = {}
+for part in re.split(r"\n### ", block)[1:]:
+    title = part.split("\n", 1)[0].strip().lower()
+    body = [l for l in part.splitlines() if l.startswith("| ") and not l.startswith("| method ")]
+    for l in body:
+        cells = [c.strip() for c in l.strip().strip("|").split("|")]
+        if len(cells) != 4 or not all(cells):
+            print(f"{title}: row without 4 filled cells: {cells[0]}")
+    rows[title] = len(body)
+def cards(t):
+    s = open(f"skills/question-types/{t}.md").read()
+    return len(re.findall(r"^## (Card|Short card): ", s, re.M))
+want = {"descriptive": cards("descriptive"), "exploratory": cards("exploratory"), "inferential": cards("inferential"),
+        "predictive": cards("predictive"), "causal and experiment": cards("causal") + cards("experiment"), "mechanistic": 1}
+for t, n in want.items():
+    if rows.get(t) != n:
+        print(f"{t}: {rows.get(t)} compact rows, {n} cards")
+PY
+)
+[ -z "$out" ] && ok "compact fallback line for every method card" || bad "compact cards" "$out"
+
+# 28 v0.3 templates: review pack, bold status, portable callouts, appendix
+out=$(grep -q '^## 9. Appendix: Review pack' templates/analysis.template.md || echo "analysis template: no Review pack"
+  grep -q '^\*\*Status: DRAFT\*\*' templates/readout.template.md || echo "readout template: no bold status"
+  for c in Answer Caveat Ask; do grep -q "^> \*\*$c:\*\*" templates/readout.template.md || echo "readout template: no $c callout"; done
+  [ "$(grep -c '^> \*\*' templates/readout.template.md)" -le 3 ] || echo "readout template: more than 3 callouts"
+  grep -q '^## 8. Appendix' templates/readout.template.md || echo "readout template: no Appendix")
+[ -z "$out" ] && ok "templates carry the review pack, bold status, at most 3 callouts and the appendix" || bad "v0.3 templates" "$out"
 
 # 21 private blocklist (gitignored .blocklist, one word per line)
 if [ -f .blocklist ]; then
@@ -157,7 +242,7 @@ else
 fi
 
 # 22 private files are not tracked
-out=$(git ls-files 2>/dev/null | grep -E '(^|/)(\.blocklist|FIXES-v0\.1\.md|BUILD-v0\.2\.md)$')
+out=$(git ls-files 2>/dev/null | grep -E '(^|/)(\.blocklist|FIXES-v0\.1\.md|BUILD-v0\.2\.md|FIXES-v0\.3\.md)$')
 [ -z "$out" ] && ok "private files are not tracked" || bad "private files tracked" "$out"
 
 exit $fail

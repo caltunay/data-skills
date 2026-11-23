@@ -6,6 +6,10 @@ Type: clean. Data is invented.
 
 User runs `/setup-data-work` and gives, in one message: connected Postgres warehouse (`select 1` works), tables `orders` (one row per order, key `order_id`) and `customers` (one row per customer, key `customer_id`), safe join `orders.customer_id = customers.customer_id`, metric `paid_orders` (status = 'paid', trusted number 120,400 for 2026-Q1 from the finance report), rule "exclude is_test = true", "we use sqlstyle.guide and PEP 8", "do not commit outputs".
 
+## Simulated answers
+
+None needed.
+
 ## Pass
 
 - Says in one line which setup mode it understood (a mix: connect and describe).

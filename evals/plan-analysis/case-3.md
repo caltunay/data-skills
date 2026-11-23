@@ -6,6 +6,10 @@ Type: clean. Data is invented.
 
 `analysis.md` holds a grilled ask: "Number of paid orders per week, last 8 weeks, UTC, test accounts excluded." Quick depth. Question type: descriptive.
 
+## Simulated answers
+
+None needed.
+
 ## Pass
 
 - Gives a one-line plan: group paid orders by week, plus the success check (reconcile to the trusted weekly number or total).

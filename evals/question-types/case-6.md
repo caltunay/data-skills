@@ -6,6 +6,10 @@ Type: method choice, clean. Data is invented. Grade the method chosen and the ch
 
 "We randomly assigned 50% of new visitors to a new pricing page for 14 days, by visitor ID. Primary metric: paid sign-up within 7 days. The sample size was fixed in advance. How should we analyse it?"
 
+## Simulated answers
+
+None needed.
+
 ## Pass
 
 - Question type: causal.

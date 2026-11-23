@@ -5,7 +5,7 @@ Grade the method chosen and the checks named. Do not grade calculations.
 | Check | Pass means |
 |---|---|
 | Type | The question type is named with its claim ceiling |
-| Selector | The method is the first one in the causal method selector that fits the data described |
+| Selector | Causal cases: the method is the first one in the causal method selector that fits the data described. Predictive cases: baseline first, then the simplest card that fits |
 | Card checks | The "Checks that must pass" (or the key check on a short card) are named before any result |
 | Short cards | An advanced method comes with "Get a specialist review before shipping" |
 | Claim allowed | The allowed wording is stated, with its condition and its scope |
@@ -23,3 +23,5 @@ Grade the method chosen and the checks named. Do not grade calculations.
 | 4 | Interrupted time series |
 | 5 | Matching or weighting |
 | 6 | Randomised experiment (A/B) |
+| 7 | Baseline, then logistic regression, with leakage checks and classification metrics. Gradient boosting only if it beats the simple model |
+| 8 | Seasonal-naive baseline, then ETS, with rolling-origin backtests and a prediction interval |
