@@ -20,3 +20,8 @@
 | Downloads first | In a chat app, creates each file and offers it as a download. Prints a block only if creating the file fails. Never says "I can't save files" when it can (v0.3 item 3) |
 | Real defaults | Every option list has one real recommended choice with a reason (v0.3 item 7) |
 | Card checks copied | The method card's "Checks that must pass" are copied into the success checks at plan time, from the type file or the compact cards. Never deferred to the run |
+| Hypothesis tree | At standard and deep depth, a tree before the method options: H1, H1.1 and so on, at most 3 levels and about 12 nodes. Each node has a support condition, a refute condition and the child it leads to. The user picks the paths. Quick depth: a flat list of up to 3 (v0.4 item 6) |
+| Hypotheses section | `analysis.md` has a Hypotheses section with a status per node (open, supported, refuted, parked) (v0.4 item 6) |
+| Readout skeleton | Offered as optional at standard and deep depth. Placeholders only (XX%, [segment]), never an invented number, `**Status: SKELETON**` (v0.4 item 10) |
+| Decisions log | Questions and the user's answers word for word, echoed back after each round (v0.4 item 3) |
+| Stable names and versions | In a chat app, files are named `DATA-MAP.md`, `analysis-<slug>.md`, `readout-<slug>.md`, start with `format:` and `updated:`, are handed back whole, and the step says "Replace the old one in your Project files." If two copies exist, uses the newest `updated:` and says so (v0.4 item 15) |

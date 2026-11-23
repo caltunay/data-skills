@@ -22,3 +22,9 @@ Score each case pass or fail.
 | Downloads first | In a chat app, creates each file and offers it as a download. Prints a block only if creating the file fails. Never says "I can't save files" when it can (v0.3 item 3) |
 | Real defaults | Every question has one real recommended default with a reason. The dialect question lists Postgres, SQL Server, BigQuery, Snowflake, Databricks and other as separate options (v0.3 items 7 and 19) |
 | Run first | With a code tool and an attached schema or data file, reads or queries it itself. Hands over only with no code tool, and says so in one line (v0.3 item 3) |
+| Goals, funnels, key queries | Asks for the mission, north star, targets and horizon; the main funnels; and 3 to 5 key queries (v0.4 item 8 and 9) |
+| Existing map first | With no map found, asks "Do you have a DATA-MAP.md from another project on the same data? Attach or copy it in." before offering a fresh setup (v0.4 item 17) |
+| Where files live | Asks how the user organises work (one repo with folders, a repo per project, a team repo, or chat Projects) (v0.4 item 11) |
+| Project instructions block | In a chat app, ends by writing a short block for the Project's instructions (v0.4 item 14) |
+| Document tool | Asks once, generically, about downloads or a document tool. Uses only a tool the user names (v0.4 item 16) |
+| Stable names and versions | In a chat app, files are named `DATA-MAP.md`, `analysis-<slug>.md`, `readout-<slug>.md`, start with `format:` and `updated:`, are handed back whole, and the step says "Replace the old one in your Project files." If two copies exist, uses the newest `updated:` and says so (v0.4 item 15) |

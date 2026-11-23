@@ -31,3 +31,7 @@
 | Review pack | `analysis.md` has an "Appendix: Review pack" with the exact code and data source for each headline number (v0.3 item 29) |
 | Readout visuals | At most 3 charts for exec, each title a takeaway, one annotation on the key moment, image files in `outputs/` linked with alt text. A chart replaces number rows that say the same thing. Hand-over mode gives the chart spec plus ready-to-run code (v0.3 item 30) |
 | Portable callouts | Callouts are blockquotes with a bold label (`> **Answer:**`, `> **Caveat:**`, `> **Ask:**`), at most 3. Status is `**Status: DRAFT**`. Bold only for one takeaway per section. No app-specific macros (v0.3 item 31) |
+| Hypothesis statuses | Updates each touched node to supported, refuted, open or parked, naming the result that shows it. Never `supported` without a result (v0.4 item 6) |
+| Skeleton replaced | A `SKELETON` readout is replaced by the draft. No XX or [segment] is left (v0.4 item 10) |
+| Readout .docx | Produces `readout.docx` from the same text as `readout.md` with the charts embedded, using the sandbox's document library. With no code tool: `readout.md` plus chart code only (v0.4 item 1) |
+| Stable names and versions | In a chat app, files are named `DATA-MAP.md`, `analysis-<slug>.md`, `readout-<slug>.md`, start with `format:` and `updated:`, are handed back whole, and the step says "Replace the old one in your Project files." If two copies exist, uses the newest `updated:` and says so (v0.4 item 15) |

@@ -42,12 +42,12 @@ Run with `scripts/self-check`. Last run: 2026-11-18, v0.3 fix pass, with the pri
 - Every eval case was walked through its skill. See `docs/walkthrough.md`.
 - `scripts/package-zips` builds one ZIP per skill into `dist/` (gitignored): 22 ZIPs.
 - `claude plugin validate .` passes for the plugin and the marketplace file.
-- Both worked examples were produced by running their queries. The eval runner was run in dry-run mode (49 cases after v0.3).
+- Both worked examples were produced by running their queries. The eval runner was run in dry-run mode (56 cases after v0.4).
 - v0.3: checks 25 to 28 were tested by breaking each rule once (a removed compact row, a renamed floor check, a missing go-ahead line); each failed as expected, then passed after the restore. The sign-up example queries were re-run; `outputs/results.txt` changed by additions only.
 
 ## Not checked (needs the maintainer)
 
-- Running the evals by hand in Claude Code, Codex, Gemini CLI and claude.ai, in incognito with a neutral profile.
+- Running the evals by hand in Claude Code, Codex, Gemini CLI and claude.ai, in normal chats (not incognito) with a neutral profile.
 - The 3 real asks on public data.
 - Trigger checks (user-invoked skills must not fire on their own; a generic SQL ask must not trigger ours).
 - Whether `npx skills add` installs the flat layout.

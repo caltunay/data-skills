@@ -21,3 +21,9 @@
 | No manual file edits | After the user confirms something, hands back the updated file. Never asks the user to edit a saved file by hand (v0.3 item 4) |
 | Downloads first | In a chat app, creates each file and offers it as a download. Prints a block only if creating the file fails. Never says "I can't save files" when it can (v0.3 item 3) |
 | Real defaults | Every question, the deadline included, has one real recommended default with a reason. No hedges such as "C if unknown" (v0.3 item 7) |
+| Does not analyse | With files attached, notes only what they contain (columns, possible duplicates, date range). No early finding in an option, the clarified question or the claim line (v0.4 item 2) |
+| Decisions log | Every question and answer is in the Decisions section word for word, and each round's answers are echoed back exactly before moving on (v0.4 item 3) |
+| One at a time when stuck | An answer that conflicts with an earlier one, the data map, or itself is named plainly, and the skill switches to one question at a time until clear, then returns to rounds (v0.4 item 7) |
+| Setup choice | The A or B choice is recorded in Meta. Setup is never offered again once set (v0.4 item 4) |
+| Routing | A design ask or a project-sized ask goes to `/wayfinder-data` with one line why (v0.4 item 12 and 13) |
+| Stable names and versions | In a chat app, files are named `DATA-MAP.md`, `analysis-<slug>.md`, `readout-<slug>.md`, start with `format:` and `updated:`, are handed back whole, and the step says "Replace the old one in your Project files." If two copies exist, uses the newest `updated:` and says so (v0.4 item 15) |

@@ -84,6 +84,7 @@
 80. Files have stable names and a version line: `DATA-MAP.md`, `analysis-<slug>.md`, `readout-<slug>.md`, each starting with `format:` and `updated:`. Whole files are handed back and replace the old copy. The newest `updated:` wins when two copies exist.
 81. Saving to a document tool is optional, asked once and generically, and only for a tool the user names. Downloads stay the default.
 82. A new project on the same data carries the map over. A fresh map is for different data sources only. Every step with no map asks for an existing one first.
+83. Evals gain rubric lines for the new rules (no analysis in the grill, the decisions log, the stuck rule, the hypothesis tree, the skeleton, stable names) and seven new cases, so a regression in any of them is visible.
 
 ## Build decisions
 
@@ -235,6 +236,10 @@ B116. `/ask-data-skills` option letters changed: E is now "big and vague, or a p
 B117. `docs/where-to-run.md` is new and short (about 40 lines). It holds the surface guide and the carry-over rule. The README, `docs/install.md` and the SPEC point to it.
 B118. The `updated:` timestamp has no time zone. Options: add UTC, or keep the brief's `YYYY-MM-DD HH:MM`. Chosen: keep the brief's form. Reason: it only has to order two copies of one file made by one user.
 B119. The document-tool question is asked in setup (step 13) and in `/grill-the-ask` round 1 when no earlier answer is visible, in chat apps only. It is not asked in every step. The answer sits in Meta as `Files`.
+B120. Chat-app tests move from incognito to normal chats. Source: the v0.4 brief asks for normal chats. Options: keep incognito for the eval cases, or switch everywhere. Chosen: switch everywhere (SPEC 15, `evals/README.md`, `CONTRIBUTING.md`, `docs/self-check.md`, two case files), with a neutral-profile note. Reason: incognito chats do not hold Projects or persistent files, which v0.4 relies on. The reference run file is a v0.3 record and keeps its wording.
+B121. Rubric rows for item 15 (stable names) were added to the six flow rubrics and setup. Rows for items 2, 3 and 7 went to the grill rubric, item 6 and 10 to plan, run and review, as the brief says "the relevant flow skill rubrics".
+B122. A seventh new case, `ask-data-skills` case 4 (design ask routing), was added beyond the six the brief lists. Reason: the routing change should have one test.
+B123. The eval runner was run in dry-run mode only (56 cases found). This session has no API key.
 
 ## Questions for Cenan
 
