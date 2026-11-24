@@ -65,7 +65,7 @@ evals/README.md evals/results evals/grilling/case-1.md evals/grilling/rubric.md 
 evals/setup-data-work/case-4.md evals/grill-the-ask/case-4.md evals/review-analysis/case-4.md
 docs/where-to-run.md templates/experiment-spec.template.md templates/metric-spec.template.md
 skills/wayfinder-data/experiment-spec.template.md skills/wayfinder-data/metric-spec.template.md
-evals/grill-the-ask/case-6.md evals/grill-the-ask/case-7.md evals/plan-analysis/case-4.md evals/wayfinder-data/case-4.md evals/wayfinder-data/case-5.md evals/setup-data-work/case-5.md"
+evals/grill-the-ask/case-6.md evals/grill-the-ask/case-7.md evals/grill-the-ask/case-8.md evals/plan-analysis/case-5.md evals/review-analysis/case-5.md evals/retro-analysis/case-5.md evals/wayfinder-data/case-6.md evals/reference/v0.4-live-run.md evals/plan-analysis/case-4.md evals/wayfinder-data/case-4.md evals/wayfinder-data/case-5.md evals/setup-data-work/case-5.md"
 for t in $qt; do need="$need skills/question-types/$t.md"; done
 for s in $all; do need="$need skills/$s/SKILL.md"; done
 for s in $user; do need="$need evals/$s/case-1.md evals/$s/case-2.md evals/$s/case-3.md evals/$s/rubric.md"; done

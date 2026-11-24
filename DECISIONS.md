@@ -97,6 +97,7 @@
 93. Hypothesis status is judged against each node's own support and refute conditions, never the parent's direction. A robustness child whose result held is supported, whatever the result was. Child nodes are written without the parent's direction. `/review-analysis` checks every status and fixes wrong ones with a was and now pair.
 94. `/wayfinder-data` ends with the same go-ahead question as the flow steps. Option A names the real next step: the next open item, the first analysis prompt, or sign-off of a fast-path spec. Specs are saved in their own analysis folder, never under a bare name.
 95. The README gets a plain chat-app guide, and `/setup-data-work` ends with the same steps in 3 to 5 lines. Coding agents are told in one line that they need none of it.
+96. Evals gain rubric lines for the v0.5 rules (save forms, continue or new, earlier work with no map, key queries as SQL, question cards, no hedged defaults, status logic, the wayfinder go-ahead question) and five new cases, so a regression in any of them shows up.
 
 ## Build decisions
 
@@ -268,6 +269,9 @@ B133. Key query layout. Options: SQL inside a table cell, or a table row plus a 
 B134. File hand-back question has three options (downloads, Project files, document tool), with a recommendation tied to whether the session can write to Project files. The old two-option wording could not express "files in my Project".
 B135. The card rule is one `grilling` bullet restated in nine skills, each with the same text. Options: a short pointer ("apply grilling"), or the full bullet. Chosen: the full bullet. Reason: SPEC section 3 says each flow skill restates the core rule, and a ZIP may load without `grilling`. Cost: about 1 KB per skill.
 B136. The pricing example's H1.1 changed from `open` to `supported` and was reworded to be direction-neutral. Its support condition (same sign in both weeks) held. Options: leave the example as a v0.4 record, or fix it. Chosen: fix it, because the example would otherwise show the very error item 16 names. The week 2 weakness stays in the status note and in the readout caveats.
+B137. Rubric rows. The old rows "Downloads first", "Stable names and versions" and the chat-app handoff rows were rewritten, not left beside new ones, because the old text contradicted the new rules ("offers a download", `analysis-<slug>.md`). New rows name their v0.5 item.
+B138. `plan-analysis` case 5 includes a colleague's earlier result so a plan step can be tested on status logic. Options: test the logic only in the review case, or in both. Chosen: both, because the brief names both skills and the plan step writes the child wording.
+B139. `evals/reference/v0.4-live-run.md` lists the live run's catches and misses from the brief, in the neutral shop domain only. It names no data, people or tools beyond what the brief states. The runner skips it (no rubric).
 
 ## Questions for Cenan
 

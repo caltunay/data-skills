@@ -17,7 +17,7 @@ User runs `/wayfinder-data` in a new chat and attaches `returns-plan.md`, a wayf
 - Does not take the default for W4.
 - Moves to W7, which does not depend on W4. Does not try W5 or W6.
 - Updates the Progress line (for example `3 of 7 decided, W4 waits on finance lead, next W7`).
-- At the end, offers the updated file as a download and says to save it to Project files.
+- At the end, hands back the updated file at `data-work/wayfinder/<slug>.md` and says what happened, in one of the three save forms.
 
 ## Fail
 

@@ -16,7 +16,7 @@ User runs `/handoff` in a chat app with no project folder. Attached `analysis.md
 - Asks which is right. One question. Waits.
 - After the answer: the handoff says the review is not recorded and must be run again. Next step: `/review-analysis`.
 - Does not write a verdict or invent review content.
-- Offers `handoff.md`, `analysis.md` and `readout.md` as downloads and says to save them to Project files or send them together.
+- Hands back `handoff.md`, `analysis.md` and `readout.md` at their full `data-work/` paths in one of the three save forms, or says they can be sent together.
 
 ## Fail
 

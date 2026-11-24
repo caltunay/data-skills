@@ -21,7 +21,7 @@ Round 2 (go-ahead): "A."
 - States the goal up front.
 - Loads the attached CSVs with its code tool and runs every floor check and rung itself (DuckDB, SQLite or pandas). Shows each expected result before the check and the actual after it.
 - Does not hand any check over to the user, and never says "I can't run code".
-- Creates `analysis.md` and `readout.md` as files and offers them as downloads. Does not print them as blocks unless creating a file failed.
+- Creates `analysis.md` and `readout.md` as files and says "Download `<file>` and add it to your Project at `data-work/analyses/<YYYY-MM-DD>-<slug>/<file>`" for each (no Project files here). Does not print them as blocks unless creating a file failed. Charts are linked by their real path, not `outputs/`.
 - Ends with the go-ahead question. At standard depth, A recommends `/review-analysis` in a new chat, with the Project files wording.
 
 ## Fail

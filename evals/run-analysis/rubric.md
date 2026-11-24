@@ -18,11 +18,11 @@
 | Precision | The clean case reports without invented issues |
 | No early tool call | No connector or data tool call before the user names the source. No answer options built from visible connectors |
 | Start check | Says in one line whether `DATA-MAP.md` and `analysis.md` were found. With no map, offers setup (A) or continue (B) |
-| Chat-app handoff | With no project folder, offers `analysis.md` (and `readout.md` when it exists) as a download at the end and says to save it to Project files |
+| Chat-app handoff | With no project folder, offers `analysis.md` (and `readout.md` when it exists) at its full `data-work/` path at the end, in one of the three save forms (v0.5 item 2) |
 | No invented names | Uses no company, product, table or source name the user did not say in this conversation |
 | Go-ahead question | Ends with the fixed go-ahead question at every depth, quick included: "Go ahead? A) Yes, run `<next command>` B) Change something (say what) C) Add a check, segment or question" (v0.3 item 6) |
 | No manual file edits | After the user confirms something, hands back the updated file. Never asks the user to edit a saved file by hand (v0.3 item 4) |
-| Downloads first | In a chat app, creates each file and offers it as a download. Prints a block only if creating the file fails. Never says "I can't save files" when it can (v0.3 item 3) |
+| Downloads first | In a chat app, writes each file to the Project files at its full path if it can, otherwise creates it and offers a download. Prints a block only if creating the file fails. Never says "I can't save files" when it can (v0.3 item 3, v0.5 item 2) |
 | Data-check floor | Runs the floor at every depth, quick in compact form: table audit, one real entity across tables, one day, daily series, join checks, category totals, assumption checks, reconcile. Each check states its expected result first (v0.3 item 1) |
 | Independent rungs | Rungs 2 to 4 compare against raw rows or a separate query, never the frame the table was built from |
 | Run first | With a code tool and attached data files, loads them and runs the checks itself (DuckDB, SQLite or pandas). Hands over only with no code tool, says so in one line, and batches checks into numbered groups (v0.3 item 3) |
@@ -34,4 +34,10 @@
 | Hypothesis statuses | Updates each touched node to supported, refuted, open or parked, naming the result that shows it. Never `supported` without a result (v0.4 item 6) |
 | Skeleton replaced | A `SKELETON` readout is replaced by the draft. No XX or [segment] is left (v0.4 item 10) |
 | Readout .docx | Produces `readout.docx` from the same text as `readout.md` with the charts embedded, using the sandbox's document library. With no code tool: `readout.md` plus chart code only (v0.4 item 1) |
-| Stable names and versions | In a chat app, files are named `DATA-MAP.md`, `analysis-<slug>.md`, `readout-<slug>.md`, start with `format:` and `updated:`, are handed back whole, and the step says "Replace the old one in your Project files." If two copies exist, uses the newest `updated:` and says so (v0.4 item 15) |
+| Stable names and versions | In a chat app, files use the `data-work/` layout at full paths (`data-work/DATA-MAP.md`, `data-work/analyses/<YYYY-MM-DD>-<slug>/analysis.md`), start with `format:` and `updated:`, and are handed back whole. If two copies exist, uses the newest `updated:` and says so (v0.5 item 1) |
+| Say what happened to each file (v0.5 items 1 to 4) | Names every file by its full `data-work/` path, never a bare name. Each save uses one of three forms: "Saved to `<path>` in your Project files", "Download `<file>` and add it to your Project at `<path>`", or "Printed below; save it as `<path>`". Never claims a save that did not happen. Never says "replace the old one, it is already saved there". Names a stale older copy of the same file and says it is stale. Chart links point to the chart's real path, never `outputs/` in a chat app |
+| Refreshes stale lines (v0.5 item 6) | When resuming, lines that are now out of date (for example "no DATA-MAP.md, so inline" after a map exists) are refreshed and shown as "was" and "now" pairs |
+| Clickable question cards (v0.5 item 12) | Uses the environment's multiple-choice question tool when it has one: one card per question, at most 3 per round, recommended option first. Otherwise lists the options as text |
+| Cards explain themselves (v0.5 item 13) | Each option says what it means in a few words (for example "H1.1: holds in each month"). Any tree, table or draft the question refers to is shown before the question is asked |
+| No hedged defaults (v0.5 item 14) | No default reads "recommended if you have one", "TBC" or "C if unknown". Each default is a real option with a reason |
+| Hypothesis status logic (v0.5 item 16) | Each node is judged against its own support and refute conditions, not the parent's direction. A robustness child whose result held is `supported`, whatever the result was. Child nodes are worded without the parent's direction |
