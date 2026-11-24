@@ -38,7 +38,7 @@ Run with `scripts/self-check`. Last run: 2026-11-18, v0.3 fix pass, with the pri
 | 32 | The experiment spec and metric spec templates hold their required fields |
 | 33 | The routing guide is in the README and in `ask-data-skills` |
 | 34 | The v0.4 rules are in the skills: retro never offers setup, the stuck rule, no analysis in the grill, the hypothesis tree, the skeleton, the `.docx`, the three save forms |
-| 35 | v0.5 files: every flow skill has the three save forms, the bare-name rule and the stale copies rule; no old file names (`analysis-<slug>`, "Replace the old one") anywhere |
+| 35 | v0.5 files: every flow skill has the three save forms, the bare-name rule and the stale copies rule; no v0.4 file names or save wording anywhere |
 | 36 | `/wayfinder-data` ends with the go-ahead question and saves specs in their own analysis folder |
 | 37 | The hypothesis status rule is in `plan-analysis`, `run-analysis` and `review-analysis`, and the review fixes statuses with a "was" and "now" pair |
 | 38 | The README has the chat-app section, and the Project instructions block matches in the setup skill and `docs/where-to-run.md` |
