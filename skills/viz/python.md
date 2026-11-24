@@ -1,6 +1,6 @@
 # Python charts (matplotlib or plotly)
 
-Use matplotlib for static files in `outputs/`. Use plotly when the reader needs hover or zoom. Ask which if it is not clear. Follow PEP 8 unless the data map Conventions say otherwise.
+Use matplotlib for static files. A coding agent saves them in the analysis folder's `outputs/`. A chat app saves them in the analysis folder itself (`data-work/analyses/<folder>/`). Use plotly when the reader needs hover or zoom. Ask which if it is not clear. Follow PEP 8 unless the data map Conventions say otherwise.
 
 ## Pattern (matplotlib)
 

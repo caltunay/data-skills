@@ -24,9 +24,9 @@ At most 5 numbers. Every number carries its uncertainty: an interval, a toleranc
 
 ## 3. Charts
 
-At most 3 charts for an exec audience. Each title states the takeaway. One annotation marks the key moment (for example, a marker on the day a step happened). Charts are image files in `outputs/` (in a chat app, offered as downloads), linked here with alt text:
+At most 3 charts for an exec audience. Each title states the takeaway. One annotation marks the key moment (for example, a marker on the day a step happened). Charts are image files in the analysis folder, linked here by their real path relative to this file, with alt text. A coding agent keeps them in `outputs/`. A chat app keeps them beside this file. Never link `outputs/` in a chat app:
 
-![Alt text: what the chart shows and its takeaway](outputs/<chart-name>.png)
+![Alt text: what the chart shows and its takeaway](<chart-name>.png)
 
 No chart is fine when a number says it better.
 

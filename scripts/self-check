@@ -279,8 +279,8 @@ out=$(grep -q 'Never offer `/setup-data-work` here' skills/retro-analysis/SKILL.
   grep -q 'Status: SKELETON' skills/plan-analysis/SKILL.md || echo "plan-analysis: no skeleton status"
   grep -q 'readout.docx' skills/run-analysis/SKILL.md || echo "run-analysis: no readout.docx"
   grep -q 'readout.docx' skills/review-analysis/SKILL.md || echo "review-analysis: no readout.docx"
-  grep -q 'Replace the old one in your Project files' skills/run-or-hand-over/SKILL.md || echo "run-or-hand-over: no replace wording")
-[ -z "$out" ] && ok "v0.4 rules are in the skills (retro, stuck, no analysis, tree, skeleton, docx, replace)" || bad "v0.4 rules" "$out"
+  grep -q 'Printed below; save it as' skills/run-or-hand-over/SKILL.md || echo "run-or-hand-over: no three save forms")
+[ -z "$out" ] && ok "v0.4 rules are in the skills (retro, stuck, no analysis, tree, skeleton, docx, save forms)" || bad "v0.4 rules" "$out"
 
 # 21 private blocklist (gitignored .blocklist, one word per line)
 if [ -f .blocklist ]; then

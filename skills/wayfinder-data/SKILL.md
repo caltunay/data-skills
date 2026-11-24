@@ -68,6 +68,8 @@ An item in a map can be a design item (an experiment or a metric to define). So 
 - **`experiment-spec.md`:** hypothesis, unit of randomisation, feature gate or assignment, primary metric, guardrails, MDE, power, runtime, seasonality, SRM check plan, decision rule. Use the `experiment` card in `question-types` for the checks, `stats-tests` for the sample size and MDE, and `metric-design` for the primary metric if it is not yet defined.
 - **`metric-spec.md`:** definition, formula, grain, population, data source or what must be collected, candidate proxies and how to check they track the true metric, a benchmark or target and where it comes from, owner. Use `metric-design`.
 
+Save each spec in its own analysis folder, `data-work/analyses/<YYYY-MM-DD>-<slug>/experiment-spec.md` or `metric-spec.md`, never as a bare `experiment-spec.md` (the next spec would overwrite it). Make the folder if it does not exist, and name the path when you save.
+
 Rules for both:
 
 - Go one section at a time. Each question has one real recommended default. Log answers word for word and echo them back.
@@ -126,10 +128,17 @@ Example ready prompt: `/grill-the-ask Monthly churn rate for the subscription ap
 
 1. Update the Progress line in the wayfinder file (if there is one).
 2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
-3. Chat app: create the wayfinder file and offer it as a download. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Save this to your Project files so the next session, in any chat, can read it."
-4. Coding agent: the file is saved under `data-work/wayfinder/`. Say where.
-5. Name the next step: the next open item, or the first `/grill-the-ask` prompt. For a fast-path spec, the next step is to share the spec for sign-off, then `/grill-the-ask` for the analysis that will read the test out.
-6. Files: `experiment-spec.md` or `metric-spec.md` (and the wayfinder file when there is a map). Start each with `format: v1` and `updated: YYYY-MM-DD HH:MM`. In a chat app, hand back the whole file and say "Replace the old one in your Project files."
+3. Save each file at its full path, never a bare file name (a bare name lands in a `claude/` folder in claude.ai, and a bare `experiment-spec.md` is overwritten by the next spec): the wayfinder file at `data-work/wayfinder/<slug>.md`, and each spec in its own analysis folder, `data-work/analyses/<YYYY-MM-DD>-<slug>/experiment-spec.md` or `metric-spec.md`. Start each with `format: v1` and `updated: YYYY-MM-DD HH:MM`. Hand back the whole file. Then say exactly what happened to each file, in one of three forms: "Saved to `<path>` in your Project files" (you wrote it there), "Download `<file>` and add it to your Project at `<path>`" (you could not write to Project files), or "Printed below; save it as `<path>`" (creating the file failed). Never claim a save that did not happen. Never say "replace the old one, it is already saved there". Never ask the user to edit a saved file by hand.
+4. Stale copies: if an older copy of a file exists elsewhere in the Project (for example a spec at the top level, or a file in `claude/`), name it and say it is stale. If two copies exist, use the newest `updated:` and say so.
+5. Coding agent: the files are saved under `data-work/`. Name each path.
+6. End with the go-ahead question, in this fixed form:
+
+   > Go ahead?
+   > A) Yes, <the next step> (recommended)
+   > B) Change something (say what)
+   > C) Add an item, a check or a question
+
+   Fill in A with the real next step: the next open item ("resolve W5"), the first `/grill-the-ask` prompt, or, for a fast-path spec, "share the spec for sign-off, then run `/grill-the-ask` for the analysis that will read the test out". Wait for the answer. A means start that step. B or C means make the change, hand back the updated file, and ask again.
 
 ## Done when
 

@@ -63,19 +63,20 @@ Stakeholder prep questions (deep): who else will read this, what will they push 
 
 - **Quick:** no files. Print the clarified question, depth and an inline assumption list. Suggest `/plan-analysis`, or just do the work if the path is obvious.
 - **Standard and deep:** build `analysis.md` from `analysis.template.md` (in this skill's folder). Fill Meta (including audience and the Progress line), Ask, Decisions and Assumptions. Start the file with `format: v1` and `updated: YYYY-MM-DD HH:MM`. Set status to `grilling`.
-  - Coding agent: save it as `data-work/analyses/<yyyy-mm-dd>-<slug>/analysis.md`. Create `queries/` and `outputs/` for deep.
-  - Chat app: do not report a sandbox path as "saved". Hand the file over (see End).
+  - The analysis folder is `data-work/analyses/<YYYY-MM-DD>-<slug>/` (today's date, a short slug). Write it in Meta as `Folder`. Coding agent: save `analysis.md` there and create `queries/` and `outputs/` for deep.
+  - Chat app: never report a sandbox path as "saved". Hand the file over with the full path (see End).
 - Apply `run-or-hand-over` for saving.
 
 ## End (every flow step)
 
-Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, and name the next step.
+Quick depth has no files: skip steps 1, 3, 4 and 5, give the result in the chat, and name the next step.
 
 1. Update the Progress line in `analysis.md` Meta.
 2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
-3. Chat app: create the updated `analysis.md` (and `readout.md` when it exists) as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Replace the old one in your Project files" (or "Save this to your Project files" if it is new), so the next step, in any chat, can read it. Name chat-app files `analysis-<slug>.md` and `readout-<slug>.md`. Start each with `format:` and `updated: YYYY-MM-DD HH:MM` (now). Hand back the whole file, never a patch. If two copies exist, use the newest `updated:` and say so.
-4. Coding agent: the files are already saved under `data-work/`. Say where.
-5. End with the go-ahead question, at every depth, quick included. Use this fixed form:
+3. Save each file at its full path, never a bare file name (a bare name lands in a `claude/` folder in claude.ai, and a generic name is overwritten by the next analysis): `data-work/analyses/<YYYY-MM-DD>-<slug>/analysis.md` (and `readout.md` in the same folder when it exists). Then say exactly what happened to each file, in one of three forms: "Saved to `<path>` in your Project files" (you wrote it there), "Download `<file>` and add it to your Project at `<path>`" (you could not write to Project files), or "Printed below; save it as `<path>`" (creating the file failed). Never claim a save that did not happen. Never say "replace the old one, it is already saved there". Start each file with `format:` and `updated: YYYY-MM-DD HH:MM` (now). Hand back the whole file, never a patch. Never ask the user to edit a saved file by hand.
+4. Stale copies: if an older copy of a file exists elsewhere in the Project (for example `analysis (6).md` at the top level, or a file in `claude/`), name it and say it is stale. Once per Project, suggest moving old analyses into the `data-work/` layout. If two copies exist, use the newest `updated:` and say so.
+5. Coding agent: the files are already saved under `data-work/`. Name each path.
+6. End with the go-ahead question, at every depth, quick included. Use this fixed form:
 
    > Go ahead?
    > A) Yes, run `/plan-analysis` (recommended)

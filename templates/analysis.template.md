@@ -16,7 +16,8 @@ updated: YYYY-MM-DD HH:MM
 - Progress: <step, where it stopped, what it waits for. Example: run step 3 of 7, waiting for Q3.1 paste>
 - Setup choice: A (ran `/setup-data-work`) | B (inline, `/retro-analysis` builds the map) | map found. Never offer setup again once this is set.
 - Goal link: <the goal in the data map's Goals section this ask serves, or "none">
-- Files: download | <the document tool the user named>
+- Folder: data-work/analyses/<YYYY-MM-DD>-<slug>/
+- Files: downloads | Project files | <the document tool the user named>
 
 ## 2. Ask
 

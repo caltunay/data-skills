@@ -169,7 +169,7 @@ Never fail because a tool is missing.
 
 **What counts as a chat app:** decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), it is a chat app. This decides where files persist, not whether the agent can run checks.
 
-**Chat-app handoff:** at the end of every flow step, create the updated `analysis.md` (and `readout.md` when it exists) as files and offer them as downloads; print one block only if that fails. Tell the user to save them to their Project files so the next step, in any chat, can read them.
+**Chat-app handoff:** at the end of every flow step, hand back each file the step changed at its full path under `data-work/` (section 7.1), never a bare file name, and say exactly what happened to it (section 7.8). Name any stale older copy. The next step, in any chat, reads the files from the Project.
 
 **No manual file edits:** after the user confirms something, never ask them to edit a saved file by hand. Hand back the updated file.
 
@@ -236,12 +236,14 @@ All user-owned files live in the user's own project, never in the skills repo. U
       analysis.md     working notes
       readout.md      stakeholder readout (source; skeleton, draft, then final)
       readout.docx    the same text with charts embedded, for Word and Google Docs
-      queries/        numbered ladder steps (q1-1-one-entity.sql ...)
-      outputs/        charts, tables, notebooks
+      experiment-spec.md or metric-spec.md   (design asks)
+      queries/        numbered ladder steps (q1-1-one-entity.sql ...)  (coding agents)
+      outputs/        charts, tables, notebooks  (coding agents; in a chat app charts sit in the analysis folder)
 ```
 
 - **Coding agents:** the skills write here. They look for `data-work/` in the current folder, then upward. A team map can sit above project maps. The nearest map wins for conflicts, and the skill says which map it read.
-- **Chat users:** keep `DATA-MAP.md`, `analysis-<slug>.md` and `readout-<slug>.md` in the chat app's Project files (see section 7.8). Each flow step creates the updated files and offers them as downloads at its end. `/retro-analysis` hands back a full updated `DATA-MAP.md` to replace the Project file. The user never edits a saved file by hand.
+- **Chat users:** the same layout, at the same full paths, in the chat app's Project files (see section 7.8). Never a bare file name: in claude.ai a bare name lands in a `claude/` folder, and a generic name such as `experiment-spec.md` is overwritten by the next spec. Charts sit in the analysis folder itself, and `readout.md` links them by their real path, never `outputs/`. Each flow step hands back the files it changed. `/retro-analysis` hands back a full updated `data-work/DATA-MAP.md`. The user never edits a saved file by hand.
+- **Design asks:** `experiment-spec.md` or `metric-spec.md` is saved in its own analysis folder (`data-work/analyses/<YYYY-MM-DD>-<slug>/`).
 - **Quick depth:** no files.
 - **No raw chat transcripts are stored.** `analysis.md` is the record.
 
@@ -321,7 +323,7 @@ The stakeholder-facing result. Portable markdown, ready to paste into Confluence
 
 1. **Answer** in 2 lines.
 2. **Key numbers**, each with its uncertainty. At most 5 (strict for an exec audience). The rest go to the Appendix.
-3. **Charts** (the `viz` rules): at most 3 in an exec readout; each title states the takeaway; one annotation on the key moment (for example, a marker on the day a step happened). Charts replace number rows where they say the same thing. Charts are image files in `outputs/` (offered as downloads in chat apps), linked from the readout with alt text. Hand-over mode gives the chart spec plus ready-to-run code.
+3. **Charts** (the `viz` rules): at most 3 in an exec readout; each title states the takeaway; one annotation on the key moment (for example, a marker on the day a step happened). Charts replace number rows where they say the same thing. Charts are image files in the analysis folder, linked from the readout by their real path with alt text (`outputs/<chart>` in a coding agent, `<chart>` beside the readout in a chat app, never `outputs/` in a chat app). Hand-over mode gives the chart spec plus ready-to-run code.
 4. **What it means** and the recommendation.
 5. **Caveats:** open high-impact assumptions, and the claim ceiling in plain words.
 6. **Method** in 3 lines. Claims only what ran: no "full validation ladder" if the review found rungs weaker than that.
@@ -347,9 +349,11 @@ Formatting:
 ### 7.8 Chat-first storage and surfaces
 
 - **Workspace.** In chat apps, one Claude or ChatGPT Project per team or area, and one chat per analysis. `/setup-data-work` ends by writing a short block to paste into the Project's instructions, for example: "Read DATA-MAP.md before any data work. Use the data-skills commands. Save updated files back to the Project files."
-- **Stable names and versions.** Fixed names: `DATA-MAP.md`, `analysis-<slug>.md`, `readout-<slug>.md` (and `readout-<slug>.docx`). A coding agent keeps `analysis.md` and `readout.md` inside the analysis folder. Every file starts with `format:` and `updated: YYYY-MM-DD HH:MM`. Skills hand back the whole file and say "Replace the old one in your Project files." If two copies exist, the skill uses the newest `updated:` and says so.
-- **Optional save to a document tool.** Ask once, generically: "Hand files to you as downloads, or save them to a document tool you use (for example a drive, a wiki or a notes app)?" Use only a tool the user names, never one picked from visible connectors. Never required. The answer is the `Files` line in Meta.
-- **Surface guide.** `docs/where-to-run.md`, linked from the README: coding agents (`data-work/` in the repo, files saved automatically, commit `DATA-MAP.md` so the team shares it); chat apps (a Project per team or area, the instructions block, files replaced by hand or saved to a document tool).
+- **One layout, full paths.** Every file has its full path under `data-work/`: `data-work/DATA-MAP.md` and `data-work/analyses/<YYYY-MM-DD>-<slug>/` with `analysis.md`, `readout.md`, `readout.docx`, charts and any spec. Meta holds the folder as `Folder`. Every file starts with `format:` and `updated: YYYY-MM-DD HH:MM`. Skills hand back the whole file.
+- **Say what happened to each file.** After a save, the skill names the path, in one of three forms only: "Saved to `<path>` in your Project files" (the agent wrote it), "Download `<file>` and add it to your Project at `<path>`" (it could not), or "Printed below; save it as `<path>`". Never "replace the old one, it is already saved there". Never a claimed save that did not happen.
+- **Stale copies.** When an older copy of the same file exists elsewhere in the Project (for example `analysis (6).md` at the top level, or a file in `claude/`), the skill names it and says it is stale, and suggests once that old analyses move into the layout. If two copies exist, the newest `updated:` wins and the skill says so.
+- **Optional save to a document tool.** Ask once per Project, generically: "Hand files to you as downloads, as files in your Project, or save them to a document tool you use (for example a drive, a wiki or a notes app)?" Use only a tool the user names, never one picked from visible connectors. Never required. The answer is the `Files` line in Meta and a row in the map's Ways of working. When the map holds it, the skill never asks again.
+- **Surface guide.** `docs/where-to-run.md`, linked from the README: coding agents (`data-work/` in the repo, files saved automatically, commit `DATA-MAP.md` so the team shares it); chat apps (a Project per team or area, the instructions block, files at their full paths in the Project or saved to a document tool).
 - **A new project, or a new Project, on the same data.** Carry over `DATA-MAP.md` and the Project instructions block. Start a fresh map only for entirely different data sources. When no map is found, `/setup-data-work` and `data-map` first ask: "Do you have a DATA-MAP.md from another project on the same data? Attach or copy it in." Only then do they offer a fresh setup.
 
 ### 7.9 Hypotheses and the readout skeleton
@@ -635,7 +639,7 @@ Decide these, then log each choice and reason in `DECISIONS.md`:
 11. One folder per analysis: `analysis.md`, `queries/`, `outputs/`. No raw chat transcripts.
 12. Assumptions: a table with alternatives required for high-impact rows.
 13. `outputs/` git policy chosen at setup, default excluded. Aggregates by default; ask before saving row-level data.
-14. Chat apps are first-class: skills install by upload in claude.ai and ChatGPT. `DATA-MAP.md` lives in the chat app's Project files.
+14. Chat apps are first-class: skills install by upload in claude.ai and ChatGPT. `DATA-MAP.md` lives in the chat app's Project files at `data-work/DATA-MAP.md`.
 15. Depth (quick, standard, deep) set by `/grill-the-ask`.
 16. `shaping-data`: one skill, a tool-agnostic core (analysis table spec) plus one file per tool. All five tools in v0.
 17. Style: sqlstyle.guide and PEP 8 by default; team overrides in Conventions; dialect per source in `DATA-MAP.md`.
@@ -646,7 +650,7 @@ Decide these, then log each choice and reason in `DECISIONS.md`:
 22. Never fill in company, product, table or source names the user has not said in this conversation.
 23. Setup asks first how to set up the map: connect, describe, paste a schema, or a mix.
 24. Every flow step checks for `DATA-MAP.md` and `analysis.md`, says what it found, and offers setup if there is no map. Outside the flow, no map means silence.
-25. Chat app is defined by situation (no user project folder), not by file access. Each flow step offers its files as downloads and tells the user to save them to Project files.
+25. Chat app is defined by situation (no user project folder), not by file access. Each flow step hands back its files at full paths and says what happened to each.
 26. Standard and deep depth always show the full 7-column assumptions table.
 27. `/run-analysis` is goal-driven: it states its goal and keeps going until the success checks pass, stopping only for pastes or answers.
 28. Readout: `/run-analysis` drafts `readout.md`; `/review-analysis` checks it word by word and marks it final. One layout, wording adapted to the audience set in grilling.

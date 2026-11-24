@@ -72,8 +72,8 @@ The exec limit applies to every format: under 150 words before the appendix. For
 
 1. Update the Progress line in `analysis.md` Meta, for example `Progress: storytell done, readout-exec.md written`.
 2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
-3. Chat app: create `readout-<audience>.md` (and the `.docx` when made) and the updated `analysis.md` as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Save these to your Project files." Hand back whole files, never patches.
-4. Coding agent: the file is saved next to `readout.md`. Say where.
+3. Save each file at its full path, never a bare file name: `data-work/analyses/<YYYY-MM-DD>-<slug>/readout-<audience>.md` (and its `.docx` when made) and the updated `analysis.md` in the same folder. Then say exactly what happened to each file, in one of three forms: "Saved to `<path>` in your Project files" (you wrote it there), "Download `<file>` and add it to your Project at `<path>`" (you could not write to Project files), or "Printed below; save it as `<path>`" (creating the file failed). Never claim a save that did not happen. Hand back whole files, never patches. Never ask the user to edit a saved file by hand.
+4. Coding agent: the file is saved next to `readout.md`. Name the path. If an older copy of a file exists elsewhere in the Project, name it and say it is stale.
 5. Name the next step: `/retro-analysis` if it has not run, or another audience version.
 
 ## Done when

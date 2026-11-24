@@ -96,7 +96,7 @@ Keep bug fixes and behaviour-preserving changes apart, so each can be checked on
 
 1. Coding agent: if the user asked you to edit the file, save it and say where. Save check queries next to it, or in `queries/` when the code lives in an analysis folder. If the code belongs to an analysis, add a line to its Progress line.
 2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
-3. Chat app: give the improved code as one block, and create it as a file offered as a download. If the code belongs to an analysis, tell the user to save it to their Project files.
+3. Chat app: give the improved code as one block, and create it as a file. Name its full path (for an analysis: `data-work/analyses/<YYYY-MM-DD>-<slug>/queries/<file>`) and say what happened to it: "Saved to `<path>` in your Project files", "Download `<file>` and add it to your Project at `<path>`", or "Printed below; save it as `<path>`". Never claim a save that did not happen.
 4. If the change fixed a trap worth remembering (a fan-out, a missing mandatory filter), suggest `/retro-analysis` to add it to the data map. Do not edit the map here.
 
 ## Done when

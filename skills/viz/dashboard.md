@@ -34,7 +34,7 @@ Ask, in one round, what you do not know:
 
 ## Build
 
-- A self-contained HTML page (Python with plotly): one file, data embedded as aggregates only, filters as dropdowns. Save it under `outputs/` when it belongs to an analysis.
+- A self-contained HTML page (Python with plotly): one file, data embedded as aggregates only, filters as dropdowns. Save it in the analysis folder (`outputs/` in a coding agent) when it belongs to an analysis.
 - Excel, Tableau, Power BI: hand-over mode. Give the layout as a numbered build list, one chart at a time, then the checks to run.
 - Give the reader a short "how to read this" note: what each number means, how fresh it is, who owns it.
 

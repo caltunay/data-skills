@@ -33,7 +33,7 @@ A review in the same context as the analysis is biased by it. Review from the fi
 
 - `question-types`: name the type. Every claim is checked against its ceiling. No "caused" without a randomised experiment or a credible causal design that passed its checks.
 - `assumptions`: flag any high-impact row still `open` when results are reported. Alternatives are required for high-impact rows. Standard and deep depth always show the full 7-column table (id, assumption, why unavoidable, likely alternatives, impact if wrong, how to check, status). Never drop columns.
-- `viz` (experimental): for each chart, check that the title states a takeaway at or below the ceiling, axes carry units, bars start at zero, uncertainty is shown, there are no dual axes and no 3D, colours are colour-blind safe, and compared panels share a scale. In a readout: at most 3 charts for exec, one annotation on the key moment, image files linked with alt text.
+- `viz` (experimental): for each chart, check that the title states a takeaway at or below the ceiling, axes carry units, bars start at zero, uncertainty is shown, there are no dual axes and no 3D, colours are colour-blind safe, and compared panels share a scale. In a readout: at most 3 charts for exec, one annotation on the key moment, image files linked by their real path with alt text.
 - `validation-ladder`: check the ladder log. The data-check floor ran at every depth. Each check and rung has an expected result, an actual result and pass or fail. Rungs 2 to 4 compare against an independent path (raw rows or a separate query), not the frame the table was built from. Reconcile to a trusted number.
 
 ## Steps
@@ -126,13 +126,14 @@ Standard and deep: write the Review section of `analysis.md`, save the corrected
 
 ## End (every flow step)
 
-Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, and name the next step.
+Quick depth has no files: skip steps 1, 3, 4 and 5, give the result in the chat, and name the next step.
 
 1. Update the Progress line in `analysis.md` Meta.
 2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
-3. Chat app: create the updated `analysis.md`, `readout.md` and `readout.docx` as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Replace the old one in your Project files" (or "Save this to your Project files" if it is new), so the next step, in any chat, can read it. Name chat-app files `analysis-<slug>.md` and `readout-<slug>.md`. Start each with `format:` and `updated: YYYY-MM-DD HH:MM` (now). Hand back the whole file, never a patch. If two copies exist, use the newest `updated:` and say so. For a pasted analysis with no `analysis.md`, the review in the chat is the output. Do not create files unless asked.
-4. Coding agent: the files are already saved under `data-work/`. Say where.
-5. End with the go-ahead question, at every depth, quick included. Use this fixed form:
+3. Save each file at its full path, never a bare file name (a bare name lands in a `claude/` folder in claude.ai, and a generic name is overwritten by the next analysis): `data-work/analyses/<YYYY-MM-DD>-<slug>/analysis.md`, `readout.md` and `readout.docx`, and the charts in the same folder. Then say exactly what happened to each file, in one of three forms: "Saved to `<path>` in your Project files" (you wrote it there), "Download `<file>` and add it to your Project at `<path>`" (you could not write to Project files), or "Printed below; save it as `<path>`" (creating the file failed). Never claim a save that did not happen. Never say "replace the old one, it is already saved there". Start each file with `format:` and `updated: YYYY-MM-DD HH:MM` (now). Hand back the whole file, never a patch. Never ask the user to edit a saved file by hand. For a pasted analysis with no `analysis.md`, the review in the chat is the output. Do not create files unless asked.
+4. Stale copies: if an older copy of a file exists elsewhere in the Project (for example `analysis (6).md` at the top level, or a file in `claude/`), name it and say it is stale. Once per Project, suggest moving old analyses into the `data-work/` layout. If two copies exist, use the newest `updated:` and say so.
+5. Coding agent: the files are already saved under `data-work/`. Name each path.
+6. End with the go-ahead question, at every depth, quick included. Use this fixed form:
 
    > Go ahead?
    > A) Yes, run `/retro-analysis` (recommended)

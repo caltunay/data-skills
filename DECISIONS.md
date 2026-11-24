@@ -85,6 +85,9 @@
 81. Saving to a document tool is optional, asked once and generically, and only for a tool the user names. Downloads stay the default.
 82. A new project on the same data carries the map over. A fresh map is for different data sources only. Every step with no map asks for an existing one first.
 83. Evals gain rubric lines for the new rules (no analysis in the grill, the decisions log, the stuck rule, the hypothesis tree, the skeleton, stable names) and seven new cases, so a regression in any of them is visible.
+84. One folder layout everywhere (v0.5). All user files live under `data-work/` with full paths, in coding agents and in chat apps. Chat apps stop using `analysis-<slug>.md` and `readout-<slug>.md`. A bare file name lands in a `claude/` folder in claude.ai and generic names get overwritten.
+85. After a save, the skill says which of three things happened, with the path: saved to Project files, download and add it, or printed below. It never claims a save that did not happen, and never says a file is both saved and to be replaced.
+86. Old copies are named as stale, and the user is told once to move old analyses into the layout. Two copies: the newest `updated:` wins.
 
 ## Build decisions
 
@@ -243,6 +246,13 @@ B123. The eval runner was run in dry-run mode only (56 cases found). This sessio
 B124. Self-check (v0.4, item 20). Six new checks, 29 to 34: Decisions and Hypotheses sections and the three new Meta lines; Goals, Funnels and Key queries; `format:` and `updated:` on every template; the two spec templates and their fields; the routing table in the README and in `ask-data-skills`; and the v0.4 rules by phrase (retro never offers setup, the stuck rule, no analysis in the grill, the tree, the skeleton, the `.docx`, the replace wording). Check 15 no longer requires the setup offer in `retro-analysis`, and now requires its never-offer rule. Check 28 looks for `## 11. Appendix`. Each new check was tested by breaking it once; it failed, then passed after the restore.
 B125. The plugin version went from 0.3.0 to 0.4.0 in both manifests. SPEC section 21 and section 7.6 no longer say app-specific exports are v0.4: the brief did not include them, so they move to a later release.
 B126. `.blocklist` was created from the brief and the check ran with it present. The word list matched nothing, so no text was changed for it.
+
+### v0.5 build
+
+B127. Setup (v0.5). Branch `v0.5` from `main`, because PR #3 (v0.4) is merged. `FIXES-v0.5.md` was added to `.gitignore`. `.blocklist` was created from the brief and is not tracked.
+B128. Chart folder in chat apps. Options: keep `outputs/` as a subfolder in chat apps, or put charts in the analysis folder itself. Chosen: flat in the analysis folder in chat apps, `outputs/` kept for coding agents. Reason: item 4 says chat links must never point to `outputs/`, and chat Project files do not reliably hold subfolders. The link is the chart's real path relative to `readout.md`.
+B129. Analysis folder name in Meta. A new `Folder` line holds `data-work/analyses/<YYYY-MM-DD>-<slug>/`, set by `/grill-the-ask`. Reason: later steps, in a new chat, need one value to build every path and to match an analysis to an ask.
+B130. Self-check 34 no longer looks for "Replace the old one in your Project files". The three save forms replace it.
 
 ## Questions for Cenan
 

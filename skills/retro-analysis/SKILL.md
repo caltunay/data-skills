@@ -59,19 +59,20 @@ The data map should get better with every analysis. This is not a memory dump.
 ## Output
 
 - Coding agent: edit `data-work/DATA-MAP.md` in place with approved changes only.
-- Chat app: create the full updated `DATA-MAP.md` (with `format: v1` and a fresh `updated:` line) as a file and offer it as a download, to replace the Project file. Print one block only if creating the file fails. Never ask the user to edit the map by hand.
+- Chat app: save the full updated map at `data-work/DATA-MAP.md` (with `format: v1` and a fresh `updated:` line), never under a bare name, and say exactly what happened to it (the three forms in End step 3). Name any stale older copy of the map. Never ask the user to edit the map by hand.
 - If the map is not `format: v1`, show the migration first and apply it only after approval.
 
 ## End (every flow step)
 
-Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, and name the next step.
+Quick depth has no files: skip steps 1, 3, 4 and 5, give the result in the chat, and name the next step.
 
 1. Update the Progress line in `analysis.md` Meta.
 2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
-3. Chat app: create the updated `analysis.md` (and `readout.md` when it exists) as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Replace the old one in your Project files" (or "Save this to your Project files" if it is new), so the next step, in any chat, can read it. Name chat-app files `analysis-<slug>.md` and `readout-<slug>.md`. Start each with `format:` and `updated: YYYY-MM-DD HH:MM` (now). Hand back the whole file, never a patch. If two copies exist, use the newest `updated:` and say so.
-4. Coding agent: the files are already saved under `data-work/`. Say where.
-5. In a chat app, also hand back the full updated `DATA-MAP.md` to replace the Project file.
-6. The flow is complete. End with the go-ahead question, at every depth, quick included, adapted to this last step:
+3. Save each file at its full path, never a bare file name (a bare name lands in a `claude/` folder in claude.ai, and a generic name is overwritten by the next analysis): `data-work/analyses/<YYYY-MM-DD>-<slug>/analysis.md` (and `readout.md` in the same folder when it exists). Then say exactly what happened to each file, in one of three forms: "Saved to `<path>` in your Project files" (you wrote it there), "Download `<file>` and add it to your Project at `<path>`" (you could not write to Project files), or "Printed below; save it as `<path>`" (creating the file failed). Never claim a save that did not happen. Never say "replace the old one, it is already saved there". Start each file with `format:` and `updated: YYYY-MM-DD HH:MM` (now). Hand back the whole file, never a patch. Never ask the user to edit a saved file by hand.
+4. Stale copies: if an older copy of a file exists elsewhere in the Project (for example `analysis (6).md` at the top level, or a file in `claude/`), name it and say it is stale. Once per Project, suggest moving old analyses into the `data-work/` layout. If two copies exist, use the newest `updated:` and say so.
+5. Coding agent: the files are already saved under `data-work/`. Name each path.
+6. In a chat app, also hand back the full updated `data-work/DATA-MAP.md` in one of the three forms (step 3).
+7. The flow is complete. End with the go-ahead question, at every depth, quick included, adapted to this last step:
 
    > Go ahead?
    > A) Yes, close this analysis. Run `/grill-the-ask` for the next ask (recommended)

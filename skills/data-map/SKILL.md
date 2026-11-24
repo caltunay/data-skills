@@ -5,7 +5,7 @@ description: Read or update the team's DATA-MAP.md, the shared record of sources
 
 # Data map
 
-`DATA-MAP.md` is the team's shared memory of the data. It lives in the user's project at `data-work/DATA-MAP.md`. In a chat app it lives in the Project files.
+`DATA-MAP.md` is the team's shared memory of the data. It lives in the user's project at `data-work/DATA-MAP.md`. In a chat app it lives in the Project files at the same path, `data-work/DATA-MAP.md`. Never save it under a bare name.
 
 The template is `DATA-MAP.template.md` in this skill's folder.
 
@@ -47,7 +47,7 @@ Only the retro step changes the map. It proposes dated changes, shows a diff, an
 
 Not a memory dump. Do not add one-off details of a single analysis.
 
-Each new entry gets today's date and `source: analyses/<slug>`. In a chat app, hand back the full updated `DATA-MAP.md` to replace the Project file. In a coding agent, edit the file in place.
+Each new entry gets today's date and `source: analyses/<slug>`. In a chat app, save the full updated map at `data-work/DATA-MAP.md` and say exactly what happened: "Saved to `data-work/DATA-MAP.md` in your Project files", "Download `DATA-MAP.md` and add it to your Project at `data-work/DATA-MAP.md`", or "Printed below; save it as `data-work/DATA-MAP.md`". Name any stale older copy. In a coding agent, edit the file in place.
 
 ## Safety
 

@@ -39,7 +39,7 @@ When you stop, say what you are waiting for and set the Progress line, for examp
 - `stats-tests`: choose the test by data type and design. Report direction, magnitude and uncertainty. Correct for multiple comparisons.
 - `question-types`: word every claim at or below the ceiling. One file per question type holds the method cards. Load the card for the chosen method and apply its "Checks that must pass" (the plan's success checks hold a copy; the compact cards in the `question-types` skill are the fallback). No "caused" without a randomised experiment or a credible causal design that passed its checks.
 - `data-map`: read it before writing queries. Flag entries older than 90 days or contradicted by data, then ask.
-- `viz` (experimental): choose the chart by the question. The title states the takeaway, axes carry units, bars start at zero, uncertainty is shown, no dual axes, no 3D, colour-blind safe, same scale when comparing. In a readout: at most 3 charts for exec, one annotation on the key moment, saved as image files in `outputs/` and linked with alt text.
+- `viz` (experimental): choose the chart by the question. The title states the takeaway, axes carry units, bars start at zero, uncertainty is shown, no dual axes, no 3D, colour-blind safe, same scale when comparing. In a readout: at most 3 charts for exec, one annotation on the key moment, saved as image files in the analysis folder and linked by their real path with alt text.
 - `assumptions`: ask instead of assuming. When you must assume, add a row. Standard and deep depth always show the full 7-column table (id, assumption, why unavoidable, likely alternatives, impact if wrong, how to check, status). Never drop columns.
 
 ## Steps
@@ -62,7 +62,7 @@ Set status `running`. Number the steps in the Progress line (step 1 of 8, and so
 5. **Reconcile (rung 5).** Compare the headline number to the trusted number from the plan. Say which count is compared (raw or cleaned) and why: a trusted number made before your cleaning matches the raw count. Compute the gap and compare it with the stated tolerance. Above tolerance: record rung 5 as fail, do not report the number as final, and test likely causes one small check at a time. Never explain a gap with an untested story.
 6. **Write findings.** Each finding gets direction, magnitude, uncertainty, and the claim ceiling applied. Update the status of every hypothesis the finding touches in the Hypotheses section (`supported`, `refuted`, `open` or `parked`), and name the result that shows it. A node is never `supported` or `refuted` without a result. Tell the user which statuses changed. Update assumption statuses as evidence arrives. List high-impact rows still `open` beside the findings.
 7. **Write the review pack.** In the "Appendix: Review pack" section of `analysis.md`, for each headline number: the exact SQL or Python that produced it, and its data source (table or file, filters, period). In a chat app `queries/` does not persist, so this is how a fresh reviewer sees the code.
-8. **Draft the readout.** Write `readout.md` next to `analysis.md`, from `readout.template.md` in this skill's folder. Set the status line to `**Status: DRAFT**`. If a skeleton exists (`**Status: SKELETON**`), replace it: keep its layout, fill every placeholder from Results, and leave no XX or [segment] behind.
+8. **Draft the readout.** Write `readout.md` in the analysis folder next to `analysis.md`, from `readout.template.md` in this skill's folder. Set the status line to `**Status: DRAFT**`. If a skeleton exists (`**Status: SKELETON**`), replace it: keep its layout, fill every placeholder from Results, and leave no XX or [segment] behind.
 9. **Build `readout.docx`.** Produce `readout.docx` from the same text as `readout.md`, with the charts embedded, so it opens in Word and Google Docs. Use whatever document library the sandbox has. `readout.md` stays the source: the review edits it, then rebuilds the `.docx`. If there is no code tool, give `readout.md` and the chart code only, and say so in one line.
 
 ## Draft readout
@@ -71,7 +71,7 @@ One layout. Wording adapts to the audience set in grilling (Meta). The default r
 
 1. **Answer** in 2 lines.
 2. **Key numbers**, each with its uncertainty. At most 5. For an exec audience this limit is strict. Every other number goes to the Appendix.
-3. **Charts** (apply `viz`). At most 3 in an exec readout. Each title states the takeaway. One annotation on the key moment (for example, a marker on the day a step happened). A chart replaces number rows that say the same thing, which keeps the 5-number limit. Charts are image files in `outputs/` (in a chat app, created and offered as downloads), linked from the readout with alt text. In hand-over mode, give the chart spec plus ready-to-run code. No chart is fine when a number says it better.
+3. **Charts** (apply `viz`). At most 3 in an exec readout. Each title states the takeaway. One annotation on the key moment (for example, a marker on the day a step happened). A chart replaces number rows that say the same thing, which keeps the 5-number limit. Charts are image files in the analysis folder (a coding agent uses its `outputs/` subfolder), saved at their full path. The link in `readout.md` is the chart's real path relative to the readout (`<chart>.png`, or `outputs/<chart>.png` only when that folder exists), never `outputs/` in a chat app. In a chat app, hand each chart over in one of the three forms. In hand-over mode, give the chart spec plus ready-to-run code. No chart is fine when a number says it better.
 4. **What it means** and the recommendation.
 5. **Caveats:** open high-impact assumptions, and the claim ceiling in plain words.
 6. **Method** in 3 lines. Claim only what ran: name the checks that passed, as they were run. Never write "full validation ladder" if a rung was skipped, failed, or compared only against the frame the table was built from.
@@ -110,7 +110,7 @@ Examples: no clean control group, a metric that is not available, a sample ratio
 
 ## Data safety
 
-Show aggregates by default. Ask before saving row-level data anywhere. Put charts and tables in `outputs/` only when asked, when the plan names one, or when the readout uses one. Apply the `viz` skill to every chart before saving it. Never store credentials.
+Show aggregates by default. Ask before saving row-level data anywhere. Put charts and tables in the analysis folder only when asked, when the plan names one, or when the readout uses one. Apply the `viz` skill to every chart before saving it. Never store credentials.
 
 ## Output
 
@@ -120,20 +120,21 @@ Show aggregates by default. Ask before saving row-level data anywhere. Put chart
 
 ## End (every flow step)
 
-Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, and name the next step.
+Quick depth has no files: skip steps 1, 3, 4 and 5, give the result in the chat, and name the next step.
 
 1. Update the Progress line in `analysis.md` Meta, for example `Progress: run done, draft readout written, next /review-analysis`.
 2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
-3. Chat app: create the updated `analysis.md`, `readout.md` and `readout.docx` as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Replace the old ones in your Project files" (or "Save these to your Project files" if they are new), so the next step, in any chat, can read them. Name chat-app files `analysis-<slug>.md` and `readout-<slug>.md`. Start each with `format:` and `updated: YYYY-MM-DD HH:MM` (now). Hand back the whole file, never a patch. If two copies exist, use the newest `updated:` and say so.
-4. Coding agent: the files are already saved under `data-work/`. Say where.
-5. End with the go-ahead question, at every depth, quick included. Use this fixed form:
+3. Save each file at its full path, never a bare file name (a bare name lands in a `claude/` folder in claude.ai, and a generic name is overwritten by the next analysis): `data-work/analyses/<YYYY-MM-DD>-<slug>/analysis.md`, `readout.md` and `readout.docx`, and the charts in the same folder. Then say exactly what happened to each file, in one of three forms: "Saved to `<path>` in your Project files" (you wrote it there), "Download `<file>` and add it to your Project at `<path>`" (you could not write to Project files), or "Printed below; save it as `<path>`" (creating the file failed). Never claim a save that did not happen. Never say "replace the old one, it is already saved there". Start each file with `format:` and `updated: YYYY-MM-DD HH:MM` (now). Hand back the whole file, never a patch. Never ask the user to edit a saved file by hand.
+4. Stale copies: if an older copy of a file exists elsewhere in the Project (for example `analysis (6).md` at the top level, or a file in `claude/`), name it and say it is stale. Once per Project, suggest moving old analyses into the `data-work/` layout. If two copies exist, use the newest `updated:` and say so.
+5. Coding agent: the files are already saved under `data-work/`. Name each path.
+6. End with the go-ahead question, at every depth, quick included. Use this fixed form:
 
    > Go ahead?
    > A) Yes, run `/review-analysis` (recommended)
    > B) Change something (say what)
    > C) Add a check, segment or question
 
-   At standard and deep depth, A recommends a fresh review, because a review in the same context is biased by it: "A) Yes: start `/review-analysis` in a new chat (recommended). In a Claude or ChatGPT Project, save the data, `DATA-MAP.md`, `analysis.md` and `readout.md` to the Project files first, then open a new chat in that Project; nothing needs attaching." If you can start a subagent with fresh context, you may run the review there instead, passing only those files. This is optional: never rely on it. A same-chat review stays allowed. Quick depth: a same-chat review is fine.
+   At standard and deep depth, A recommends a fresh review, because a review in the same context is biased by it: "A) Yes: start `/review-analysis` in a new chat (recommended). In a Claude or ChatGPT Project, make sure the data, `data-work/DATA-MAP.md`, `analysis.md` and `readout.md` are in the Project files first, then open a new chat in that Project; nothing needs attaching." If you can start a subagent with fresh context, you may run the review there instead, passing only those files. This is optional: never rely on it. A same-chat review stays allowed. Quick depth: a same-chat review is fine.
 
    Wait for the answer. A means start the next step. B or C means make the change in this step, hand back the updated file, and ask again.
 

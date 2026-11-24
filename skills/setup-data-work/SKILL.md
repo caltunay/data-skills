@@ -63,14 +63,14 @@ Optional line: "If you have a web search or docs lookup tool, check the current 
 
 ## Output
 
-1. Write `data-work/DATA-MAP.md` from the template (`updated:` line set to now). Fill what you know. Joins go in with check status `unverified` unless a query in this session checked them. Leave unknown sections as empty tables. Date every entry today, with `source: setup`.
+1. Write `data-work/DATA-MAP.md` (full path) from the template (`updated:` line set to now). Fill what you know. Joins go in with check status `unverified` unless a query in this session checked them. Leave unknown sections as empty tables. Date every entry today, with `source: setup`.
 2. Coding agent with a repo: add `data-work/analyses/*/outputs/` to `.gitignore` unless the user chose to commit outputs. Chat app: skip this. No git advice in a chat app.
 3. Chat app: also write the **Project instructions block** (see End).
 4. Show a short summary of what is still missing, as a list.
 
 ## End
 
-- Chat app (no user project folder: no `data-work/` and no repo): create the full `DATA-MAP.md` as a file and offer it as a download. Print it as one block only if creating the file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Tell the user to save it to their Project files so every later step, in any chat, can read it.
+- Chat app (no user project folder: no `data-work/` and no repo): save the full map at its full path, `data-work/DATA-MAP.md`, never as a bare `DATA-MAP.md`. Say exactly what happened, in one of three forms: "Saved to `data-work/DATA-MAP.md` in your Project files" (you wrote it there), "Download `DATA-MAP.md` and add it to your Project at `data-work/DATA-MAP.md`" (you could not write to Project files), or "Printed below; save it as `data-work/DATA-MAP.md`" (creating the file failed). Never claim a save that did not happen. Never ask the user to edit a saved file by hand. If an older copy of the map sits elsewhere in the Project (for example at the top level or in `claude/`), name it and say it is stale.
 - Chat app: end the output with a short block to paste into the Project's instructions, in a fenced block, for example:
 
   ```

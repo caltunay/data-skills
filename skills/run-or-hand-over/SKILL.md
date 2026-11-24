@@ -32,7 +32,7 @@ Always try first. Decide by the tools you have, not by the app you are in.
 Decide by situation, not by file access.
 
 - **Coding agent:** there is a user project folder (a repo, or a `data-work/` folder). Save files under `data-work/`.
-- **Chat app:** there is no user project folder. A sandbox file is not the user's file until they download it. Create each file in the sandbox and offer it as a download. Print it as one block only if creating the file fails.
+- **Chat app:** there is no user project folder. A sandbox file is not the user's file until it is in their Project files or they download it. If you can write to the Project files, write each file there at its full path. If you cannot, create each file in the sandbox and offer it as a download. Print it as one block only if creating the file fails.
 - Never say "I can't save files" when you can create a download.
 
 ## Decide per action
@@ -41,8 +41,8 @@ Decide by situation, not by file access.
 |---|---|---|
 | Coding agent, the user named a connected source | Run them | Save under `data-work/` |
 | Coding agent, no data connection | Hand the query over, wait for the paste | Save under `data-work/` |
-| Chat app with a code tool and attached data files | Load the files and run the checks (DuckDB, SQLite or pandas) | Create the file, offer it as a download |
-| Chat app, data only in a source with no connection | Hand the query over, wait for the paste | Create the file, offer it as a download |
+| Chat app with a code tool and attached data files | Load the files and run the checks (DuckDB, SQLite or pandas) | Write it to the Project files, or create it and offer a download |
+| Chat app, data only in a source with no connection | Hand the query over, wait for the paste | Write it to the Project files, or create it and offer a download |
 | Chat app with no code tool | Hand the query over. Say so in one line | Print one block to copy |
 
 Excel, Power BI and Tableau work always runs in hand-over mode. You give steps, the user does them and pastes the result.
@@ -76,10 +76,44 @@ Rules:
 
 ## Files
 
-- Coding agent: write to the user's own project in `data-work/`. Never write into the skills repo.
-- Chat app: at the end of every flow step, create the updated `analysis.md` (and `readout.md` and `readout.docx` when they exist) as files and offer them as downloads. Print one block only if creating the file fails. Tell the user to replace the old one in their Project files so the next step, in any chat, can read it.
-- Stable names and versions. Fixed names: `DATA-MAP.md`, `analysis-<slug>.md`, `readout-<slug>.md` (a coding agent keeps `analysis.md` and `readout.md` in the analysis folder). Every file starts with `format:` and `updated: YYYY-MM-DD HH:MM` (now). Hand back the whole file, never a patch, and say "Replace the old one in your Project files." If two copies exist, use the newest `updated:` and say so.
-- Document tool (optional). Ask once, generically: "Hand files to you as downloads, or save them to a document tool you use (for example a drive, a wiki or a notes app)?" Use only a tool the user names, never one picked from the connectors you can see. Never required. Downloads stay the default. The answer goes in Meta as `Files`.
+### One layout
+
+All user files live under `data-work/`, in a coding agent and in a chat app:
+
+```
+data-work/DATA-MAP.md
+data-work/wayfinder/<slug>.md
+data-work/analyses/<YYYY-MM-DD>-<slug>/
+    analysis.md
+    readout.md
+    readout.docx
+    <charts>
+    experiment-spec.md or metric-spec.md   (design asks)
+```
+
+- **Never save with a bare file name.** In claude.ai a bare name lands in a `claude/` folder, and a generic name such as `experiment-spec.md` is overwritten by the next spec. Always use the full path.
+- The analysis folder is `<YYYY-MM-DD>-<slug>`: the date the ask was grilled, and a short slug. Meta holds it as `Folder`. Coding agents also keep `queries/` and `outputs/` inside it. In a chat app, charts sit in the analysis folder itself.
+- A coding agent writes the files under `data-work/` in the repo.
+
+### Say exactly what happened to each file
+
+After a save, name the path. Use one of three forms and no others:
+
+1. "Saved to `<path>` in your Project files" (you wrote it there).
+2. "Download `<file>` and add it to your Project at `<path>`" (you could not write to Project files).
+3. "Printed below; save it as `<path>`" (creating the file failed).
+
+Never claim a save that did not happen. Never say "replace the old one, it is already saved there": it is saved, or the user must add it, never both. Coding agent: name the path you wrote.
+
+### Stale copies
+
+When an older copy of the same file exists elsewhere in the Project (for example `analysis (6).md` at the top level, or a file in `claude/`), name it and say it is stale. Once per Project, suggest moving old analyses into the `data-work/` layout. If two copies exist, use the newest `updated:` line and say so.
+
+### Other rules
+
+- Chat app: at the end of every flow step, hand back each file the step changed (for example `analysis.md`, and `readout.md` and `readout.docx` when they exist), in one of the three forms above. Say which files changed and where they are.
+- Every file starts with `format:` and `updated: YYYY-MM-DD HH:MM` (now). Hand back the whole file, never a patch.
+- Document tool (optional). Ask once per Project, generically: "Hand files to you as downloads, as files in your Project, or save them to a document tool you use (for example a drive, a wiki or a notes app)?" Use only a tool the user names, never one picked from the connectors you can see. Never required. The answer goes in Meta as `Files` and in the data map under Ways of working. If the map already holds the answer, never ask again.
 - A readout `.docx` needs a document library in the sandbox. Use whatever it has. With no code tool, give `readout.md` plus the chart code only, and say so in one line.
 - No manual file edits. After the user confirms something, never ask them to edit a saved file by hand. Make the change yourself and hand back the updated file.
 - If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before re-asking anything.
