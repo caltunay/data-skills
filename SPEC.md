@@ -372,7 +372,9 @@ Formatting:
 |---|---|---|---|---|---|
 | H1 | Sign-ups fell because of one channel | One channel falls far more than the others | All channels fall by a similar share | H1.1, H1.2 | open |
 
-Status: `open`, `supported`, `refuted` or `parked`. `/run-analysis` updates it, naming the result that shows it. `/review-analysis` checks that every node has a status, that `supported` and `refuted` nodes have a result behind them, and that no `open` or `parked` node is worded as a finding.
+Status: `open`, `supported`, `refuted` or `parked`. `/run-analysis` updates it, naming the result that shows it. `/review-analysis` checks that every node has a status, that `supported` and `refuted` nodes have a result behind them, that every status is right against the node's own conditions (fixing wrong ones with a was and now pair), and that no `open` or `parked` node is worded as a finding.
+
+**Status logic.** Judge each node against its own "would support it" and "would refute it" conditions, never against the parent's direction. A child that tests robustness ("the result holds in each month", "holds on the raw count") is `supported` when the result held, whatever the result was, and `refuted` only when it did not hold. Child nodes are written in terms that do not depend on the parent's direction ("the difference has the same sign in each month", not "sign-ups fall in each month"). `/plan-analysis` writes them that way, `/run-analysis` applies the rule, `/review-analysis` checks it.
 
 **Readout skeleton.** Optional at standard and deep depth, in `/plan-analysis`. It drafts `readout.md` with placeholders only (XX%, [segment]), never an invented number, to check that the story would answer the decision. Status line `**Status: SKELETON**`. `/run-analysis` replaces it. `/review-analysis` and `/storytell` refuse to treat it as a result.
 

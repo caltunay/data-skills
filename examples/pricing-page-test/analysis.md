@@ -186,7 +186,7 @@ Open high-impact assumptions next to these findings: none.
 | id | hypothesis | would support it | would refute it | leads to | status |
 |---|---|---|---|---|---|
 | H1 | The new layout raises 7-day conversion | Variant conversion above control, interval above zero | Interval includes zero or below | H1.1 | supported (+1.65 points, interval +0.22 to +3.07) |
-| H1.1 | The gain holds in both weeks | Both weekly differences above zero | A weekly difference at or below zero | none | open (week 2 weaker, +0.59, interval includes zero) |
+| H1.1 | The difference has the same sign in both weeks | Both weekly differences have the same sign as the overall difference | A weekly difference has the opposite sign or is zero | none | supported (week 1 +2.67, week 2 +0.59: same sign. Week 2 interval includes zero, so the size in week 2 is not settled) |
 | H2 | The gain appears on mobile only | Mobile difference above zero, desktop near zero | Both devices move together | none | parked (one exploratory slice, a pattern to test) |
 
 ## 11. Appendix: Review pack

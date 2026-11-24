@@ -128,13 +128,13 @@ Every question asked and the user's answer, word for word, per round. After each
 
 ## 10. Hypotheses
 
-Written by `/plan-analysis` at standard and deep depth, before the method options. At most 3 levels and about 12 nodes. Children are numbered H1.1, H1.2, then H1.2.1. `/run-analysis` updates the status. `/review-analysis` checks every node has one.
+Written by `/plan-analysis` at standard and deep depth, before the method options. At most 3 levels and about 12 nodes. Children are numbered H1.1, H1.2, then H1.2.1. `/run-analysis` updates the status. `/review-analysis` checks every status against its conditions.
 
 | id | hypothesis | would support it | would refute it | leads to | status |
 |---|---|---|---|---|---|
 | H1 | | | | H1.1, H1.2 | open |
 
-Status: `open`, `supported`, `refuted` or `parked`. A node is `supported` or `refuted` only with a result in section 6 that shows it. Quick depth: a flat list of up to 3 hypotheses, no file.
+Status: `open`, `supported`, `refuted` or `parked`. A node is `supported` or `refuted` only with a result in section 6 that shows it. Judge each node against its own "would support it" and "would refute it" conditions, never against the parent's direction. A child that tests robustness ("the result holds in each month") is `supported` when the result held, whatever the result was. Write child nodes in terms that do not depend on the parent's direction. Quick depth: a flat list of up to 3 hypotheses, no file.
 
 ## 11. Appendix: Review pack
 
