@@ -282,6 +282,47 @@ out=$(grep -q 'Never offer `/setup-data-work` here' skills/retro-analysis/SKILL.
   grep -q 'Printed below; save it as' skills/run-or-hand-over/SKILL.md || echo "run-or-hand-over: no three save forms")
 [ -z "$out" ] && ok "v0.4 rules are in the skills (retro, stuck, no analysis, tree, skeleton, docx, save forms)" || bad "v0.4 rules" "$out"
 
+# 35 v0.5 files: one layout, full paths, three save forms, no old names
+out=$(for s in $flow $flowstyle setup-data-work; do f="skills/$s/SKILL.md"
+    grep -q 'Printed below; save it as' "$f" || echo "$f: no three save forms"
+    grep -qE 'bare (file )?name|bare `' "$f" || echo "$f: no bare-name rule"
+    grep -q 'stale' "$f" || echo "$f: no stale copies rule"; done
+  grep -q 'Printed below; save it as' skills/improve-code/SKILL.md || echo "improve-code: no save forms"
+  grep -rnE 'analysis-<slug>|readout-<slug>|Replace the old one in your|Save (this|these) to your Project files|outputs/<chart-name>\.png' skills docs templates README.md)
+[ -z "$out" ] && ok "v0.5 files: full paths, three save forms, stale copies, no old file names" || bad "v0.5 file rules" "$out"
+
+# 36 /wayfinder-data ends with the go-ahead question
+f=skills/wayfinder-data/SKILL.md
+out=$(grep -q '> Go ahead?' "$f" || echo "$f: no go-ahead question"
+  grep -q '> A) Yes, ' "$f" || echo "$f: no option A"
+  grep -q '> B) Change something' "$f" || echo "$f: no option B"
+  grep -q '> C) Add an item' "$f" || echo "$f: no option C"
+  grep -q 'data-work/analyses/<YYYY-MM-DD>-<slug>/experiment-spec.md' "$f" || echo "$f: spec not saved in its own analysis folder")
+[ -z "$out" ] && ok "wayfinder-data ends with the go-ahead question and saves specs in their own folder" || bad "wayfinder end" "$out"
+
+# 37 hypothesis status rule in plan, run and review
+out=$(for s in plan-analysis run-analysis review-analysis; do f="skills/$s/SKILL.md"
+    grep -q "Judge each node against its own" "$f" || echo "$f: no status rule (each node against its own conditions)"
+    grep -q 'whatever the result was' "$f" || echo "$f: no robustness child rule"; done
+  grep -q '"was" and "now" pair' skills/review-analysis/SKILL.md || echo "review-analysis: no was and now fix for statuses")
+[ -z "$out" ] && ok "hypothesis status rule is in plan, run and review" || bad "status rule" "$out"
+
+# 38 chat-app section in the README, and the instructions block
+out=$(grep -q '^## Using data-skills in a chat app' README.md || echo "README.md: no chat-app section"
+  grep -q 'Coding agents need none of this' README.md || echo "README.md: no coding-agent line"
+  blk='Read data-work/DATA-MAP.md before any data work. Use the data-skills commands. Keep files in data-work/ as the skills lay them out. At the end of each step, tell me which files changed and where they are.'
+  for f in skills/setup-data-work/SKILL.md docs/where-to-run.md; do grep -qF "$blk" "$f" || echo "$f: instructions block differs"; done)
+[ -z "$out" ] && ok "README has the chat-app section; the Project instructions block matches" || bad "chat-app guide" "$out"
+
+# 39 question cards, continue-or-new and earlier-work wording
+out=$(for s in grilling grill-the-ask setup-data-work plan-analysis run-analysis review-analysis retro-analysis wayfinder-data ask-data-skills; do f="skills/$s/SKILL.md"
+    grep -q 'multiple-choice question tool' "$f" || echo "$f: no question card rule"; done
+  for s in grilling grill-the-ask setup-data-work plan-analysis run-analysis review-analysis retro-analysis wayfinder-data; do f="skills/$s/SKILL.md"
+    grep -qE 'what it means in a few words|says what it means in a few words' "$f" || echo "$f: options do not explain themselves"; done
+  grep -qF 'Continue `<folder>`, or start a new analysis?' skills/grill-the-ask/SKILL.md || echo "grill-the-ask: no continue-or-new question"
+  for s in $flow wayfinder-data; do grep -qF 'Download it and add it to `data-work/DATA-MAP.md`' "skills/$s/SKILL.md" || echo "skills/$s/SKILL.md: no earlier-work hint"; done)
+[ -z "$out" ] && ok "question cards, continue-or-new and the earlier-work hint are in the skills" || bad "v0.5 question rules" "$out"
+
 # 21 private blocklist (gitignored .blocklist, one word per line)
 if [ -f .blocklist ]; then
   out=$(grep -rnwiIF -f .blocklist --exclude-dir=.git --exclude=.blocklist . | cut -d: -f1,2)
@@ -291,7 +332,7 @@ else
 fi
 
 # 22 private files are not tracked
-out=$(git ls-files 2>/dev/null | grep -E '(^|/)(\.blocklist|FIXES-v0\.1\.md|BUILD-v0\.2\.md|FIXES-v0\.3\.md|FIXES-v0\.4\.md)$')
+out=$(git ls-files 2>/dev/null | grep -E '(^|/)(\.blocklist|FIXES-v0\.1\.md|BUILD-v0\.2\.md|FIXES-v0\.3\.md|FIXES-v0\.4\.md|FIXES-v0\.5\.md)$')
 [ -z "$out" ] && ok "private files are not tracked" || bad "private files tracked" "$out"
 
 exit $fail

@@ -36,7 +36,7 @@ Second, asks that need a design and no data yet: "design an A/B test for the new
 - `stats-tests`: size an experiment with a baseline, an MDE, power and a significance level. Fix the primary metric and the runtime in advance. One primary metric; extra metrics get a correction or the label exploratory.
 - `experiment` card (in `question-types`): randomise a unit, hold the split fixed, check the sample ratio, no peeking, full weekly cycles, guardrails, one decision rule written before the test.
 - `data-map`: read `DATA-MAP.md` first. Flag entries older than 90 days or contradicted by data, then ask.
-- `run-or-hand-over`: two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts (load them and run SQL with DuckDB or SQLite, or pandas). Hand over only when no code tool exists, and say so in one line. Where do files persist? In a chat app, create each file and offer it as a download; print it only if that fails. Never ask the user to edit a saved file by hand.
+- `run-or-hand-over`: two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts (load them and run SQL with DuckDB or SQLite, or pandas). Hand over only when no code tool exists, and say so in one line. Where do files persist? In a chat app, save each file at its full `data-work/` path in the Project files if you can, otherwise create it and offer a download, and say which; print it only if that fails. Never ask the user to edit a saved file by hand.
 
 ## Steps
 

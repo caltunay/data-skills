@@ -9,7 +9,7 @@ Never fail because a tool is missing.
 
 ## Core rule
 
-Two separate questions. Can I run things here? Always try first. Where do files persist? In a chat app, create the file and offer it as a download. Print it only if that fails. Never call a data tool before the user names the source.
+Two separate questions. Can I run things here? Always try first. Where do files persist? In a chat app, save the file at its full `data-work/` path in the Project files if you can, otherwise create it and offer a download, and say which. Print it only if that fails. Never call a data tool before the user names the source.
 
 ## Sources and names
 

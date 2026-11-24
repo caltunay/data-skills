@@ -1,8 +1,8 @@
-# data-skills: spec (v0.4)
+# data-skills: spec (v0.5)
 
 v0.1 adds: connector rules, data map check, chat-app handoff, readout, progress tracker, method cards for all question types, neutral example domain. See section 19, decisions 21 to 32.
 
-v0.2 adds the experimental skills in section 20. v0.3 is a fix pass from a full manual run: see section 21 and decisions 47 onward. v0.4 fixes the v0.3 live run and adds a hypothesis tree, strategy context, design asks, routing and chat-first storage: see section 22 and decisions 65 onward.
+v0.2 adds the experimental skills in section 20. v0.3 is a fix pass from a full manual run: see section 21 and decisions 47 onward. v0.4 fixes the v0.3 live run and adds a hypothesis tree, strategy context, design asks, routing and chat-first storage: see section 22 and decisions 65 onward. v0.5 fixes the v0.4 live run: one folder layout and honest save messages, several analyses in one Project, a tidier map, clickable question cards that explain themselves, hypothesis status logic, and a chat-app guide: see section 23 and decisions 84 onward.
 
 - Repo: `caltunay/data-skills`
 - License: MIT, unless an upstream license we borrow from requires otherwise.
@@ -513,6 +513,7 @@ Before each check, state the expected result. After it, record the actual result
 - **Business:** does it answer the decision? Is the effect practically meaningful? Guardrails, cost and risk, what a sceptical leader will ask.
 - **Claims:** every claim checked against the question-type ceiling.
 - **Assumptions:** any high-impact open row flagged.
+- **Hypothesis statuses:** every status is checked against the node's own support and refute conditions (section 7.9). A wrong status is fixed in `analysis.md` and shown as a "was" and "now" pair.
 - **Leadership questions:** each answer marked "not supported yet" names the cheapest way to answer it.
 - **Readout:** every sentence the review changes is shown as a "was" and "now" pair.
 - **Verdict:** `ready`, `ready with caveats`, or `needs rework`, with the reasons.
@@ -836,3 +837,24 @@ Built from the v0.3 live run in claude.ai (all steps passed) and a design round 
 | Surface guide | `docs/where-to-run.md`; carry the map over to a new project on the same data; ask for an existing map first | 7.8 |
 | Evals | Rubric rows for items 2, 3, 6, 7, 10, 15 and the new features; seven new cases | 15 |
 | Self-check | Checks 29 to 34: Decisions and Hypotheses, map sections, `updated:` lines, spec templates, routing guide, v0.4 rules | `docs/self-check.md` |
+
+---
+
+## 23. v0.5 fix pass
+
+Built from a full live run of v0.4 in claude.ai (setup extending a map, two analyses through the whole flow, and a design ask). The flow worked well. These fixes target chat-app use, file handling and a few logic gaps. Branch `v0.5`, from `main` after PR #3. All section 3 hard rules apply. Decisions 84 to 96. Plugin version: `0.5.0`.
+
+| Area | Change | Where in this spec |
+|---|---|---|
+| Files and folders | One layout under `data-work/` everywhere, always full paths, never a bare file name; three save forms and never a claimed save that did not happen; stale copies named; chart links use the chart's real path | 5, 7.1, 7.6, 7.8 |
+| Several analyses | Match an analysis to the ask by folder or slug; the grill asks "Continue `<folder>`, or start a new analysis?" and never resumes silently; a resumed file has stale lines refreshed as was and now pairs | 4 |
+| Map and setup | Earlier work but no map: recommend "Yes, attach it"; key queries as SQL; tidy a messy map when extending it; Ways of working section; the Project instructions block in fixed words | 7.2, 7.8, 8 |
+| Questions | Clickable cards in every asking skill; each option says what it means; show the tree, table or draft first; no hedged defaults anywhere; flag options that need missing data | 4 |
+| Hypotheses | Judge each node against its own conditions; robustness children are supported when the result held; the review checks and fixes statuses | 7.9, 12 |
+| Wayfinder | Ends with the go-ahead question; specs saved in their own analysis folder | 20.5 |
+| Chat-user guide | README section "Using data-skills in a chat app"; setup ends with the same steps in 3 to 5 lines | 7.10, 8 |
+| Evals | Rubric lines for the new rules, five new cases, `evals/reference/v0.4-live-run.md` | 15 |
+| Self-check | Checks 35 to 39: save forms and no old names, the wayfinder end, the status rule, the chat-app section and the instructions block, question cards and continue-or-new | `docs/self-check.md` |
+
+Not tested: a live run of v0.5 in claude.ai. The eval runner was run in dry-run mode only (61 cases).
+
