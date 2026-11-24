@@ -89,6 +89,10 @@
 85. After a save, the skill says which of three things happened, with the path: saved to Project files, download and add it, or printed below. It never claims a save that did not happen, and never says a file is both saved and to be replaced.
 86. Old copies are named as stale, and the user is told once to move old analyses into the layout. Two copies: the newest `updated:` wins.
 87. Several analyses can live in one Project. An analysis is matched to an ask by its folder or slug. A grill that finds an analysis of the same ask always asks whether to continue or start a new one. Resuming never happens silently, and a resumed file has its stale lines refreshed as "was" and "now" pairs.
+88. Setup and retro tidy a messy map when they extend it: one entry per source, grain and keys under Tables, the template's layout. The tidy is one approved change with a diff, so the rule that the map changes only through approved changes still holds.
+89. Key queries are saved as SQL text, in the team's conventions, checked against the columns the map knows. A description alone is not a key query.
+90. The map records how the user works (chat Projects or a repo layout, and the file hand-back choice) in a new section 12, Ways of working. Hand-back is asked once per Project, not at every grill.
+91. When the Project holds earlier analyses but no map, the first option is "Yes, attach it", with the hint that an earlier retro chat holds the map.
 
 ## Build decisions
 
@@ -255,6 +259,9 @@ B128. Chart folder in chat apps. Options: keep `outputs/` as a subfolder in chat
 B129. Analysis folder name in Meta. A new `Folder` line holds `data-work/analyses/<YYYY-MM-DD>-<slug>/`, set by `/grill-the-ask`. Reason: later steps, in a new chat, need one value to build every path and to match an analysis to an ask.
 B130. Self-check 34 no longer looks for "Replace the old one in your Project files". The three save forms replace it.
 B131. Continue or new (item 5). The question appears in `/grill-the-ask` only. Later steps ask only when more than one analysis could be the one. Reason: a later step runs because the user chose the analysis in the grill, so asking again is noise unless it is unclear. Default recommendation: continue when the status is not `retro done`, new when it is.
+B132. Ways of working is section 12 of the map template, appended after Key queries (as B107 did for 9 to 11). The map stays `format: v1`.
+B133. Key query layout. Options: SQL inside a table cell, or a table row plus a SQL block per query. Chosen: row plus block, with a "columns used" column in the row. Reason: multi-line SQL breaks table cells, and the column list lets a reader see which columns were checked against Tables.
+B134. File hand-back question has three options (downloads, Project files, document tool), with a recommendation tied to whether the session can write to Project files. The old two-option wording could not express "files in my Project".
 
 ## Questions for Cenan
 

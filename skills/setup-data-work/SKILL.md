@@ -16,13 +16,13 @@ Run once per team or project. Target: under 20 minutes. Partial answers are fine
 ## Start
 
 1. Check for `DATA-MAP.md` (in `data-work/` in the current folder, then upward; in the Project files; or pasted). Say in one line what you found, and which map you read. A team map can sit above project maps: the nearest map wins for conflicts. This step needs no `analysis.md`.
-2. If a map exists, read it. Check its format line and stale entries (see the `data-map` rule below). Offer to extend it. Do not start from zero. Step 0 still applies to anything new: ask how the user wants to add it.
-3. If there is no map, say so. First ask: "Do you have a DATA-MAP.md from another project on the same data? Attach or copy it in." If yes, read it and extend it (carry it over; start a fresh map only for entirely different data sources). If no, go to step 0.
+2. If a map exists, read it. Check its format line and stale entries (see the `data-map` rule below). Offer to extend it. Do not start from zero. Step 0 still applies to anything new: ask how the user wants to add it. **Tidy it when you extend it.** Normalise the map to the template: one entry per source (split a bullet that lists several files or tables as one source), grain and keys under Tables (fill them from what the user says, never guess), the template's table layout instead of loose bullets, key queries as SQL, and a Ways of working section. Show the tidy as a diff and apply it only after the user approves.
+3. If there is no map, say so. First ask: "Do you have a DATA-MAP.md from another project on the same data? Attach or copy it in." If the Project holds earlier analyses but no map, make the first option "Yes, attach it (recommended: earlier analyses are here)", never "No", and say: "If an earlier analysis ended with a retro, the map is in that chat. Download it and add it to `data-work/DATA-MAP.md`." If yes, read it and extend it (carry it over; start a fresh map only for entirely different data sources). If no, go to step 0.
 
 ## Rules from the disciplines (in case they do not load)
 
 - `grilling`: rounds of at most 3 questions, each with 2 to 4 options and one real recommended default (never a hedge such as "C if unknown"). Wait for answers. Never assume silently. When an answer conflicts with an earlier one or the data map, or does not make sense, say so plainly and ask one question at a time until it is clear. Use the environment's multiple-choice question tool for each round if it has one (one question per card, recommended option first); otherwise list the options as text.
-- `data-map`: one file, fixed sections, `format: v1` on line 1 and `updated: YYYY-MM-DD HH:MM` on line 2 (set to now at every change). Sections include Goals, Funnels and Key queries. Joins start `unverified` until a query checks them. Conventions hold style only. Every entry has `verified: YYYY-MM-DD` and `source: setup`. Flag entries older than 90 days or contradicted by data, then ask. Show a migration before applying it. The template is `DATA-MAP.template.md` in the `data-map` skill.
+- `data-map`: one file, fixed sections, `format: v1` on line 1 and `updated: YYYY-MM-DD HH:MM` on line 2 (set to now at every change). Sections include Goals, Funnels, Key queries (each as SQL text) and Ways of working. Joins start `unverified` until a query checks them. Conventions hold style only. Every entry has `verified: YYYY-MM-DD` and `source: setup`. Flag entries older than 90 days or contradicted by data, then ask. Show a migration before applying it. The template is `DATA-MAP.template.md` in the `data-map` skill.
 - `run-or-hand-over`: two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts (load them and run SQL with DuckDB or SQLite, or pandas). Hand over only when no code tool exists, and say so in one line. Where do files persist? In a chat app, create each file and offer it as a download; print it only if that fails. Never ask the user to edit a saved file by hand. Never fail because a tool is missing. Never call a data tool before the user names the source.
 
 ## Steps
@@ -52,12 +52,12 @@ Ask in rounds of at most 3 questions. Skip what the user already told you.
 5. **Metrics.** The 3 to 5 most-used metrics: definition, and one trusted number each (value, period, where it comes from) for reconciling.
 6. **Goals.** "What are the organisation's goals?" Ask for the mission, the north star metric, the target metrics, and the horizon of each (this quarter, this year, 3 years). Partial is fine. Write them to the Goals section. `/grill-the-ask` later asks how an ask links to one of them.
 7. **Funnels.** "What are the main funnels?" For each: every step, the event or table that marks it, and the step definition (what counts as having reached it). Write them to the Funnels section.
-8. **Key queries.** "Which 3 to 5 queries does the team reuse?" For each: what it returns and when to use it. Write them to the Key queries section. Keep to 5 at most.
+8. **Key queries.** "Which 3 to 5 queries does the team reuse?" For each: what it returns and when to use it, and the query itself. Save each as SQL text under its name (a table row plus a SQL block), written in the team's SQL conventions (step 10; sqlstyle.guide if none) and checked against the columns the map knows from the Tables section. A column the map does not know goes in "columns used" marked `unchecked`. Never save a description without the SQL. If the user has no SQL to hand, write it from the Tables section and say it is untested. Keep to 5 at most.
 9. **Rules.** Mandatory filters: test accounts, cancelled orders, time zones.
 10. **Conventions.** "Does your team have SQL or Python conventions? If not, I'll use sqlstyle.guide and PEP 8."
-11. **Where the files live.** "How do you organise your work? A) One repo with a folder per project. B) A repo per project. C) A team repo. D) Chat Projects (Claude or ChatGPT)." Recommend the one the user's own words point to. For A to C, the map goes in `data-work/` (skills look in the current folder, then upward, so a team map can sit above project maps and the nearest map wins for conflicts). For D, recommend one Project per team or area and one chat per analysis.
+11. **How you work.** "How do you organise your work? A) One repo with a folder per project. B) A repo per project. C) A team repo. D) Chat Projects (Claude or ChatGPT)." Recommend the one the user's own words point to. For A to C, the map goes in `data-work/` (skills look in the current folder, then upward, so a team map can sit above project maps and the nearest map wins for conflicts). For D, recommend one Project per team or area and one chat per analysis. Record the answer in the map under Ways of working (`where work lives`).
 12. **Git policy (coding agent only).** Commit `outputs/` or not. Default: not. In a chat app there is no repo: skip this question and give no git advice. For a team repo, say the map is committed so the team shares it.
-13. **Save to a document tool (chat app, ask once).** "Hand files to you as downloads, or save them to a document tool you use (for example a drive, a wiki or a notes app)?" Use only a tool the user names, never one picked from visible connectors. Never required. Default: downloads.
+13. **File hand-back (chat app, ask once per Project).** "How should I hand files back? A) As downloads. B) As files in your Project. C) Save to a document tool you use (for example a drive, a wiki or a notes app)." Recommend B if this session can write to the Project files, otherwise A, and say why. Use only a tool the user names for C, never one picked from visible connectors. Never required. Record the answer in the map under Ways of working (`file hand-back`), so later steps never ask again.
 
 Optional line: "If you have a web search or docs lookup tool, check the current setup steps for your agent and source." Never required.
 
@@ -74,12 +74,10 @@ Optional line: "If you have a web search or docs lookup tool, check the current 
 - Chat app: end the output with a short block to paste into the Project's instructions, in a fenced block, for example:
 
   ```
-  Read DATA-MAP.md before any data work. Use the data-skills commands.
-  Keep files named DATA-MAP.md, analysis-<slug>.md and readout-<slug>.md.
-  Save updated files back to the Project files. If two copies exist, use the newest `updated:` line.
+  Read data-work/DATA-MAP.md before any data work. Use the data-skills commands. Keep files in data-work/ as the skills lay them out. At the end of each step, tell me which files changed and where they are.
   ```
 
-  Add a line for the document tool if the user named one. Tell the user to paste it into the Project's instructions, and to use one chat per analysis. When they start another Project on the same data, they carry over `DATA-MAP.md` and this block.
+  Use these words exactly. Add a line for the document tool if the user named one. When they start another Project on the same data, they carry over `data-work/DATA-MAP.md` and this block.
 - End with the go-ahead question in this fixed form:
 
   > Go ahead?

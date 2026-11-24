@@ -82,8 +82,33 @@ One row per step, in order.
 
 ## 11. Key queries
 
-| name | what it returns | when to use it | query | verified | source |
+| name | what it returns | when to use it | columns used | verified | source |
 |---|---|---|---|---|---|
-| paid_orders_by_day | Paid orders per day, test accounts out | Any daily trend or drop check | `select order_date, count(distinct order_id) from orders where is_test = false and status = 'paid' group by 1` | 2026-01-01 | setup |
+| paid_orders_by_day | Paid orders per day, test accounts out | Any daily trend or drop check | orders.order_date, orders.order_id, orders.is_test, orders.status | 2026-01-01 | setup |
 
-Three to five queries. Reusable, each tested once.
+Three to five queries. Each is saved as SQL text under its name, in the team's SQL conventions, and every column in it is checked against the Tables section. A column the map does not know is marked `unchecked` in "columns used". Reusable, each tested once.
+
+### paid_orders_by_day
+
+```sql
+select
+    orders.order_date
+  , count(distinct orders.order_id) as paid_orders
+from
+    orders
+where true
+    and orders.is_test = false
+    and orders.status = 'paid'
+group by 1
+order by 1
+;
+```
+
+## 12. Ways of working
+
+| item | answer | verified | source |
+|---|---|---|---|
+| where work lives | chat Projects (one per team or area) | 2026-01-01 | setup |
+| file hand-back | downloads | 2026-01-01 | setup |
+
+Where work lives: chat Projects, or a repo layout (one repo with a folder per project, a repo per project, or a team repo). File hand-back: downloads, Project files, or a named document tool. Skills ask about hand-back once per Project, then read it from here.

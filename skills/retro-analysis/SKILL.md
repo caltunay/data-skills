@@ -15,13 +15,13 @@ The data map should get better with every analysis. This is not a memory dump.
 ## Start (every flow step)
 
 1. Check for `DATA-MAP.md` and `analysis.md` (in `data-work/` in the current folder, then upward; in the Project files; or attached). Say in one line what you found, and which map you read. A team map can sit above project maps: the nearest map wins for conflicts.
-2. If there is no `DATA-MAP.md`, first ask: "Do you have a DATA-MAP.md from another project on the same data? Attach or copy it in." If yes, extend that map. If not, this retro builds the map itself from the template, with only the entries you approve. Never offer `/setup-data-work` here, whatever Meta says. The template is `DATA-MAP.template.md` in the `data-map` skill. If it is not available, start with `format: v1` on line 1 and these sections: Sources, Tables, Joins, Metrics, Rules, Gotchas, Glossary, Conventions.
+2. If there is no `DATA-MAP.md`, first ask: "Do you have a DATA-MAP.md from another project on the same data? Attach or copy it in." If the Project holds earlier analyses but no map, make the first option "Yes, attach it (recommended: earlier analyses are here)", never "No", and say: "If an earlier analysis ended with a retro, the map is in that chat. Download it and add it to `data-work/DATA-MAP.md`." If yes, extend that map. If not, this retro builds the map itself from the template, with only the entries you approve. Never offer `/setup-data-work` here, whatever Meta says. The template is `DATA-MAP.template.md` in the `data-map` skill. If it is not available, start with `format: v1` on line 1 and these sections: Sources, Tables, Joins, Metrics, Rules, Gotchas, Glossary, Conventions.
 3. If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before re-asking anything. At quick depth there is no file: ask for a short summary of what was learned. Match the analysis to the ask by its folder or slug (`data-work/analyses/<YYYY-MM-DD>-<slug>/`). If more than one analysis could be the one, ask which. Never resume one silently.
 4. Read the Progress line in Meta and resume from it. Then read all sections, especially Assumptions, Results and Review. When resuming, refresh every line that is now out of date before you go on, and show each as a "was" and "now" pair. Examples: "no DATA-MAP.md, so inline" in Meta after a map now exists, an old hint in the claim ceiling line, a Progress line that points at a finished step.
 
 ## Rules from the disciplines (in case they do not load)
 
-- `data-map`: change the map only through approved retro changes. One entry per source; grain and keys under Tables; the template's table layout, never loose bullets. Conventions hold style only; analysis rules go in Rules or Gotchas; no duplicates across sections. Each entry has `verified: YYYY-MM-DD` and `source: analyses/<slug>`. Flag entries older than 90 days or contradicted by data, then ask. Check the format version and offer a migration if old.
+- `data-map`: change the map only through approved retro changes. Tidy a messy map to the template as one approved change. Key queries are saved as SQL text. One entry per source; grain and keys under Tables; the template's table layout, never loose bullets. Conventions hold style only; analysis rules go in Rules or Gotchas; no duplicates across sections. Each entry has `verified: YYYY-MM-DD` and `source: analyses/<slug>`. Flag entries older than 90 days or contradicted by data, then ask. Check the format version and offer a migration if old.
 
 ## Steps
 
@@ -34,20 +34,21 @@ The data map should get better with every analysis. This is not a memory dump.
    - a **gotcha** from a mistake that cost time
    - a **glossary** term
    - a **convention** the team settled (style only: SQL, Python, naming)
-   - a **funnel** (each step, its event or table, the step definition) or a **key query** (what it returns and when to use it) that the next analyst would reuse. Propose additions to the Funnels and Key queries sections. Keep key queries to 3 to 5 in total
+   - a **funnel** (each step, its event or table, the step definition) or a **key query** (what it returns and when to use it) that the next analyst would reuse. Propose additions to the Funnels and Key queries sections. Save each key query as SQL text (the exact query from the Review pack, in the team's SQL conventions, with its columns checked against the Tables section), with what it returns and when to use it. A description alone is not a key query. Keep key queries to 3 to 5 in total
    - a join that this run **checked** by query: propose changing its status from `unverified` to `checked`, with what the query found
-2. Check existing entries: did the data contradict any? Is any older than 90 days and re-confirmed by this work? Propose updating its `verified` date.
-3. Put each entry in the right section:
+2. **Tidy the map.** If the map is not in the template's layout, propose one change called "Tidy" and show it as a diff: one entry per source (split a bullet that lists several files or tables as one source), grain and keys under Tables for every table this analysis used (take them from `analysis.md`; if they are not there, leave the cell empty and say so, never guess), the template's tables instead of loose bullets, and a Ways of working section. The user approves it like any other change.
+3. Check existing entries: did the data contradict any? Is any older than 90 days and re-confirmed by this work? Propose updating its `verified` date.
+4. Put each entry in the right section:
    - Conventions hold style only: SQL style, Python style, naming. Nothing else.
    - Analysis rules (a filter, an exclusion, a dedup rule, a time zone rule) go in Rules. Mistakes and traps go in Gotchas.
    - Sources: one entry per source, one row each. Grain, keys and key facts go under Tables, not Sources.
    - Follow the template's table layout (the same columns, one row per entry). Never write loose bullets in place of a table row. When this retro builds the map, copy the template's sections and columns exactly.
    - One fact goes in one section. No duplicate entries across sections. If a fact fits two, pick one and leave the other out.
-4. Propose changes as a short numbered list. Each one: section, the exact entry, and why it is worth keeping. The reason must be true for this run: quote the line in `analysis.md` that shows it (a failed rung, a Plan revisions row, a review issue). If nothing in this run shows it cost time or changed a number, do not say it did.
-5. Show a diff (old and new text) for each change.
-6. The user approves each change: yes, no or edit. Do not apply unapproved changes.
-7. Apply the approved changes, with today's date as `verified` and `source: analyses/<slug>`.
-8. Record the proposals and the decisions in the Retro section of `analysis.md`. Set status `retro done` and update the Progress line.
+5. Propose changes as a short numbered list. Each one: section, the exact entry, and why it is worth keeping. The reason must be true for this run: quote the line in `analysis.md` that shows it (a failed rung, a Plan revisions row, a review issue). If nothing in this run shows it cost time or changed a number, do not say it did.
+6. Show a diff (old and new text) for each change.
+7. The user approves each change: yes, no or edit. Do not apply unapproved changes.
+8. Apply the approved changes, with today's date as `verified` and `source: analyses/<slug>`.
+9. Record the proposals and the decisions in the Retro section of `analysis.md`. Set status `retro done` and update the Progress line.
 
 ## Keep out
 

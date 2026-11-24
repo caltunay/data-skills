@@ -245,9 +245,9 @@ out=$(for h in '^## 9. Decisions' '^## 10. Hypotheses' '^- Setup choice:' '^- Go
 [ -z "$out" ] && ok "analysis template has Decisions, Hypotheses, Setup choice, Goal link and Files" || bad "v0.4 analysis template" "$out"
 
 # 30 v0.4 data map template: Goals, Funnels and Key queries sections
-out=$(for h in '^## 9. Goals' '^## 10. Funnels' '^## 11. Key queries'; do
+out=$(for h in '^## 9. Goals' '^## 10. Funnels' '^## 11. Key queries' '^## 12. Ways of working' '^```sql'; do
     grep -q "$h" skills/data-map/DATA-MAP.template.md || echo "map template: missing $h"; done)
-[ -z "$out" ] && ok "data map template has Goals, Funnels and Key queries" || bad "v0.4 map template" "$out"
+[ -z "$out" ] && ok "data map template has Goals, Funnels, Key queries (as SQL) and Ways of working" || bad "v0.4 map template" "$out"
 
 # 31 every template carries format: and updated: lines
 out=$(for f in templates/*.template.md skills/data-map/DATA-MAP.template.md skills/wayfinder-data/*.template.md skills/grill-the-ask/analysis.template.md skills/run-analysis/readout.template.md; do

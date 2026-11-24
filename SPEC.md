@@ -250,7 +250,7 @@ All user-owned files live in the user's own project, never in the skills repo. U
 
 ### 7.2 `DATA-MAP.md`
 
-One file with fixed sections. The first line is the format version: `format: v1`. The second line is `updated: YYYY-MM-DD HH:MM`, set to now at every change. When a skill finds an older format, it offers a migration and shows the changes first. A v1 map that lacks the Goals, Funnels or Key queries sections is still valid: the sections are added as empty tables at the next update.
+One file with fixed sections. The first line is the format version: `format: v1`. The second line is `updated: YYYY-MM-DD HH:MM`, set to now at every change. When a skill finds an older format, it offers a migration and shows the changes first. A v1 map that lacks the Goals, Funnels, Key queries or Ways of working sections is still valid: the sections are added as empty tables at the next update.
 
 Sections:
 1. **Sources:** name, type (warehouse, lake, sheet, file, API, cube), dialect (Postgres, SQL Server, BigQuery, Snowflake...), access mode (connected or hand-over).
@@ -263,9 +263,12 @@ Sections:
 8. **Conventions:** style only: SQL style, Python style, naming, team overrides of the defaults. Analysis rules go in Rules or Gotchas. No entry appears in two sections.
 9. **Goals:** mission, north star metric, target metrics, each with a horizon (this quarter, this year, 3 years). `/grill-the-ask` asks how an ask links to a goal and records it in Meta.
 10. **Funnels:** one row per step: the funnel, the step, its event or table, and the step definition.
-11. **Key queries:** 3 to 5 reusable queries: name, what it returns, when to use it, the query. `/retro-analysis` proposes additions to Funnels and Key queries.
+11. **Key queries:** 3 to 5 reusable queries: name, what it returns, when to use it, and the query saved as SQL text (a SQL block under its name), in the team's SQL conventions, with every column checked against the Tables section. A column the map does not know is marked `unchecked`. A description alone is not a key query. `/retro-analysis` proposes additions to Funnels and Key queries.
+12. **Ways of working:** how the user works: where work lives (chat Projects, or a repo layout) and the file hand-back choice (downloads, Project files, or a named document tool). Skills ask about hand-back once per Project and read it from here afterwards.
 
 Sources hold one entry per source. Grain and key facts go under Tables. Every section is a table with the template's columns, never loose bullets (Conventions is the one list).
+
+**Tidy on extend.** When setup or a retro extends a map, it normalises it to the template: one entry per source (a bullet that lists several files becomes separate entries), grain and keys under Tables, table layout instead of bullets, key queries as SQL, a Ways of working section. The tidy is shown as a diff and applied only after approval.
 
 Every entry carries `verified: YYYY-MM-DD` and `source: setup` or `source: analyses/<slug>`.
 
@@ -349,7 +352,7 @@ Formatting:
 
 ### 7.8 Chat-first storage and surfaces
 
-- **Workspace.** In chat apps, one Claude or ChatGPT Project per team or area, and one chat per analysis. `/setup-data-work` ends by writing a short block to paste into the Project's instructions, for example: "Read DATA-MAP.md before any data work. Use the data-skills commands. Save updated files back to the Project files."
+- **Workspace.** In chat apps, one Claude or ChatGPT Project per team or area, and one chat per analysis. `/setup-data-work` ends by writing a short block to paste into the Project's instructions, in these words: "Read data-work/DATA-MAP.md before any data work. Use the data-skills commands. Keep files in data-work/ as the skills lay them out. At the end of each step, tell me which files changed and where they are."
 - **One layout, full paths.** Every file has its full path under `data-work/`: `data-work/DATA-MAP.md` and `data-work/analyses/<YYYY-MM-DD>-<slug>/` with `analysis.md`, `readout.md`, `readout.docx`, charts and any spec. Meta holds the folder as `Folder`. Every file starts with `format:` and `updated: YYYY-MM-DD HH:MM`. Skills hand back the whole file.
 - **Say what happened to each file.** After a save, the skill names the path, in one of three forms only: "Saved to `<path>` in your Project files" (the agent wrote it), "Download `<file>` and add it to your Project at `<path>`" (it could not), or "Printed below; save it as `<path>`". Never "replace the old one, it is already saved there". Never a claimed save that did not happen.
 - **Stale copies.** When an older copy of the same file exists elsewhere in the Project (for example `analysis (6).md` at the top level, or a file in `claude/`), the skill names it and says it is stale, and suggests once that old analyses move into the layout. If two copies exist, the newest `updated:` wins and the skill says so.
@@ -385,16 +388,16 @@ Rounds of max 3 questions. Partial answers are fine; the map grows through retro
 5. **Metrics:** the 3 to 5 most-used metrics, their definitions, and one trusted number each (for reconciling).
 6. **Goals:** the mission, the north star metric, the target metrics and the horizon of each (this quarter, this year, 3 years). Written to the Goals section.
 7. **Funnels:** the main funnels: each step, the event or table that marks it, and the step definition. Written to the Funnels section.
-8. **Key queries:** 3 to 5 reusable queries, what each returns and when to use it. Written to the Key queries section.
+8. **Key queries:** 3 to 5 reusable queries, what each returns and when to use it, and the SQL itself, in the team's conventions and checked against the columns the map knows. Written to the Key queries section as SQL text.
 9. **Rules:** mandatory filters (test accounts, cancelled orders, time zones).
 10. **Conventions:** "Does your team have SQL or Python conventions? If not, I'll use sqlstyle.guide and PEP 8."
-11. **Where the files live:** "A) One repo with a folder per project. B) A repo per project. C) A team repo. D) Chat Projects." Skills look for `data-work/` in the current folder, then upward. A team map can sit above project maps: the nearest map wins for conflicts, and the skill says which map it read. For chat apps, recommend one Project per team or area and one chat per analysis (section 7.8).
+11. **How you work (where the files live):** "A) One repo with a folder per project. B) A repo per project. C) A team repo. D) Chat Projects." Recorded in the map under Ways of working. Skills look for `data-work/` in the current folder, then upward. A team map can sit above project maps: the nearest map wins for conflicts, and the skill says which map it read. For chat apps, recommend one Project per team or area and one chat per analysis (section 7.8).
 12. **Git policy (coding agents only):** commit `outputs/` or not (default: not). No git advice in chat apps.
-13. **Save to a document tool (chat apps, ask once):** "Hand files to you as downloads, or save them to a document tool you use (for example a drive, a wiki or a notes app)?" Only a tool the user names. Never required.
+13. **File hand-back (chat apps, ask once per Project):** "A) As downloads. B) As files in your Project. C) Save to a document tool you use." Recommend B when the session can write to the Project files, otherwise A. Only a tool the user names. Never required. Recorded in the map under Ways of working, so later steps do not ask again.
 
 Before step 0, when no map is found: "Do you have a DATA-MAP.md from another project on the same data? Attach or copy it in." If yes, extend it. Start a fresh map only for entirely different data sources.
 
-Then write `DATA-MAP.md` and show a short summary of what is still missing. In a chat app, end with the Project instructions block (section 7.8).
+Then write `DATA-MAP.md` and show a short summary of what is still missing. In a chat app, end with the Project instructions block (section 7.8) and a short walk-through of the chat-app steps (section 7.10).
 
 ---
 
