@@ -380,6 +380,10 @@ Status: `open`, `supported`, `refuted` or `parked`. `/run-analysis` updates it, 
 
 **Stuck rule.** When an answer conflicts with an earlier one, contradicts the data map, or does not make sense, the skill says so plainly ("This does not fit X because Y") and asks one question at a time until it is clear. Then it returns to rounds.
 
+### 7.10 Using data-skills in a chat app
+
+The README has a section "Using data-skills in a chat app" in plain steps: create a Project per team or area; upload the skills; run `/setup-data-work` and paste its instructions block into the Project instructions; one chat per analysis; files live in `data-work/` in the Project files and every step says which changed and where; what to do if the app cannot save to the Project (download, add at the path shown). It says in one line that coding agents need none of this. `/setup-data-work` in a chat app ends by walking the user through the same steps in 3 to 5 short lines.
+
 ---
 
 ## 8. Onboarding: `/setup-data-work`

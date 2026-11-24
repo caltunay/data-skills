@@ -96,6 +96,7 @@
 92. Clickable question cards (already on `v0.4`) are restated in every skill that asks questions, not only the grill. Cards explain their options, show the thing they refer to first, never hedge a default, and flag options that need data the map says is missing.
 93. Hypothesis status is judged against each node's own support and refute conditions, never the parent's direction. A robustness child whose result held is supported, whatever the result was. Child nodes are written without the parent's direction. `/review-analysis` checks every status and fixes wrong ones with a was and now pair.
 94. `/wayfinder-data` ends with the same go-ahead question as the flow steps. Option A names the real next step: the next open item, the first analysis prompt, or sign-off of a fast-path spec. Specs are saved in their own analysis folder, never under a bare name.
+95. The README gets a plain chat-app guide, and `/setup-data-work` ends with the same steps in 3 to 5 lines. Coding agents are told in one line that they need none of it.
 
 ## Build decisions
 

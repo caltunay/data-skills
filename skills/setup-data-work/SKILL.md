@@ -77,7 +77,7 @@ Optional line: "If you have a web search or docs lookup tool, check the current 
   Read data-work/DATA-MAP.md before any data work. Use the data-skills commands. Keep files in data-work/ as the skills lay them out. At the end of each step, tell me which files changed and where they are.
   ```
 
-  Use these words exactly. Add a line for the document tool if the user named one. When they start another Project on the same data, they carry over `data-work/DATA-MAP.md` and this block.
+  Use these words exactly. Then walk the user through the chat-app steps in 3 to 5 short lines: 1) Paste the block into the Project instructions. 2) Use one chat per analysis, starting with `/grill-the-ask`. 3) Files live in `data-work/` in the Project files, and every step says which files changed and where they are. 4) If the app cannot save to the Project, download the file and add it at the path shown. 5) Old files outside `data-work/` are stale. Add a line for the document tool if the user named one. When they start another Project on the same data, they carry over `data-work/DATA-MAP.md` and this block.
 - End with the go-ahead question in this fixed form:
 
   > Go ahead?

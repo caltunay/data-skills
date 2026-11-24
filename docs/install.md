@@ -66,24 +66,24 @@ Use the `npx` command and pick Copilot, or copy the skills into the folder Copil
 1. Get the ZIPs: download them from the latest release on GitHub (one ZIP per skill is attached to every release). Or build them: run `scripts/package-zips`, and one ZIP per skill appears in `dist/`.
 2. In claude.ai, open Settings, then Capabilities (or Skills), and upload each ZIP.
 3. Upload all of them. The flow skills call the others by name.
-4. Create a Project for your data work. Put your `DATA-MAP.md` in the Project files.
+4. Create a Project for your data work. Put your `DATA-MAP.md` in the Project files at `data-work/DATA-MAP.md`.
 
 ## ChatGPT
 
 1. Get the ZIPs from the latest release, or build them with `scripts/package-zips`, as above.
 2. Upload each ZIP where your ChatGPT plan supports skills.
 3. If your plan has no skill upload, paste the `SKILL.md` of the skill you need into a Project's instructions, or the chat itself.
-4. Put `DATA-MAP.md` in the Project files.
+4. Put `DATA-MAP.md` in the Project files at `data-work/DATA-MAP.md`.
 
 ## Chat apps: how files work
 
 - A chat has no project folder, so the skills treat it as a chat app for files.
 - Running is a separate question. If the chat has a code tool and you attach data files (CSV, Excel), the skills load them and run the checks themselves (DuckDB, SQLite or pandas). They hand queries over only when there is no code tool, and say so.
-- Every flow step ends by creating the updated `analysis.md` (and `readout.md` when it exists) as files and offering them as downloads. A block to copy is the fallback only if a file cannot be made.
+- Every flow step ends by saving the files it changed at their full paths under `data-work/`, and says exactly what happened to each. If it cannot write to the Project files, it offers a download and tells you where to add it. A block to copy is the fallback only if a file cannot be made.
 - You never edit a saved file by hand. After you confirm a change, the skill hands back the updated file.
-- Save each download to your Project files. The next step, in any chat, reads it from there.
+- Add each download to your Project at the path the skill names. The next step, in any chat, reads it from there.
 - If a step cannot find `analysis.md`, it asks you to attach it before asking anything again.
-- `/retro-analysis` gives you a full updated `DATA-MAP.md`. Replace the Project file with it.
+- `/retro-analysis` gives you a full updated `DATA-MAP.md` for `data-work/DATA-MAP.md`.
 
 ## First run
 
