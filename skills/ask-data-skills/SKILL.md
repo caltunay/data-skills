@@ -22,7 +22,7 @@ Experimental (v0.2).
    - "What are you trying to do?" A) Answer one data question or a stakeholder ask. B) Check or share work that is already done. C) Set up or improve how the team works with its data. D) Fix or improve a query or script. E) Something big and vague, or a project of several questions. F) Design an experiment or define a measure. G) Not sure.
    - "Where are you in the work?" A) Not started. B) Clarified. C) Planned. D) Results exist. E) Reviewed.
    - "Is there an `analysis.md` for it?" A) Yes. B) No. C) Not sure.
-   Use the environment's multiple-choice question tool if it has one (such tools take at most 4 options per card, so split the first question into two cards if needed); otherwise list the options as text.
+   Use the environment's multiple-choice question tool if it has one (such tools take at most 4 options per card, so split the first question into two cards if needed); otherwise list the options as text. Each option says what it means in a few words, and the recommended option is a real option with its reason, never a hedge.
    Then stop asking. One round only.
 3. Recommend **one command**. Give **one line why**. Name **the next command after it**.
 4. Stop. Do not run the command for them. Do not begin its questions.

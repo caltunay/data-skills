@@ -29,7 +29,7 @@ Second, asks that need a design and no data yet: "design an A/B test for the new
 
 ## Rules from the disciplines (in case they do not load)
 
-- `grilling`: rounds of at most 3 questions, each with 2 to 4 options and one real recommended default (never a hedge such as "C if unknown"). Wait for answers. Never assume silently. When an answer conflicts with an earlier one or the data map, or does not make sense, say so plainly and ask one question at a time until it is clear. Never ask the same question twice. Use the environment's multiple-choice question tool for each round if it has one (one question per card, recommended option first); otherwise list the options as text.
+- `grilling`: rounds of at most 3 questions, each with 2 to 4 options and one real recommended default with its reason. A hedge is not a default: never "recommended if you have one", "TBC" or "C if unknown". Pick a real option and say why. Show any tree, table or draft a question refers to before you ask it (never ask "which hypothesis paths?" before the tree is on screen). Each option says what it means in a few words (for example "H1.1: holds in each month"). An option that needs data the map says is missing says so in the option text (for example "needs the visit marker; the map says it is unknown"). Use the environment's multiple-choice question tool for every round if it has one (one card per question, recommended option first, room for the user's own answer); otherwise list the options as text. Wait for answers. Never assume silently. When an answer conflicts with an earlier one or the data map, or does not make sense, say so plainly and ask one question at a time until it is clear. Never ask the same question twice.
 - `assumptions`: when something must be assumed, write it down with likely alternatives and the impact if wrong.
 - `question-types`: six question types, each with a claim ceiling. Name the type of each analysis you list.
 - `metric-design` (experimental): a metric needs a formula, a grain, a population, an owner, guardrails and a trusted number.
@@ -46,7 +46,7 @@ Second, asks that need a design and no data yet: "design an A/B test for the new
 3. **Draft the map.** List the decision items: every choice that must be made before the work can be done well. Aim for 5 to 12. Fewer than 4 means this is one analysis: say so and suggest `/grill-the-ask` instead. For each item write:
    - **id** (W1, W2, ...) and a one-line question
    - **options** (2 to 4), each with its main trade-off
-   - **recommended default**, with one line why
+   - **recommended default:** a real option with one line why. "Recommended if you have one" or "TBC" is not a default. Flag an option that needs data the map says is missing
    - **status:** `open`
    - **depends on:** ids that must be decided first, or none
    - **who decides:** a role the user names. If unknown, write "to confirm" and ask. Do not guess a person or a team.

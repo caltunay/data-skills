@@ -114,7 +114,11 @@ B or C means the step makes the change, hands back the updated file, and asks ag
 
 ### Every question has a real default
 
-Every question in every step has one real recommended default with a one-line reason. No hedges such as "C if unknown". The deadline question gets a default too.
+Every question in every step has one real recommended default with a one-line reason. No hedges such as "C if unknown", "recommended if you have one" or "TBC". The deadline question gets a default too. This holds in every skill that asks, `/setup-data-work` and `/wayfinder-data` included.
+
+### Questions are clickable cards that explain themselves
+
+Every skill that asks questions (`grilling`, `/grill-the-ask`, `/setup-data-work`, `/plan-analysis`, `/run-analysis`, `/review-analysis`, `/retro-analysis`, `/wayfinder-data`, `/ask-data-skills`) uses the environment's multiple-choice question tool when it has one: one card per question, at most 3 per round, the recommended option first. Otherwise it lists the options as text. Each option says what it means in a few words ("H1.1: holds in each month"). Any tree, table or draft a question refers to is shown before the question. An option that needs data the map says is missing says so in the option text ("needs the visit marker; the map says it is unknown").
 
 ### Goal-driven run
 

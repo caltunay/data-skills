@@ -13,7 +13,7 @@ Only for data asks: an analysis, a metric, a query, a report, an experiment. If 
 
 ## Core rule
 
-Ask in rounds of at most 3 questions. Give each question 2 to 4 options and one real recommended default, with a one-line reason. Use the environment's multiple-choice question tool if it has one; otherwise list the options as text. Wait for the answers. Never assume silently.
+Ask in rounds of at most 3 questions. Give each question 2 to 4 options and one real recommended default, with a one-line reason. Use the environment's multiple-choice question tool if it has one; otherwise list the options as text. Wait for the answers. Never assume silently. Show whatever a question refers to (a tree, a table, a draft) before you ask it. Each option says what it means in a few words.
 
 ## How to run a round
 
@@ -46,7 +46,9 @@ Ask in rounds of at most 3 questions. Give each question 2 to 4 options and one 
 ## Rules
 
 - Skip anything already answered or visible in the data map.
-- Every question has one real recommended default, marked "(recommended: reason)". No hedges such as "C if unknown", "depends" or "your call". No question without one, the deadline included. If you know little, recommend the option that is safest for the decision and say why. Example for a deadline: "A. No fixed date, normal turnaround (recommended: the ask names no meeting or launch)".
+- **Cards explain themselves.** Each option says what it means in a few words, for example "H1.1: holds in each month", not just "H1.1". Show any tree, table or draft the question refers to first, in the same message, and only then ask. Never ask "which paths?" before the tree is shown.
+- **Flag options that need missing data.** When an option depends on something the data map says is missing or unknown, say so in the option: "B. Sign-ups per visitor (needs the visit marker; the map says it is unknown)". Do not recommend such an option without that flag. Prefer an option the data can support, and say why.
+- Every question has one real recommended default, marked "(recommended: reason)". No hedges such as "recommended if you have one", "TBC", "C if unknown", "depends" or "your call". Pick a real option and give the reason. No question without one, the deadline included. If you know little, recommend the option that is safest for the decision and say why. Example for a deadline: "A. No fixed date, normal turnaround (recommended: the ask names no meeting or launch)".
 - If an answer conflicts with an earlier one, contradicts the data map, or does not make sense, say so plainly ("This does not fit X because Y"). Switch to one question at a time until it is clear. Then return to rounds.
 - After each round, echo the user's answers back exactly, in their own words, before moving on. Never paraphrase: "this week" is not "later".
 - Do not analyse while grilling. Note only what attached files contain (columns, possible duplicates, date range). Never early findings. Do not put an observed pattern in an option.

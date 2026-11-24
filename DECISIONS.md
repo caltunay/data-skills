@@ -93,6 +93,7 @@
 89. Key queries are saved as SQL text, in the team's conventions, checked against the columns the map knows. A description alone is not a key query.
 90. The map records how the user works (chat Projects or a repo layout, and the file hand-back choice) in a new section 12, Ways of working. Hand-back is asked once per Project, not at every grill.
 91. When the Project holds earlier analyses but no map, the first option is "Yes, attach it", with the hint that an earlier retro chat holds the map.
+92. Clickable question cards (already on `v0.4`) are restated in every skill that asks questions, not only the grill. Cards explain their options, show the thing they refer to first, never hedge a default, and flag options that need data the map says is missing.
 
 ## Build decisions
 
@@ -262,6 +263,7 @@ B131. Continue or new (item 5). The question appears in `/grill-the-ask` only. L
 B132. Ways of working is section 12 of the map template, appended after Key queries (as B107 did for 9 to 11). The map stays `format: v1`.
 B133. Key query layout. Options: SQL inside a table cell, or a table row plus a SQL block per query. Chosen: row plus block, with a "columns used" column in the row. Reason: multi-line SQL breaks table cells, and the column list lets a reader see which columns were checked against Tables.
 B134. File hand-back question has three options (downloads, Project files, document tool), with a recommendation tied to whether the session can write to Project files. The old two-option wording could not express "files in my Project".
+B135. The card rule is one `grilling` bullet restated in nine skills, each with the same text. Options: a short pointer ("apply grilling"), or the full bullet. Chosen: the full bullet. Reason: SPEC section 3 says each flow skill restates the core rule, and a ZIP may load without `grilling`. Cost: about 1 KB per skill.
 
 ## Questions for Cenan
 
