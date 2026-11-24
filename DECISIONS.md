@@ -66,6 +66,25 @@
 62. `analysis.md` carries a Review pack appendix with the exact code and data source of each headline number, so a fresh reviewer can see the code in a chat app.
 63. Readout visuals follow the `viz` rules: at most 3 charts for exec, a takeaway title, one annotation, image files linked with alt text, and a chart replaces number rows that say the same thing.
 64. Readouts use portable markdown: callouts as bold-labelled blockquotes (Answer, Caveat, Ask), at most 3; the status as a bold label (`**Status: DRAFT**`, `**Status: FINAL**`); bold only for one takeaway per section. App-specific exports are v0.4, in `/storytell`.
+65. The readout has one source, `readout.md`, and a `.docx` built from the same text with the charts embedded. The review edits the `.md` and rebuilds the `.docx`. With no code tool, the `.md` plus the chart code is the output.
+66. `/grill-the-ask` never analyses. With files attached it notes only what they contain (columns, possible duplicates, date range). An early finding anchors the whole analysis.
+67. `analysis.md` has a Decisions section: every question and answer, word for word, per round, echoed back exactly before moving on. A paraphrase ("this week" written as "later") is a data error.
+68. The setup choice (A, B or map found) is written to Meta and setup is never offered again once it is set. `/retro-analysis` never offers setup: it builds the map itself.
+69. The retro map follows the template layout: one entry per source, grain and key facts under Tables, table rows and never loose bullets.
+70. `/plan-analysis` writes a hypothesis tree before the method options (standard and deep): support and refute conditions per node, at most 3 levels and about 12 nodes. The user picks the paths. Status per node is kept in `analysis.md` and checked by the review. Quick depth keeps a flat list of up to 3.
+71. When an answer conflicts with an earlier one, contradicts the data map, or makes no sense, the skill says so plainly and asks one question at a time until it is clear, then returns to rounds.
+72. The data map holds the organisation's goals (mission, north star, targets, horizon). `/grill-the-ask` links the ask to a goal when one exists and records it in Meta.
+73. The data map holds Funnels and Key queries (3 to 5). Setup asks for both. Retro proposes additions.
+74. The readout skeleton is optional. It uses placeholders only and never an invented number. It exists to test the story against the decision before any work.
+75. Skills find `data-work/` in the current folder, then upward. A team map can sit above project maps. The nearest map wins for conflicts and the skill says which one it read. Setup asks how the user organises work.
+76. `/wayfinder-data` also handles design asks (an experiment, a metric). A single design item takes a fast path with no project map. The outputs are `experiment-spec.md` and `metric-spec.md`.
+77. A spec never holds an invented number. Baselines, targets and benchmarks come from the user or the data map, or are marked "to confirm". A proxy is a guess until a check shows it tracks the true metric, and the spec says how to check.
+78. One routing guide, in the README and in `/ask-data-skills`: a project or a design goes to `/wayfinder-data`, one question with a decision goes to `/grill-the-ask`, unsure goes to `/ask-data-skills`. `/grill-the-ask` sends project-sized and design asks to `/wayfinder-data` with one line why.
+79. In chat apps the workspace is one Project per team or area and one chat per analysis, set up by a short instructions block that `/setup-data-work` writes.
+80. Files have stable names and a version line: `DATA-MAP.md`, `analysis-<slug>.md`, `readout-<slug>.md`, each starting with `format:` and `updated:`. Whole files are handed back and replace the old copy. The newest `updated:` wins when two copies exist.
+81. Saving to a document tool is optional, asked once and generically, and only for a tool the user names. Downloads stay the default.
+82. A new project on the same data carries the map over. A fresh map is for different data sources only. Every step with no map asks for an existing one first.
+83. Evals gain rubric lines for the new rules (no analysis in the grill, the decisions log, the stuck rule, the hypothesis tree, the skeleton, stable names) and seven new cases, so a regression in any of them is visible.
 
 ## Build decisions
 
@@ -193,6 +212,38 @@ B95. Self-check (fix H, item 25). Four new checks: 25 go-ahead question (the `> 
 B96. Plugin version bumped from 0.2.0 to 0.3.0 in both manifests. Options: keep 0.2.0 on the `v0.2` branch, or bump. Reason: B57 says a set version pins users until it changes, so the v0.3 skill changes need a new version to reach plugin users.
 B97. SPEC section 21 summarises v0.3 and points to the sections each fix changed. The title line now says v0.3. Sections 4, 5, 6.1, 6.2, 7.2, 7.3, 7.5, 7.6, 7.7, 8, 11, 12 and 15 were edited in place, so the spec reads as one current document.
 
+### v0.4 build
+
+B98. Setup (v0.4). Branch `v0.4` from `main`. `FIXES-v0.4.md` was added to `.gitignore` and to the self-check list of private files, next to the earlier briefs. `.blocklist` was created from the brief and is not tracked. Design decisions 65 onward, build decisions B98 onward.
+B99. Section numbers in `analysis.md`. Options: renumber so the Appendix stays last, or append the new sections after the Appendix. Chosen: Decisions is 9, Hypotheses is 10, the Review pack appendix moves to 11. Reason: an appendix belongs last. Both examples were renumbered. Self-check 28 tests `## 11. Appendix`.
+B100. Meta gained three lines: `Setup choice`, `Goal link`, `Files`. Options: one combined line, or one per fact. Chosen: one per fact, so each skill can read and write one value.
+B101. Readout `.docx` for `/storytell`. Options: always, never, or for the doc and email formats only. Chosen: doc and email only. Reason: a chat message and a slide outline are not documents.
+B102. Retro still asks for an existing map first ("Do you have a DATA-MAP.md from another project on the same data?"), because extending a map beats building a second one. It never offers setup.
+B103. Every flow skill, not only setup and `data-map`, asks for an existing map before offering setup. Options: only setup and `data-map` (the brief's text), or all flow starts. Chosen: all flow starts. Reason: a new chat in a Project often meets a step other than setup first, and a second map would then start.
+B104. Chat-app save line. The old line "Save this to your Project files" became "Replace the old one in your Project files" (or "Save this ..." when the file is new), plus a naming rule: `analysis-<slug>.md`, `readout-<slug>.md`, `format:` and `updated:` lines, the whole file, newest `updated:` wins.
+B105. Hypotheses live in `analysis.md` as section 10, as a table with a status column. Options: a separate file, or a section. Chosen: a section. Reason: one file keeps the fresh-review rule simple.
+B106. A plain measurement ask ("how many") has one hypothesis, the expected range. Options: skip the tree for such asks, or always write one. Chosen: always write one, kept to one node. Reason: the refute condition doubles as a sanity check.
+B107. The new data map sections are appended as 9, 10, 11 (Goals, Funnels, Key queries), not inserted. Reason: existing maps and the retro diffs keep their section numbers. A v1 map without them stays valid.
+B108. The map keeps `format: v1`. Options: bump to v2 for the new sections and the `updated:` line, or stay on v1. Chosen: stay on v1. Reason: both are additions, nothing is removed or renamed, and a v2 migration prompt on every old map is noise.
+B109. The two example maps and analyses were brought to v0.4 with invented but consistent rows: Goals, Funnels, Key queries, Decisions, Hypotheses, and `updated:` lines. The Decisions answers are invented to match each example's Ask.
+B110. Setup grew from 8 to 13 steps. Options: cut older steps, or keep all and say partial answers are fine. Chosen: keep all. The setup still asks in rounds of at most 3 and stops when the user stops.
+B111. The hypothesis tree is part of `/plan-analysis`, not a new skill. Reason: SPEC section 3 keeps the catalogue small, and no other step builds one.
+B112. Where the two spec templates live. Options: only in `templates/`, only in the skill folder, or both. Chosen: both, byte-identical, as for the analysis and readout templates. Reason: a ZIP holds only one skill folder, so a chat-app user needs the copy inside it. `scripts/package-zips` and self-check 10 compare the copies.
+B113. The experiment spec has its own section for open items. Reason: a design often waits on one number from another person, and the spec should say who.
+B114. `/wayfinder-data` keeps its name and gains the design role. Options: a new skill for designs, or one skill. Chosen: one skill. Reason: the brief says design asks live inside wayfinder, and a second command would blur the routing guide.
+B115. The routing guide is in the README near the top, before the command table, so a new user sees it first. `/ask-data-skills` keeps its longer routing table below the guide and gained a design row, a "design" option in its question and two tie-breaks.
+B116. `/ask-data-skills` option letters changed: E is now "big and vague, or a project", F is "design an experiment or define a measure", G is "not sure". Reason: a design ask needs its own answer, and the old F had no other user.
+B117. `docs/where-to-run.md` is new and short (about 40 lines). It holds the surface guide and the carry-over rule. The README, `docs/install.md` and the SPEC point to it.
+B118. The `updated:` timestamp has no time zone. Options: add UTC, or keep the brief's `YYYY-MM-DD HH:MM`. Chosen: keep the brief's form. Reason: it only has to order two copies of one file made by one user.
+B119. The document-tool question is asked in setup (step 13) and in `/grill-the-ask` round 1 when no earlier answer is visible, in chat apps only. It is not asked in every step. The answer sits in Meta as `Files`.
+B120. Chat-app tests move from incognito to normal chats. Source: the v0.4 brief asks for normal chats. Options: keep incognito for the eval cases, or switch everywhere. Chosen: switch everywhere (SPEC 15, `evals/README.md`, `CONTRIBUTING.md`, `docs/self-check.md`, two case files), with a neutral-profile note. Reason: incognito chats do not hold Projects or persistent files, which v0.4 relies on. The reference run file is a v0.3 record and keeps its wording.
+B121. Rubric rows for item 15 (stable names) were added to the six flow rubrics and setup. Rows for items 2, 3 and 7 went to the grill rubric, item 6 and 10 to plan, run and review, as the brief says "the relevant flow skill rubrics".
+B122. A seventh new case, `ask-data-skills` case 4 (design ask routing), was added beyond the six the brief lists. Reason: the routing change should have one test.
+B123. The eval runner was run in dry-run mode only (56 cases found). This session has no API key.
+B124. Self-check (v0.4, item 20). Six new checks, 29 to 34: Decisions and Hypotheses sections and the three new Meta lines; Goals, Funnels and Key queries; `format:` and `updated:` on every template; the two spec templates and their fields; the routing table in the README and in `ask-data-skills`; and the v0.4 rules by phrase (retro never offers setup, the stuck rule, no analysis in the grill, the tree, the skeleton, the `.docx`, the replace wording). Check 15 no longer requires the setup offer in `retro-analysis`, and now requires its never-offer rule. Check 28 looks for `## 11. Appendix`. Each new check was tested by breaking it once; it failed, then passed after the restore.
+B125. The plugin version went from 0.3.0 to 0.4.0 in both manifests. SPEC section 21 and section 7.6 no longer say app-specific exports are v0.4: the brief did not include them, so they move to a later release.
+B126. `.blocklist` was created from the brief and the check ran with it present. The word list matched nothing, so no text was changed for it.
+
 ## Questions for Cenan
 
 Short yes/no or A/B. Default is used until answered.
@@ -204,3 +255,6 @@ Q4. SPEC section 3 style rule now says "active verbs" so the private word check 
 Q5. Add a plugin icon (square PNG, 512 px or more) for the Claude Code plugin listing? It can be set only once. Default: no icon for now (A: leave, B: you supply one).
 Q6. The Codex one-line install command in `docs/install.md` is unverified (docs site not reachable). Can you run `codex plugin --help` once and confirm or correct it? Default: keep it, marked unverified (A: keep, B: remove the command).
 Q7. The pricing page example reports a real but awkward result (effect below the planned size, weaker second week). Keep it, or regenerate with a seed that gives a cleaner win? Default: keep it (A: keep, B: cleaner seed).
+
+Q8. Chat-app evals moved from incognito to normal chats, as the v0.4 brief says. Default: yes (A: normal chats, B: back to incognito for the old cases).
+Q9. The worked examples got invented Decisions and Hypotheses rows to match the v0.4 template. Default: keep (A: keep, B: re-run them in a live chat and replace).

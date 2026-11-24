@@ -15,14 +15,14 @@ Run once per team or project. Target: under 20 minutes. Partial answers are fine
 
 ## Start
 
-1. Check for `DATA-MAP.md` (in `data-work/`, in the Project files, or pasted). Say in one line what you found. This step needs no `analysis.md`.
+1. Check for `DATA-MAP.md` (in `data-work/` in the current folder, then upward; in the Project files; or pasted). Say in one line what you found, and which map you read. A team map can sit above project maps: the nearest map wins for conflicts. This step needs no `analysis.md`.
 2. If a map exists, read it. Check its format line and stale entries (see the `data-map` rule below). Offer to extend it. Do not start from zero. Step 0 still applies to anything new: ask how the user wants to add it.
-3. If there is no map, say so and go to step 0.
+3. If there is no map, say so. First ask: "Do you have a DATA-MAP.md from another project on the same data? Attach or copy it in." If yes, read it and extend it (carry it over; start a fresh map only for entirely different data sources). If no, go to step 0.
 
 ## Rules from the disciplines (in case they do not load)
 
-- `grilling`: rounds of at most 3 questions, each with 2 to 4 options and one real recommended default (never a hedge such as "C if unknown"). Wait for answers. Never assume silently.
-- `data-map`: one file, fixed sections, `format: v1` on line 1. Joins start `unverified` until a query checks them. Conventions hold style only. Every entry has `verified: YYYY-MM-DD` and `source: setup`. Flag entries older than 90 days or contradicted by data, then ask. Show a migration before applying it. The template is `DATA-MAP.template.md` in the `data-map` skill.
+- `grilling`: rounds of at most 3 questions, each with 2 to 4 options and one real recommended default (never a hedge such as "C if unknown"). Wait for answers. Never assume silently. When an answer conflicts with an earlier one or the data map, or does not make sense, say so plainly and ask one question at a time until it is clear. Use the environment's multiple-choice question tool for each round if it has one (one question per card, recommended option first); otherwise list the options as text.
+- `data-map`: one file, fixed sections, `format: v1` on line 1 and `updated: YYYY-MM-DD HH:MM` on line 2 (set to now at every change). Sections include Goals, Funnels and Key queries. Joins start `unverified` until a query checks them. Conventions hold style only. Every entry has `verified: YYYY-MM-DD` and `source: setup`. Flag entries older than 90 days or contradicted by data, then ask. Show a migration before applying it. The template is `DATA-MAP.template.md` in the `data-map` skill.
 - `run-or-hand-over`: two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts (load them and run SQL with DuckDB or SQLite, or pandas). Hand over only when no code tool exists, and say so in one line. Where do files persist? In a chat app, create each file and offer it as a download; print it only if that fails. Never ask the user to edit a saved file by hand. Never fail because a tool is missing. Never call a data tool before the user names the source.
 
 ## Steps
@@ -50,21 +50,36 @@ Ask in rounds of at most 3 questions. Skip what the user already told you.
 3. **Key tables.** The 3 to 10 tables used most. For each: what one row means (grain) and the key.
 4. **Joins.** The joins they trust, and any known fan-out traps. Every join starts as `unverified` in the map, even when the schema or the user says it is safe. A join becomes `checked` only after a query measured its key match rate and fan-out (in setup, only if a source is connected and the user agrees to run it). Never mark a join checked from a schema alone.
 5. **Metrics.** The 3 to 5 most-used metrics: definition, and one trusted number each (value, period, where it comes from) for reconciling.
-6. **Rules.** Mandatory filters: test accounts, cancelled orders, time zones.
-7. **Conventions.** "Does your team have SQL or Python conventions? If not, I'll use sqlstyle.guide and PEP 8."
-8. **Git policy (coding agent only).** Commit `outputs/` or not. Default: not. In a chat app there is no repo: skip this question and give no git advice.
+6. **Goals.** "What are the organisation's goals?" Ask for the mission, the north star metric, the target metrics, and the horizon of each (this quarter, this year, 3 years). Partial is fine. Write them to the Goals section. `/grill-the-ask` later asks how an ask links to one of them.
+7. **Funnels.** "What are the main funnels?" For each: every step, the event or table that marks it, and the step definition (what counts as having reached it). Write them to the Funnels section.
+8. **Key queries.** "Which 3 to 5 queries does the team reuse?" For each: what it returns and when to use it. Write them to the Key queries section. Keep to 5 at most.
+9. **Rules.** Mandatory filters: test accounts, cancelled orders, time zones.
+10. **Conventions.** "Does your team have SQL or Python conventions? If not, I'll use sqlstyle.guide and PEP 8."
+11. **Where the files live.** "How do you organise your work? A) One repo with a folder per project. B) A repo per project. C) A team repo. D) Chat Projects (Claude or ChatGPT)." Recommend the one the user's own words point to. For A to C, the map goes in `data-work/` (skills look in the current folder, then upward, so a team map can sit above project maps and the nearest map wins for conflicts). For D, recommend one Project per team or area and one chat per analysis.
+12. **Git policy (coding agent only).** Commit `outputs/` or not. Default: not. In a chat app there is no repo: skip this question and give no git advice. For a team repo, say the map is committed so the team shares it.
+13. **Save to a document tool (chat app, ask once).** "Hand files to you as downloads, or save them to a document tool you use (for example a drive, a wiki or a notes app)?" Use only a tool the user names, never one picked from visible connectors. Never required. Default: downloads.
 
 Optional line: "If you have a web search or docs lookup tool, check the current setup steps for your agent and source." Never required.
 
 ## Output
 
-1. Write `data-work/DATA-MAP.md` from the template. Fill what you know. Joins go in with check status `unverified` unless a query in this session checked them. Leave unknown sections as empty tables. Date every entry today, with `source: setup`.
+1. Write `data-work/DATA-MAP.md` from the template (`updated:` line set to now). Fill what you know. Joins go in with check status `unverified` unless a query in this session checked them. Leave unknown sections as empty tables. Date every entry today, with `source: setup`.
 2. Coding agent with a repo: add `data-work/analyses/*/outputs/` to `.gitignore` unless the user chose to commit outputs. Chat app: skip this. No git advice in a chat app.
-3. Show a short summary of what is still missing, as a list.
+3. Chat app: also write the **Project instructions block** (see End).
+4. Show a short summary of what is still missing, as a list.
 
 ## End
 
 - Chat app (no user project folder: no `data-work/` and no repo): create the full `DATA-MAP.md` as a file and offer it as a download. Print it as one block only if creating the file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Tell the user to save it to their Project files so every later step, in any chat, can read it.
+- Chat app: end the output with a short block to paste into the Project's instructions, in a fenced block, for example:
+
+  ```
+  Read DATA-MAP.md before any data work. Use the data-skills commands.
+  Keep files named DATA-MAP.md, analysis-<slug>.md and readout-<slug>.md.
+  Save updated files back to the Project files. If two copies exist, use the newest `updated:` line.
+  ```
+
+  Add a line for the document tool if the user named one. Tell the user to paste it into the Project's instructions, and to use one chat per analysis. When they start another Project on the same data, they carry over `DATA-MAP.md` and this block.
 - End with the go-ahead question in this fixed form:
 
   > Go ahead?

@@ -19,3 +19,7 @@
 | Downloads first | In a chat app, creates each file and offers it as a download. Prints a block only if creating the file fails. Never says "I can't save files" when it can (v0.3 item 3) |
 | Right section | Conventions hold style only (SQL, Python, naming). Analysis rules go in Rules or Gotchas. No entry in two sections |
 | True reasons | Every reason quotes a line in `analysis.md` that shows it. No "this cost a rung" unless the ladder log shows it |
+| Never offers setup | With no map, asks for a map from another project, then builds the map itself. Never offers `/setup-data-work` (v0.4 item 4) |
+| Map layout | One entry per source. Grain and key facts under Tables. The template's table layout, no loose bullets (v0.4 item 5) |
+| Funnels and key queries | Proposes additions to Funnels and Key queries when the analysis earned them (v0.4 item 9) |
+| Stable names and versions | In a chat app, files are named `DATA-MAP.md`, `analysis-<slug>.md`, `readout-<slug>.md`, start with `format:` and `updated:`, are handed back whole, and the step says "Replace the old one in your Project files." If two copies exist, uses the newest `updated:` and says so (v0.4 item 15) |

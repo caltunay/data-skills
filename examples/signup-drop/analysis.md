@@ -1,4 +1,5 @@
 format: v1
+updated: 2026-04-07 09:00
 
 # Analysis: why did sign-ups drop in March?
 
@@ -14,6 +15,9 @@ Invented example. Every number below comes from `outputs/results.txt`, produced 
 - Question type: descriptive, then exploratory (the "why" is not reachable with this data)
 - Status: retro done
 - Progress: retro done, 6 data map changes accepted. Readout final.
+- Setup choice: A (ran `/setup-data-work`)
+- Goal link: target, lift monthly sign-ups
+- Files: download
 
 ## 2. Ask
 
@@ -169,7 +173,32 @@ Open high-impact assumptions next to these findings: A4.
 | Joins: aggregate `signups` before joining to `daily_spend` | yes |
 | Glossary: "paid social sign-ups fell because of the spend cut" | no: not a fact the data supports |
 
-## 9. Appendix: Review pack
+## 9. Decisions
+
+### Round 1 (2026-04-02)
+
+| # | question | user's answer (verbatim) |
+|---|---|---|
+| 1 | What counts as a sign-up? | "Accounts created. Leave out test accounts." |
+| 2 | Which periods to compare? | "March against February. January for context." |
+| 3 | What is the answer for? | "The Q2 budget split by channel." |
+
+### Round 2 (2026-04-02)
+
+| # | question | user's answer (verbatim) |
+|---|---|---|
+| 1 | Who reads the result? | "Exec." |
+
+## 10. Hypotheses
+
+| id | hypothesis | would support it | would refute it | leads to | status |
+|---|---|---|---|---|---|
+| H1 | The fall is concentrated in one channel | One channel's per-day sign-ups fall far more than the others | Every channel falls by about the same share | H1.1 | supported (Q3.1: paid social 15.32 to 5.42 per day) |
+| H1.1 | The fall in that channel follows the spend cut | Sign-ups fall in the week spend falls | Sign-ups fall before spend does | none (needs a market test) | parked (timing matches, no design to test a cause) |
+| H2 | A logging break explains the drop | Zero or missing days in the daily series | A full daily series with no gaps | none | refuted (Q0.2: no gaps, no zero days) |
+| H3 | The whole app dipped (season) | All channels fall together | Most channels hold | none | refuted (four of five channels held) |
+
+## 11. Appendix: Review pack
 
 The code behind each headline number. Every query file is in `queries/`; results are in `outputs/results.txt`.
 

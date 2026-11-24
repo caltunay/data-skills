@@ -1,4 +1,5 @@
 format: v1
+updated: 2026-02-24 09:00
 
 # Data map
 
@@ -60,3 +61,22 @@ Entries older than 90 days, or contradicted by data, must be re-confirmed before
 - SQL style: sqlstyle.guide defaults, with lowercase keywords, leading commas, `where true`, CTEs and full table names.
 - Python style: PEP 8.
 - Team overrides: none yet.
+
+## 9. Goals
+
+| level | goal | metric | horizon | verified | source |
+|---|---|---|---|---|---|
+| target | Lift order conversion on the shop | conversion within 7 days | this quarter | 2026-01-26 | setup |
+
+## 10. Funnels
+
+| funnel | step | event or table | step definition | verified | source |
+|---|---|---|---|---|---|
+| pricing page | 1 assigned | assignments | A visitor assigned to an arm | 2026-01-26 | setup |
+| pricing page | 2 ordered | orders | A paid order within 7 days of `assigned_ts` | 2026-01-26 | setup |
+
+## 11. Key queries
+
+| name | what it returns | when to use it | query | verified | source |
+|---|---|---|---|---|---|
+| arm_split | Visitors per arm, internal visitors out | Sample ratio check before any test readout | see `queries/` | 2026-01-26 | setup |

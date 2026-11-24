@@ -77,7 +77,10 @@ Rules:
 ## Files
 
 - Coding agent: write to the user's own project in `data-work/`. Never write into the skills repo.
-- Chat app: at the end of every flow step, create the updated `analysis.md` (and `readout.md` when it exists) as files and offer them as downloads. Print one block only if creating the file fails. Tell the user to save it to their Project files so the next step, in any chat, can read it.
+- Chat app: at the end of every flow step, create the updated `analysis.md` (and `readout.md` and `readout.docx` when they exist) as files and offer them as downloads. Print one block only if creating the file fails. Tell the user to replace the old one in their Project files so the next step, in any chat, can read it.
+- Stable names and versions. Fixed names: `DATA-MAP.md`, `analysis-<slug>.md`, `readout-<slug>.md` (a coding agent keeps `analysis.md` and `readout.md` in the analysis folder). Every file starts with `format:` and `updated: YYYY-MM-DD HH:MM` (now). Hand back the whole file, never a patch, and say "Replace the old one in your Project files." If two copies exist, use the newest `updated:` and say so.
+- Document tool (optional). Ask once, generically: "Hand files to you as downloads, or save them to a document tool you use (for example a drive, a wiki or a notes app)?" Use only a tool the user names, never one picked from the connectors you can see. Never required. Downloads stay the default. The answer goes in Meta as `Files`.
+- A readout `.docx` needs a document library in the sandbox. Use whatever it has. With no code tool, give `readout.md` plus the chart code only, and say so in one line.
 - No manual file edits. After the user confirms something, never ask them to edit a saved file by hand. Make the change yourself and hand back the updated file.
 - If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before re-asking anything.
 - Quick depth: write no files.

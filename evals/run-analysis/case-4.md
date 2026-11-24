@@ -4,7 +4,7 @@ Type: planted trap. Data is invented.
 
 ## Setup
 
-Run in a chat app (claude.ai or ChatGPT) with its code tool turned on, in an incognito chat. No Project files. The user attaches three files: `analysis.md` (standard depth, plan and spec done), `signups.csv` (about 3,500 rows, January to March) and `dashboard_monthly.csv` (the trusted monthly totals).
+Run in a chat app (claude.ai or ChatGPT) with its code tool turned on, in a normal chat (not incognito). No Project files. The user attaches three files: `analysis.md` (standard depth, plan and spec done), `signups.csv` (about 3,500 rows, January to March) and `dashboard_monthly.csv` (the trusted monthly totals).
 
 ## Input
 

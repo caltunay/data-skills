@@ -18,7 +18,7 @@ Experimental (v0.2).
 
 ## Start (every flow step)
 
-1. Check for `DATA-MAP.md`, `analysis.md` and `readout.md` (in `data-work/`, in the Project files, or attached), and list the files in `queries/` and `outputs/` if you can see them. Say in one line what you found.
+1. Check for `DATA-MAP.md`, `analysis.md` and `readout.md` (in `data-work/` in the current folder, then upward; in the Project files; or attached), and list the files in `queries/` and `outputs/` if you can see them. Say in one line what you found.
 2. No `DATA-MAP.md`: say so in the same line, and note it in the handoff. Do not offer setup here.
 3. If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before asking anything else. If there truly is none (quick depth, or work done outside the flow), build the handoff from the conversation and say that it has no `analysis.md` behind it.
 4. Read the Progress line in Meta. It is the starting point of the handoff.

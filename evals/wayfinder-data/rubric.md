@@ -15,3 +15,6 @@
 | No early tool call | No connector or data tool call before the user names the source |
 | Chat-app handoff | With no project folder, offers the wayfinder file as a download and says to save it to Project files |
 | No invented names | No company, product, table, source, person or team name the user did not say |
+| Fast path | When the whole ask is one design item, skips the decision map and the project file and goes to the spec (v0.4 item 12) |
+| Experiment spec | `experiment-spec.md` has hypothesis, unit of randomisation, feature gate or assignment, primary metric, guardrails, MDE, power, runtime, seasonality, SRM check plan and decision rule. No invented number (v0.4 item 12) |
+| Metric spec | `metric-spec.md` has definition, formula, grain, population, data source or what must be collected, proxies with how to check them, benchmark or target with its source, and owner (v0.4 item 12) |

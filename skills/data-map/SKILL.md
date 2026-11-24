@@ -15,10 +15,10 @@ Outside the flow, stay silent if there is no map. Read it before writing queries
 
 ## Reading
 
-1. Open `DATA-MAP.md` if it exists. The map is optional and partial.
-   - **Inside the flow** (a flow command is running): say in one line whether a map was found. If there is none, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Offer it once per analysis.
+1. Look for `data-work/DATA-MAP.md` in the current folder, then upward. A team map can sit above project maps: the nearest map wins for conflicts, and you say which map you read. Open `DATA-MAP.md` if it exists. The map is optional and partial.
+   - **Inside the flow** (a flow command is running): say in one line which map you found and read. If there is none, first ask: "Do you have a DATA-MAP.md from another project on the same data? Attach or copy it in." If not, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Offer it once per analysis.
    - **Outside the flow:** if there is no map, stay silent. Do not mention the map, and do not suggest setup.
-2. Use these sections: Sources (dialect, access mode), Tables (grain, keys), Joins (safe joins and fan-out traps, each with a check status: `unverified` until a query measured its match rate and fan-out, then `checked`), Metrics (definitions, trusted numbers), Rules (mandatory filters), Gotchas, Glossary, Conventions (style only: SQL, Python, naming; analysis rules go in Rules or Gotchas).
+2. Use these sections: Goals (mission, north star, targets and their horizon), Funnels (steps, events, definitions), Key queries (3 to 5 reusable queries, what they return, when to use them), Sources (dialect, access mode), Tables (grain, keys), Joins (safe joins and fan-out traps, each with a check status: `unverified` until a query measured its match rate and fan-out, then `checked`), Metrics (definitions, trusted numbers), Rules (mandatory filters), Gotchas, Glossary, Conventions (style only: SQL, Python, naming; analysis rules go in Rules or Gotchas).
 3. Apply Rules filters in every query. Say which ones you applied.
 4. Use Conventions over the default styles.
 
@@ -32,7 +32,7 @@ Every entry has `verified: YYYY-MM-DD` and `source: setup` or `source: analyses/
 
 ## Format version
 
-Line 1 is `format: v1`. If it is missing or older, tell the user, show the exact changes a migration would make, and apply them only after approval.
+Line 1 is `format: v1` and line 2 is `updated: YYYY-MM-DD HH:MM`. A map without the Goals, Funnels or Key queries sections is still valid: add them as empty tables at the next update. A map without an `updated:` line gets one at the next update. Two copies of the map: use the newest `updated:` and say so. If the format line is missing or older, tell the user, show the exact changes a migration would make, and apply them only after approval.
 
 ## Updating
 
@@ -43,6 +43,7 @@ Only the retro step changes the map. It proposes dated changes, shows a diff, an
 - a confirmed metric definition or a new trusted number
 - a gotcha from a mistake that cost time
 - a glossary term
+- a funnel, or a key query worth keeping (3 to 5 in all)
 
 Not a memory dump. Do not add one-off details of a single analysis.
 

@@ -1,4 +1,5 @@
 format: v1
+updated: YYYY-MM-DD HH:MM
 
 # Data map
 
@@ -58,3 +59,31 @@ Check status: every join starts as `unverified`, even when the schema or the use
 - SQL style: sqlstyle.guide defaults, unless overridden here.
 - Python style: PEP 8, unless overridden here.
 - Team overrides: none yet.
+
+## 9. Goals
+
+| level | goal | metric | horizon | verified | source |
+|---|---|---|---|---|---|
+| mission | Make good home goods easy to buy | none | 3 years | 2026-01-01 | setup |
+| north star | Repeat customers | repeat_customer_rate | this year | 2026-01-01 | setup |
+| target | Raise paid orders per active customer | orders_per_active_customer | this quarter | 2026-01-01 | setup |
+
+Level: mission, north star or target. Horizon: this quarter, this year or 3 years.
+
+## 10. Funnels
+
+| funnel | step | event or table | step definition | verified | source |
+|---|---|---|---|---|---|
+| sign-up | 1 visit | web_events (page_view) | First page view of a session | 2026-01-01 | setup |
+| sign-up | 2 started form | web_events (form_start) | Form field focused | 2026-01-01 | setup |
+| sign-up | 3 signed up | customers | A row with created_at in the window | 2026-01-01 | setup |
+
+One row per step, in order.
+
+## 11. Key queries
+
+| name | what it returns | when to use it | query | verified | source |
+|---|---|---|---|---|---|
+| paid_orders_by_day | Paid orders per day, test accounts out | Any daily trend or drop check | `select order_date, count(distinct order_id) from orders where is_test = false and status = 'paid' group by 1` | 2026-01-01 | setup |
+
+Three to five queries. Reusable, each tested once.

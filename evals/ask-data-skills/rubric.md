@@ -12,3 +12,4 @@
 | Precision | The clean case gets three lines and no questions |
 | No early tool call | No connector or data tool call |
 | No invented names | Uses no company, product, table or source name the user did not say |
+| Routing guide | Sends a project or a design ask to `/wayfinder-data`, one question with a decision to `/grill-the-ask` (v0.4 item 13) |

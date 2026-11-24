@@ -1,4 +1,5 @@
 format: v1
+updated: YYYY-MM-DD HH:MM
 
 # Analysis: <title>
 
@@ -13,6 +14,9 @@ format: v1
 - Claim ceiling: <one line: the strongest wording allowed, and claim rules such as "X is a lead, not a cause">
 - Status: grilling | planned | running | reviewed | retro done
 - Progress: <step, where it stopped, what it waits for. Example: run step 3 of 7, waiting for Q3.1 paste>
+- Setup choice: A (ran `/setup-data-work`) | B (inline, `/retro-analysis` builds the map) | map found. Never offer setup again once this is set.
+- Goal link: <the goal in the data map's Goals section this ask serves, or "none">
+- Files: download | <the document tool the user named>
 
 ## 2. Ask
 
@@ -111,7 +115,27 @@ Each finding: direction, magnitude, uncertainty, claim ceiling applied. Aggregat
 | proposed data map change | accepted (yes or no) |
 |---|---|
 
-## 9. Appendix: Review pack
+## 9. Decisions
+
+Every question asked and the user's answer, word for word, per round. After each round, echo the answers back exactly before moving on. Never paraphrase an answer: "this week" is not "later".
+
+### Round 1 (<YYYY-MM-DD>)
+
+| # | question | user's answer (verbatim) |
+|---|---|---|
+| 1 | | |
+
+## 10. Hypotheses
+
+Written by `/plan-analysis` at standard and deep depth, before the method options. At most 3 levels and about 12 nodes. Children are numbered H1.1, H1.2, then H1.2.1. `/run-analysis` updates the status. `/review-analysis` checks every node has one.
+
+| id | hypothesis | would support it | would refute it | leads to | status |
+|---|---|---|---|---|---|
+| H1 | | | | H1.1, H1.2 | open |
+
+Status: `open`, `supported`, `refuted` or `parked`. A node is `supported` or `refuted` only with a result in section 6 that shows it. Quick depth: a flat list of up to 3 hypotheses, no file.
+
+## 11. Appendix: Review pack
 
 For each headline number: the exact SQL or Python that produced it, and its data source. In a chat app `queries/` does not persist, so this is how a fresh reviewer sees the code.
 

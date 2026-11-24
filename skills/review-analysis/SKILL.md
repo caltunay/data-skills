@@ -14,8 +14,8 @@ Be a sceptical colleague. Critique the work, never the person. Say "no material 
 
 ## Start (every flow step)
 
-1. Check for `DATA-MAP.md`, `analysis.md` and `readout.md` (in `data-work/`, in the Project files, attached, or pasted). Say in one line what you found.
-2. If the review is of a flow analysis and there is no `DATA-MAP.md`, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Do not offer it again if the user already chose B. For an analysis pasted from outside the flow, say there is no map in one line and continue.
+1. Check for `DATA-MAP.md`, `analysis.md` and `readout.md` (in `data-work/` in the current folder, then upward; in the Project files; attached; or pasted). Say in one line what you found, and which map you read. A team map can sit above project maps: the nearest map wins for conflicts.
+2. If the review is of a flow analysis and there is no `DATA-MAP.md`, first ask: "Do you have a DATA-MAP.md from another project on the same data? Attach or copy it in." If not, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Never offer it again if Meta shows a `Setup choice`. For an analysis pasted from outside the flow, say there is no map in one line and continue.
 3. If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before re-asking anything. A pasted analysis from anyone is also fine: review it as it is. If there is no ladder log or spec, review the claim and the method anyway and note what is missing.
 4. Read the Progress line in Meta, if there is one, and resume from it. A pasted analysis with no Meta is reviewed at standard depth unless the user says otherwise.
 
@@ -53,6 +53,8 @@ A review in the same context as the analysis is biased by it. Review from the fi
    - Spec match: do the results match the analysis table spec (grain, filters, row count)?
    - Floor and ladder: did the data-check floor run (table audit, one entity across tables, one day, daily series, joins, category totals, assumption checks, reconcile)? Was each rung run and logged? Does each of rungs 2 to 4 compare against an independent path? A rung that compares the table with the frame it was built from tested only the aggregation: report it as weaker than logged.
    - Method card: open the `question-types` file for the question type and find the card for the method used (if the file will not open, use the compact cards in the `question-types` skill). Check the analysis against every item under "Checks that must pass". A check that was not run, or that failed, is an issue, and the claim allowed drops.
+   - Hypotheses: does every node in the Hypotheses section have a status? Is each `supported` or `refuted` node backed by a named result in Results? Is any `open` or `parked` node worded as a finding in the readout? A supported hypothesis still stays under the claim ceiling.
+   - Decisions: do the Decisions answers match what the analysis used (for example, the window the user said)? A mismatch is an issue.
    - Charts: if the analysis or the readout has charts, apply the `viz` checks to each. Report only the fails.
    - Review pack: does the "Appendix: Review pack" hold the exact code and source for each headline number? A missing entry is an issue: the number cannot be traced.
 4. **Business review.** Ask what leadership will ask.
@@ -83,7 +85,9 @@ A review in the same context as the analysis is biased by it. Review from the fi
 4. Check the layout: Answer in 2 lines, Key numbers with uncertainty (at most 5; for an exec audience, move the rest to the Appendix), Charts (at most 3 for exec, each title a takeaway, one annotation, linked image with alt text), What it means, Caveats, Method in 3 lines, Link, Appendix. The readout must suit the audience in Meta. Portable markdown only: at most 3 callouts as blockquotes with a bold label (`> **Answer:**`, `> **Caveat:**`, `> **Ask:**`), bold only for the one takeaway per section, no app-specific macros.
 5. Check the Method section claims only what ran. Compare it with the ladder log and with step 5 of this review. If it says "full validation ladder" or names a check that was weaker than claimed, rewrite it to say exactly what ran.
 6. If the verdict is `ready` or `ready with caveats`, set the status line in `readout.md` to `**Status: FINAL**`. If the verdict is `needs rework`, leave it `**Status: DRAFT**` and say what must happen first.
-7. No readout (quick depth, or a pasted analysis): check the pasted claims the same way. Do not create a readout unless asked.
+7. Rebuild `readout.docx` from the corrected `readout.md` (same text, charts embedded, whatever document library the sandbox has). Never edit the `.docx` by hand: `readout.md` is the source. With no code tool, hand back `readout.md` and say the `.docx` is not rebuilt.
+8. A readout with `**Status: SKELETON**` has no results in it. Say so and send the user to `/run-analysis`. Do not review it as a result.
+9. No readout (quick depth, or a pasted analysis): check the pasted claims the same way. Do not create a readout unless asked.
 
 ## Depth table
 
@@ -118,7 +122,7 @@ Quick: run steps 1, 2, 5 and 6 only, in a few lines. The recompute at quick dept
 
 ## Writing
 
-Standard and deep: write the Review section of `analysis.md`, save the corrected `readout.md` with its status, and set the analysis status `reviewed`. Apply `run-or-hand-over` for saving. Chat app: see End.
+Standard and deep: write the Review section of `analysis.md`, save the corrected `readout.md` with its status, rebuild `readout.docx`, and set the analysis status `reviewed`. Apply `run-or-hand-over` for saving. Chat app: see End.
 
 ## End (every flow step)
 
@@ -126,7 +130,7 @@ Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, an
 
 1. Update the Progress line in `analysis.md` Meta.
 2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
-3. Chat app: create the updated `analysis.md` and `readout.md` as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Save this to your Project files so the next step, in any chat, can read it." For a pasted analysis with no `analysis.md`, the review in the chat is the output. Do not create files unless asked.
+3. Chat app: create the updated `analysis.md`, `readout.md` and `readout.docx` as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Replace the old one in your Project files" (or "Save this to your Project files" if it is new), so the next step, in any chat, can read it. Name chat-app files `analysis-<slug>.md` and `readout-<slug>.md`. Start each with `format:` and `updated: YYYY-MM-DD HH:MM` (now). Hand back the whole file, never a patch. If two copies exist, use the newest `updated:` and say so. For a pasted analysis with no `analysis.md`, the review in the chat is the output. Do not create files unless asked.
 4. Coding agent: the files are already saved under `data-work/`. Say where.
 5. End with the go-ahead question, at every depth, quick included. Use this fixed form:
 

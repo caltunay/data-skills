@@ -17,11 +17,12 @@ Experimental (v0.2).
 
 ## Start (every flow step)
 
-1. Check for `DATA-MAP.md`, `analysis.md` and `readout.md` (in `data-work/`, in the Project files, attached, or pasted). Say in one line what you found.
+1. Check for `DATA-MAP.md`, `analysis.md` and `readout.md` (in `data-work/` in the current folder, then upward; in the Project files; attached; or pasted). Say in one line what you found, and which map you read. A team map can sit above project maps: the nearest map wins for conflicts.
 2. No `DATA-MAP.md` is fine here: this step does not need it. Say so in the same line. Do not offer setup.
 3. If `readout.md` or `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before asking anything else. A readout pasted from outside the flow is fine: then ask for the question type or the claim ceiling if the paste does not state it.
 4. Read the Progress line in Meta and the readout's `Status`.
    - `**Status: FINAL**` (or the older `Status: final`): continue.
+   - `**Status: SKELETON**`: it holds placeholders, not results. Send the user to `/run-analysis`. Stop.
    - `**Status: DRAFT**` (or the older `Status: draft`), or no status: say "This readout is not final. It has not been checked against the claim ceiling." Suggest `/review-analysis` first. Continue only if the user says to, and then mark the output `Status: draft, from an unreviewed readout`.
 
 ## Rules from the disciplines (in case they do not load)
@@ -45,7 +46,7 @@ Experimental (v0.2).
    - Is every claim at or below the ceiling? Shorter words must not become stronger words. "Is concentrated in" must not become "is driven by" or "because of".
    - Is every caveat from the readout still there, in plain words?
    - Is there any number, name or reason that is not in the source files? Remove it.
-6. **Write** `readout-<audience>.md` next to `readout.md` (for example `readout-exec.md`). First lines: the audience, the format, the date, and "Source: readout.md (final)".
+6. **Write** `readout-<audience>.md` next to `readout.md` (for example `readout-exec.md`). First lines: `format: v1`, `updated: YYYY-MM-DD HH:MM`, then the audience, the format, the date, and "Source: readout.md (final)". For the doc and email formats, also produce `readout-<audience>.docx` from the same text, with any charts embedded, using whatever document library the sandbox has. With no code tool, give the `.md` only.
 
 ## Words by audience
 
@@ -71,7 +72,7 @@ The exec limit applies to every format: under 150 words before the appendix. For
 
 1. Update the Progress line in `analysis.md` Meta, for example `Progress: storytell done, readout-exec.md written`.
 2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
-3. Chat app: create `readout-<audience>.md` and the updated `analysis.md` as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Save these to your Project files."
+3. Chat app: create `readout-<audience>.md` (and the `.docx` when made) and the updated `analysis.md` as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Save these to your Project files." Hand back whole files, never patches.
 4. Coding agent: the file is saved next to `readout.md`. Say where.
 5. Name the next step: `/retro-analysis` if it has not run, or another audience version.
 

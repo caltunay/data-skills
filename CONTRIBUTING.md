@@ -62,7 +62,7 @@ The maintainer keeps a private list of words that must never appear in the repo.
 
 ## Run the evals
 
-By hand: follow `evals/README.md`. Run chat-app tests in an incognito chat with a neutral profile.
+By hand: follow `evals/README.md`. Run chat-app tests in normal chats (not incognito) with a neutral profile.
 
 With the runner (it approximates skill loading and does not test triggering):
 

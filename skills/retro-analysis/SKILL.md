@@ -14,14 +14,14 @@ The data map should get better with every analysis. This is not a memory dump.
 
 ## Start (every flow step)
 
-1. Check for `DATA-MAP.md` and `analysis.md` (in `data-work/`, in the Project files, or attached). Say in one line what you found.
-2. If there is no `DATA-MAP.md`, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: this retro starts the map from the template, with only the entries you approve." The template is `DATA-MAP.template.md` in the `data-map` skill. If it is not available, start with `format: v1` on line 1 and these sections: Sources, Tables, Joins, Metrics, Rules, Gotchas, Glossary, Conventions.
+1. Check for `DATA-MAP.md` and `analysis.md` (in `data-work/` in the current folder, then upward; in the Project files; or attached). Say in one line what you found, and which map you read. A team map can sit above project maps: the nearest map wins for conflicts.
+2. If there is no `DATA-MAP.md`, first ask: "Do you have a DATA-MAP.md from another project on the same data? Attach or copy it in." If yes, extend that map. If not, this retro builds the map itself from the template, with only the entries you approve. Never offer `/setup-data-work` here, whatever Meta says. The template is `DATA-MAP.template.md` in the `data-map` skill. If it is not available, start with `format: v1` on line 1 and these sections: Sources, Tables, Joins, Metrics, Rules, Gotchas, Glossary, Conventions.
 3. If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before re-asking anything. At quick depth there is no file: ask for a short summary of what was learned.
 4. Read the Progress line in Meta and resume from it. Then read all sections, especially Assumptions, Results and Review.
 
 ## Rules from the disciplines (in case they do not load)
 
-- `data-map`: change the map only through approved retro changes. Conventions hold style only; analysis rules go in Rules or Gotchas; no duplicates across sections. Each entry has `verified: YYYY-MM-DD` and `source: analyses/<slug>`. Flag entries older than 90 days or contradicted by data, then ask. Check the format version and offer a migration if old.
+- `data-map`: change the map only through approved retro changes. One entry per source; grain and keys under Tables; the template's table layout, never loose bullets. Conventions hold style only; analysis rules go in Rules or Gotchas; no duplicates across sections. Each entry has `verified: YYYY-MM-DD` and `source: analyses/<slug>`. Flag entries older than 90 days or contradicted by data, then ask. Check the format version and offer a migration if old.
 
 ## Steps
 
@@ -34,11 +34,14 @@ The data map should get better with every analysis. This is not a memory dump.
    - a **gotcha** from a mistake that cost time
    - a **glossary** term
    - a **convention** the team settled (style only: SQL, Python, naming)
+   - a **funnel** (each step, its event or table, the step definition) or a **key query** (what it returns and when to use it) that the next analyst would reuse. Propose additions to the Funnels and Key queries sections. Keep key queries to 3 to 5 in total
    - a join that this run **checked** by query: propose changing its status from `unverified` to `checked`, with what the query found
 2. Check existing entries: did the data contradict any? Is any older than 90 days and re-confirmed by this work? Propose updating its `verified` date.
 3. Put each entry in the right section:
    - Conventions hold style only: SQL style, Python style, naming. Nothing else.
    - Analysis rules (a filter, an exclusion, a dedup rule, a time zone rule) go in Rules. Mistakes and traps go in Gotchas.
+   - Sources: one entry per source, one row each. Grain, keys and key facts go under Tables, not Sources.
+   - Follow the template's table layout (the same columns, one row per entry). Never write loose bullets in place of a table row. When this retro builds the map, copy the template's sections and columns exactly.
    - One fact goes in one section. No duplicate entries across sections. If a fact fits two, pick one and leave the other out.
 4. Propose changes as a short numbered list. Each one: section, the exact entry, and why it is worth keeping. The reason must be true for this run: quote the line in `analysis.md` that shows it (a failed rung, a Plan revisions row, a review issue). If nothing in this run shows it cost time or changed a number, do not say it did.
 5. Show a diff (old and new text) for each change.
@@ -56,7 +59,7 @@ The data map should get better with every analysis. This is not a memory dump.
 ## Output
 
 - Coding agent: edit `data-work/DATA-MAP.md` in place with approved changes only.
-- Chat app: create the full updated `DATA-MAP.md` as a file and offer it as a download, to replace the Project file. Print one block only if creating the file fails. Never ask the user to edit the map by hand.
+- Chat app: create the full updated `DATA-MAP.md` (with `format: v1` and a fresh `updated:` line) as a file and offer it as a download, to replace the Project file. Print one block only if creating the file fails. Never ask the user to edit the map by hand.
 - If the map is not `format: v1`, show the migration first and apply it only after approval.
 
 ## End (every flow step)
@@ -65,7 +68,7 @@ Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, an
 
 1. Update the Progress line in `analysis.md` Meta.
 2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
-3. Chat app: create the updated `analysis.md` (and `readout.md` when it exists) as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Save this to your Project files so the next step, in any chat, can read it."
+3. Chat app: create the updated `analysis.md` (and `readout.md` when it exists) as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Replace the old one in your Project files" (or "Save this to your Project files" if it is new), so the next step, in any chat, can read it. Name chat-app files `analysis-<slug>.md` and `readout-<slug>.md`. Start each with `format:` and `updated: YYYY-MM-DD HH:MM` (now). Hand back the whole file, never a patch. If two copies exist, use the newest `updated:` and say so.
 4. Coding agent: the files are already saved under `data-work/`. Say where.
 5. In a chat app, also hand back the full updated `DATA-MAP.md` to replace the Project file.
 6. The flow is complete. End with the go-ahead question, at every depth, quick included, adapted to this last step:

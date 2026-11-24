@@ -18,7 +18,7 @@ Experimental (v0.2).
 ## Start
 
 1. Take the code: pasted, or a file path. Read all of it before saying anything.
-2. Check for `DATA-MAP.md` (in `data-work/`, in the Project files, or attached). Say in one line whether you found it. If found, read Tables (grain, keys), Joins (traps), Rules (mandatory filters) and Conventions. If not found, continue without it and ask about grain and style when you need them. Do not offer setup here.
+2. Check for `DATA-MAP.md` (in `data-work/` in the current folder, then upward; in the Project files; or attached). Say in one line whether you found it. If found, read Tables (grain, keys), Joins (traps), Rules (mandatory filters) and Conventions. If not found, continue without it and ask about grain and style when you need them. Do not offer setup here.
 3. This step needs no `analysis.md`. If the code belongs to an analysis folder (it sits in `queries/`), say so and read the Analysis table spec for the intended grain.
 
 ## Rules from the disciplines (in case they do not load)

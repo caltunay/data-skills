@@ -13,7 +13,7 @@ Only for data asks: an analysis, a metric, a query, a report, an experiment. If 
 
 ## Core rule
 
-Ask in rounds of at most 3 questions. Give each question 2 to 4 options and one real recommended default, with a one-line reason. Wait for the answers. Never assume silently.
+Ask in rounds of at most 3 questions. Give each question 2 to 4 options and one real recommended default, with a one-line reason. Use the environment's multiple-choice question tool if it has one; otherwise list the options as text. Wait for the answers. Never assume silently.
 
 ## How to run a round
 
@@ -27,8 +27,9 @@ Ask in rounds of at most 3 questions. Give each question 2 to 4 options and one 
    - C. Dispatch date
    - D. Something else
 
-4. Stop. Wait for the reply.
-5. Repeat until the work is clear, or until the depth limit is reached (quick: 1 round).
+4. **How to show the round.** If your environment offers a tool for asking multiple-choice questions (clickable options), use it for every round: one question per card, at most 3 cards per round, the recommended option first with its reason in the option text, and leave room for the user's own answer. Otherwise write the round as text, as above. Never name a specific agent's tool in what you show the user.
+5. Stop. Wait for the reply.
+6. Repeat until the work is clear, or until the depth limit is reached (quick: 1 round).
 
 ## What to cover, in this order of priority
 
@@ -46,6 +47,9 @@ Ask in rounds of at most 3 questions. Give each question 2 to 4 options and one 
 
 - Skip anything already answered or visible in the data map.
 - Every question has one real recommended default, marked "(recommended: reason)". No hedges such as "C if unknown", "depends" or "your call". No question without one, the deadline included. If you know little, recommend the option that is safest for the decision and say why. Example for a deadline: "A. No fixed date, normal turnaround (recommended: the ask names no meeting or launch)".
+- If an answer conflicts with an earlier one, contradicts the data map, or does not make sense, say so plainly ("This does not fit X because Y"). Switch to one question at a time until it is clear. Then return to rounds.
+- After each round, echo the user's answers back exactly, in their own words, before moving on. Never paraphrase: "this week" is not "later".
+- Do not analyse while grilling. Note only what attached files contain (columns, possible duplicates, date range). Never early findings. Do not put an observed pattern in an option.
 - If the user says "you choose", take the recommended default and record it as an assumption.
 - If the user answers only some questions, ask the rest next round. Do not guess.
 - Ask about the most uncertain thing first, not the easiest.

@@ -28,3 +28,7 @@
 | Readout visuals | Checks at most 3 charts for exec, takeaway titles, one annotation, linked images with alt text (v0.3 item 30) |
 | Portable callouts | Checks at most 3 bold-labelled blockquote callouts, sets `**Status: FINAL**` only when the verdict allows (v0.3 item 31) |
 | Was and now | Every changed readout sentence is shown as a "was" and "now" pair. Every "not supported yet" leadership answer names the cheapest way to answer it |
+| Hypotheses check | Every node has a status. Each `supported` or `refuted` node has a result behind it. No `open` or `parked` node is worded as a finding (v0.4 item 6) |
+| Decisions check | Compares the Decisions answers with what the analysis used. A mismatch is an issue (v0.4 item 3) |
+| Readout .docx | Rebuilds `readout.docx` from the corrected `readout.md`. Never edits the `.docx` by hand (v0.4 item 1) |
+| Stable names and versions | In a chat app, files are named `DATA-MAP.md`, `analysis-<slug>.md`, `readout-<slug>.md`, start with `format:` and `updated:`, are handed back whole, and the step says "Replace the old one in your Project files." If two copies exist, uses the newest `updated:` and says so (v0.4 item 15) |

@@ -14,8 +14,8 @@ Build from the spec. Trust nothing until it has climbed the ladder.
 
 ## Start (every flow step)
 
-1. Check for `DATA-MAP.md` and `analysis.md` (in `data-work/`, in the Project files, or attached). Say in one line what you found.
-2. If there is no `DATA-MAP.md`, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Wait for the choice. Exception: if the ask is small and already clear (quick depth), make the offer in one line and continue with B without waiting. Do not offer it again if the user already chose B for this analysis.
+1. Check for `DATA-MAP.md` and `analysis.md` (in `data-work/` in the current folder, then upward; in the Project files; or attached). Say in one line what you found, and which map you read. A team map can sit above project maps: the nearest map wins for conflicts.
+2. If there is no `DATA-MAP.md`, first ask: "Do you have a DATA-MAP.md from another project on the same data? Attach or copy it in." If not, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Wait for the choice. Exception: if the ask is small and already clear (quick depth), make the offer in one line and continue with B without waiting. Meta records the choice as `Setup choice`. Never offer setup again once it is set. If Meta has no choice (an older file), write it there now.
 3. If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before re-asking anything. Quick depth has no file: work from the one-line plan in the chat. If the plan or the spec is missing, say so and suggest `/plan-analysis`.
 4. Read the Progress line in Meta and resume from it. Do not redo rungs the ladder log shows as passed. Then read Ask, Assumptions, Plan and Analysis table spec.
 
@@ -44,7 +44,7 @@ When you stop, say what you are waiting for and set the Progress line, for examp
 
 ## Steps
 
-Set status `running`. Number the steps in the Progress line (step 1 of 8, and so on). Quick depth runs the compact floor (step 1), the query, and step 5, then gives the short answer. No steps 7 and 8. The floor is never skipped.
+Set status `running`. Number the steps in the Progress line (step 1 of 8, and so on). Quick depth runs the compact floor (step 1), the query, and step 5, then gives the short answer. No steps 7 to 9. The floor is never skipped.
 
 1. **Data-check floor** for every table used (apply `data-audit` and `validation-ladder`). Each check states its expected result first:
    1. Table audit: row count; distinct keys against rows (duplicates); null rate of every column used; min and max dates (coverage, future dates); distinct values of every category column used (flag unexpected labels).
@@ -60,9 +60,10 @@ Set status `running`. Number the steps in the Progress line (step 1 of 8, and so
 3. **Climb the ladder, rungs 1 to 4.** Before each rung, write the expected result. Run the check. Write the actual and pass or fail. Rungs 2 to 4 test the data, not only the aggregation: recompute from raw rows or with a separate query that does not use the analysis table or the frame it was built from, and compare. A fail means find the cause before going up. If the fix needs a choice (for example, a rule for duplicates), propose it, add an assumption row, and ask.
 4. **Run the method.** Open the `question-types` file for the question type and load the method card named in the plan. Apply every item under "Checks that must pass" and log each as pass or fail in Results. If a check fails, the claim allowed drops: say to what.
 5. **Reconcile (rung 5).** Compare the headline number to the trusted number from the plan. Say which count is compared (raw or cleaned) and why: a trusted number made before your cleaning matches the raw count. Compute the gap and compare it with the stated tolerance. Above tolerance: record rung 5 as fail, do not report the number as final, and test likely causes one small check at a time. Never explain a gap with an untested story.
-6. **Write findings.** Each finding gets direction, magnitude, uncertainty, and the claim ceiling applied. Update assumption statuses as evidence arrives. List high-impact rows still `open` beside the findings.
+6. **Write findings.** Each finding gets direction, magnitude, uncertainty, and the claim ceiling applied. Update the status of every hypothesis the finding touches in the Hypotheses section (`supported`, `refuted`, `open` or `parked`), and name the result that shows it. A node is never `supported` or `refuted` without a result. Tell the user which statuses changed. Update assumption statuses as evidence arrives. List high-impact rows still `open` beside the findings.
 7. **Write the review pack.** In the "Appendix: Review pack" section of `analysis.md`, for each headline number: the exact SQL or Python that produced it, and its data source (table or file, filters, period). In a chat app `queries/` does not persist, so this is how a fresh reviewer sees the code.
-8. **Draft the readout.** Write `readout.md` next to `analysis.md`, from `readout.template.md` in this skill's folder. Set the status line to `**Status: DRAFT**`.
+8. **Draft the readout.** Write `readout.md` next to `analysis.md`, from `readout.template.md` in this skill's folder. Set the status line to `**Status: DRAFT**`. If a skeleton exists (`**Status: SKELETON**`), replace it: keep its layout, fill every placeholder from Results, and leave no XX or [segment] behind.
+9. **Build `readout.docx`.** Produce `readout.docx` from the same text as `readout.md`, with the charts embedded, so it opens in Word and Google Docs. Use whatever document library the sandbox has. `readout.md` stays the source: the review edits it, then rebuilds the `.docx`. If there is no code tool, give `readout.md` and the chart code only, and say so in one line.
 
 ## Draft readout
 
@@ -77,7 +78,7 @@ One layout. Wording adapts to the audience set in grilling (Meta). The default r
 7. **Link** to `analysis.md`.
 8. **Appendix:** the other numbers, segment tables, the ladder summary.
 
-Portable markdown only, no app-specific macros:
+The `.docx` carries the same text and the charts. Portable markdown only for `readout.md`, no app-specific macros:
 
 - Callouts are blockquotes with a bold label: `> **Answer:** ...`, `> **Caveat:** ...`, `> **Ask:** ...`. At most 3 in the whole readout, so they stand out.
 - The status is a bold label at the top: `**Status: DRAFT**` or `**Status: FINAL**`.
@@ -113,7 +114,7 @@ Show aggregates by default. Ask before saving row-level data anywhere. Put chart
 
 ## Output
 
-- Standard and deep: update Results in `analysis.md` (ladder log, method checks, findings), write the Review pack appendix, and write the draft `readout.md`. This step sets status `running` when it starts and leaves it at `running`. Only `/review-analysis` sets `reviewed`.
+- Standard and deep: update Results in `analysis.md` (ladder log, method checks, findings), update Hypotheses, write the Review pack appendix, and write the draft `readout.md` and `readout.docx`. This step sets status `running` when it starts and leaves it at `running`. Only `/review-analysis` sets `reviewed`.
 - Quick: print the answer, the compact floor table, the ceiling, and open assumptions. No file.
 - Apply `run-or-hand-over` for saving. Chat app: see End.
 
@@ -123,7 +124,7 @@ Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, an
 
 1. Update the Progress line in `analysis.md` Meta, for example `Progress: run done, draft readout written, next /review-analysis`.
 2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
-3. Chat app: create the updated `analysis.md` and `readout.md` as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Save these to your Project files so the next step, in any chat, can read them."
+3. Chat app: create the updated `analysis.md`, `readout.md` and `readout.docx` as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Replace the old ones in your Project files" (or "Save these to your Project files" if they are new), so the next step, in any chat, can read them. Name chat-app files `analysis-<slug>.md` and `readout-<slug>.md`. Start each with `format:` and `updated: YYYY-MM-DD HH:MM` (now). Hand back the whole file, never a patch. If two copies exist, use the newest `updated:` and say so.
 4. Coding agent: the files are already saved under `data-work/`. Say where.
 5. End with the go-ahead question, at every depth, quick included. Use this fixed form:
 
@@ -138,7 +139,7 @@ Quick depth has no files: skip steps 1, 3 and 4, give the result in the chat, an
 
 ## Done when
 
-The goal is met: the floor and the ladder are complete for the depth, the success checks pass (or a gap is explained and logged), findings are written with the ceiling applied, the review pack holds the code for each headline number, and the draft readout is written.
+The goal is met: the floor and the ladder are complete for the depth, the success checks pass (or a gap is explained and logged), findings are written with the ceiling applied, the review pack holds the code for each headline number, and the draft readout is written (`readout.md` and `readout.docx`).
 
 ## Do not
 
@@ -148,4 +149,6 @@ The goal is met: the floor and the ladder are complete for the depth, the succes
 - Do not run a segment scan on a drop before the daily series check.
 - Do not write causal wording without a causal design.
 - Do not clean data silently.
+- Do not leave a placeholder (XX%, [segment]) in a draft readout.
+- When you stop for an answer, log it word for word in Decisions and echo it back before you carry on.
 - Do not stop between steps unless you are waiting for a paste or an answer.
