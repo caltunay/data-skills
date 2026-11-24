@@ -79,6 +79,28 @@ Only the last step of the funnel is in this example data.
 
 ## 11. Key queries
 
-| name | what it returns | when to use it | query | verified | source |
+| name | what it returns | when to use it | columns used | verified | source |
 |---|---|---|---|---|---|
-| daily_signups | Sign-ups per day, one row per `signup_id`, test accounts out | First check of any "sign-ups dropped" ask | see `queries/q0-2-daily-series.sql` | 2026-04-02 | setup |
+| daily_signups | Sign-ups per day, one row per `signup_id`, test accounts out | First check of any "sign-ups dropped" ask | signups.signup_ts, signups.signup_id, signups.is_test | 2026-04-02 | setup |
+
+### daily_signups
+
+```sql
+select
+    substr(signups.signup_ts, 1, 10)  as signup_date
+  , count(distinct signups.signup_id) as signups
+from
+    signups
+where true
+    and signups.is_test = 0
+group by 1
+order by 1
+;
+```
+
+## 12. Ways of working
+
+| item | answer | verified | source |
+|---|---|---|---|
+| where work lives | chat Projects (one per team or area) | 2026-04-07 | setup |
+| file hand-back | downloads | 2026-04-07 | setup |

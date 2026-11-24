@@ -54,13 +54,13 @@ Read only the file for the tool in use.
 - Power BI: `powerbi.md`
 - A dashboard (several charts with filters): `dashboard.md`, then the tool file
 
-Excel, Tableau and Power BI always run in hand-over mode. Give numbered steps. The user builds the chart and pastes or describes what they see. Apply the `run-or-hand-over` skill. Core rule if it does not load: two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts (load them and run SQL with DuckDB or SQLite, or pandas). Hand over only when no code tool exists, and say so in one line. Where do files persist? In a chat app, create each file and offer it as a download; print it only if that fails. Never ask the user to edit a saved file by hand.
+Excel, Tableau and Power BI always run in hand-over mode. Give numbered steps. The user builds the chart and pastes or describes what they see. Apply the `run-or-hand-over` skill. Core rule if it does not load: two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts (load them and run SQL with DuckDB or SQLite, or pandas). Hand over only when no code tool exists, and say so in one line. Where do files persist? In a chat app, save each file at its full `data-work/` path in the Project files if you can, otherwise create it and offer a download, and say which; print it only if that fails. Never ask the user to edit a saved file by hand.
 
 ## Where charts go
 
-- `/run-analysis` saves charts under `outputs/` in the analysis folder, only when asked or when the plan names one. File names say what the chart shows (`signups-by-channel-feb-mar.png`).
+- `/run-analysis` saves charts in the analysis folder (`outputs/` in a coding agent, beside `readout.md` in a chat app), only when asked or when the plan names one. File names say what the chart shows (`signups-by-channel-feb-mar.png`).
 - Charts show aggregates. Ask before a chart exposes row-level data (one point per customer with an identifier).
-- In a chat app, offer the chart as a download and say where it belongs.
+- In a chat app, save the chart at its full path in the analysis folder in the Project files if you can, otherwise offer it as a download and say where to add it.
 
 ## Charts in a readout
 
@@ -68,7 +68,7 @@ Excel, Tableau and Power BI always run in hand-over mode. Give numbered steps. T
 - Each title states the takeaway (check 1).
 - One annotation on the key moment, for example a marker and a short label on the day a step happened. Only one, so it stands out.
 - A chart replaces number rows that say the same thing. This keeps the readout to at most 5 key numbers.
-- Charts are image files (PNG or SVG) in `outputs/`, linked from the readout with alt text that states what the chart shows and its takeaway: `![Daily sign-ups, with the step down on 2 March marked](outputs/signups-daily.png)`. In a chat app, create the image and offer it as a download.
+- Charts are image files (PNG or SVG) in the analysis folder, linked from the readout by the chart's real path with alt text that states what the chart shows and its takeaway: `![Daily sign-ups, with the step down on 2 March marked](signups-daily.png)` (a coding agent uses `outputs/signups-daily.png`). In a chat app, save the image at its full path under `data-work/analyses/<folder>/` or offer it as a download, and say which.
 - Hand-over mode (no code tool, or Excel, Tableau or Power BI): give the chart spec (chart type, data, title, annotation, axes) plus ready-to-run code or numbered build steps.
 
 ## Reviewing a chart

@@ -26,10 +26,10 @@ Round 3: "Key queries: paid orders by day, new customers by week, active subscri
 - Asks for the main funnels with each step, its event or table and the step definition.
 - Asks for 3 to 5 key queries, what they return and when to use them.
 - Asks how the user organises work (one repo with folders, a repo per project, a team repo, or chat Projects). Recommends one Project per team or area and one chat per analysis for the chat Projects answer.
-- Asks once, generically, about downloads or a document tool. Names no tool the user did not say.
+- Asks once, with three options (downloads, files in the Project, a document tool the user names), and records the answer in the map's Ways of working. Names no tool the user did not say.
 - Joins start `unverified`. No invented table, number or name.
 - Hands over the whole `DATA-MAP.md` as a file with `format: v1` and `updated:` lines, with Goals, Funnels and Key queries sections.
-- Ends with a short block to paste into the Project's instructions that says: read `DATA-MAP.md` before any data work, use the data-skills commands, save updated files back to the Project files.
+- Ends with a short block to paste into the Project's instructions that says: read `DATA-MAP.md` before any data work, use the data-skills commands, keep files in `data-work/`, tell the user which files changed and where. The block uses the exact words from the skill, then 3 to 5 lines walk the user through the chat-app steps.
 - Ends with the go-ahead question, A) being `/grill-the-ask`.
 
 ## Fail

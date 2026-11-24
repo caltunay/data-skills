@@ -85,6 +85,19 @@
 81. Saving to a document tool is optional, asked once and generically, and only for a tool the user names. Downloads stay the default.
 82. A new project on the same data carries the map over. A fresh map is for different data sources only. Every step with no map asks for an existing one first.
 83. Evals gain rubric lines for the new rules (no analysis in the grill, the decisions log, the stuck rule, the hypothesis tree, the skeleton, stable names) and seven new cases, so a regression in any of them is visible.
+84. One folder layout everywhere (v0.5). All user files live under `data-work/` with full paths, in coding agents and in chat apps. Chat apps stop using `analysis-<slug>.md` and `readout-<slug>.md`. A bare file name lands in a `claude/` folder in claude.ai and generic names get overwritten.
+85. After a save, the skill says which of three things happened, with the path: saved to Project files, download and add it, or printed below. It never claims a save that did not happen, and never says a file is both saved and to be replaced.
+86. Old copies are named as stale, and the user is told once to move old analyses into the layout. Two copies: the newest `updated:` wins.
+87. Several analyses can live in one Project. An analysis is matched to an ask by its folder or slug. A grill that finds an analysis of the same ask always asks whether to continue or start a new one. Resuming never happens silently, and a resumed file has its stale lines refreshed as "was" and "now" pairs.
+88. Setup and retro tidy a messy map when they extend it: one entry per source, grain and keys under Tables, the template's layout. The tidy is one approved change with a diff, so the rule that the map changes only through approved changes still holds.
+89. Key queries are saved as SQL text, in the team's conventions, checked against the columns the map knows. A description alone is not a key query.
+90. The map records how the user works (chat Projects or a repo layout, and the file hand-back choice) in a new section 12, Ways of working. Hand-back is asked once per Project, not at every grill.
+91. When the Project holds earlier analyses but no map, the first option is "Yes, attach it", with the hint that an earlier retro chat holds the map.
+92. Clickable question cards (already on `v0.4`) are restated in every skill that asks questions, not only the grill. Cards explain their options, show the thing they refer to first, never hedge a default, and flag options that need data the map says is missing.
+93. Hypothesis status is judged against each node's own support and refute conditions, never the parent's direction. A robustness child whose result held is supported, whatever the result was. Child nodes are written without the parent's direction. `/review-analysis` checks every status and fixes wrong ones with a was and now pair.
+94. `/wayfinder-data` ends with the same go-ahead question as the flow steps. Option A names the real next step: the next open item, the first analysis prompt, or sign-off of a fast-path spec. Specs are saved in their own analysis folder, never under a bare name.
+95. The README gets a plain chat-app guide, and `/setup-data-work` ends with the same steps in 3 to 5 lines. Coding agents are told in one line that they need none of it.
+96. Evals gain rubric lines for the v0.5 rules (save forms, continue or new, earlier work with no map, key queries as SQL, question cards, no hedged defaults, status logic, the wayfinder go-ahead question) and five new cases, so a regression in any of them shows up.
 
 ## Build decisions
 
@@ -243,6 +256,22 @@ B123. The eval runner was run in dry-run mode only (56 cases found). This sessio
 B124. Self-check (v0.4, item 20). Six new checks, 29 to 34: Decisions and Hypotheses sections and the three new Meta lines; Goals, Funnels and Key queries; `format:` and `updated:` on every template; the two spec templates and their fields; the routing table in the README and in `ask-data-skills`; and the v0.4 rules by phrase (retro never offers setup, the stuck rule, no analysis in the grill, the tree, the skeleton, the `.docx`, the replace wording). Check 15 no longer requires the setup offer in `retro-analysis`, and now requires its never-offer rule. Check 28 looks for `## 11. Appendix`. Each new check was tested by breaking it once; it failed, then passed after the restore.
 B125. The plugin version went from 0.3.0 to 0.4.0 in both manifests. SPEC section 21 and section 7.6 no longer say app-specific exports are v0.4: the brief did not include them, so they move to a later release.
 B126. `.blocklist` was created from the brief and the check ran with it present. The word list matched nothing, so no text was changed for it.
+
+### v0.5 build
+
+B127. Setup (v0.5). Branch `v0.5` from `main`, because PR #3 (v0.4) is merged. `FIXES-v0.5.md` was added to `.gitignore`. `.blocklist` was created from the brief and is not tracked.
+B128. Chart folder in chat apps. Options: keep `outputs/` as a subfolder in chat apps, or put charts in the analysis folder itself. Chosen: flat in the analysis folder in chat apps, `outputs/` kept for coding agents. Reason: item 4 says chat links must never point to `outputs/`, and chat Project files do not reliably hold subfolders. The link is the chart's real path relative to `readout.md`.
+B129. Analysis folder name in Meta. A new `Folder` line holds `data-work/analyses/<YYYY-MM-DD>-<slug>/`, set by `/grill-the-ask`. Reason: later steps, in a new chat, need one value to build every path and to match an analysis to an ask.
+B130. Self-check 34 no longer looks for "Replace the old one in your Project files". The three save forms replace it.
+B131. Continue or new (item 5). The question appears in `/grill-the-ask` only. Later steps ask only when more than one analysis could be the one. Reason: a later step runs because the user chose the analysis in the grill, so asking again is noise unless it is unclear. Default recommendation: continue when the status is not `retro done`, new when it is.
+B132. Ways of working is section 12 of the map template, appended after Key queries (as B107 did for 9 to 11). The map stays `format: v1`.
+B133. Key query layout. Options: SQL inside a table cell, or a table row plus a SQL block per query. Chosen: row plus block, with a "columns used" column in the row. Reason: multi-line SQL breaks table cells, and the column list lets a reader see which columns were checked against Tables.
+B134. File hand-back question has three options (downloads, Project files, document tool), with a recommendation tied to whether the session can write to Project files. The old two-option wording could not express "files in my Project".
+B135. The card rule is one `grilling` bullet restated in nine skills, each with the same text. Options: a short pointer ("apply grilling"), or the full bullet. Chosen: the full bullet. Reason: SPEC section 3 says each flow skill restates the core rule, and a ZIP may load without `grilling`. Cost: about 1 KB per skill.
+B136. The pricing example's H1.1 changed from `open` to `supported` and was reworded to be direction-neutral. Its support condition (same sign in both weeks) held. Options: leave the example as a v0.4 record, or fix it. Chosen: fix it, because the example would otherwise show the very error item 16 names. The week 2 weakness stays in the status note and in the readout caveats.
+B137. Rubric rows. The old rows "Downloads first", "Stable names and versions" and the chat-app handoff rows were rewritten, not left beside new ones, because the old text contradicted the new rules ("offers a download", `analysis-<slug>.md`). New rows name their v0.5 item.
+B138. `plan-analysis` case 5 includes a colleague's earlier result so a plan step can be tested on status logic. Options: test the logic only in the review case, or in both. Chosen: both, because the brief names both skills and the plan step writes the child wording.
+B139. `evals/reference/v0.4-live-run.md` lists the live run's catches and misses from the brief, in the neutral shop domain only. It names no data, people or tools beyond what the brief states. The runner skips it (no rubric).
 
 ## Questions for Cenan
 

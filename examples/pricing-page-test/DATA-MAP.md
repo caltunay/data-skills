@@ -77,6 +77,28 @@ Entries older than 90 days, or contradicted by data, must be re-confirmed before
 
 ## 11. Key queries
 
-| name | what it returns | when to use it | query | verified | source |
+| name | what it returns | when to use it | columns used | verified | source |
 |---|---|---|---|---|---|
-| arm_split | Visitors per arm, internal visitors out | Sample ratio check before any test readout | see `queries/` | 2026-01-26 | setup |
+| arm_split | Visitors per arm, internal visitors out | Sample ratio check before any test readout | assignments.arm, assignments.visitor_id, assignments.is_internal | 2026-01-26 | setup |
+
+### arm_split
+
+```sql
+select
+    assignments.arm            as arm
+  , count(*)                   as visitors
+from
+    assignments
+where true
+    and assignments.is_internal = 0
+group by 1
+order by 1
+;
+```
+
+## 12. Ways of working
+
+| item | answer | verified | source |
+|---|---|---|---|
+| where work lives | one repo with a folder per project | 2026-02-24 | setup |
+| file hand-back | downloads | 2026-02-24 | setup |

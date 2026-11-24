@@ -109,7 +109,7 @@ Plain models already spot visible flaws. These skills add:
 
 ## Works with or without a data connection
 
-If your agent can run queries, it does. In a chat app with a code tool, attach your data files (CSV, Excel) and it loads them and runs the checks itself. Only with no code tool does it hand you numbered queries, in groups, and wait for the paste. In a chat app it creates each file and offers it as a download. Every step ends with a go-ahead question. It never fails because a tool is missing.
+If your agent can run queries, it does. In a chat app with a code tool, attach your data files (CSV, Excel) and it loads them and runs the checks itself. Only with no code tool does it hand you numbered queries, in groups, and wait for the paste. In a chat app it saves each file to your Project files at its full path, or offers a download and tells you where to add it. Every step ends with a go-ahead question. It never fails because a tool is missing.
 
 ## Your files
 
@@ -123,9 +123,23 @@ data-work/
       analysis.md     working notes, with a Progress line any new session resumes from
       readout.md      stakeholder readout (skeleton, draft, then final)
       readout.docx    the same text with the charts, for Word and Google Docs
-      queries/
-      outputs/
+      experiment-spec.md or metric-spec.md   (design asks)
+      queries/        (coding agents)
+      outputs/        (coding agents; in a chat app charts sit in the analysis folder)
 ```
+
+## Using data-skills in a chat app
+
+These steps are for claude.ai and ChatGPT. Coding agents need none of this: they save your files in the repo.
+
+1. **Create a Project** per team or area.
+2. **Upload the skills.** Add the ZIPs from the latest release (see [docs/install.md](docs/install.md)).
+3. **Run `/setup-data-work`.** At the end it gives you a short block. Paste it into the Project instructions.
+4. **Use one chat per analysis.** Start with `/grill-the-ask` and follow the go-ahead question at the end of each step.
+5. **Your files live in `data-work/` in the Project files.** Every step ends by telling you which files changed and where they are. It says "Saved to `<path>` in your Project files" or "Download `<file>` and add it to your Project at `<path>`".
+6. **If the app cannot save to the Project,** download the file and add it to the Project at the path shown. Keep the folder names, so the next chat finds it. Never edit a file by hand: the skill hands back the whole file.
+7. **Many analyses in one Project are fine.** A new ask that matches an old one asks you: continue it, or start a new analysis.
+8. **Old files at the top level or in a `claude/` folder** are stale. The skill names them. Move old analyses into the `data-work/` layout once.
 
 ## Question types
 

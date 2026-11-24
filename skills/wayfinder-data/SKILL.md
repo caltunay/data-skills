@@ -23,20 +23,20 @@ Second, asks that need a design and no data yet: "design an A/B test for the new
 ## Start (every flow step)
 
 1. Check for `DATA-MAP.md` and for an existing wayfinder file `data-work/wayfinder/<slug>.md` (in `data-work/` in the current folder, then upward; in the Project files; or attached). Say in one line what you found, and which map you read. A team map can sit above project maps: the nearest map wins for conflicts. This step needs no `analysis.md`.
-2. If there is no `DATA-MAP.md`, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Wait for the choice.
+2. If there is no `DATA-MAP.md`, first ask: "Do you have a DATA-MAP.md from another project on the same data? Attach or copy it in." If the Project holds earlier analyses but no map, make the first option "Yes, attach it (recommended: earlier analyses are here)", never "No", and say: "If an earlier analysis ended with a retro, the map is in that chat. Download it and add it to `data-work/DATA-MAP.md`." If not, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Wait for the choice.
 3. If the user is resuming and the wayfinder file is not found (for example, a new chat), ask them to attach it before asking anything else.
-4. If a wayfinder file exists, read its Progress line and resume from it. Do not reopen decided items unless the user asks.
+4. If a wayfinder file exists, read its Progress line and resume from it. Do not reopen decided items unless the user asks. If a spec for the same design already sits in an analysis folder, ask "Continue `<folder>`, or start a new spec?" Never resume silently.
 
 ## Rules from the disciplines (in case they do not load)
 
-- `grilling`: rounds of at most 3 questions, each with 2 to 4 options and one real recommended default (never a hedge such as "C if unknown"). Wait for answers. Never assume silently. When an answer conflicts with an earlier one or the data map, or does not make sense, say so plainly and ask one question at a time until it is clear. Never ask the same question twice. Use the environment's multiple-choice question tool for each round if it has one (one question per card, recommended option first); otherwise list the options as text.
+- `grilling`: rounds of at most 3 questions, each with 2 to 4 options and one real recommended default with its reason. A hedge is not a default: never "recommended if you have one", "TBC" or "C if unknown". Pick a real option and say why. Show any tree, table or draft a question refers to before you ask it (never ask "which hypothesis paths?" before the tree is on screen). Each option says what it means in a few words (for example "H1.1: holds in each month"). An option that needs data the map says is missing says so in the option text (for example "needs the visit marker; the map says it is unknown"). Use the environment's multiple-choice question tool for every round if it has one (one card per question, recommended option first, room for the user's own answer); otherwise list the options as text. Wait for answers. Never assume silently. When an answer conflicts with an earlier one or the data map, or does not make sense, say so plainly and ask one question at a time until it is clear. Never ask the same question twice.
 - `assumptions`: when something must be assumed, write it down with likely alternatives and the impact if wrong.
 - `question-types`: six question types, each with a claim ceiling. Name the type of each analysis you list.
 - `metric-design` (experimental): a metric needs a formula, a grain, a population, an owner, guardrails and a trusted number.
 - `stats-tests`: size an experiment with a baseline, an MDE, power and a significance level. Fix the primary metric and the runtime in advance. One primary metric; extra metrics get a correction or the label exploratory.
 - `experiment` card (in `question-types`): randomise a unit, hold the split fixed, check the sample ratio, no peeking, full weekly cycles, guardrails, one decision rule written before the test.
 - `data-map`: read `DATA-MAP.md` first. Flag entries older than 90 days or contradicted by data, then ask.
-- `run-or-hand-over`: two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts (load them and run SQL with DuckDB or SQLite, or pandas). Hand over only when no code tool exists, and say so in one line. Where do files persist? In a chat app, create each file and offer it as a download; print it only if that fails. Never ask the user to edit a saved file by hand.
+- `run-or-hand-over`: two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts (load them and run SQL with DuckDB or SQLite, or pandas). Hand over only when no code tool exists, and say so in one line. Where do files persist? In a chat app, save each file at its full `data-work/` path in the Project files if you can, otherwise create it and offer a download, and say which; print it only if that fails. Never ask the user to edit a saved file by hand.
 
 ## Steps
 
@@ -46,7 +46,7 @@ Second, asks that need a design and no data yet: "design an A/B test for the new
 3. **Draft the map.** List the decision items: every choice that must be made before the work can be done well. Aim for 5 to 12. Fewer than 4 means this is one analysis: say so and suggest `/grill-the-ask` instead. For each item write:
    - **id** (W1, W2, ...) and a one-line question
    - **options** (2 to 4), each with its main trade-off
-   - **recommended default**, with one line why
+   - **recommended default:** a real option with one line why. "Recommended if you have one" or "TBC" is not a default. Flag an option that needs data the map says is missing
    - **status:** `open`
    - **depends on:** ids that must be decided first, or none
    - **who decides:** a role the user names. If unknown, write "to confirm" and ask. Do not guess a person or a team.
@@ -67,6 +67,8 @@ An item in a map can be a design item (an experiment or a metric to define). So 
 
 - **`experiment-spec.md`:** hypothesis, unit of randomisation, feature gate or assignment, primary metric, guardrails, MDE, power, runtime, seasonality, SRM check plan, decision rule. Use the `experiment` card in `question-types` for the checks, `stats-tests` for the sample size and MDE, and `metric-design` for the primary metric if it is not yet defined.
 - **`metric-spec.md`:** definition, formula, grain, population, data source or what must be collected, candidate proxies and how to check they track the true metric, a benchmark or target and where it comes from, owner. Use `metric-design`.
+
+Save each spec in its own analysis folder, `data-work/analyses/<YYYY-MM-DD>-<slug>/experiment-spec.md` or `metric-spec.md`, never as a bare `experiment-spec.md` (the next spec would overwrite it). Make the folder if it does not exist, and name the path when you save.
 
 Rules for both:
 
@@ -126,10 +128,17 @@ Example ready prompt: `/grill-the-ask Monthly churn rate for the subscription ap
 
 1. Update the Progress line in the wayfinder file (if there is one).
 2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
-3. Chat app: create the wayfinder file and offer it as a download. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Save this to your Project files so the next session, in any chat, can read it."
-4. Coding agent: the file is saved under `data-work/wayfinder/`. Say where.
-5. Name the next step: the next open item, or the first `/grill-the-ask` prompt. For a fast-path spec, the next step is to share the spec for sign-off, then `/grill-the-ask` for the analysis that will read the test out.
-6. Files: `experiment-spec.md` or `metric-spec.md` (and the wayfinder file when there is a map). Start each with `format: v1` and `updated: YYYY-MM-DD HH:MM`. In a chat app, hand back the whole file and say "Replace the old one in your Project files."
+3. Save each file at its full path, never a bare file name (a bare name lands in a `claude/` folder in claude.ai, and a bare `experiment-spec.md` is overwritten by the next spec): the wayfinder file at `data-work/wayfinder/<slug>.md`, and each spec in its own analysis folder, `data-work/analyses/<YYYY-MM-DD>-<slug>/experiment-spec.md` or `metric-spec.md`. Start each with `format: v1` and `updated: YYYY-MM-DD HH:MM`. Hand back the whole file. Then say exactly what happened to each file, in one of three forms: "Saved to `<path>` in your Project files" (you wrote it there), "Download `<file>` and add it to your Project at `<path>`" (you could not write to Project files), or "Printed below; save it as `<path>`" (creating the file failed). Never claim a save that did not happen. Never say "replace the old one, it is already saved there". Never ask the user to edit a saved file by hand.
+4. Stale copies: if an older copy of a file exists elsewhere in the Project (for example a spec at the top level, or a file in `claude/`), name it and say it is stale. If two copies exist, use the newest `updated:` and say so.
+5. Coding agent: the files are saved under `data-work/`. Name each path.
+6. End with the go-ahead question, in this fixed form:
+
+   > Go ahead?
+   > A) Yes, <the next step> (recommended)
+   > B) Change something (say what)
+   > C) Add an item, a check or a question
+
+   Fill in A with the real next step: the next open item ("resolve W5"), the first `/grill-the-ask` prompt, or, for a fast-path spec, "share the spec for sign-off, then run `/grill-the-ask` for the analysis that will read the test out". Wait for the answer. A means start that step. B or C means make the change, hand back the updated file, and ask again.
 
 ## Done when
 

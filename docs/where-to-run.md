@@ -15,15 +15,14 @@ Pick the row that matches how you work. The skills behave the same. Only where t
 - Run `/setup-data-work` once. It ends with a short block to paste into the Project's instructions. Example:
 
   ```
-  Read DATA-MAP.md before any data work. Use the data-skills commands.
-  Keep files named DATA-MAP.md, analysis-<slug>.md and readout-<slug>.md.
-  Save updated files back to the Project files. If two copies exist, use the newest `updated:` line.
+  Read data-work/DATA-MAP.md before any data work. Use the data-skills commands. Keep files in data-work/ as the skills lay them out. At the end of each step, tell me which files changed and where they are.
   ```
 
-- Fixed file names: `DATA-MAP.md`, `analysis-<slug>.md`, `readout-<slug>.md`. Every file starts with `format:` and `updated: YYYY-MM-DD HH:MM`.
-- Each step hands back the whole file and says "Replace the old one in your Project files." You never edit a file by hand. If two copies exist, the skill uses the newest `updated:` line and says so.
+- One layout: `data-work/DATA-MAP.md` and `data-work/analyses/<YYYY-MM-DD>-<slug>/` with `analysis.md`, `readout.md`, `readout.docx`, charts and any spec. Every file starts with `format:` and `updated: YYYY-MM-DD HH:MM`. The skills never save under a bare name.
+- Each step names the path of every file it changed, in one of three forms: "Saved to `<path>` in your Project files", "Download `<file>` and add it to your Project at `<path>`", or "Printed below; save it as `<path>`". You never edit a file by hand.
+- Older copies elsewhere in the Project (for example `analysis (6).md` at the top level, or a file in `claude/`) are named as stale. Move old analyses into the layout once. If two copies exist, the skill uses the newest `updated:` line and says so.
 - Optional: save files to a document tool you use (for example a drive, a wiki or a notes app) instead of downloads. The skill asks once, and only uses a tool you name.
-- The readout comes as `readout-<slug>.md` and as a `.docx` with the charts embedded, if the chat has a code tool. It opens in Word and Google Docs.
+- The readout comes as `readout.md` and as a `.docx` with the charts embedded, if the chat has a code tool. It opens in Word and Google Docs.
 - Start the review in a new chat in the same Project. Everything it needs is in the Project files.
 
 ## Starting a new project, or a new Project, on the same data

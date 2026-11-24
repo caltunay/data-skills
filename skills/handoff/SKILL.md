@@ -27,7 +27,7 @@ Experimental (v0.2).
 
 - `assumptions`: list every high-impact row still `open`, with its alternatives and how to check it.
 - `question-types`: state the question type and its claim ceiling, so the next person does not overclaim.
-- `run-or-hand-over`: two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts (load them and run SQL with DuckDB or SQLite, or pandas). Hand over only when no code tool exists, and say so in one line. Where do files persist? In a chat app, create each file and offer it as a download; print it only if that fails. Never ask the user to edit a saved file by hand.
+- `run-or-hand-over`: two separate questions. Can I run things here? Always try first: a code tool or sandbox with attached files counts (load them and run SQL with DuckDB or SQLite, or pandas). Hand over only when no code tool exists, and say so in one line. Where do files persist? In a chat app, save each file at its full `data-work/` path in the Project files if you can, otherwise create it and offer a download, and say which; print it only if that fails. Never ask the user to edit a saved file by hand.
 
 ## Steps
 
@@ -74,7 +74,7 @@ analysis.md, readout.md (draft or final), each file in queries/ (run or not run)
 1. Attach or open: <the files>.
 2. Run: <the command from the Progress line>.
 3. First thing it will need: <the paste or answer being waited for>.
-Chat app: put the files in the Project files first.
+Chat app: put the files in the Project files first, at their `data-work/` paths.
 ```
 
 Keep it to about one page. Link to `analysis.md` for detail. Do not copy it.
@@ -83,8 +83,8 @@ Keep it to about one page. Link to `analysis.md` for detail. Do not copy it.
 
 1. Add the handoff to the Progress line in `analysis.md` Meta, for example `Progress: run step 3 of 7, waiting for Q3.1 paste; handoff written 2026-11-16`. Do not change the step it points to.
 2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
-3. Chat app: create `handoff.md`, `analysis.md` (and `readout.md` when it exists) as files and offer them as downloads. Print one block only if creating a file fails. Never ask the user to edit a saved file by hand: hand back the updated file. Say: "Save these to your Project files, or send them together to your colleague."
-4. Coding agent: `handoff.md` is saved in the analysis folder. Say where.
+3. Save each file at its full path, never a bare file name: `data-work/analyses/<YYYY-MM-DD>-<slug>/handoff.md`, `analysis.md` (and `readout.md` when it exists) in the same folder. Then say exactly what happened to each file, in one of three forms: "Saved to `<path>` in your Project files" (you wrote it there), "Download `<file>` and add it to your Project at `<path>`" (you could not write to Project files), or "Printed below; save it as `<path>`" (creating the file failed). Never claim a save that did not happen. Never ask the user to edit a saved file by hand. A colleague can also get the files sent together.
+4. Coding agent: `handoff.md` is saved in the analysis folder. Name the path. If an older copy of a file exists elsewhere in the Project, name it and say it is stale.
 5. Name the next step: the command in section 5 of the handoff.
 
 ## Done when
