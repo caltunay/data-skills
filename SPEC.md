@@ -161,14 +161,14 @@ Three environments, one behaviour:
 |---|---|---|
 | Coding agent with data connected | Runs them | Writes to `data-work/` |
 | Coding agent, no data connection | Hands them over, waits for the paste | Writes to `data-work/` |
-| Chat app with a code tool and attached data files | Loads the files and runs the checks (DuckDB, SQLite or pandas) | Creates the file, offers a download |
-| Chat app, data in a source with no connection | Hands them over, waits for the paste | Creates the file, offers a download |
+| Chat app with a code tool and attached data files | Loads the files and runs the checks (DuckDB, SQLite or pandas) | Writes to the Project files, or creates the file and offers a download |
+| Chat app, data in a source with no connection | Hands them over, waits for the paste | Writes to the Project files, or creates the file and offers a download |
 | Chat app with no code tool | Hands them over, says so in one line | Prints a block to copy |
 
 The `run-or-hand-over` discipline defines this. It asks two separate questions.
 
 - **Can I run things here?** Always try first. A code tool or sandbox with attached files counts: load them and run SQL (DuckDB or SQLite) or pandas. Only hand over when no code tool exists, and say so in one line. Never say "I can't run code" when a code tool exists.
-- **Where do files persist?** In a chat app, create each file in the sandbox and offer it as a download. Print it as a block only if creating the file fails. Never say "I can't save files" when a download can be made.
+- **Where do files persist?** In a chat app, write each file to the Project files at its full path if you can. Otherwise create it in the sandbox and offer it as a download, and say where to add it. Print it as a block only if creating the file fails. Never say "I can't save files" when a download can be made.
 
 Never fail because a tool is missing.
 
