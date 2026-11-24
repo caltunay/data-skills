@@ -732,6 +732,8 @@ Rules for every new skill:
   - Uses the `experiment` card, `stats-tests` and `metric-design`. Never invents a number: baselines, targets and benchmarks come from the user or the data map, or stay "to confirm".
   - **Fast path:** when the whole ask is one design item, it skips the decision map and goes straight to that spec.
   - `/grill-the-ask` sends design asks and project-sized asks to `/wayfinder-data` with one line why.
+  - **Specs live in their own analysis folder (v0.5).** `data-work/analyses/<YYYY-MM-DD>-<slug>/experiment-spec.md` or `metric-spec.md`, never a bare `experiment-spec.md`.
+  - **Ends with the go-ahead question (v0.5)**, in the fixed form: A) the next step (recommended), B) Change something, C) Add an item, a check or a question.
 
 ### 20.6 `/handoff` (user-invoked, off-flow)
 

@@ -95,6 +95,7 @@
 91. When the Project holds earlier analyses but no map, the first option is "Yes, attach it", with the hint that an earlier retro chat holds the map.
 92. Clickable question cards (already on `v0.4`) are restated in every skill that asks questions, not only the grill. Cards explain their options, show the thing they refer to first, never hedge a default, and flag options that need data the map says is missing.
 93. Hypothesis status is judged against each node's own support and refute conditions, never the parent's direction. A robustness child whose result held is supported, whatever the result was. Child nodes are written without the parent's direction. `/review-analysis` checks every status and fixes wrong ones with a was and now pair.
+94. `/wayfinder-data` ends with the same go-ahead question as the flow steps. Option A names the real next step: the next open item, the first analysis prompt, or sign-off of a fast-path spec. Specs are saved in their own analysis folder, never under a bare name.
 
 ## Build decisions
 

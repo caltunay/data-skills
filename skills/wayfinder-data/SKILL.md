@@ -25,7 +25,7 @@ Second, asks that need a design and no data yet: "design an A/B test for the new
 1. Check for `DATA-MAP.md` and for an existing wayfinder file `data-work/wayfinder/<slug>.md` (in `data-work/` in the current folder, then upward; in the Project files; or attached). Say in one line what you found, and which map you read. A team map can sit above project maps: the nearest map wins for conflicts. This step needs no `analysis.md`.
 2. If there is no `DATA-MAP.md`, first ask: "Do you have a DATA-MAP.md from another project on the same data? Attach or copy it in." If the Project holds earlier analyses but no map, make the first option "Yes, attach it (recommended: earlier analyses are here)", never "No", and say: "If an earlier analysis ended with a retro, the map is in that chat. Download it and add it to `data-work/DATA-MAP.md`." If not, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Wait for the choice.
 3. If the user is resuming and the wayfinder file is not found (for example, a new chat), ask them to attach it before asking anything else.
-4. If a wayfinder file exists, read its Progress line and resume from it. Do not reopen decided items unless the user asks.
+4. If a wayfinder file exists, read its Progress line and resume from it. Do not reopen decided items unless the user asks. If a spec for the same design already sits in an analysis folder, ask "Continue `<folder>`, or start a new spec?" Never resume silently.
 
 ## Rules from the disciplines (in case they do not load)
 
