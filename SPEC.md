@@ -98,7 +98,8 @@ Inspired by `mattpocock/skills` (structure, flow, user-invoked vs model-invoked)
 2. Look for `data-work/` in the current folder, then upward. If more than one map is found, the nearest one wins for conflicts. Say which map you read.
 3. If there is no `DATA-MAP.md`, first ask: "Do you have a DATA-MAP.md from another project on the same data? Attach or copy it in." If not, offer: "A) Run `/setup-data-work` first (recommended if you will analyse this data again). B) Continue: I ask about the data inline, and `/retro-analysis` starts the map." Record the choice in Meta as `Setup choice`. Never offer setup again once it is set. `/retro-analysis` never offers setup: it builds the map itself.
 4. If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before re-asking anything.
-5. Read the Progress line and resume from it.
+5. Match the analysis file to the ask by its folder or slug. In `/grill-the-ask`, if an analysis of the same ask already exists, ask "Continue `<folder>`, or start a new analysis?" and never resume silently. In later steps, if more than one analysis could fit, ask which.
+6. Read the Progress line and resume from it. When resuming, refresh every line that is now out of date (for example "no DATA-MAP.md, so inline" after a map exists, or an old hint in the Meta claim line), shown as "was" and "now" pairs.
 
 ### Every flow step ends the same way
 

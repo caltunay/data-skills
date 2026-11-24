@@ -88,6 +88,7 @@
 84. One folder layout everywhere (v0.5). All user files live under `data-work/` with full paths, in coding agents and in chat apps. Chat apps stop using `analysis-<slug>.md` and `readout-<slug>.md`. A bare file name lands in a `claude/` folder in claude.ai and generic names get overwritten.
 85. After a save, the skill says which of three things happened, with the path: saved to Project files, download and add it, or printed below. It never claims a save that did not happen, and never says a file is both saved and to be replaced.
 86. Old copies are named as stale, and the user is told once to move old analyses into the layout. Two copies: the newest `updated:` wins.
+87. Several analyses can live in one Project. An analysis is matched to an ask by its folder or slug. A grill that finds an analysis of the same ask always asks whether to continue or start a new one. Resuming never happens silently, and a resumed file has its stale lines refreshed as "was" and "now" pairs.
 
 ## Build decisions
 
@@ -253,6 +254,7 @@ B127. Setup (v0.5). Branch `v0.5` from `main`, because PR #3 (v0.4) is merged. `
 B128. Chart folder in chat apps. Options: keep `outputs/` as a subfolder in chat apps, or put charts in the analysis folder itself. Chosen: flat in the analysis folder in chat apps, `outputs/` kept for coding agents. Reason: item 4 says chat links must never point to `outputs/`, and chat Project files do not reliably hold subfolders. The link is the chart's real path relative to `readout.md`.
 B129. Analysis folder name in Meta. A new `Folder` line holds `data-work/analyses/<YYYY-MM-DD>-<slug>/`, set by `/grill-the-ask`. Reason: later steps, in a new chat, need one value to build every path and to match an analysis to an ask.
 B130. Self-check 34 no longer looks for "Replace the old one in your Project files". The three save forms replace it.
+B131. Continue or new (item 5). The question appears in `/grill-the-ask` only. Later steps ask only when more than one analysis could be the one. Reason: a later step runs because the user chose the analysis in the grill, so asking again is noise unless it is unclear. Default recommendation: continue when the status is not `retro done`, new when it is.
 
 ## Questions for Cenan
 
