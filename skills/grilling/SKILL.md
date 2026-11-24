@@ -13,7 +13,7 @@ Only for data asks: an analysis, a metric, a query, a report, an experiment. If 
 
 ## Core rule
 
-Ask in rounds of at most 3 questions. Give each question 2 to 4 options and one real recommended default, with a one-line reason. Wait for the answers. Never assume silently.
+Ask in rounds of at most 3 questions. Give each question 2 to 4 options and one real recommended default, with a one-line reason. Use the environment's multiple-choice question tool if it has one; otherwise list the options as text. Wait for the answers. Never assume silently.
 
 ## How to run a round
 
@@ -27,8 +27,9 @@ Ask in rounds of at most 3 questions. Give each question 2 to 4 options and one 
    - C. Dispatch date
    - D. Something else
 
-4. Stop. Wait for the reply.
-5. Repeat until the work is clear, or until the depth limit is reached (quick: 1 round).
+4. **How to show the round.** If your environment offers a tool for asking multiple-choice questions (clickable options), use it for every round: one question per card, at most 3 cards per round, the recommended option first with its reason in the option text, and leave room for the user's own answer. Otherwise write the round as text, as above. Never name a specific agent's tool in what you show the user.
+5. Stop. Wait for the reply.
+6. Repeat until the work is clear, or until the depth limit is reached (quick: 1 round).
 
 ## What to cover, in this order of priority
 
