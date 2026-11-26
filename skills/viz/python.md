@@ -5,12 +5,18 @@ Use matplotlib for static files. A coding agent saves them in the analysis folde
 ## Pattern (matplotlib)
 
 ```python
+import sys
+from pathlib import Path
+
 import matplotlib.pyplot as plt
 import pandas as pd
 
+# usage: python make_chart.py <data folder> <analysis folder>
+data_dir, out_dir = Path(sys.argv[1]), Path(sys.argv[2])
+
 OKABE_ITO = ["#0072B2", "#E69F00", "#009E73", "#D55E00", "#CC79A7", "#56B4E9", "#F0E442", "#000000"]
 
-weekly = pd.read_csv("outputs/weekly_signups.csv", parse_dates=["week_start"])
+weekly = pd.read_csv(data_dir / "weekly_signups.csv", parse_dates=["week_start"])
 
 fig, ax = plt.subplots(figsize=(8, 4.5))
 for colour, (channel, part) in zip(OKABE_ITO, weekly.groupby("channel")):
@@ -25,7 +31,7 @@ ax.set_ylim(bottom=0)
 ax.spines[["top", "right"]].set_visible(False)
 fig.text(0.01, 0.01, "Source: signups table, Feb to Mar, test accounts excluded.", fontsize=8)
 fig.tight_layout(rect=(0, 0.03, 1, 1))
-fig.savefig("outputs/signups-by-channel-feb-mar.png", dpi=200)
+fig.savefig(out_dir / "signups-by-channel-feb-mar.svg")  # SVG in chat apps; PNG only inside .docx or .pptx
 ```
 
 ## Notes by check

@@ -18,7 +18,7 @@ Experimental (v0.2).
 
 ## Start (every flow step)
 
-1. Check for `DATA-MAP.md`, `analysis.md` and `readout.md` (in `data-work/` in the current folder, then upward; in the Project files; or attached), and list the files in `queries/` and `outputs/` if you can see them. Say in one line what you found.
+1. Check for `DATA-MAP.md`, `analysis.md` and `readout.md` (in `data-work/` in the current folder, then upward; in the Project files; or attached), and list the files in `scripts/` and `outputs/` if you can see them. Say in one line what you found.
 2. No `DATA-MAP.md`: say so in the same line, and note it in the handoff. Do not offer setup here.
 3. If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before asking anything else. If there truly is none (quick depth, or work done outside the flow), build the handoff from the conversation and say that it has no `analysis.md` behind it.
 4. Read the Progress line in Meta. It is the starting point of the handoff.
@@ -68,7 +68,7 @@ Anything being waited for: a paste (which query), an answer (from whom, which qu
 
 ## 6. Files and their state
 | file | state | note |
-analysis.md, readout.md (draft or final), each file in queries/ (run or not run), each file in outputs/, DATA-MAP.md (present or not).
+analysis.md, readout.md (draft or final), each file in scripts/ (run or not run), each file in outputs/, DATA-MAP.md (present or not).
 
 ## 7. How to resume in a fresh session
 1. Attach or open: <the files>.
@@ -83,7 +83,7 @@ Keep it to about one page. Link to `analysis.md` for detail. Do not copy it.
 
 1. Add the handoff to the Progress line in `analysis.md` Meta, for example `Progress: run step 3 of 7, waiting for Q3.1 paste; handoff written 2026-11-16`. Do not change the step it points to.
 2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
-3. Save each file at its full path, never a bare file name: `data-work/analyses/<YYYY-MM-DD>-<slug>/handoff.md`, `analysis.md` (and `readout.md` when it exists) in the same folder. Then say exactly what happened to each file, in one of three forms: "Saved to `<path>` in your Project files" (you wrote it there), "Download `<file>` and add it to your Project at `<path>`" (you could not write to Project files), or "Printed below; save it as `<path>`" (creating the file failed). Never claim a save that did not happen. Never ask the user to edit a saved file by hand. A colleague can also get the files sent together.
+3. Save each file at its full path, never a bare file name: `data-work/analyses/<YYYY-MM-DD>-<slug>/handoff.md`, `analysis.md` (and `readout.md` when it exists) in the same folder. Then say exactly what happened to each file, in one of three forms: "Saved to `<path>` in your Project files" (you wrote it there), "Download `<file>`" (you could not write to Project files; never ask the user to move a file into a Project folder, chat apps do not allow it), or "Printed below; save it as `<path>`" (creating the file failed). Never claim a save that did not happen. Never ask the user to edit a saved file by hand. A colleague can also get the files sent together.
 4. Coding agent: `handoff.md` is saved in the analysis folder. Name the path. If an older copy of a file exists elsewhere in the Project, name it and say it is stale.
 5. Name the next step: the command in section 5 of the handoff.
 

@@ -87,12 +87,13 @@ data-work/analyses/<YYYY-MM-DD>-<slug>/
     analysis.md
     readout.md
     readout.docx
-    <charts>
+    scripts/        every script behind a number, a check or a chart
+    <charts>        SVG in a chat app that can write text but not binary files
     experiment-spec.md or metric-spec.md   (design asks)
 ```
 
 - **Never save with a bare file name.** In claude.ai a bare name lands in a `claude/` folder, and a generic name such as `experiment-spec.md` is overwritten by the next spec. Always use the full path.
-- The analysis folder is `<YYYY-MM-DD>-<slug>`: the date the ask was grilled, and a short slug. Meta holds it as `Folder`. Coding agents also keep `queries/` and `outputs/` inside it. In a chat app, charts sit in the analysis folder itself.
+- The analysis folder is `<YYYY-MM-DD>-<slug>`: the date the ask was grilled, and a short slug. Meta holds it as `Folder`. Every script is its own file in `scripts/`, in any environment (scripts are text). Each script takes the data folder as an argument and writes its outputs into the analysis folder, never a temp path. Coding agents also keep `outputs/`. In a chat app, charts sit in the analysis folder itself, saved as SVG when the agent can write text files but not binary files. PNG stays inside binary outputs (`.docx`, `.pptx`).
 - A coding agent writes the files under `data-work/` in the repo.
 
 ### Say exactly what happened to each file
@@ -100,20 +101,23 @@ data-work/analyses/<YYYY-MM-DD>-<slug>/
 After a save, name the path. Use one of three forms and no others:
 
 1. "Saved to `<path>` in your Project files" (you wrote it there).
-2. "Download `<file>` and add it to your Project at `<path>`" (you could not write to Project files).
+2. "Download `<file>`" (you could not write to Project files; never ask the user to move a file into a Project folder, chat apps do not allow it).
 3. "Printed below; save it as `<path>`" (creating the file failed).
 
 Never claim a save that did not happen. Never say "replace the old one, it is already saved there": it is saved, or the user must add it, never both. Coding agent: name the path you wrote.
 
 ### Stale copies
 
-When an older copy of the same file exists elsewhere in the Project (for example `analysis (6).md` at the top level, or a file in `claude/`), name it and say it is stale. Once per Project, suggest moving old analyses into the `data-work/` layout. If two copies exist, use the newest `updated:` line and say so.
+List stale copies by full path, never a bare name next to the live full path (never `DATA-MAP.md` beside `data-work/DATA-MAP.md`). One rule every time: a copy is stale when it has the same file name as a live file but sits at another path, or has an older `updated:` line. The list changes only when files change, so it does not shrink or grow between steps for no reason.
+
+A step never leaves its own stale copy. If it renames or replaces a file it created, it removes or overwrites the old one where it can, and lists only the files it cannot remove. Once per Project, suggest moving old analyses into the `data-work/` layout. If two copies exist, use the newest `updated:` line and say so.
 
 ### Other rules
 
-- Chat app: at the end of every flow step, hand back each file the step changed (for example `analysis.md`, and `readout.md` and `readout.docx` when they exist), in one of the three forms above. Say which files changed and where they are.
+- Chat app: at the end of every flow step that could change files, hand back each file the step changed (for example `analysis.md`, and `readout.md` and `readout.docx` when they exist), in one of the three forms above. Say which files changed and where they are. A question turn changes no files: add no "Files changed" line.
 - Every file starts with `format:` and `updated: YYYY-MM-DD HH:MM` (now). Hand back the whole file, never a patch.
 - Document tool (optional). Ask once per Project, generically: "Hand files to you as downloads, as files in your Project, or save them to a document tool you use (for example a drive, a wiki or a notes app)?" Use only a tool the user names, never one picked from the connectors you can see. Never required. The answer goes in Meta as `Files` and in the data map under Ways of working. If the map already holds the answer, never ask again.
+- Charts: when you can write text files to the Project files but not binary files, save each chart as SVG in the analysis folder and link it from `readout.md`. SVG is text, so it saves and renders there. Keep PNG only inside binary outputs (`.docx`, `.pptx`).
 - A readout `.docx` needs a document library in the sandbox. Use whatever it has. With no code tool, give `readout.md` plus the chart code only, and say so in one line.
 - No manual file edits. After the user confirms something, never ask them to edit a saved file by hand. Make the change yourself and hand back the updated file.
 - If `analysis.md` is expected but not found (for example, a new chat), ask the user to attach it before re-asking anything.

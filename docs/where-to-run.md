@@ -19,8 +19,8 @@ Pick the row that matches how you work. The skills behave the same. Only where t
   ```
 
 - One layout: `data-work/DATA-MAP.md` and `data-work/analyses/<YYYY-MM-DD>-<slug>/` with `analysis.md`, `readout.md`, `readout.docx`, charts and any spec. Every file starts with `format:` and `updated: YYYY-MM-DD HH:MM`. The skills never save under a bare name.
-- Each step names the path of every file it changed, in one of three forms: "Saved to `<path>` in your Project files", "Download `<file>` and add it to your Project at `<path>`", or "Printed below; save it as `<path>`". You never edit a file by hand.
-- Older copies elsewhere in the Project (for example `analysis (6).md` at the top level, or a file in `claude/`) are named as stale. Move old analyses into the layout once. If two copies exist, the skill uses the newest `updated:` line and says so.
+- Each step names the path of every file it changed, in one of three forms: "Saved to `<path>` in your Project files", "Download `<file>`" (no move into a Project folder is ever asked), or "Printed below; save it as `<path>`". You never edit a file by hand.
+- Older copies elsewhere in the Project (for example `analysis (6).md` at the top level, or a file in `claude/`) are named as stale. The skill lists them by full path. If two copies exist, the skill uses the newest `updated:` line and says so.
 - Optional: save files to a document tool you use (for example a drive, a wiki or a notes app) instead of downloads. The skill asks once, and only uses a tool you name.
 - The readout comes as `readout.md` and as a `.docx` with the charts embedded, if the chat has a code tool. It opens in Word and Google Docs.
 - Start the review in a new chat in the same Project. Everything it needs is in the Project files.

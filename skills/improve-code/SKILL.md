@@ -19,7 +19,7 @@ Experimental (v0.2).
 
 1. Take the code: pasted, or a file path. Read all of it before saying anything.
 2. Check for `DATA-MAP.md` (in `data-work/` in the current folder, then upward; in the Project files; or attached). Say in one line whether you found it. If found, read Tables (grain, keys), Joins (traps), Rules (mandatory filters) and Conventions. If not found, continue without it and ask about grain and style when you need them. Do not offer setup here.
-3. This step needs no `analysis.md`. If the code belongs to an analysis folder (it sits in `queries/`), say so and read the Analysis table spec for the intended grain.
+3. This step needs no `analysis.md`. If the code belongs to an analysis folder (it sits in `scripts/`), say so and read the Analysis table spec for the intended grain.
 
 ## Rules from the disciplines (in case they do not load)
 
@@ -94,9 +94,9 @@ Keep bug fixes and behaviour-preserving changes apart, so each can be checked on
 
 ## End
 
-1. Coding agent: if the user asked you to edit the file, save it and say where. Save check queries next to it, or in `queries/` when the code lives in an analysis folder. If the code belongs to an analysis, add a line to its Progress line.
+1. Coding agent: if the user asked you to edit the file, save it and say where. Save check queries next to it, or in `scripts/` when the code lives in an analysis folder. If the code belongs to an analysis, add a line to its Progress line.
 2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
-3. Chat app: give the improved code as one block, and create it as a file. Name its full path (for an analysis: `data-work/analyses/<YYYY-MM-DD>-<slug>/queries/<file>`) and say what happened to it: "Saved to `<path>` in your Project files", "Download `<file>` and add it to your Project at `<path>`", or "Printed below; save it as `<path>`". Never claim a save that did not happen.
+3. Chat app: give the improved code as one block, and create it as a file. Name its full path (for an analysis: `data-work/analyses/<YYYY-MM-DD>-<slug>/scripts/<file>`) and say what happened to it: "Saved to `<path>` in your Project files", "Download `<file>`", or "Printed below; save it as `<path>`". Never claim a save that did not happen.
 4. If the change fixed a trap worth remembering (a fan-out, a missing mandatory filter), suggest `/retro-analysis` to add it to the data map. Do not edit the map here.
 
 ## Done when
