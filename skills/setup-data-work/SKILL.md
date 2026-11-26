@@ -71,7 +71,7 @@ Optional line: "If you have a web search or docs lookup tool, check the current 
 
 ## End
 
-- Chat app (no user project folder: no `data-work/` and no repo): save the full map at its full path, `data-work/DATA-MAP.md`, never as a bare `DATA-MAP.md`. Say exactly what happened, in one of three forms: "Saved to `data-work/DATA-MAP.md` in your Project files" (you wrote it there), "Download `DATA-MAP.md`" (you could not write to Project files), or "Printed below; save it as `data-work/DATA-MAP.md`" (creating the file failed). Never claim a save that did not happen. Never ask the user to edit a saved file by hand. If an older copy of the map sits elsewhere in the Project (for example at the top level or in `claude/`), name it and say it is stale.
+- Chat app (no user project folder: no `data-work/` and no repo): save the full map at its full path, `data-work/DATA-MAP.md`, never as a bare `DATA-MAP.md`. Say exactly what happened, in one of three forms: "Saved to `data-work/DATA-MAP.md` in your Project files" (you wrote it there), "Download `DATA-MAP.md`" (you could not write to Project files), or "Printed below; save it as `data-work/DATA-MAP.md`" (creating the file failed). Never claim a save that did not happen. Never ask the user to edit a saved file by hand. Never ask the user to move a file into a Project folder. If an older copy of the map sits elsewhere in the Project (for example at the top level or in `claude/`), name it and say it is stale.
 - Chat app: end the output with a short block to paste into the Project's instructions, in a fenced block, for example:
 
   ```

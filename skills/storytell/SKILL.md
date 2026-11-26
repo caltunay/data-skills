@@ -1,6 +1,6 @@
 ---
 name: storytell
-description: The storytelling discipline of the readout. Applied inside /run-analysis to draft the readout as a story, and inside /review-analysis to check the story and fix it before the readout is marked final. Run directly it rewrites a final readout for one audience (exec, product, data or mixed) and one format (doc, chat message, email, slide pack). Use only when the user runs /storytell or explicitly asks to turn a finished readout into an audience version.
+description: The storytelling discipline of the readout. Applied inside /run-analysis and /review-analysis: the first drafts the readout as a story, the second checks the story and fixes it before the readout is marked final. Run directly it rewrites a final readout for one audience (exec, product, data or mixed) and one format (doc, chat message, email, slide pack). Use only when the user runs /storytell or explicitly asks to turn a finished readout into an audience version.
 ---
 
 # /storytell
@@ -103,7 +103,7 @@ Offered at the end of `/review-analysis` as one card: "Also make a slide pack?" 
 1. Update the Progress line and the "Where it stands" block in `analysis.md`, for example `Progress: storytell done, readout-exec.md written`.
 2. Where do files persist? Decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), you are in a chat app. This is only about files: a chat app with a code tool still runs checks itself.
 3. Save each file at its full path, never a bare file name: `data-work/analyses/<YYYY-MM-DD>-<slug>/readout-<audience>.md` (and its `.docx` or `.pptx` when made) and the updated `analysis.md` in the same folder. Then say exactly what happened to each file, in one of three forms: "Saved to `<path>` in your Project files" (you wrote it there), "Download `<file>`" (you could not write to Project files; never ask the user to move a file into a Project folder, chat apps do not allow it), or "Printed below; save it as `<path>`" (creating the file failed). Never claim a save that did not happen. Hand back whole files, never patches. Never ask the user to edit a saved file by hand.
-4. Stale copies: list each older copy of a file this step handles by its full path, never a bare name beside the live full path. One rule every time: same file name at another path, or an older `updated:` line. If this step replaced a file it created, remove or overwrite the old one where you can, and list only the files you cannot remove. Coding agent: the file is saved next to `readout.md`. Name the path.
+4. Stale copies: list each older copy of a file this step handles by its full path, never a bare name beside the live full path. One rule every time: a copy is stale when it has the same file name at another path, or an older `updated:` line. If this step replaced a file it created, remove or overwrite the old one where you can, and list only the files you cannot remove. Coding agent: the file is saved next to `readout.md`. Name the path.
 5. Say which files changed only if this step changed files. Name the next step: `/retro-analysis` if it has not run, or another audience version.
 
 ## Done when
