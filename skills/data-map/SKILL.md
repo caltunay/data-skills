@@ -24,7 +24,7 @@ Outside the flow, stay silent if there is no map. Read it before writing queries
 
 ## Staleness
 
-Every entry has `verified: YYYY-MM-DD` and `source: setup` or `source: analyses/<slug>`.
+Every entry has `verified: YYYY-MM-DD` and `source: setup` or `source: analyses/<YYYY-MM-DD>-<slug>`. Source paths use one form: the dated analysis folder name, never a bare slug or a full path. When a step touches an older entry written another way, normalise it and show the change.
 
 - Older than 90 days: say so and ask whether it still holds before relying on it.
 - Contradicted by data (a trusted number does not reconcile, a key is not unique): say so, show the evidence, ask.
@@ -51,7 +51,7 @@ Only the retro step changes the map. It proposes dated changes, shows a diff, an
 
 Not a memory dump. Do not add one-off details of a single analysis.
 
-Each new entry gets today's date and `source: analyses/<slug>`. In a chat app, save the full updated map at `data-work/DATA-MAP.md` and say exactly what happened: "Saved to `data-work/DATA-MAP.md` in your Project files", "Download `DATA-MAP.md`", or "Printed below; save it as `data-work/DATA-MAP.md`". Name any stale older copy. In a coding agent, edit the file in place.
+Each new entry gets today's date and `source: analyses/<YYYY-MM-DD>-<slug>`. In a chat app, save the full updated map at `data-work/DATA-MAP.md` and say exactly what happened: "Saved to `data-work/DATA-MAP.md` in your Project files", "Download `DATA-MAP.md`", or "Printed below; save it as `data-work/DATA-MAP.md`". Name any stale older copy. In a coding agent, edit the file in place.
 
 ## Safety
 

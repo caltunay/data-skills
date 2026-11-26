@@ -3,7 +3,7 @@ updated: YYYY-MM-DD HH:MM
 
 # Data map
 
-Shared by the team. Every entry carries `verified: YYYY-MM-DD` and `source: setup` or `source: analyses/<slug>`.
+Shared by the team. Every entry carries `verified: YYYY-MM-DD` and `source: setup` or `source: analyses/<YYYY-MM-DD>-<slug>`.
 Entries older than 90 days, or contradicted by data, must be re-confirmed before use.
 
 ## 1. Sources

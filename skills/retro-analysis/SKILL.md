@@ -22,7 +22,7 @@ The data map should get better with every analysis. This is not a memory dump.
 ## Rules from the disciplines (in case they do not load)
 
 - `grilling`: rounds of at most 3 questions, each with 2 to 4 options and one real recommended default with its reason. A hedge is not a default: never "recommended if you have one", "TBC" or "C if unknown". Pick a real option and say why. Show any tree, table or draft a question refers to before you ask it (never ask "which hypothesis paths?" before the tree is on screen). Each option says what it means in a few words (for example "H1.1: holds in each month"). An option that needs data the map says is missing says so in the option text (for example "needs the visit marker; the map says it is unknown"). Use the environment's multiple-choice question tool for every round if it has one (one card per question, recommended option first, room for the user's own answer); otherwise list the options as text. Wait for answers. Never assume silently. When an answer conflicts with an earlier one or the data map, or does not make sense, say so plainly and ask one question at a time until it is clear. Never ask the same question twice.
-- `data-map`: change the map only through approved retro changes. Tidy a messy map to the template as one approved change. Key queries are saved as SQL text. One entry per source; grain and keys under Tables; the template's table layout, never loose bullets. Conventions hold style only; analysis rules go in Rules or Gotchas; no duplicates across sections. Each entry has `verified: YYYY-MM-DD` and `source: analyses/<slug>`. Flag entries older than 90 days or contradicted by data, then ask. Check the format version and offer a migration if old.
+- `data-map`: change the map only through approved retro changes. Tidy a messy map to the template as one approved change. Key queries are saved as SQL text. One entry per source; grain and keys under Tables; the template's table layout, never loose bullets. Conventions hold style only; analysis rules go in Rules or Gotchas; no duplicates across sections. Each entry has `verified: YYYY-MM-DD` and `source: analyses/<YYYY-MM-DD>-<slug>`. Flag entries older than 90 days or contradicted by data, then ask. Check the format version and offer a migration if old.
 
 ## Steps
 
@@ -48,7 +48,7 @@ The data map should get better with every analysis. This is not a memory dump.
 5. Propose changes as a short numbered list. Each one: section, the exact entry, and why it is worth keeping. The reason must be true for this run: quote the line in `analysis.md` that shows it (a failed rung, a Plan revisions row, a review issue). If nothing in this run shows it cost time or changed a number, do not say it did.
 6. Show a diff (old and new text) for each change.
 7. The user approves each change: yes, no or edit. Do not apply unapproved changes.
-8. Apply the approved changes, with today's date as `verified` and `source: analyses/<slug>`.
+8. Apply the approved changes, with today's date as `verified` and `source: analyses/<YYYY-MM-DD>-<slug>` (the dated analysis folder name, one form everywhere). Normalise any older entry you touch to this form and show it in the diff.
 9. Record the proposals and the decisions in the Retro section of `analysis.md`. Set status `retro done` and update the Progress line.
 
 ## Keep out

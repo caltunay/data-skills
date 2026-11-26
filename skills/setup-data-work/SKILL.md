@@ -63,10 +63,11 @@ Optional line: "If you have a web search or docs lookup tool, check the current 
 
 ## Output
 
-1. Write `data-work/DATA-MAP.md` (full path) from the template (`updated:` line set to now). Fill what you know. Joins go in with check status `unverified` unless a query in this session checked them. Leave unknown sections as empty tables. Date every entry today, with `source: setup`.
+1. Write `data-work/DATA-MAP.md` (full path) from the template (`updated:` line set to now). Fill what you know. Joins go in with check status `unverified` unless a query in this session checked them. Leave unknown sections as empty tables. Date every entry today, with `source: setup`. **Answered is recorded, never a gap:** every Ways of working item the user answered (where work lives, file hand-back, slide pack choice) is written with the user's answer. Before you save, compare each Ways of working row with the answers given in this session. Never write "gap" or "unknown" for something the user answered.
 2. Coding agent with a repo: add `data-work/analyses/*/outputs/` to `.gitignore` unless the user chose to commit outputs. Chat app: skip this. No git advice in a chat app.
 3. Chat app: also write the **Project instructions block** (see End).
-4. Show a short summary of what is still missing, as a list.
+4. Show a short summary of what is still missing, as a list. Only real gaps go on it, never an item the user answered.
+5. **Name stale files and analyses in the Project** by full path (an old `DATA-MAP.md` or `analysis.md` at the top level or in `claude/`, a map copy next to the live `data-work/DATA-MAP.md`, an earlier analysis outside `data-work/analyses/`). One rule: same file name at another path, or an older `updated:` line. Never a bare name beside the live full path.
 
 ## End
 
