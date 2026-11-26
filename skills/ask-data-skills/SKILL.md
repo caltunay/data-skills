@@ -22,7 +22,7 @@ Experimental (v0.2).
    - "What are you trying to do?" A) Answer one data question or a stakeholder ask. B) Check or share work that is already done. C) Set up or improve how the team works with its data. D) Fix or improve a query or script. E) Something big and vague, or a project of several questions. F) Design an experiment or define a measure. G) Not sure.
    - "Where are you in the work?" A) Not started. B) Clarified. C) Planned. D) Results exist. E) Reviewed.
    - "Is there an `analysis.md` for it?" A) Yes. B) No. C) Not sure.
-   Use the environment's multiple-choice question tool if it has one (such tools take at most 4 options per card, so split the first question into two cards if needed); otherwise list the options as text. Each option says what it means in a few words, and the recommended option is a real option with its reason, never a hedge.
+   Use the environment's multiple-choice question tool if it has one (such tools take at most 4 options per card, so split the first question into two cards if needed); otherwise list the options as text. Card counters show the position out of the full total across rounds (for example "2 of 5"), never a count that restarts each round. Each option says what it means in a few words, and the recommended option is a real option with its reason, never a hedge.
    Then stop asking. One round only.
 3. Recommend **one command**. Give **one line why**. Name **the next command after it**.
 4. Stop. Do not run the command for them. Do not begin its questions.
@@ -58,12 +58,11 @@ The table below is the detail.
 | Build the numbers for a planned analysis | `/run-analysis` | `/review-analysis` |
 | Check an analysis or a readout before sharing it (theirs or anyone's) | `/review-analysis` | `/retro-analysis` |
 | Save what an analysis taught them about the data | `/retro-analysis` | none, the flow is complete |
-| Turn a final readout into an exec, product or data version, an email or a slide outline | `/storytell` | `/retro-analysis` |
+| Turn a final readout into an exec, product or data version, an email or a slide pack (also offered at the end of `/review-analysis`) | `/storytell` | `/retro-analysis` |
 | Fix, check or speed up SQL or Python | `/improve-code` | `/retro-analysis` if a trap was found |
 | Break down big, vague work (a metrics framework, a quarter of analysis) | `/wayfinder-data` | `/grill-the-ask` for the first analysis |
-| Design an experiment, or define how to measure something, with no data needed yet | `/wayfinder-data` (fast path: one spec, no project map) | `/grill-the-ask` for the analysis that reads it out |
-| Pass the work to a colleague, or to a fresh session | `/handoff` | the command named in the handoff |
-| Resume and not sure where they stopped | The command named in the Progress line of `analysis.md` | the next one in the flow |
+| Design an experiment, or define how to measure something, with no data needed yet | `/wayfinder-data` (fast path: one spec, no project map) | Sign-off and the open items, then `/grill-the-ask` for the readout analysis after the test ends |
+| Resume, or pass the work to a colleague or a fresh session | The command named in the "Where it stands" block of `analysis.md` (its Progress line says the same) | the next one in the flow |
 
 The flow, for reference: `/setup-data-work` (once), then `/grill-the-ask`, `/plan-analysis`, `/run-analysis`, `/review-analysis`, `/retro-analysis`.
 
@@ -82,7 +81,7 @@ The flow, for reference: `/setup-data-work` (once), then `/grill-the-ask`, `/pla
 User-invoked commands (the only things this step recommends):
 
 - Flow: `/setup-data-work`, `/grill-the-ask`, `/plan-analysis`, `/run-analysis`, `/review-analysis`, `/retro-analysis`.
-- Off-flow, experimental: `/storytell`, `/improve-code`, `/wayfinder-data`, `/handoff`, `/ask-data-skills`.
+- Off-flow, experimental (`/storytell` is also a discipline: `/run-analysis` and `/review-analysis` apply it inside the flow, so the readout is a story and the slide pack offer comes at the end of the review): `/storytell`, `/improve-code`, `/wayfinder-data`, `/ask-data-skills`.
 
 Skills the agent applies by itself inside those commands. Never tell the user to "run" these:
 

@@ -3,7 +3,15 @@ updated: 2026-04-07 09:00
 
 # Analysis: why did sign-ups drop in March?
 
-Invented example. Every number below comes from `outputs/results.txt`, produced by running the files in `queries/`.
+Invented example. Every number below comes from `outputs/results.txt`, produced by running the files in `scripts/`.
+
+## Where it stands
+
+- Status: retro done
+- Answer so far: Sign-ups fell 17% in March (about 25% per day), almost all of it in paid social. The data shows where, not why.
+- Open risks: Channel attribution rule unchecked (A4). No data for March last year.
+- Next step: Decide on a spend test before the Q2 channel split.
+- How to resume: Open `data-work/analyses/2026-04-07-signup-drop/`; the work is complete, start the next ask with `/grill-the-ask`.
 
 ## 1. Meta
 
@@ -200,7 +208,7 @@ Open high-impact assumptions next to these findings: A4.
 
 ## 11. Appendix: Review pack
 
-The code behind each headline number. Every query file is in `queries/`; results are in `outputs/results.txt`.
+The code behind each headline number. Every query file is in `scripts/`; results are in `outputs/results.txt`.
 
 ### Sign-ups per month (February 1,175; March 973) and per day (41.96; 31.39)
 

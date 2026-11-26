@@ -6,10 +6,10 @@ ok() { echo "PASS  $1"; }
 bad() { echo "FAIL  $1"; shift; printf '      %s\n' "$@"; fail=1; }
 
 flow="setup-data-work grill-the-ask plan-analysis run-analysis review-analysis retro-analysis"
-offflow="storytell improve-code ask-data-skills wayfinder-data handoff"
-flowstyle="storytell wayfinder-data handoff"
+offflow="storytell improve-code ask-data-skills wayfinder-data"
+flowstyle="storytell wayfinder-data"
 extra_files="skills/viz/python.md skills/viz/excel.md skills/viz/tableau.md skills/viz/powerbi.md skills/viz/dashboard.md examples/run_queries.py evals/runner/run.py evals/runner/README.md CONTRIBUTING.md .github/workflows/self-check.yml .github/workflows/release.yml .github/pull_request_template.md .github/ISSUE_TEMPLATE/skill-bug.md .github/ISSUE_TEMPLATE/method-card-request.md .github/ISSUE_TEMPLATE/new-skill-proposal.md"
-for e in signup-drop pricing-page-test; do extra_files="$extra_files examples/$e/generate_data.py examples/$e/DATA-MAP.md examples/$e/analysis.md examples/$e/readout.md examples/$e/README.md examples/$e/queries examples/$e/outputs/results.txt"; done
+for e in signup-drop pricing-page-test; do extra_files="$extra_files examples/$e/generate_data.py examples/$e/DATA-MAP.md examples/$e/analysis.md examples/$e/readout.md examples/$e/README.md examples/$e/scripts examples/$e/outputs/results.txt"; done
 predictive_full=8
 predictive_short=0
 model="grilling assumptions validation-ladder question-types data-map run-or-hand-over shaping-data data-audit stats-tests viz metric-design"
@@ -65,7 +65,7 @@ evals/README.md evals/results evals/grilling/case-1.md evals/grilling/rubric.md 
 evals/setup-data-work/case-4.md evals/grill-the-ask/case-4.md evals/review-analysis/case-4.md
 docs/where-to-run.md templates/experiment-spec.template.md templates/metric-spec.template.md
 skills/wayfinder-data/experiment-spec.template.md skills/wayfinder-data/metric-spec.template.md
-evals/grill-the-ask/case-6.md evals/grill-the-ask/case-7.md evals/grill-the-ask/case-8.md evals/plan-analysis/case-5.md evals/review-analysis/case-5.md evals/retro-analysis/case-5.md evals/wayfinder-data/case-6.md evals/reference/v0.4-live-run.md evals/plan-analysis/case-4.md evals/wayfinder-data/case-4.md evals/wayfinder-data/case-5.md evals/setup-data-work/case-5.md"
+evals/grill-the-ask/case-6.md evals/grill-the-ask/case-7.md evals/grill-the-ask/case-8.md evals/plan-analysis/case-5.md evals/review-analysis/case-5.md evals/retro-analysis/case-5.md evals/wayfinder-data/case-6.md evals/reference/v0.4-live-run.md evals/plan-analysis/case-4.md evals/wayfinder-data/case-4.md evals/wayfinder-data/case-5.md evals/setup-data-work/case-5.md evals/run-analysis/case-6.md evals/review-analysis/case-6.md evals/review-analysis/case-7.md evals/review-analysis/case-8.md evals/retro-analysis/case-6.md evals/improve-code/case-4.md evals/wayfinder-data/case-7.md evals/reference/v0.5-live-run.md"
 for t in $qt; do need="$need skills/question-types/$t.md"; done
 for s in $all; do need="$need skills/$s/SKILL.md"; done
 for s in $user; do need="$need evals/$s/case-1.md evals/$s/case-2.md evals/$s/case-3.md evals/$s/rubric.md"; done
@@ -107,7 +107,7 @@ out=$(for s in $flow $flowstyle; do f="skills/$s/SKILL.md"
   grep -q '^## Start' "$f" || echo "$f: no Start section"
   grep -q '^## End' "$f" || echo "$f: no End section"
   grep -q 'no user project folder' "$f" || echo "$f: chat app not defined by situation"
-  grep -q 'Project files' "$f" || echo "$f: no Project files handoff"
+  grep -q 'Project files' "$f" || echo "$f: no Project files hand-back"
 done
 for s in grill-the-ask plan-analysis run-analysis review-analysis retro-analysis; do f="skills/$s/SKILL.md"
   [ "$s" = retro-analysis ] || grep -q 'Run `/setup-data-work` first' "$f" || echo "$f: no setup offer"
@@ -115,14 +115,14 @@ for s in grill-the-ask plan-analysis run-analysis review-analysis retro-analysis
 done
 grep -q 'Never offer `/setup-data-work` here' skills/retro-analysis/SKILL.md || echo "retro-analysis: must say it never offers setup"
 grep -q 'How do you want to set up your data map?' skills/setup-data-work/SKILL.md || echo "setup-data-work: no setup mode question")
-[ -z "$out" ] && ok "flow skills have the start check, end handoff and progress line" || bad "flow structure" "$out"
+[ -z "$out" ] && ok "flow skills have the start check, end hand-back and progress line" || bad "flow structure" "$out"
 
 # 16 graceful fallback: each flow skill restates the disciplines it calls
 calls_setup="grilling data-map run-or-hand-over"
 calls_grill="grilling assumptions question-types data-map"
 calls_plan="assumptions question-types shaping-data"
-calls_run="validation-ladder run-or-hand-over shaping-data data-audit stats-tests question-types data-map assumptions viz"
-calls_review="question-types assumptions validation-ladder viz"
+calls_run="validation-ladder run-or-hand-over shaping-data data-audit stats-tests question-types data-map assumptions viz storytell"
+calls_review="question-types assumptions validation-ladder viz storytell"
 calls_retro="data-map"
 out=$(chk() { f="skills/$1/SKILL.md"; shift; for d in "$@"; do grep -qE "^- \`$d\`( \(experimental\))?: " "$f" || echo "$f: does not restate $d"; done; }
   chk setup-data-work $calls_setup; chk grill-the-ask $calls_grill; chk plan-analysis $calls_plan
@@ -234,9 +234,9 @@ PY
 # 28 v0.3 templates: review pack, bold status, portable callouts, appendix
 out=$(grep -q '^## 11. Appendix: Review pack' templates/analysis.template.md || echo "analysis template: no Review pack"
   grep -q '^\*\*Status: DRAFT\*\*' templates/readout.template.md || echo "readout template: no bold status"
-  for c in Answer Caveat Ask; do grep -q "^> \*\*$c:\*\*" templates/readout.template.md || echo "readout template: no $c callout"; done
+  for c in Ask Caveat; do grep -q "^> \*\*$c:\*\*" templates/readout.template.md || echo "readout template: no $c callout"; done
   [ "$(grep -c '^> \*\*' templates/readout.template.md)" -le 3 ] || echo "readout template: more than 3 callouts"
-  grep -q '^## 8. Appendix' templates/readout.template.md || echo "readout template: no Appendix")
+  grep -q '^## Appendix' templates/readout.template.md || echo "readout template: no Appendix")
 [ -z "$out" ] && ok "templates carry the review pack, bold status, at most 3 callouts and the appendix" || bad "v0.3 templates" "$out"
 
 # 29 v0.4 analysis template: Decisions and Hypotheses sections, Meta lines
@@ -245,7 +245,7 @@ out=$(for h in '^## 9. Decisions' '^## 10. Hypotheses' '^- Setup choice:' '^- Go
 [ -z "$out" ] && ok "analysis template has Decisions, Hypotheses, Setup choice, Goal link and Files" || bad "v0.4 analysis template" "$out"
 
 # 30 v0.4 data map template: Goals, Funnels and Key queries sections
-out=$(for h in '^## 9. Goals' '^## 10. Funnels' '^## 11. Key queries' '^## 12. Ways of working' '^```sql'; do
+out=$(for h in '^## 9. Goals' '^## 10. Funnels' '^## 11. Key queries' '^## 12. Ways of working' '^## 13. Open gaps' '^```sql'; do
     grep -q "$h" skills/data-map/DATA-MAP.template.md || echo "map template: missing $h"; done)
 [ -z "$out" ] && ok "data map template has Goals, Funnels, Key queries (as SQL) and Ways of working" || bad "v0.4 map template" "$out"
 
@@ -256,7 +256,7 @@ out=$(for f in templates/*.template.md skills/data-map/DATA-MAP.template.md skil
 [ -z "$out" ] && ok "every template starts with format: and updated:" || bad "template version lines" "$out"
 
 # 32 both spec templates hold their required fields
-out=$(for k in 'Hypothesis' 'Unit of randomisation' 'Feature gate or assignment' 'Primary metric' 'Guardrails' 'MDE' 'Power' 'Runtime' 'Seasonality' 'SRM check plan' 'Decision rule'; do
+out=$(for k in 'Business limits' 'Hypothesis' 'Unit of randomisation' 'Feature gate or assignment' 'Primary metric' 'Guardrails' 'MDE' 'Power' 'Runtime' 'Seasonality' 'What this size can and cannot detect' 'Overlapping tests' 'SRM check plan' 'Decision rule'; do
     grep -qi "$k" templates/experiment-spec.template.md || echo "experiment spec: missing $k"; done
   for k in 'Definition' 'Formula' 'Grain' 'Population' 'Data source' 'proxies' 'check' 'Benchmark or target' 'Owner'; do
     grep -qi "$k" templates/metric-spec.template.md || echo "metric spec: missing $k"; done)
@@ -320,8 +320,66 @@ out=$(for s in grilling grill-the-ask setup-data-work plan-analysis run-analysis
   for s in grilling grill-the-ask setup-data-work plan-analysis run-analysis review-analysis retro-analysis wayfinder-data; do f="skills/$s/SKILL.md"
     grep -qE 'what it means in a few words|says what it means in a few words' "$f" || echo "$f: options do not explain themselves"; done
   grep -qF 'Continue `<folder>`, or start a new analysis?' skills/grill-the-ask/SKILL.md || echo "grill-the-ask: no continue-or-new question"
-  for s in $flow wayfinder-data; do grep -qF 'Download it and add it to `data-work/DATA-MAP.md`' "skills/$s/SKILL.md" || echo "skills/$s/SKILL.md: no earlier-work hint"; done)
+  for s in $flow wayfinder-data; do grep -qF 'Download it and attach it to this chat' "skills/$s/SKILL.md" || echo "skills/$s/SKILL.md: no earlier-work hint"; done)
 [ -z "$out" ] && ok "question cards, continue-or-new and the earlier-work hint are in the skills" || bad "v0.5 question rules" "$out"
+
+# 40 v0.6 files: scripts as files, Where it stands, SVG charts, no move requests
+out=$(grep -q '^## Where it stands' templates/analysis.template.md || echo "analysis template: no Where it stands block"
+  grep -q 'scripts/' templates/analysis.template.md || echo "analysis template: Review pack does not list scripts"
+  grep -q 'Scripts are files' skills/run-analysis/SKILL.md || echo "run-analysis: no scripts-as-files rule"
+  grep -q 'takes the data folder as an argument' skills/run-analysis/SKILL.md || echo "run-analysis: scripts must take the data folder"
+  grep -q 'Scripts run from the data folder' skills/review-analysis/SKILL.md || echo "review-analysis: no scripts-run check"
+  grep -q 'scripts/' skills/run-or-hand-over/SKILL.md || echo "run-or-hand-over: no scripts folder in the layout"
+  grep -q 'SVG' skills/viz/SKILL.md || echo "viz: no SVG rule"
+  grep -q 'SVG' skills/run-or-hand-over/SKILL.md || echo "run-or-hand-over: no SVG rule"
+  for s in $flow storytell wayfinder-data; do grep -q 'Never ask the user to move' "skills/$s/SKILL.md" || grep -q 'never ask the user to move' "skills/$s/SKILL.md" || echo "skills/$s/SKILL.md: no no-move rule"; done
+  grep -rnE 'add it to your Project|and add it to .data-work' skills README.md docs templates)
+[ -z "$out" ] && ok "v0.6 files: scripts as files, Where it stands, SVG charts, no move requests" || bad "v0.6 file rules" "$out"
+
+# 41 the handoff skill is gone everywhere
+out=$(ls skills/handoff evals/handoff 2>/dev/null
+  grep -rniIE 'handoff' --exclude-dir=.git --exclude-dir=dist --exclude=.blocklist --exclude=SPEC.md --exclude=DECISIONS.md --exclude=self-check . )
+[ -z "$out" ] && ok "no handoff skill, eval or mention (SPEC.md and DECISIONS.md keep the removal record)" || bad "handoff remains" "$out"
+
+# 42 readout is a story: TL;DR, no label-only headers; storytell is used by run and review
+out=$(grep -q '^## TL;DR' templates/readout.template.md || echo "readout template: no TL;DR"
+  grep -nE '^## [0-9. ]*(Answer|Key numbers|Charts|What it means|Link)$' templates/readout.template.md
+  for s in run-analysis review-analysis; do grep -q 'Apply `storytell`\|apply `storytell`' "skills/$s/SKILL.md" || echo "skills/$s/SKILL.md: does not apply storytell"; done
+  grep -q 'takeaway sentence' skills/storytell/SKILL.md || echo "storytell: no story discipline"
+  grep -q 'Applied inside /run-analysis and /review-analysis' skills/storytell/SKILL.md || echo "storytell: description does not cover both uses"
+  grep -q 'ask-data-skills' /dev/null; grep -q 'storytell' skills/ask-data-skills/SKILL.md || echo "ask-data-skills: no storytell routing")
+[ -z "$out" ] && ok "readout skeleton has a TL;DR and no label-only headers; storytell is applied by run and review" || bad "readout story" "$out"
+
+# 43 slide pack offer in review-analysis and the deck rules in storytell
+out=$(grep -q 'Also make a slide pack?' skills/review-analysis/SKILL.md || echo "review-analysis: no slide pack offer"
+  grep -q 'readout.pptx' skills/review-analysis/SKILL.md || echo "review-analysis: no readout.pptx"
+  grep -q 'about 20 words' skills/storytell/SKILL.md || echo "storytell: no 20-word slide rule"
+  grep -q 'Ways of working' skills/review-analysis/SKILL.md || echo "review-analysis: slide pack answer is not saved under Ways of working")
+[ -z "$out" ] && ok "slide pack offer is in review-analysis, with its rules in storytell" || bad "slide pack" "$out"
+
+# 44 no temp paths in skill text and templates
+out=$(grep -rnE '(^|[^A-Za-z_])/tmp/|/var/tmp|%TEMP%|\\Temp\\|mktemp|tempfile' skills templates README.md docs | grep -v 'never a temp path\|Never a temp path\|no temp path\|any temp path\|a temp path\|temp path')
+[ -z "$out" ] && ok "no temp paths in skill examples" || bad "temp paths" "$out"
+
+# 45 wayfinder asks the business limits first and offers other designs
+f=skills/wayfinder-data/SKILL.md
+out=$(grep -q 'Business limits first' "$f" || echo "$f: no business-limits step"
+  grep -q 'how long the test can run' "$f" || echo "$f: does not ask the runtime limit"
+  grep -q 'expected to gain' "$f" || echo "$f: does not ask the expected gain"
+  grep -q 'difference-in-differences' "$f" || echo "$f: no other designs offered"
+  grep -q 'evaluation spec' "$f" || echo "$f: no evaluation spec"
+  grep -q 'Never invent a constraint\|never invent a constraint' "$f" || echo "$f: no invented-constraint rule")
+[ -z "$out" ] && ok "wayfinder-data asks the business limits first and offers other designs" || bad "wayfinder v0.6" "$out"
+
+# 46 improve-code, retro and review rules from v0.6
+out=$(grep -q 'Stay in scope' skills/improve-code/SKILL.md || echo "improve-code: no stay-in-scope rule"
+  grep -q 'Verify by running' skills/improve-code/SKILL.md || echo "improve-code: no verify-by-running rule"
+  grep -q 'Keep reusable code reusable' skills/improve-code/SKILL.md || echo "improve-code: no reusable-code rule"
+  grep -q 'repeat run, no outside check' skills/retro-analysis/SKILL.md || echo "retro-analysis: no repeat-run rule"
+  grep -q 'Open gaps' skills/retro-analysis/SKILL.md || echo "retro-analysis: no open gaps"
+  grep -q 'A new chat gives a fresher review. Continue here anyway?' skills/review-analysis/SKILL.md || echo "review-analysis: no same-chat card"
+  grep -q 'Card counters show' skills/grilling/SKILL.md || echo "grilling: no card counter rule")
+[ -z "$out" ] && ok "v0.6 rules are in improve-code, retro, review and grilling" || bad "v0.6 skill rules" "$out"
 
 # 21 private blocklist (gitignored .blocklist, one word per line)
 if [ -f .blocklist ]; then
@@ -332,7 +390,7 @@ else
 fi
 
 # 22 private files are not tracked
-out=$(git ls-files 2>/dev/null | grep -E '(^|/)(\.blocklist|FIXES-v0\.1\.md|BUILD-v0\.2\.md|FIXES-v0\.3\.md|FIXES-v0\.4\.md|FIXES-v0\.5\.md)$')
+out=$(git ls-files 2>/dev/null | grep -E '(^|/)(\.blocklist|FIXES-v0\.1\.md|BUILD-v0\.2\.md|FIXES-v0\.3\.md|FIXES-v0\.4\.md|FIXES-v0\.5\.md|FIXES-v0\.6\.md)$')
 [ -z "$out" ] && ok "private files are not tracked" || bad "private files tracked" "$out"
 
 exit $fail

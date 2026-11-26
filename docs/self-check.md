@@ -1,6 +1,6 @@
 # Self-check
 
-Run with `scripts/self-check`. Last run: 2026-11-18, v0.3 fix pass, with the private `.blocklist` present. Result: all pass (28 checks). It also runs on every pull request and push (`.github/workflows/self-check.yml`).
+Run with `scripts/self-check`. Last run: 2026-11-26, v0.6 fix pass, with the private `.blocklist` present. Result: all pass (46 checks). It also runs on every pull request and push (`.github/workflows/self-check.yml`).
 
 | # | Check |
 |---|---|
@@ -18,7 +18,7 @@ Run with `scripts/self-check`. Last run: 2026-11-18, v0.3 fix pass, with the pri
 | 12 | No credentials in any file |
 | 13 | Every skill holds the "no names the user has not said" rule |
 | 14 | Every user-invoked skill holds the "name the source first" rule |
-| 15 | Flow skills and flow-style v0.2 skills have the start check, the end handoff, the chat-app definition and the Progress line. Setup asks the setup mode question |
+| 15 | Flow skills and flow-style v0.2 skills have the start check, the end hand-back, the chat-app definition and the Progress line. Setup asks the setup mode question |
 | 16 | Each flow skill restates the core rule of every discipline it calls |
 | 17 | Method cards: full cards have all 8 fields. Short cards have 4 fields and end with the specialist line |
 | 18 | The method catalogue matches SPEC sections 10.2 and 20.7 (card counts per type file) |
@@ -42,7 +42,14 @@ Run with `scripts/self-check`. Last run: 2026-11-18, v0.3 fix pass, with the pri
 | 36 | `/wayfinder-data` ends with the go-ahead question and saves specs in their own analysis folder |
 | 37 | The hypothesis status rule is in `plan-analysis`, `run-analysis` and `review-analysis`, and the review fixes statuses with a "was" and "now" pair |
 | 38 | The README has the chat-app section, and the Project instructions block matches in the setup skill and `docs/where-to-run.md` |
-| 39 | Question cards, the continue-or-new question and the earlier-work hint are in the skills |
+| 39 | Question cards, the continue-or-new question and the earlier-work hint ("Download it and attach it to this chat") are in the skills |
+| 40 | v0.6 files: "Where it stands" block, scripts listed in the Review pack, scripts-as-files and data-folder rules in `run-analysis`, the scripts-run check in `review-analysis`, SVG charts, no request to move a file into a Project folder |
+| 41 | The removed note-for-a-colleague skill, its evals and every mention are gone (SPEC.md and DECISIONS.md keep the removal record) |
+| 42 | The readout template has a TL;DR and no label-only headers; `run-analysis` and `review-analysis` apply `storytell`; `storytell` covers both uses |
+| 43 | The slide pack offer is in `review-analysis` and its rules (20 words, one chart per slide) are in `storytell` |
+| 44 | No temp paths in skill text, templates, README or docs |
+| 45 | `wayfinder-data` asks the business limits first, offers other designs, writes an evaluation spec, and never invents a constraint |
+| 46 | Rules in `improve-code` (run, scope, reusable), `retro-analysis` (repeat run, open gaps), `review-analysis` (same-chat card) and `grilling` (card counters) |
 
 ## Private blocklist
 
@@ -54,6 +61,7 @@ Run with `scripts/self-check`. Last run: 2026-11-18, v0.3 fix pass, with the pri
 - `scripts/package-zips` builds one ZIP per skill into `dist/` (gitignored): 22 ZIPs.
 - `claude plugin validate .` passes for the plugin and the marketplace file.
 - Both worked examples were produced by running their queries. The eval runner was run in dry-run mode (56 cases after v0.4).
+- v0.6: checks 40 to 46 were added. Check 28 now tests the story readout template, check 30 the Open gaps section, check 32 the business limits fields. Each new check was tested by breaking its rule once. The eval runner was run in dry-run mode.
 - v0.5: checks 35 to 39 were added, and each was tested by breaking its rule once. The eval runner was run in dry-run mode (61 cases after v0.5).
 - v0.4: checks 29 to 34 were added. Each needs the template copies to match, so `scripts/package-zips` and check 10 compare the two spec templates too.
 - v0.3: checks 25 to 28 were tested by breaking each rule once (a removed compact row, a renamed floor check, a missing go-ahead line); each failed as expected, then passed after the restore. The sign-up example queries were re-run; `outputs/results.txt` changed by additions only.

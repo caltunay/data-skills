@@ -3,6 +3,16 @@ updated: YYYY-MM-DD HH:MM
 
 # Analysis: <title>
 
+## Where it stands
+
+Five lines. Every step updates them. A fresh chat or a colleague can pick up from here.
+
+- Status: <grilling | planned | running | reviewed | retro done>
+- Answer so far: <one line, at or below the claim ceiling, or "none yet">
+- Open risks: <high-impact assumptions still open, failed or weak checks>
+- Next step: <the next command, or what the step waits for>
+- How to resume: <where to open: the analysis folder, the files to attach, the command to run>
+
 ## 1. Meta
 
 - Title:
@@ -138,13 +148,8 @@ Status: `open`, `supported`, `refuted` or `parked`. A node is `supported` or `re
 
 ## 11. Appendix: Review pack
 
-For each headline number: the exact SQL or Python that produced it, and its data source. In a chat app `queries/` does not persist, so this is how a fresh reviewer sees the code.
+Every script that produces a headline number, a check or a chart is its own file in `scripts/` in this folder. The code is not copied here. Each script takes the data folder as an argument and writes its outputs into this folder.
 
-### <headline number 1>: <value>
-
-- Source: <table or file, filters, period>
-- Code:
-
-```sql
--- the exact query or script that produced the number
-```
+| script | produces | how to run | data source (table or file, filters, period) |
+|---|---|---|---|
+| scripts/q1-1-one-entity.sql | | | |

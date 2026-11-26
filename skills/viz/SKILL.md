@@ -27,6 +27,19 @@ Choose the chart by the question it answers. The title states the takeaway. Axes
 
 One chart, one question. If a chart needs a paragraph to explain it, split it.
 
+### Chart choice per claim
+
+In a readout, pick the chart from the message it must prove, not from the data shape:
+
+| The claim | Chart |
+|---|---|
+| A number against a target | Bars plus a target line |
+| Change over time | Line |
+| Mix, or what the total is made of | Stacked bars |
+| Spread | Histogram or box plot |
+
+One message per chart, and the takeaway is its title. A second message gets a second chart or no chart.
+
 ## Step 2: checks
 
 Run all of them on every chart, built or reviewed. Log a fail with the fix.
@@ -58,9 +71,9 @@ Excel, Tableau and Power BI always run in hand-over mode. Give numbered steps. T
 
 ## Where charts go
 
-- `/run-analysis` saves charts in the analysis folder (`outputs/` in a coding agent, beside `readout.md` in a chat app), only when asked or when the plan names one. File names say what the chart shows (`signups-by-channel-feb-mar.png`).
+- `/run-analysis` saves charts in the analysis folder (`outputs/` in a coding agent, beside `readout.md` in a chat app), only when asked or when the plan names one. File names say what the chart shows (`signups-by-channel-feb-mar.svg`).
 - Charts show aggregates. Ask before a chart exposes row-level data (one point per customer with an identifier).
-- In a chat app, save the chart at its full path in the analysis folder in the Project files if you can, otherwise offer it as a download and say where to add it.
+- In a chat app, save the chart at its full path in the analysis folder in the Project files if you can, otherwise offer it as a download. Never ask the user to move it into a Project folder.
 
 ## Charts in a readout
 
@@ -68,7 +81,9 @@ Excel, Tableau and Power BI always run in hand-over mode. Give numbered steps. T
 - Each title states the takeaway (check 1).
 - One annotation on the key moment, for example a marker and a short label on the day a step happened. Only one, so it stands out.
 - A chart replaces number rows that say the same thing. This keeps the readout to at most 5 key numbers.
-- Charts are image files (PNG or SVG) in the analysis folder, linked from the readout by the chart's real path with alt text that states what the chart shows and its takeaway: `![Daily sign-ups, with the step down on 2 March marked](signups-daily.png)` (a coding agent uses `outputs/signups-daily.png`). In a chat app, save the image at its full path under `data-work/analyses/<folder>/` or offer it as a download, and say which.
+- **Chat apps: charts are SVG.** When the agent can write text files to the Project files but not binary files, save each chart as an SVG file in the analysis folder and link it from `readout.md`. SVG is text, so it saves and renders there. Keep PNG only inside binary outputs (`.docx`, `.pptx`), where the chart is embedded. A coding agent may use PNG or SVG in `outputs/`.
+- Charts are linked from the readout by the chart's real path with alt text that states what the chart shows and its takeaway: `![Daily sign-ups, with the step down marked](signups-daily.svg)` (a coding agent uses `outputs/signups-daily.svg`). In a chat app, save the image at its full path under `data-work/analyses/<folder>/` or offer it as a download, and say which.
+- Each chart script is saved in `scripts/` in the analysis folder, takes the data folder as an argument and writes the chart into the analysis folder (see `run-analysis`).
 - Hand-over mode (no code tool, or Excel, Tableau or Power BI): give the chart spec (chart type, data, title, annotation, axes) plus ready-to-run code or numbered build steps.
 
 ## Reviewing a chart

@@ -48,8 +48,8 @@ Codex also has a plugin manifest. Or upload the ZIPs in claude.ai and ChatGPT. S
 | `/setup-data-work` | Tests data access, interviews you, writes `DATA-MAP.md` |
 | `/grill-the-ask` | Turns a vague ask into a clear question, with assumptions and a depth |
 | `/plan-analysis` | Options, a chosen plan, the analysis table spec, success checks |
-| `/run-analysis` | Builds the table, climbs the validation ladder, runs the method, drafts `readout.md` |
-| `/review-analysis` | Technical and business review, claim check, verdict. Checks the readout word by word and marks it final |
+| `/run-analysis` | Builds the table, climbs the validation ladder, runs the method with every script saved as a file, drafts `readout.md` as a story |
+| `/review-analysis` | Technical and business review, claim check, verdict. Reruns the scripts, checks the story and the readout word by word, marks it final, and offers a slide pack |
 | `/retro-analysis` | Proposes data map updates. You approve each one |
 
 ## Demo: two worked examples
@@ -67,9 +67,8 @@ Every skill in this section is **experimental** until it has passed its evals. E
 |---|---|---|
 | `/ask-data-skills` | **experimental** | Tells you which command to run, why, and what comes after it |
 | `/wayfinder-data` | **experimental** | Maps big, vague work as decision items, settles them one at a time, and ends with ready `/grill-the-ask` prompts. Also designs an experiment or a metric (`experiment-spec.md`, `metric-spec.md`) with no project map |
-| `/storytell` | **experimental** | Turns a final readout into an exec, product or data version, as a doc, chat message, email or slide outline. Never raises a claim |
+| `/storytell` | **experimental** | The story discipline of the readout: `/run-analysis` uses it to draft the readout as a story and `/review-analysis` uses it to check the story. Run directly, it turns a final readout into an exec, product or data version, as a doc, chat message, email or slide pack. Never raises a claim |
 | `/improve-code` | **experimental** | Reviews SQL or Python in order: intent, correctness, style, performance. Shows a diff and proves the result did not change |
-| `/handoff` | **experimental** | Writes `handoff.md` so a colleague or a fresh session can pick the analysis up |
 
 | Skill the agent applies | Status | Does |
 |---|---|---|
@@ -84,6 +83,7 @@ Plain models already spot visible flaws. These skills add:
 - explicit assumptions with likely alternatives
 - a data-check floor at every depth, then a validation ladder that tests the data against an independent path
 - claim ceilings tied to the question type
+- a readout that tells a story: a TL;DR, then sections whose headers are the takeaways
 - a review that can say "no material issues"
 - a data map that learns from every analysis
 
@@ -97,7 +97,7 @@ Plain models already spot visible flaws. These skills add:
 | Plan | One line, flat hypotheses | Hypothesis tree, 2 to 4 options | Plus power or MDE |
 | Ladder | Compact data-check floor | Full floor plus full ladder | Plus alternative specification |
 | Review | Self-check plus recompute | Technical plus business, best in a fresh chat | Plus leadership questions |
-| Readout | Short answer in chat | `readout.md` and `readout.docx` | Plus appendix |
+| Readout | Short answer in chat | `readout.md` (a story with a TL;DR) and `readout.docx` | Plus appendix |
 | Files | None | `analysis.md`, `readout.md` | Full analysis folder |
 
 ## What is inside
@@ -105,11 +105,11 @@ Plain models already spot visible flaws. These skills add:
 - **Flow skills (you run them):** the 6 commands above.
 - **Disciplines (the agent applies them):** `grilling`, `assumptions`, `validation-ladder`, `question-types`, `data-map`, `run-or-hand-over`.
 - **Data skills (the agent applies them):** `shaping-data` (SQL, Python, Excel, Power BI, Tableau), `data-audit`, `stats-tests`.
-- **Experimental (v0.2):** `/ask-data-skills`, `/wayfinder-data`, `/storytell`, `/improve-code`, `/handoff`, `viz`, `metric-design`. See the table above.
+- **Experimental (v0.2):** `/ask-data-skills`, `/wayfinder-data`, `/storytell`, `/improve-code`, `viz`, `metric-design`. See the table above.
 
 ## Works with or without a data connection
 
-If your agent can run queries, it does. In a chat app with a code tool, attach your data files (CSV, Excel) and it loads them and runs the checks itself. Only with no code tool does it hand you numbered queries, in groups, and wait for the paste. In a chat app it saves each file to your Project files at its full path, or offers a download and tells you where to add it. Every step ends with a go-ahead question. It never fails because a tool is missing.
+If your agent can run queries, it does. In a chat app with a code tool, attach your data files (CSV, Excel) and it loads them and runs the checks itself. Only with no code tool does it hand you numbered queries, in groups, and wait for the paste. In a chat app it saves each file to your Project files at its full path, or offers a download and tells you to download it. Every step ends with a go-ahead question. It never fails because a tool is missing.
 
 ## Your files
 
@@ -124,8 +124,8 @@ data-work/
       readout.md      stakeholder readout (skeleton, draft, then final)
       readout.docx    the same text with the charts, for Word and Google Docs
       experiment-spec.md or metric-spec.md   (design asks)
-      queries/        (coding agents)
-      outputs/        (coding agents; in a chat app charts sit in the analysis folder)
+      scripts/        every script behind a number, a check or a chart (any environment)
+      outputs/        (coding agents; in a chat app charts sit in the analysis folder as SVG)
 ```
 
 ## Using data-skills in a chat app
@@ -136,10 +136,10 @@ These steps are for claude.ai and ChatGPT. Coding agents need none of this: they
 2. **Upload the skills.** Add the ZIPs from the latest release (see [docs/install.md](docs/install.md)).
 3. **Run `/setup-data-work`.** At the end it gives you a short block. Paste it into the Project instructions.
 4. **Use one chat per analysis.** Start with `/grill-the-ask` and follow the go-ahead question at the end of each step.
-5. **Your files live in `data-work/` in the Project files.** Every step ends by telling you which files changed and where they are. It says "Saved to `<path>` in your Project files" or "Download `<file>` and add it to your Project at `<path>`".
-6. **If the app cannot save to the Project,** download the file and add it to the Project at the path shown. Keep the folder names, so the next chat finds it. Never edit a file by hand: the skill hands back the whole file.
+5. **Your files live in `data-work/` in the Project files.** Every step ends by telling you which files changed and where they are. It says "Saved to `<path>` in your Project files" or "Download `<file>`".
+6. **If the app cannot save to the Project,** it says "Download `<file>`". Download it and attach it to the next chat when a step needs it. The skill never asks you to move a file into a Project folder. Never edit a file by hand: the skill hands back the whole file.
 7. **Many analyses in one Project are fine.** A new ask that matches an old one asks you: continue it, or start a new analysis.
-8. **Old files at the top level or in a `claude/` folder** are stale. The skill names them. Move old analyses into the `data-work/` layout once.
+8. **Old files at the top level or in a `claude/` folder** are stale. The skill names them by full path.
 
 ## Question types
 
