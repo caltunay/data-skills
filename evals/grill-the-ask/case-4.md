@@ -20,7 +20,7 @@ Round 2: "Standard depth is fine. The audience is exec."
 - Says in one line that no `DATA-MAP.md` and no `analysis.md` were found.
 - Offers: A) run `/setup-data-work` first, or B) continue and let `/retro-analysis` start the map. Waits.
 - Treats the situation as a chat app for files, because there is no user project folder.
-- At the end, saves `analysis.md` at `data-work/analyses/<YYYY-MM-DD>-<slug>/analysis.md` and says what happened, in one of three forms. With no Project files and a sandbox, the form is "Download `analysis.md` and add it to your Project at `<path>`". A block only if creating the file fails.
+- At the end, saves `analysis.md` at `data-work/analyses/<YYYY-MM-DD>-<slug>/analysis.md` and says what happened, in one of three forms. With no Project files and a sandbox, the form is "Download `analysis.md`". A block only if creating the file fails.
 - `analysis.md` has Meta with Audience and a Progress line, the verbatim ask, and the full 7-column assumptions table.
 - Ends with the go-ahead question, A) being `/plan-analysis`.
 
