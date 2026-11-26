@@ -58,12 +58,11 @@ The table below is the detail.
 | Build the numbers for a planned analysis | `/run-analysis` | `/review-analysis` |
 | Check an analysis or a readout before sharing it (theirs or anyone's) | `/review-analysis` | `/retro-analysis` |
 | Save what an analysis taught them about the data | `/retro-analysis` | none, the flow is complete |
-| Turn a final readout into an exec, product or data version, an email or a slide outline | `/storytell` | `/retro-analysis` |
+| Turn a final readout into an exec, product or data version, an email or a slide pack (also offered at the end of `/review-analysis`) | `/storytell` | `/retro-analysis` |
 | Fix, check or speed up SQL or Python | `/improve-code` | `/retro-analysis` if a trap was found |
 | Break down big, vague work (a metrics framework, a quarter of analysis) | `/wayfinder-data` | `/grill-the-ask` for the first analysis |
-| Design an experiment, or define how to measure something, with no data needed yet | `/wayfinder-data` (fast path: one spec, no project map) | `/grill-the-ask` for the analysis that reads it out |
-| Pass the work to a colleague, or to a fresh session | `/handoff` | the command named in the handoff |
-| Resume and not sure where they stopped | The command named in the Progress line of `analysis.md` | the next one in the flow |
+| Design an experiment, or define how to measure something, with no data needed yet | `/wayfinder-data` (fast path: one spec, no project map) | Sign-off and the open items, then `/grill-the-ask` for the readout analysis after the test ends |
+| Resume, or pass the work to a colleague or a fresh session | The command named in the "Where it stands" block of `analysis.md` (its Progress line says the same) | the next one in the flow |
 
 The flow, for reference: `/setup-data-work` (once), then `/grill-the-ask`, `/plan-analysis`, `/run-analysis`, `/review-analysis`, `/retro-analysis`.
 
@@ -82,7 +81,7 @@ The flow, for reference: `/setup-data-work` (once), then `/grill-the-ask`, `/pla
 User-invoked commands (the only things this step recommends):
 
 - Flow: `/setup-data-work`, `/grill-the-ask`, `/plan-analysis`, `/run-analysis`, `/review-analysis`, `/retro-analysis`.
-- Off-flow, experimental: `/storytell`, `/improve-code`, `/wayfinder-data`, `/handoff`, `/ask-data-skills`.
+- Off-flow, experimental (`/storytell` is also a discipline: `/run-analysis` and `/review-analysis` apply it inside the flow, so the readout is a story and the slide pack offer comes at the end of the review): `/storytell`, `/improve-code`, `/wayfinder-data`, `/ask-data-skills`.
 
 Skills the agent applies by itself inside those commands. Never tell the user to "run" these:
 

@@ -14,5 +14,5 @@
 | Precision | The clean case gets "No changes needed" and at most 2 optional suggestions |
 | Start check | Says in one line whether a `DATA-MAP.md` was found |
 | No early tool call | No connector or data tool call before the user names the source |
-| Chat-app handoff | With no project folder, gives the code as one block and offers a download |
+| Chat-app hand-back | With no project folder, gives the code as one block and offers a download |
 | No invented names | Uses no company, product, table or source name the user did not say |

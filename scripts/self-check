@@ -6,8 +6,8 @@ ok() { echo "PASS  $1"; }
 bad() { echo "FAIL  $1"; shift; printf '      %s\n' "$@"; fail=1; }
 
 flow="setup-data-work grill-the-ask plan-analysis run-analysis review-analysis retro-analysis"
-offflow="storytell improve-code ask-data-skills wayfinder-data handoff"
-flowstyle="storytell wayfinder-data handoff"
+offflow="storytell improve-code ask-data-skills wayfinder-data"
+flowstyle="storytell wayfinder-data"
 extra_files="skills/viz/python.md skills/viz/excel.md skills/viz/tableau.md skills/viz/powerbi.md skills/viz/dashboard.md examples/run_queries.py evals/runner/run.py evals/runner/README.md CONTRIBUTING.md .github/workflows/self-check.yml .github/workflows/release.yml .github/pull_request_template.md .github/ISSUE_TEMPLATE/skill-bug.md .github/ISSUE_TEMPLATE/method-card-request.md .github/ISSUE_TEMPLATE/new-skill-proposal.md"
 for e in signup-drop pricing-page-test; do extra_files="$extra_files examples/$e/generate_data.py examples/$e/DATA-MAP.md examples/$e/analysis.md examples/$e/readout.md examples/$e/README.md examples/$e/queries examples/$e/outputs/results.txt"; done
 predictive_full=8
@@ -107,7 +107,7 @@ out=$(for s in $flow $flowstyle; do f="skills/$s/SKILL.md"
   grep -q '^## Start' "$f" || echo "$f: no Start section"
   grep -q '^## End' "$f" || echo "$f: no End section"
   grep -q 'no user project folder' "$f" || echo "$f: chat app not defined by situation"
-  grep -q 'Project files' "$f" || echo "$f: no Project files handoff"
+  grep -q 'Project files' "$f" || echo "$f: no Project files hand-back"
 done
 for s in grill-the-ask plan-analysis run-analysis review-analysis retro-analysis; do f="skills/$s/SKILL.md"
   [ "$s" = retro-analysis ] || grep -q 'Run `/setup-data-work` first' "$f" || echo "$f: no setup offer"
@@ -115,7 +115,7 @@ for s in grill-the-ask plan-analysis run-analysis review-analysis retro-analysis
 done
 grep -q 'Never offer `/setup-data-work` here' skills/retro-analysis/SKILL.md || echo "retro-analysis: must say it never offers setup"
 grep -q 'How do you want to set up your data map?' skills/setup-data-work/SKILL.md || echo "setup-data-work: no setup mode question")
-[ -z "$out" ] && ok "flow skills have the start check, end handoff and progress line" || bad "flow structure" "$out"
+[ -z "$out" ] && ok "flow skills have the start check, end hand-back and progress line" || bad "flow structure" "$out"
 
 # 16 graceful fallback: each flow skill restates the disciplines it calls
 calls_setup="grilling data-map run-or-hand-over"

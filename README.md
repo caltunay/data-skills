@@ -67,9 +67,8 @@ Every skill in this section is **experimental** until it has passed its evals. E
 |---|---|---|
 | `/ask-data-skills` | **experimental** | Tells you which command to run, why, and what comes after it |
 | `/wayfinder-data` | **experimental** | Maps big, vague work as decision items, settles them one at a time, and ends with ready `/grill-the-ask` prompts. Also designs an experiment or a metric (`experiment-spec.md`, `metric-spec.md`) with no project map |
-| `/storytell` | **experimental** | Turns a final readout into an exec, product or data version, as a doc, chat message, email or slide outline. Never raises a claim |
+| `/storytell` | **experimental** | The story discipline of the readout: `/run-analysis` uses it to draft the readout as a story and `/review-analysis` uses it to check the story. Run directly, it turns a final readout into an exec, product or data version, as a doc, chat message, email or slide pack. Never raises a claim |
 | `/improve-code` | **experimental** | Reviews SQL or Python in order: intent, correctness, style, performance. Shows a diff and proves the result did not change |
-| `/handoff` | **experimental** | Writes `handoff.md` so a colleague or a fresh session can pick the analysis up |
 
 | Skill the agent applies | Status | Does |
 |---|---|---|
@@ -105,7 +104,7 @@ Plain models already spot visible flaws. These skills add:
 - **Flow skills (you run them):** the 6 commands above.
 - **Disciplines (the agent applies them):** `grilling`, `assumptions`, `validation-ladder`, `question-types`, `data-map`, `run-or-hand-over`.
 - **Data skills (the agent applies them):** `shaping-data` (SQL, Python, Excel, Power BI, Tableau), `data-audit`, `stats-tests`.
-- **Experimental (v0.2):** `/ask-data-skills`, `/wayfinder-data`, `/storytell`, `/improve-code`, `/handoff`, `viz`, `metric-design`. See the table above.
+- **Experimental (v0.2):** `/ask-data-skills`, `/wayfinder-data`, `/storytell`, `/improve-code`, `viz`, `metric-design`. See the table above.
 
 ## Works with or without a data connection
 

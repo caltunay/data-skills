@@ -18,7 +18,7 @@ Run with `scripts/self-check`. Last run: 2026-11-18, v0.3 fix pass, with the pri
 | 12 | No credentials in any file |
 | 13 | Every skill holds the "no names the user has not said" rule |
 | 14 | Every user-invoked skill holds the "name the source first" rule |
-| 15 | Flow skills and flow-style v0.2 skills have the start check, the end handoff, the chat-app definition and the Progress line. Setup asks the setup mode question |
+| 15 | Flow skills and flow-style v0.2 skills have the start check, the end hand-back, the chat-app definition and the Progress line. Setup asks the setup mode question |
 | 16 | Each flow skill restates the core rule of every discipline it calls |
 | 17 | Method cards: full cards have all 8 fields. Short cards have 4 fields and end with the specialist line |
 | 18 | The method catalogue matches SPEC sections 10.2 and 20.7 (card counts per type file) |

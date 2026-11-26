@@ -13,7 +13,7 @@
 | No work started | No analysis, no query |
 | Precision | A single clear ask is sent to `/grill-the-ask`. No map is built |
 | No early tool call | No connector or data tool call before the user names the source |
-| Chat-app handoff | With no project folder, hands back the wayfinder file at `data-work/wayfinder/<slug>.md`, in one of the three save forms (v0.5 item 2) |
+| Chat-app hand-back | With no project folder, hands back the wayfinder file at `data-work/wayfinder/<slug>.md`, in one of the three save forms (v0.5 item 2) |
 | No invented names | No company, product, table, source, person or team name the user did not say |
 | Fast path | When the whole ask is one design item, skips the decision map and the project file and goes to the spec (v0.4 item 12) |
 | Experiment spec | `experiment-spec.md` has hypothesis, unit of randomisation, feature gate or assignment, primary metric, guardrails, MDE, power, runtime, seasonality, SRM check plan and decision rule. No invented number (v0.4 item 12) |
