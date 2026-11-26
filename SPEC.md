@@ -1,8 +1,8 @@
-# data-skills: spec (v0.5)
+# data-skills: spec (v0.6)
 
 v0.1 adds: connector rules, data map check, chat-app handoff, readout, progress tracker, method cards for all question types, neutral example domain. See section 19, decisions 21 to 32.
 
-v0.2 adds the experimental skills in section 20. v0.3 is a fix pass from a full manual run: see section 21 and decisions 47 onward. v0.4 fixes the v0.3 live run and adds a hypothesis tree, strategy context, design asks, routing and chat-first storage: see section 22 and decisions 65 onward. v0.5 fixes the v0.4 live run: one folder layout and honest save messages, several analyses in one Project, a tidier map, clickable question cards that explain themselves, hypothesis status logic, and a chat-app guide: see section 23 and decisions 84 onward.
+v0.2 adds the experimental skills in section 20. v0.3 is a fix pass from a full manual run: see section 21 and decisions 47 onward. v0.4 fixes the v0.3 live run and adds a hypothesis tree, strategy context, design asks, routing and chat-first storage: see section 22 and decisions 65 onward. v0.5 fixes the v0.4 live run: one folder layout and honest save messages, several analyses in one Project, a tidier map, clickable question cards that explain themselves, hypothesis status logic, and a chat-app guide: see section 23 and decisions 84 onward. v0.6 fixes the v0.5 live run: scripts as files, the readout as a story, an optional slide pack, design asks that face business limits, and a few gaps in review, retro and `/improve-code`: see section 24 and decisions 97 onward.
 
 - Repo: `caltunay/data-skills`
 - License: MIT, unless an upstream license we borrow from requires otherwise.
@@ -35,7 +35,7 @@ Inspired by `mattpocock/skills` (structure, flow, user-invoked vs model-invoked)
 2. **Assume as little as possible.** When an assumption is unavoidable, state it, and give the most likely alternatives and their impact.
 3. **Epicycle at every step.** Set an expectation, collect information, compare the expectation to the data, revise.
 4. **Validation ladder.** A data-check floor at every depth, then one entity, one entity-day, many entities, aggregates, and reconcile to a trusted number. Every check tests the data against an independent path. Never jump straight to the final query.
-5. **Claim ceilings.** A claim never goes above what its method supports. No "caused" without a causal design.
+5. **Claim ceilings.** A claim never goes above what its method supports. No "caused" without a causal design. The ceiling applies in every skill, `/improve-code` and the slide pack included, not only in the flow.
 6. **Easy solution first.** Try the simplest method that could answer the question.
 7. **Simplicity and surgical changes.** Minimum code. Touch only what you must.
 8. **Goal-driven.** Define success checks up front. Loop until they pass.
@@ -114,11 +114,11 @@ B or C means the step makes the change, hands back the updated file, and asks ag
 
 ### Every question has a real default
 
-Every question in every step has one real recommended default with a one-line reason. No hedges such as "C if unknown", "recommended if you have one" or "TBC". The deadline question gets a default too. This holds in every skill that asks, `/setup-data-work` and `/wayfinder-data` included.
+Every question in every step has one real recommended default with a one-line reason. No hedges such as "C if unknown", "recommended if you have one" or "TBC". This holds in every skill that asks, `/setup-data-work` and `/wayfinder-data` included. There is no separate "when is it due?" question: the deadline folds into the depth choice, and a date is asked only when a meeting, launch or review sets one (v0.6).
 
 ### Questions are clickable cards that explain themselves
 
-Every skill that asks questions (`grilling`, `/grill-the-ask`, `/setup-data-work`, `/plan-analysis`, `/run-analysis`, `/review-analysis`, `/retro-analysis`, `/wayfinder-data`, `/ask-data-skills`) uses the environment's multiple-choice question tool when it has one: one card per question, at most 3 per round, the recommended option first. Otherwise it lists the options as text. Each option says what it means in a few words ("H1.1: holds in each month"). Any tree, table or draft a question refers to is shown before the question. An option that needs data the map says is missing says so in the option text ("needs the visit marker; the map says it is unknown").
+Every skill that asks questions (`grilling`, `/grill-the-ask`, `/setup-data-work`, `/plan-analysis`, `/run-analysis`, `/review-analysis`, `/retro-analysis`, `/wayfinder-data`, `/ask-data-skills`) uses the environment's multiple-choice question tool when it has one: one card per question, at most 3 per round, the recommended option first. Otherwise it lists the options as text. Card counters show the position out of the full total across rounds ("2 of 5"), never a count that restarts each round (v0.6). Each option says what it means in a few words ("H1.1: holds in each month"). Any tree, table or draft a question refers to is shown before the question. An option that needs data the map says is missing says so in the option text ("needs the visit marker; the map says it is unknown").
 
 ### Goal-driven run
 
@@ -161,26 +161,26 @@ Three environments, one behaviour:
 |---|---|---|
 | Coding agent with data connected | Runs them | Writes to `data-work/` |
 | Coding agent, no data connection | Hands them over, waits for the paste | Writes to `data-work/` |
-| Chat app with a code tool and attached data files | Loads the files and runs the checks (DuckDB, SQLite or pandas) | Writes to the Project files, or creates the file and offers a download |
+| Chat app with a code tool and attached data files | Loads the files and runs the checks (DuckDB, SQLite or pandas) | Writes to the Project files, or creates the file and offers a download (`Download <file>`) |
 | Chat app, data in a source with no connection | Hands them over, waits for the paste | Writes to the Project files, or creates the file and offers a download |
 | Chat app with no code tool | Hands them over, says so in one line | Prints a block to copy |
 
 The `run-or-hand-over` discipline defines this. It asks two separate questions.
 
 - **Can I run things here?** Always try first. A code tool or sandbox with attached files counts: load them and run SQL (DuckDB or SQLite) or pandas. Only hand over when no code tool exists, and say so in one line. Never say "I can't run code" when a code tool exists.
-- **Where do files persist?** In a chat app, write each file to the Project files at its full path if you can. Otherwise create it in the sandbox and offer it as a download, and say where to add it. Print it as a block only if creating the file fails. Never say "I can't save files" when a download can be made.
+- **Where do files persist?** In a chat app, write each file to the Project files at its full path if you can. Otherwise create it in the sandbox and offer it as a download: "Download `<file>`". Never ask the user to move a file or add it to a Project folder: chat apps do not let users place uploads in folders. If it matters, say where a later step expects the file. Print it as a block only if creating the file fails. Never say "I can't save files" when a download can be made.
 
 Never fail because a tool is missing.
 
 **What counts as a chat app:** decide by situation, not by file access. If there is no user project folder (no `data-work/` and no repo), it is a chat app. This decides where files persist, not whether the agent can run checks.
 
-**Chat-app handoff:** at the end of every flow step, hand back each file the step changed at its full path under `data-work/` (section 7.1), never a bare file name, and say exactly what happened to it (section 7.8). Name any stale older copy. The next step, in any chat, reads the files from the Project.
+**Chat-app hand-back:** at the end of every flow step that could change files, hand back each file the step changed at its full path under `data-work/` (section 7.1), never a bare file name, and say exactly what happened to it (section 7.8). The "files changed" line appears only after such a step, never on a question turn. Name any stale older copy by its full path (section 7.8). The next step, in any chat, reads the files from the Project.
 
 **No manual file edits:** after the user confirms something, never ask them to edit a saved file by hand. Hand back the updated file.
 
 **Method cards without file access:** `question-types/SKILL.md` holds a compact line per method (when to use, checks that must pass, claim allowed), so the cards work even when the type files cannot be opened. `/plan-analysis` copies the card's checks into the success checks at plan time and never defers them.
 
-**Progress tracker:** `analysis.md` Meta keeps one line, for example `Progress: run step 3 of 7, waiting for Q3.1 paste`. Every step updates it. Any new session resumes from it.
+**Progress tracker and "Where it stands":** `analysis.md` Meta keeps one Progress line, for example `Progress: run step 3 of 7, waiting for Q3.1 paste`. The top of `analysis.md` holds a "Where it stands" block of about 5 lines: status, answer so far, open risks, next step, how to resume. Every step updates both. Any new session or colleague resumes from them. This replaces the old `handoff` note (v0.6).
 
 Copy-paste form for queries: numbered (`Q2.1`, `Q2.2`), each with one purpose line, the expected result stated before it runs, and "Paste the result here." Keep each check query small. Batch several checks into numbered groups so the user pastes once per group.
 
@@ -193,11 +193,11 @@ Copy-paste form for queries: numbered (`Q2.1`, `Q2.2`), each with one purpose li
 | Skill | Trigger | Inputs | Does | Writes | Calls |
 |---|---|---|---|---|---|
 | `/setup-data-work` | User runs it, once per team or project | Nothing, or an existing `DATA-MAP.md` | First asks for a map from another project on the same data, then asks how the user wants to set up the map (section 8). Tests access only against a source the user named. Points to the agent's connector directory if there is none. Interviews the user, including goals, funnels, key queries and how the team organises its files. In a chat app ends with a block to paste into the Project instructions. Can be partial; the map fills in over time. Target: under 20 minutes. | `data-work/DATA-MAP.md`, `.gitignore` entry | grilling, data-map, run-or-hand-over |
-| `/grill-the-ask` | User runs it with a stakeholder ask | The ask, `DATA-MAP.md` if present | Rounds of max 3 questions, each with options and a recommended default. Covers goal, the decision it feeds, requester, question type, metric, population, time window, constraints, deadline, and who reads the result (audience). When periods are compared, recommends a comparison that handles seasonality (year on year, or the same weekdays), or flags that the recommended option ignores it. Sets the depth with a one-line reason. Never asks the same question twice. Never analyses: with files attached it notes only columns, possible duplicates and the date range. Logs every answer word for word in Decisions and echoes it back. On a conflicting or senseless answer, says so and asks one question at a time. Asks how the ask links to a goal. Sends design asks and project-sized asks to `/wayfinder-data` with one line why. | `analysis.md`: Meta, Ask, Decisions, Assumptions | grilling, assumptions, question-types, data-map |
+| `/grill-the-ask` | User runs it with a stakeholder ask | The ask, `DATA-MAP.md` if present | Rounds of max 3 questions, each with options and a recommended default. Covers goal, the decision it feeds, requester, question type, metric, population, time window, constraints, and who reads the result (audience). The deadline is not its own question: it folds into the depth choice, and a date is asked only when a meeting, launch or review sets one. When periods are compared, recommends a comparison that handles seasonality (year on year, or the same weekdays), or flags that the recommended option ignores it. Sets the depth with a one-line reason (the deadline folds into it). Never asks the same question twice. Never analyses: with files attached it notes only columns, possible duplicates and the date range. Logs every answer word for word in Decisions and echoes it back. On a conflicting or senseless answer, says so and asks one question at a time. Asks how the ask links to a goal, recommending the goal whose metric matches the ask's metric, and asks about an Open gaps row that matters to the ask. Sends design asks and project-sized asks to `/wayfinder-data` with one line why. | `analysis.md`: Meta, Ask, Decisions, Assumptions | grilling, assumptions, question-types, data-map |
 | `/plan-analysis` | User runs it after grilling | `analysis.md` | Writes a hypothesis tree (section 7.9) before the method options. 2 to 4 options with trade-offs, then the chosen plan. Writes the analysis table spec. Sets success checks. Optionally drafts a readout skeleton with placeholders only. Records decisions already made; does not invent new ones. | `analysis.md`: Hypotheses, Plan, Analysis table spec; `readout.md` (skeleton, optional) | assumptions, question-types, shaping-data |
-| `/run-analysis` | User runs it after the plan | `analysis.md`, `DATA-MAP.md` | Builds the analysis table from the spec, climbing the validation ladder. States the expected result before each query. Audits the data. Runs the method for the question type. Asks instead of assuming. Adds plan revisions when needed. States its goal up front and keeps going until it is met. Updates hypothesis statuses. Writes a draft readout (replacing any skeleton) and a `.docx` copy. | `analysis.md`: Results, Hypotheses, Progress; `readout.md` (draft); `readout.docx`; `queries/`; `outputs/` | validation-ladder, run-or-hand-over, shaping-data, data-audit, stats-tests, question-types, data-map, assumptions |
-| `/review-analysis` | User runs it on a finished analysis (theirs or anyone's) | `analysis.md` or any pasted analysis | Technical review and business review. Checks claims against the ceiling. Checks assumption status. Gives a verdict. Writes questions leadership will ask, with answers. Says "no material issues" when that is true. Checks the hypothesis statuses and the decisions log. Reviews the draft readout word by word, fixes claims above the ceiling, marks it final and rebuilds the `.docx`. | `analysis.md`: Review; `readout.md` (final); `readout.docx` | question-types, assumptions, validation-ladder |
-| `/retro-analysis` | User runs it at the end | `analysis.md`, `DATA-MAP.md` | Proposes dated changes to the data map: new joins, traps, filters, definitions, trusted numbers, gotchas. Puts each in the right section (Conventions are style only) with no duplicates. Each reason must be true for this run, shown by a line in `analysis.md`. Shows a diff. The user approves each change. Proposes additions to Funnels and Key queries. One entry per source; grain under Tables. Never offers setup: it builds the map itself. Not a memory dump. | `DATA-MAP.md` (approved changes only) | data-map |
+| `/run-analysis` | User runs it after the plan | `analysis.md`, `DATA-MAP.md` | Builds the analysis table from the spec, climbing the validation ladder. Every script behind a number, a check or a chart is its own file in `scripts/`, takes the data folder as an argument and writes into the analysis folder. States the expected result before each query. Audits the data. Runs the method for the question type. Asks instead of assuming. Adds plan revisions when needed. States its goal up front and keeps going until it is met. Updates hypothesis statuses. Writes a draft readout as a story (TL;DR, takeaway headers; replacing any skeleton) with `storytell`, and a `.docx` copy. | `analysis.md`: Where it stands, Results, Hypotheses, Progress; `readout.md` (draft); `readout.docx`; `scripts/`; `outputs/` | validation-ladder, run-or-hand-over, shaping-data, data-audit, stats-tests, question-types, data-map, assumptions, viz, storytell |
+| `/review-analysis` | User runs it on a finished analysis (theirs or anyone's) | `analysis.md` or any pasted analysis | Technical review and business review. Checks claims against the ceiling. Checks assumption status. Gives a verdict. Writes questions leadership will ask, with answers. Says "no material issues" when that is true. Checks the hypothesis statuses and the decisions log. Reviews the draft readout word by word, checks the story with `storytell`, fixes claims above the ceiling, marks it final and rebuilds the `.docx`. Asks first when run in the chat that ran the analysis. Runs the review pack scripts from the data folder. Offers an opt-in slide pack. | `analysis.md`: Review; `readout.md` (final); `readout.docx`; `readout.pptx` (opt-in) | question-types, assumptions, validation-ladder, viz, storytell |
+| `/retro-analysis` | User runs it at the end | `analysis.md`, `DATA-MAP.md` | Proposes dated changes to the data map: new joins, traps, filters, definitions, trusted numbers, gotchas. Puts each in the right section (Conventions are style only) with no duplicates. Each reason must be true for this run, shown by a line in `analysis.md`. Shows a diff. The user approves each change. Proposes additions to Funnels and Key queries. One entry per source; grain under Tables. Never offers setup: it builds the map itself. Never upgrades a repeat run to a trusted number (a number is trusted only after an outside check). Updates Ways of working and records open gaps as their own entries. Not a memory dump. | `DATA-MAP.md` (approved changes only) | data-map |
 
 ### 6.2 Disciplines (model-invoked, v0)
 
@@ -220,7 +220,7 @@ Copy-paste form for queries: numbered (`Q2.1`, `Q2.2`), each with one purpose li
 
 ### 6.4 v1 and later
 
-- **Off-flow (v1):** `/ask-data-skills` (router), `/wayfinder-data` (map big, ambiguous work as decision items), `/handoff`, `/improve-code` (review and refactor SQL or Python), `/storytell` (narrative by audience), `/viz`.
+- **Off-flow (v1):** `/ask-data-skills` (router), `/wayfinder-data` (map big, ambiguous work as decision items), `/improve-code` (review and refactor SQL or Python), `/storytell` (narrative by audience), `/viz`.
 - **Rest of the upstream inventory (v1).**
 - **Automated eval runner (v1).**
 - **Productionisation and monitoring (v2+).**
@@ -242,12 +242,13 @@ All user-owned files live in the user's own project, never in the skills repo. U
       readout.md      stakeholder readout (source; skeleton, draft, then final)
       readout.docx    the same text with charts embedded, for Word and Google Docs
       experiment-spec.md or metric-spec.md   (design asks)
-      queries/        numbered ladder steps (q1-1-one-entity.sql ...)  (coding agents)
-      outputs/        charts, tables, notebooks  (coding agents; in a chat app charts sit in the analysis folder)
+      scripts/        every script behind a number, a check or a chart (q1-1-one-entity.sql ...), in any environment
+      outputs/        charts, tables, notebooks  (coding agents; in a chat app charts sit in the analysis folder, as SVG when binary files cannot be written)
+      readout.pptx    opt-in slide pack, built from the final readout
 ```
 
 - **Coding agents:** the skills write here. They look for `data-work/` in the current folder, then upward. A team map can sit above project maps. The nearest map wins for conflicts, and the skill says which map it read.
-- **Chat users:** the same layout, at the same full paths, in the chat app's Project files (see section 7.8). Never a bare file name: in claude.ai a bare name lands in a `claude/` folder, and a generic name such as `experiment-spec.md` is overwritten by the next spec. Charts sit in the analysis folder itself, and `readout.md` links them by their real path, never `outputs/`. Each flow step hands back the files it changed. `/retro-analysis` hands back a full updated `data-work/DATA-MAP.md`. The user never edits a saved file by hand.
+- **Chat users:** the same layout, at the same full paths, in the chat app's Project files (see section 7.8). Never a bare file name: in claude.ai a bare name lands in a `claude/` folder, and a generic name such as `experiment-spec.md` is overwritten by the next spec. Charts sit in the analysis folder itself, saved as SVG when the agent can write text files but not binary files (PNG only inside `.docx` and `.pptx`), and `readout.md` links them by their real path, never `outputs/`. Scripts are text, so `scripts/` is kept in chat apps too. Each flow step hands back the files it changed. `/retro-analysis` hands back a full updated `data-work/DATA-MAP.md`. The user never edits a saved file by hand.
 - **Design asks:** `experiment-spec.md` or `metric-spec.md` is saved in its own analysis folder (`data-work/analyses/<YYYY-MM-DD>-<slug>/`).
 - **Quick depth:** no files.
 - **No raw chat transcripts are stored.** `analysis.md` is the record.
@@ -268,13 +269,14 @@ Sections:
 9. **Goals:** mission, north star metric, target metrics, each with a horizon (this quarter, this year, 3 years). `/grill-the-ask` asks how an ask links to a goal and records it in Meta.
 10. **Funnels:** one row per step: the funnel, the step, its event or table, and the step definition.
 11. **Key queries:** 3 to 5 reusable queries: name, what it returns, when to use it, and the query saved as SQL text (a SQL block under its name), in the team's SQL conventions, with every column checked against the Tables section. A column the map does not know is marked `unchecked`. A description alone is not a key query. `/retro-analysis` proposes additions to Funnels and Key queries.
-12. **Ways of working:** how the user works: where work lives (chat Projects, or a repo layout) and the file hand-back choice (downloads, Project files, or a named document tool). Skills ask about hand-back once per Project and read it from here afterwards.
+12. **Ways of working:** how the user works: where work lives (chat Projects, or a repo layout), the file hand-back choice (downloads, Project files, or a named document tool), the chart format (SVG or PNG) and the slide pack choice. Skills ask about each once per Project and read it from here afterwards. An item the user answered is recorded with the answer, never saved as a gap.
+13. **Open gaps:** one row per open gap (what is unknown, who can answer, where it was raised), each its own entry, never buried in another line. `/retro-analysis` records them. `/grill-the-ask` reads them and asks about a gap that matters to the new ask.
 
 Sources hold one entry per source. Grain and key facts go under Tables. Every section is a table with the template's columns, never loose bullets (Conventions is the one list).
 
 **Tidy on extend.** When setup or a retro extends a map, it normalises it to the template: one entry per source (a bullet that lists several files becomes separate entries), grain and keys under Tables, table layout instead of bullets, key queries as SQL, a Ways of working section. The tidy is shown as a diff and applied only after approval.
 
-Every entry carries `verified: YYYY-MM-DD` and `source: setup` or `source: analyses/<slug>`.
+Every entry carries `verified: YYYY-MM-DD` and `source: setup` or `source: analyses/<YYYY-MM-DD>-<slug>`: one form, the dated analysis folder name. A step that touches an older entry written another way normalises it and shows the change.
 
 **Staleness:** when a skill relies on an entry older than 90 days, or one the data contradicts, it says so and asks before using it.
 
@@ -282,7 +284,7 @@ Shared by the team: committed to git where there is a repo, so every retro impro
 
 ### 7.3 `analysis.md`
 
-First line: `format: v1`. Second line: `updated: YYYY-MM-DD HH:MM`. Sections, filled by step:
+First line: `format: v1`. Second line: `updated: YYYY-MM-DD HH:MM`. Then a **"Where it stands"** block of about 5 lines at the top: status, answer so far, open risks, next step, how to resume. Every step updates it. Then the sections, filled by step:
 
 1. **Meta:** title, requester, audience, date, depth, question type, claim ceiling, status, progress line, setup choice (A, B or map found; setup is never offered again once set), goal link (the goal in the map's Goals section the ask serves), files (download, or a document tool the user named). Requester (a person or role the user names) and date are never blank.
 2. **Ask:** the original ask verbatim, the clarified question, the decision it feeds, constraints, deadline. *(grill)*
@@ -294,7 +296,7 @@ First line: `format: v1`. Second line: `updated: YYYY-MM-DD HH:MM`. Sections, fi
 8. **Retro:** proposed data map changes and which were accepted. *(retro)*
 9. **Decisions:** every question and the user's answer, word for word, per round. After each round the skill echoes the answers back exactly before moving on. *(every step that asks)*
 10. **Hypotheses:** the hypothesis tree with a status per node (section 7.9). *(plan, updated by run, checked by review)*
-11. **Appendix: Review pack:** for each headline number, the exact SQL or Python that produced it and its data source. In chat apps `queries/` does not persist, so this is how a fresh reviewer sees the code. *(run)*
+11. **Appendix: Review pack:** each script that produces a headline number, a check or a chart: its path in `scripts/`, one line on what it produces, how to run it, and its data source. The code lives in the script files, not in `analysis.md` (a roughly 600-line `analysis.md` is hard to update safely). Each script takes the data folder as an argument and writes its outputs into the analysis folder, never a temp path. *(run)*
 
 Every skill reads `analysis.md` first, so a fresh session can pick up without re-asking.
 
@@ -327,25 +329,29 @@ Designed before any query or code, without reference to a tool:
 
 ### 7.6 Readout (`readout.md`)
 
-The stakeholder-facing result. Portable markdown, ready to paste into Confluence, Notion or a doc, with no app-specific macros. One layout; wording adapts to the audience set in grilling. The default readout respects that audience. `/storytell` is for other audiences and formats. App-specific exports (Confluence, Notion) are a later release, in `/storytell`. The `.docx` copy (below) covers Word and Google Docs.
+The stakeholder-facing result, written as a story. It is the decision layer. `analysis.md` is the evidence layer. Portable markdown, ready to paste into Confluence, Notion or a doc, with no app-specific macros. One layout; wording adapts to the audience set in grilling. `/run-analysis` drafts it and `/review-analysis` checks it, both with the `storytell` discipline (section 20.1). Audience versions (exec email, chat message, slide pack) come from `/storytell` and are offered at the end of the review.
 
-1. **Answer** in 2 lines.
-2. **Key numbers**, each with its uncertainty. At most 5 (strict for an exec audience). The rest go to the Appendix.
-3. **Charts** (the `viz` rules): at most 3 in an exec readout; each title states the takeaway; one annotation on the key moment (for example, a marker on the day a step happened). Charts replace number rows where they say the same thing. Charts are image files in the analysis folder, linked from the readout by their real path with alt text (`outputs/<chart>` in a coding agent, `<chart>` beside the readout in a chat app, never `outputs/` in a chat app). Hand-over mode gives the chart spec plus ready-to-run code.
-4. **What it means** and the recommendation.
-5. **Caveats:** open high-impact assumptions, and the claim ceiling in plain words.
-6. **Method** in 3 lines. Claims only what ran: no "full validation ladder" if the review found rungs weaker than that.
-7. **Link** to `analysis.md`.
-8. **Appendix:** other numbers, segment tables, the ladder summary.
+1. **TL;DR:** 2 to 3 lines covering the answer, what it means and the ask.
+2. **Story sections,** top down, then drilling in. Each section header is a takeaway sentence, and the chart or number under it proves it. Read in order, the headers alone tell the story. Never a label-only header ("Answer", "Key numbers", "Charts", "What it means").
+3. **Callouts** only where a decision or attention is needed.
+4. **Caveats,** then a short **Method** (3 lines, claims only what ran: no "full validation ladder" if the review found rungs weaker than that), then the **Appendix** (with a link to `analysis.md`).
+
+Caps: at most 5 headline numbers (strict for an exec audience), 3 charts, 3 callouts. Analyst-only figures (raw-count checks, intervals of robustness cuts, recompute detail) go to the appendix or `analysis.md`.
+
+- **Lead with the insight a decision needs.** If a number tells the reader what it would take to change the answer (the gap to a target, the size of change needed), it belongs in the story, not the appendix.
+- **Chart choice per claim.** Pick the chart from the message it must prove: a number against a target (bars plus a target line), change over time (line), mix (stacked bars), spread (histogram or box). One message per chart, takeaway as its title, one annotation on the key moment. Charts replace number rows where they say the same thing. Charts are image files in the analysis folder, linked by their real path with alt text (`outputs/<chart>` in a coding agent, `<chart>` beside the readout in a chat app, never `outputs/` in a chat app). In a chat app that can write text files but not binary files, each chart is saved as SVG. PNG stays inside binary outputs (`.docx`, `.pptx`). Each chart comes from a script in `scripts/`. Hand-over mode gives the chart spec plus ready-to-run code.
+- **Plain words.** Round numbers for exec audiences. Plain phrases over jargon ("almost double the target", not "85% above"; "we are 95% sure it fell", not "interval below zero"). This applies to readouts, decks and question cards.
 
 Formatting:
-- Callouts are blockquotes with a bold label: `> **Answer:** ...`, `> **Caveat:** ...`, `> **Ask:** ...`. At most 3 per readout.
+- Callouts are blockquotes with a bold label: `> **Ask:** ...`, `> **Caveat:** ...`, `> **Decision:** ...`. At most 3 per readout.
 - Status is a bold label at the top: `**Status: DRAFT**` or `**Status: FINAL**`.
 - Bold only for the one takeaway per section.
 
-`/run-analysis` writes the draft. `/review-analysis` checks every sentence against the claim ceiling, fixes it, and marks it final. Quick depth: a short answer in the chat, no file.
+`/run-analysis` writes the draft. `/review-analysis` checks every sentence against the claim ceiling, checks the story (TL;DR, takeaway headers, the decision insight not buried, plain words, chart fit), fixes it, and marks it final. Quick depth: a short answer in the chat, no file.
 
-**Word and Google Docs copy.** `readout.md` is the source. `/run-analysis` also produces `readout.docx` from the same text with the charts embedded, using whatever document library the sandbox has. `/review-analysis` edits `readout.md`, then rebuilds the `.docx`. Nobody edits the `.docx` by hand. With no code tool: `readout.md` plus the chart code only. `/storytell` makes a `.docx` for its doc and email formats.
+**Slide pack (opt-in).** At the end of `/review-analysis`, one card asks "Also make a slide pack?" The answer is saved under Ways of working in the map, so later analyses do not ask again unless the user changes it. When yes, `readout.pptx` is built from the final `readout.md` with no new claims, and is never edited on its own. Titles are takeaways: read in order, the titles alone tell the story, and each slide proves its title. One message and at most one chart per slide, about 20 words of body text at most. Evidence goes on appendix slides. Same claim ceiling as the readout. No slide repeats another. In chat apps it is a download, like `readout.docx`. If no library can build `.pptx`, the fallback is a markdown slide outline, and the skill says so. The review checks the deck against the readout: numbers match, and no title claims more.
+
+**Word and Google Docs copy.** `readout.md` is the source. `/run-analysis` also produces `readout.docx` from the same text with the charts embedded, using whatever document library the sandbox has. `/review-analysis` edits `readout.md`, then rebuilds the `.docx`. Nobody edits the `.docx` by hand. With no code tool: `readout.md` plus the chart code only. `/storytell` makes a `.docx` for its doc and email formats, and a `.pptx` for the slide pack.
 
 **Status line values:** `SKELETON` (placeholders only, from `/plan-analysis`, section 7.9), `DRAFT`, `FINAL`.
 
@@ -358,8 +364,8 @@ Formatting:
 
 - **Workspace.** In chat apps, one Claude or ChatGPT Project per team or area, and one chat per analysis. `/setup-data-work` ends by writing a short block to paste into the Project's instructions, in these words: "Read data-work/DATA-MAP.md before any data work. Use the data-skills commands. Keep files in data-work/ as the skills lay them out. At the end of each step, tell me which files changed and where they are."
 - **One layout, full paths.** Every file has its full path under `data-work/`: `data-work/DATA-MAP.md` and `data-work/analyses/<YYYY-MM-DD>-<slug>/` with `analysis.md`, `readout.md`, `readout.docx`, charts and any spec. Meta holds the folder as `Folder`. Every file starts with `format:` and `updated: YYYY-MM-DD HH:MM`. Skills hand back the whole file.
-- **Say what happened to each file.** After a save, the skill names the path, in one of three forms only: "Saved to `<path>` in your Project files" (the agent wrote it), "Download `<file>` and add it to your Project at `<path>`" (it could not), or "Printed below; save it as `<path>`". Never "replace the old one, it is already saved there". Never a claimed save that did not happen.
-- **Stale copies.** When an older copy of the same file exists elsewhere in the Project (for example `analysis (6).md` at the top level, or a file in `claude/`), the skill names it and says it is stale, and suggests once that old analyses move into the layout. If two copies exist, the newest `updated:` wins and the skill says so.
+- **Say what happened to each file.** After a save, the skill names the path, in one of three forms only: "Saved to `<path>` in your Project files" (the agent wrote it), "Download `<file>`" (it could not; never a request to move it into a Project folder), or "Printed below; save it as `<path>`". Never "replace the old one, it is already saved there". Never a claimed save that did not happen.
+- **Stale copies.** Each step lists stale copies by full path, never a bare `DATA-MAP.md` next to the live `data-work/DATA-MAP.md`, and applies one rule every time: a copy is stale when it has the same file name at another path, or an older `updated:` line. The list changes only when files change. A step never leaves its own stale copy: if it renames or replaces a file it created, it removes or overwrites the old one where it can and lists only the files it cannot remove. Setup names stale analyses and files in the Project by full path. The skill suggests once that old analyses move into the layout. If two copies exist, the newest `updated:` wins and the skill says so.
 - **Optional save to a document tool.** Ask once per Project, generically: "Hand files to you as downloads, as files in your Project, or save them to a document tool you use (for example a drive, a wiki or a notes app)?" Use only a tool the user names, never one picked from visible connectors. Never required. The answer is the `Files` line in Meta and a row in the map's Ways of working. When the map holds it, the skill never asks again.
 - **Surface guide.** `docs/where-to-run.md`, linked from the README: coding agents (`data-work/` in the repo, files saved automatically, commit `DATA-MAP.md` so the team shares it); chat apps (a Project per team or area, the instructions block, files at their full paths in the Project or saved to a document tool).
 - **A new project, or a new Project, on the same data.** Carry over `DATA-MAP.md` and the Project instructions block. Start a fresh map only for entirely different data sources. When no map is found, `/setup-data-work` and `data-map` first ask: "Do you have a DATA-MAP.md from another project on the same data? Attach or copy it in." Only then do they offer a fresh setup.
@@ -382,7 +388,7 @@ Status: `open`, `supported`, `refuted` or `parked`. `/run-analysis` updates it, 
 
 ### 7.10 Using data-skills in a chat app
 
-The README has a section "Using data-skills in a chat app" in plain steps: create a Project per team or area; upload the skills; run `/setup-data-work` and paste its instructions block into the Project instructions; one chat per analysis; files live in `data-work/` in the Project files and every step says which changed and where; what to do if the app cannot save to the Project (download, add at the path shown). It says in one line that coding agents need none of this. `/setup-data-work` in a chat app ends by walking the user through the same steps in 3 to 5 short lines.
+The README has a section "Using data-skills in a chat app" in plain steps: create a Project per team or area; upload the skills; run `/setup-data-work` and paste its instructions block into the Project instructions; one chat per analysis; files live in `data-work/` in the Project files and every step says which changed and where; what to do if the app cannot save to the Project (the step says "Download `<file>`"; attach it to a later chat when needed; no move into a Project folder is ever asked). It says in one line that coding agents need none of this. `/setup-data-work` in a chat app ends by walking the user through the same steps in 3 to 5 short lines.
 
 ---
 
@@ -403,11 +409,11 @@ Rounds of max 3 questions. Partial answers are fine; the map grows through retro
 10. **Conventions:** "Does your team have SQL or Python conventions? If not, I'll use sqlstyle.guide and PEP 8."
 11. **How you work (where the files live):** "A) One repo with a folder per project. B) A repo per project. C) A team repo. D) Chat Projects." Recorded in the map under Ways of working. Skills look for `data-work/` in the current folder, then upward. A team map can sit above project maps: the nearest map wins for conflicts, and the skill says which map it read. For chat apps, recommend one Project per team or area and one chat per analysis (section 7.8).
 12. **Git policy (coding agents only):** commit `outputs/` or not (default: not). No git advice in chat apps.
-13. **File hand-back (chat apps, ask once per Project):** "A) As downloads. B) As files in your Project. C) Save to a document tool you use." Recommend B when the session can write to the Project files, otherwise A. Only a tool the user names. Never required. Recorded in the map under Ways of working, so later steps do not ask again.
+13. **File hand-back (chat apps, ask once per Project):** "A) As downloads. B) As files in your Project. C) Save to a document tool you use." Recommend B when the session can write to the Project files, otherwise A. Only a tool the user names. Never required. Recorded in the map under Ways of working, so later steps do not ask again. The answers to every Ways of working item the user gave in the session are recorded with the answer, never saved as a gap.
 
 Before step 0, when no map is found: "Do you have a DATA-MAP.md from another project on the same data? Attach or copy it in." If yes, extend it. Start a fresh map only for entirely different data sources.
 
-Then write `DATA-MAP.md` and show a short summary of what is still missing. In a chat app, end with the Project instructions block (section 7.8) and a short walk-through of the chat-app steps (section 7.10).
+Then write `DATA-MAP.md`, name stale files and analyses in the Project by full path, and show a short summary of what is still missing (real gaps only, never an item the user answered). In a chat app, end with the Project instructions block (section 7.8) and a short walk-through of the chat-app steps (section 7.10).
 
 ---
 
@@ -509,15 +515,17 @@ Before each check, state the expected result. After it, record the actual result
 ## 12. Review standard (`/review-analysis`)
 
 - **Technical:** data, joins, filters, method, tests, ladder log, analysis table spec match, uncertainty.
+- **Scripts run from the data folder:** the review runs each script of the review pack as a fresh reader would, with the data folder as its argument. Any temp path, absolute path or missing input is an issue. "Code is present" is not a pass.
 - **Independent recompute (every depth):** recompute the 3 to 5 headline numbers by a route the analysis did not use, and spot-check 1 or 2 rungs. The review checks; it does not rebuild the analysis.
 - **Business:** does it answer the decision? Is the effect practically meaningful? Guardrails, cost and risk, what a sceptical leader will ask.
 - **Claims:** every claim checked against the question-type ceiling.
 - **Assumptions:** any high-impact open row flagged.
 - **Hypothesis statuses:** every status is checked against the node's own support and refute conditions (section 7.9). A wrong status is fixed in `analysis.md` and shown as a "was" and "now" pair.
 - **Leadership questions:** each answer marked "not supported yet" names the cheapest way to answer it.
-- **Readout:** every sentence the review changes is shown as a "was" and "now" pair.
+- **Readout:** every sentence the review changes is shown as a "was" and "now" pair. The review also checks the story with `storytell`: TL;DR, takeaway headers, the decision insight not buried, callouts only where needed, plain words, chart fit. It fixes the story before marking the readout final.
+- **Slide pack:** the review ends with the opt-in card (section 7.6) and checks the deck against the readout.
 - **Verdict:** `ready`, `ready with caveats`, or `needs rework`, with the reasons.
-- **Fresh context:** the review works from the files only (`analysis.md`, `readout.md`, `DATA-MAP.md`, the data), never from chat memory. If the agent can start a subagent with fresh context, it may run the review there, passing only the files; this is optional and never relied on (section 3). Otherwise, at standard and deep depth, the go-ahead question at the end of `/run-analysis` recommends: "Start `/review-analysis` in a new chat. In a Claude or ChatGPT Project, save the data, `DATA-MAP.md`, `analysis.md` and `readout.md` to the Project files first, then open a new chat in that Project; nothing needs attaching." A same-chat review stays allowed, with the files-only stance. Quick depth: a same-chat review is fine.
+- **Fresh context:** the review works from the files only (`analysis.md`, `readout.md`, `DATA-MAP.md`, the data), never from chat memory. If the agent can start a subagent with fresh context, it may run the review there, passing only the files; this is optional and never relied on (section 3). Otherwise, at standard and deep depth, the go-ahead question at the end of `/run-analysis` recommends: "Start `/review-analysis` in a new chat. In a Claude or ChatGPT Project, save the data, `DATA-MAP.md`, `analysis.md` and `readout.md` to the Project files first, then open a new chat in that Project; nothing needs attaching." When `/review-analysis` runs in the chat that ran the analysis (standard and deep depth), a card comes first: "A new chat gives a fresher review. Continue here anyway?", with "Open a new chat" recommended. A same-chat review stays allowed, with the files-only stance. Quick depth: a same-chat review is fine, with no card.
 - **Precision matters:** if there are no material issues, say so plainly. Do not invent issues.
 - Reuse the review protocol, technical review, business review and methods files from `caltunay/datafolx` where they fit.
 
@@ -562,6 +570,8 @@ Pre-release check, run by the maintainer:
 - v0.3 cases: `run-analysis` on attached CSVs in a chat app with a code tool (must run the checks itself); `run-analysis` on data with a zero-day logging gap (must find it before any segment scan); `grill-the-ask` with a period comparison across a seasonal boundary (must flag seasonality); `retro-analysis` (must not put analysis rules under Conventions).
 - v0.4 rubric rows: no analysis in the grill, the decisions log, one question at a time when stuck, the hypothesis tree and its statuses, the readout skeleton, the `.docx` readout, the setup choice, stable names and versions (flow rubrics); the fast path and the two specs (`wayfinder-data`); the routing guide (`ask-data-skills`).
 - v0.4 cases: `grill-the-ask` 6 (a contradicting answer) and 7 (files with an obvious pattern); `plan-analysis` 4 (hypothesis tree for a "why did X drop"); `wayfinder-data` 4 (design an A/B test) and 5 (define customer health); `setup-data-work` 5 (chat app: goals, funnels, key queries, an existing map first, the Project instructions block); `ask-data-skills` 4 (a design ask).
+- v0.6 rubric rows: scripts as files and run from the data folder, SVG charts, no move requests, the story readout, the decision insight, `storytell`, the slide pack, the same-chat card, the repeat-run rule, `/improve-code` runs, reuse and scope, business limits, other designs, options checked against the map.
+- v0.6 cases: `run-analysis` 6, `review-analysis` 6 to 8, `retro-analysis` 6, `improve-code` 4, `wayfinder-data` 7.
 - Reference case: `evals/reference/signup-drop-claude-ai.md` summarises what a good manual run caught on the sign-up example. Neutral domain only.
 
 ---
@@ -651,7 +661,7 @@ Decide these, then log each choice and reason in `DECISIONS.md`:
 8. One `DATA-MAP.md` with fixed sections, including Conventions. Format version on line 1, with migrations.
 9. Every data map entry has a verified date and source. Retro proposes, the user approves. Flag entries older than 90 days or contradicted by data.
 10. User files live in `data-work/` in the user's project, committed and shared by the team. Never in the skills repo.
-11. One folder per analysis: `analysis.md`, `queries/`, `outputs/`. No raw chat transcripts.
+11. One folder per analysis: `analysis.md`, `scripts/` (called `queries/` before v0.6), `outputs/`. No raw chat transcripts.
 12. Assumptions: a table with alternatives required for high-impact rows.
 13. `outputs/` git policy chosen at setup, default excluded. Aggregates by default; ask before saving row-level data.
 14. Chat apps are first-class: skills install by upload in claude.ai and ChatGPT. `DATA-MAP.md` lives in the chat app's Project files at `data-work/DATA-MAP.md`.
@@ -686,10 +696,12 @@ Rules for every new skill:
 - Flow-style skills (they read or write files in `data-work/`) open with the 4-step start from section 4 and end with the chat-app handoff from section 5.
 - Each new user-invoked skill has 3 eval cases (2 flawed, 1 clean) and a rubric.
 
-### 20.1 `/storytell` (user-invoked, off-flow)
+### 20.1 `/storytell` (user-invoked, off-flow, and a discipline from v0.6)
+
+**v0.6 role change.** `/storytell` is now also a discipline. `/run-analysis` applies it to draft the readout as a story (section 7.6). `/review-analysis` applies it to check the story and fix it before marking the readout final. Its description covers both uses: applied inside run and review, and run directly when the user asks for an audience version. Audience versions (exec email, chat message, slide pack) are offered at the end of the review, not as a separate required step. The skill name stays `storytell`. The slide pack rules are in section 7.6.
 
 - Input: the final `readout.md` and `analysis.md`. If the readout is not final, it says so and suggests `/review-analysis` first.
-- Asks the audience (exec, product, data, mixed) and the format (doc, chat message, email, slide outline).
+- Asks the audience (exec, product, data, mixed) and the format (doc, chat message, email, slide pack).
 - Writes `readout-<audience>.md` next to the readout.
 - Rules: answer first. Every number keeps its uncertainty. No claim above the ceiling recorded in `analysis.md`. Caveats in plain words. Exec version: no jargon, under 150 words before the appendix. Slide outline: at most 5 slides, each title states the takeaway, one chart suggestion per slide.
 - Calls: `question-types`, `viz`.
@@ -708,6 +720,8 @@ Rules for every new skill:
 - Surgical: change only what is needed. Show a diff. One line per change saying why.
 - Prove equivalence where behaviour should not change: before and after row counts and totals, as check queries through `run-or-hand-over`. If behaviour changes on purpose (a bug fix), say so and show the difference.
 - Calls: `shaping-data`, `validation-ladder`, `run-or-hand-over`, `data-map`.
+
+**v0.6 additions to `/improve-code`.** Verify by running when possible: if the agent can run code and reach the data, it runs the old and the new version itself and shows the same result, without stopping to ask first. Prefer checks that make a mismatch visible (for example coverage per side of a join) over filters that hide it. Keep reusable code reusable: no fixed dates, windows or one-off values in shared queries. Use what the map or an analysis already knows (nulls, ties, grain). Close the loop: when a check changes what is known about shared code (untested, tested on a translation, failed), offer to record it where the team keeps that code. Stay in scope: report on the code only, no findings and no claim above the ceiling. Offer scripts from analyses as candidates for Key queries, not only the map's key queries.
 
 ### 20.4 `/ask-data-skills` (user-invoked router)
 
@@ -738,12 +752,12 @@ Rules for every new skill:
   - **Fast path:** when the whole ask is one design item, it skips the decision map and goes straight to that spec.
   - `/grill-the-ask` sends design asks and project-sized asks to `/wayfinder-data` with one line why.
   - **Specs live in their own analysis folder (v0.5).** `data-work/analyses/<YYYY-MM-DD>-<slug>/experiment-spec.md` or `metric-spec.md`, never a bare `experiment-spec.md`.
-  - **Ends with the go-ahead question (v0.5)**, in the fixed form: A) the next step (recommended), B) Change something, C) Add an item, a check or a question.
+  - **Ends with the go-ahead question (v0.5)**, in the fixed form: A) the next step (recommended), B) Change something, C) Add an item, a check or a question. After a spec the next step is sign-off and the open items. The readout analysis comes after the test ends (v0.6).
+  - **Designing a test (v0.6).** Business limits first: before any sizing, ask how long the test can run, what the change is expected to gain, what it costs to be wrong and whether it is easy to reverse. Never invent a constraint. Size for the user's limits and say plainly what that can and cannot detect. Derive the margin or minimum effect from the trade-off (expected gain against the loss that would cancel it), not from what fits the timeline. A reversible change can justify a looser bar: say why. State the sizing assumptions and flag when the data breaks them. When an A/B test is too weak, offer other designs in the first round of options through the causal selector and method cards (before and after, time series, difference-in-differences, synthetic control, matched cohorts, a reversible switch with a guardrail alert, no test), each with pros, cons, data needed, the check that would break it and its claim ceiling. The spec becomes an evaluation spec when the chosen design is not an experiment. Check options against the map before offering them (unit counts, missing fields, known breaks in a comparison series). Raise a goal conflict when the choice is made. Do not ask about choices a tool or another owner makes: record them as "to confirm with <owner>". When only one option is sound, write it as a requirement. For overlapping tests, explain whether independent splits keep the comparison fair and what interaction risk remains, and offer a later start date. Name likely owners for open items.
 
-### 20.6 `/handoff` (user-invoked, off-flow)
+### 20.6 `/handoff` (removed in v0.6)
 
-- Writes `handoff.md` in the analysis folder: where things stand (the Progress line), what is done, decisions made, open high-impact assumptions, the next step, files and their state, and how to resume in a fresh session.
-- For a colleague or a fresh session. Chat apps: offered as a download.
+The skill is removed. The "Where it stands" block at the top of `analysis.md` (section 7.3) replaces it: status, answer so far, open risks, next step and how to resume, updated by every step.
 
 ### 20.7 Predictive cards upgrade
 
@@ -767,7 +781,7 @@ Rules for every new skill:
 
 - `examples/signup-drop/`: "Why did sign-ups drop in March?" for the invented subscription app. Descriptive, then exploratory, with the ceiling stated.
 - `examples/pricing-page-test/`: an A/B test on the shop's pricing page, with an SRM check, power, and a clean readout.
-- Each has invented data as small CSVs from a seeded script (`generate_data.py`), `DATA-MAP.md`, `analysis.md`, `readout.md` and `queries/`. Produced by following the skills in order, with the queries really run.
+- Each has invented data as small CSVs from a seeded script (`generate_data.py`), `DATA-MAP.md`, `analysis.md`, `readout.md` and `scripts/`. Produced by following the skills in order, with the queries really run.
 
 ### 20.11 GitHub Actions
 
@@ -790,7 +804,7 @@ Rules for every new skill:
 
 ### 20.14 Catalogue after v0.2
 
-22 skills: the 15 from v0, plus user-invoked `storytell`, `improve-code`, `ask-data-skills`, `wayfinder-data`, `handoff`, and model-invoked `viz`, `metric-design`.
+22 skills: the 15 from v0, plus user-invoked `storytell`, `improve-code`, `ask-data-skills`, `wayfinder-data`, `handoff`, and model-invoked `viz`, `metric-design`. From v0.6 the catalogue is 21 skills: `handoff` is removed (section 20.6).
 
 ---
 
@@ -856,5 +870,27 @@ Built from a full live run of v0.4 in claude.ai (setup extending a map, two anal
 | Evals | Rubric lines for the new rules, five new cases, `evals/reference/v0.4-live-run.md` | 15 |
 | Self-check | Checks 35 to 39: save forms and no old names, the wayfinder end, the status rule, the chat-app section and the instructions block, question cards and continue-or-new | `docs/self-check.md` |
 
-Not tested: a live run of v0.5 in claude.ai. The eval runner was run in dry-run mode only (61 cases).
+Not tested: a live run of v0.5 in claude.ai (done later: see section 24). The eval runner was run in dry-run mode only (61 cases).
+
+---
+
+## 24. v0.6 fix pass
+
+Built from a full live run of v0.5 in claude.ai (setup, one analysis through grill, plan, run, review in the same chat and then in a new chat, and retro, then `/improve-code`, `/storytell` and a design ask through `/wayfinder-data`). The flow works. The numbers, checks and honesty are strong. These fixes target file handling in chat apps, the readout as a story, design asks that face business limits, and a few skill gaps. Branch `v0.6`, from `v0.5` because PR #4 was open and unmerged. All section 3 hard rules apply. Decisions 97 to 112. Plugin version: `0.6.0`.
+
+Rule for every item: skill text states principles and directions that work for any data, team and ask. No column name, number, date or case from the live run appears in a skill. Concrete cases live only in the evals and in `evals/reference/v0.5-live-run.md`.
+
+| Area | Change | Where in this spec |
+|---|---|---|
+| Files and folders | Every script behind a number, a check or a chart is its own file in `scripts/`, takes the data folder as an argument, writes into the analysis folder, never a temp path. `analysis.md` lists them and stays short. A "Where it stands" block at the top replaces `handoff`. Charts are SVG in chat apps that cannot write binary files. Never ask the user to move a file into a Project folder ("Download `<file>`"). Stale lists use full paths and one rule. A step never leaves its own stale copy. "Files changed" appears only after a step that could change files | 4, 5, 7.1, 7.3, 7.6, 7.8 |
+| Readout and storytelling | The readout is a story: TL;DR, takeaway headers, callouts only where needed, caveats, method, appendix. The caps stay (5 numbers, 3 charts, 3 callouts). The decision insight is in the story. Chart choice per claim. Plain words. `storytell` becomes a discipline used by run and review. Opt-in slide pack at the end of the review | 7.6, 12, 20.1 |
+| Setup, grill and map | Answered Ways of working items are recorded, never saved as gap. Setup names stale files by full path. One source form (`analyses/<YYYY-MM-DD>-<slug>`). Goal link defaults to the goal whose metric matches the ask. The deadline folds into depth. New map section 13, Open gaps | 4, 6.1, 7.2, 8 |
+| Review and retro | Same-chat review asks first. The review runs scripts from the data folder. Card counters show position out of the full total. Retro never upgrades a repeat run to a trusted number, updates Ways of working and records open gaps as entries | 4, 6.1, 12 |
+| `/improve-code` | Verify by running when possible, surface problems, keep reusable code reusable, use known facts, close the loop, stay in scope, offer analysis scripts as candidates. The claim ceiling applies in every skill | 2, 20.3 |
+| Design asks | Business limits first, show what the limits buy, other designs offered in the first round, never invent a constraint, state sizing assumptions, check options against the map, raise goal conflicts at the choice, no asking about choices others make, one sound option as a requirement, overlapping tests explained, owners named, next step is sign-off | 20.5 |
+| Skill set | `handoff` removed. `storytell` changes role | 6.4, 20.1, 20.6, 20.14 |
+| Evals | Rubric lines for items 1, 3, 4, 8, 9, 12, 13, 19, 20, 22, 24, 26, 29, 31, 33 and 36, seven new cases, `evals/reference/v0.5-live-run.md` | 15 |
+| Self-check | Checks 40 to 46: scripts and files, no `handoff`, story readout and `storytell` use, slide pack offer, no temp paths, business limits step, the v0.6 skill rules | `docs/self-check.md` |
+
+Not tested: a live run of v0.6 in claude.ai. The eval runner was run in dry-run mode only (65 cases). Building a real `.pptx` was not tried in a chat sandbox: the skills carry a fallback (a markdown slide outline).
 

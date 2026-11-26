@@ -44,7 +44,7 @@ Run with `scripts/self-check`. Last run: 2026-11-26, v0.6 fix pass, with the pri
 | 38 | The README has the chat-app section, and the Project instructions block matches in the setup skill and `docs/where-to-run.md` |
 | 39 | Question cards, the continue-or-new question and the earlier-work hint ("Download it and attach it to this chat") are in the skills |
 | 40 | v0.6 files: "Where it stands" block, scripts listed in the Review pack, scripts-as-files and data-folder rules in `run-analysis`, the scripts-run check in `review-analysis`, SVG charts, no request to move a file into a Project folder |
-| 41 | The `handoff` skill, its evals and every mention are gone (SPEC.md and DECISIONS.md keep the removal record) |
+| 41 | The removed note-for-a-colleague skill, its evals and every mention are gone (SPEC.md and DECISIONS.md keep the removal record) |
 | 42 | The readout template has a TL;DR and no label-only headers; `run-analysis` and `review-analysis` apply `storytell`; `storytell` covers both uses |
 | 43 | The slide pack offer is in `review-analysis` and its rules (20 words, one chart per slide) are in `storytell` |
 | 44 | No temp paths in skill text, templates, README or docs |

@@ -98,6 +98,22 @@
 94. `/wayfinder-data` ends with the same go-ahead question as the flow steps. Option A names the real next step: the next open item, the first analysis prompt, or sign-off of a fast-path spec. Specs are saved in their own analysis folder, never under a bare name.
 95. The README gets a plain chat-app guide, and `/setup-data-work` ends with the same steps in 3 to 5 lines. Coding agents are told in one line that they need none of it.
 96. Evals gain rubric lines for the v0.5 rules (save forms, continue or new, earlier work with no map, key queries as SQL, question cards, no hedged defaults, status logic, the wayfinder go-ahead question) and five new cases, so a regression in any of them shows up.
+97. Every script behind a headline number, a check or a chart is its own file in `scripts/` in the analysis folder, in any environment. Each takes the data folder as an argument and writes into the analysis folder, never a temp path. `analysis.md` lists them with one line each and does not hold the code. Reason: in the v0.5 live run `analysis.md` grew to about 600 lines, one step refused to rewrite it, and two reviews missed that the review pack used temp paths.
+98. A "Where it stands" block (status, answer so far, open risks, next step, how to resume) sits at the top of `analysis.md` and every step updates it. It replaces the `handoff` skill, which is removed.
+99. In a chat app that can write text files but not binary files, charts are saved as SVG in the analysis folder. PNG stays inside binary outputs (`.docx`, `.pptx`). The live run confirmed that SVG saves and renders in claude.ai Project files.
+100. Skills never ask the user to move a file into a Project folder. When a file cannot be written, the step says "Download `<file>`" and, if it matters, where a later step expects it. Chat apps do not let users place uploads in folders.
+101. Stale copies are listed by full path with one rule every time (same file name at another path, or an older `updated:` line). A step never leaves its own stale copy. The "files changed" line appears only after a step that could change files.
+102. The readout is a story: a TL;DR, sections with takeaway-sentence headers proved by a chart or number, callouts only where a decision or attention is needed, then caveats, a short method and an appendix. The caps stay (5 numbers, 3 charts, 3 callouts). The readout is the decision layer, `analysis.md` the evidence layer.
+103. Lead with the insight a decision needs (the gap to a target, the size of change needed). Pick each chart from the message it proves. Use plain, rounded words for exec audiences, in readouts, decks and question cards.
+104. `storytell` becomes a discipline used by `/run-analysis` (draft) and `/review-analysis` (check and fix before final). It keeps its name and stays runnable directly. Audience versions and an opt-in slide pack are offered at the end of the review. The pack is built from the final readout, with no new claims, and the answer is saved in the map.
+105. Answered Ways of working items are recorded, never saved as a gap. Source paths in the map use one form (`analyses/<YYYY-MM-DD>-<slug>`). Open gaps are their own entries in a new map section, so the next grill asks about them. Retro never upgrades a repeat run to a trusted number: trusted needs an outside check.
+106. The goal link defaults to the goal whose metric matches the ask's metric. The deadline folds into the depth choice and a date is asked only when a meeting, launch or review sets one.
+107. A same-chat `/review-analysis` shows a card first ("A new chat gives a fresher review. Continue here anyway?"). The review runs each script from the data folder. Card counters show position out of the full total.
+108. `/improve-code` runs the old and new versions itself when it can, surfaces problems instead of hiding them, keeps reusable code reusable, uses what the map already knows, offers to close the loop, offers analysis scripts as candidates, and stays in scope. The claim ceiling applies in every skill.
+109. `/wayfinder-data` asks the business limits first (runtime limit, expected gain, cost of being wrong, reversibility), sizes for those limits, and derives the margin from the trade-off, never from the timeline. It never invents a constraint.
+110. When an A/B test is too weak, other designs are offered in the first round of options, each with pros, cons, data needed, the breaking check and the claim ceiling. The spec becomes an evaluation spec when the chosen design is not an experiment.
+111. Design hygiene: state sizing assumptions and flag when data breaks them, check options against the map before offering them, raise goal conflicts when the choice is made, record choices others make as "to confirm with <owner>", write a single sound option as a requirement, explain overlapping tests, name owners for open items, and end with sign-off and the open items.
+112. `handoff` is removed everywhere (skill, evals, README, manifests, routing, self-check). `/ask-data-skills` routes "pass the work on" to the "Where it stands" block.
 
 ## Build decisions
 
@@ -273,6 +289,28 @@ B137. Rubric rows. The old rows "Downloads first", "Stable names and versions" a
 B138. `plan-analysis` case 5 includes a colleague's earlier result so a plan step can be tested on status logic. Options: test the logic only in the review case, or in both. Chosen: both, because the brief names both skills and the plan step writes the child wording.
 B139. `evals/reference/v0.4-live-run.md` lists the live run's catches and misses from the brief, in the neutral shop domain only. It names no data, people or tools beyond what the brief states. The runner skips it (no rubric).
 
+### v0.6 build
+
+B140. Setup (v0.6). Branch `v0.6` from `v0.5`, because PR #4 (v0.5) is open and not merged. The draft PR goes into `v0.5`. `FIXES-v0.6.md` was added to `.gitignore` and to the self-check list of private files. `.blocklist` was created from the brief and is not tracked.
+B141. `scripts/` replaces `queries/` in every environment. Options: keep `queries/` for coding agents and add `scripts/` for chat apps, or one folder. Chosen: one folder, `scripts/`, because the brief names it and scripts include Python and chart code, not only SQL. The two worked examples were renamed (`git mv`) and their text updated. `run_queries.py` reads `scripts/`.
+B142. The Progress line stays in Meta next to the new "Where it stands" block. Options: drop the Progress line, or keep both. Chosen: keep both. Reason: every skill and the self-check read the Progress line, and the block is a human summary. Both are updated at the end of every step.
+B143. The Review pack appendix keeps its heading (`## 11. Appendix: Review pack`) but now holds a table of scripts, not code. Reason: the heading is checked and referenced by name in several skills.
+B144. Save form 2 is now "Download `<file>`", with a note on where a later step expects the file. Form 3 ("Printed below; save it as `<path>`") is unchanged: it only applies when creating the file failed. The earlier-work hint now says "Download it and attach it to this chat" (attaching a file to a chat is not placing it in a Project folder).
+B145. Readout callout labels changed to Ask, Caveat and Decision (the Answer callout is gone: the TL;DR is the answer). Self-check 28 tests the TL;DR template, the Ask and Caveat callouts, at most 3 callouts and an Appendix heading.
+B146. `storytell` stays in the user-invoked list, so self-check 6 still needs "Use only when the user runs /storytell or explicitly asks to". The description opens with "Applied inside /run-analysis and /review-analysis" and ends with that phrase, so it covers both uses.
+B147. The slide pack procedure lives in `storytell` ("Slide pack"), the offer in `/review-analysis` step 7a, and the answer in the map's Ways of working. The review hands back the updated map when it saves the choice. Default recommendation on the card is "No" when the readout will be read, and "Yes" is one click. Not tested: a real `.pptx` build in a chat sandbox (see Q12).
+B148. Open gaps is map section 13, appended after Ways of working (as in B107 and B132). The map stays `format: v1`. Self-check 30 requires the heading.
+B149. `/improve-code` hard rule changed. Old: never run the user's code against a source to see what happens before they name it and agree. New: never run against a source the user has not named. Once data is attached or a source is named in the chat, running the checks is part of the job and the skill does not stop to ask. Reason: item 24, and the live run asked twice.
+B150. There is no new template for the evaluation spec. The experiment spec template gained section 0 (business limits and designs considered), and the skill says that for a non-experiment design the file is `evaluation-spec.md` with section 2 replaced by the chosen design, its breaking check and its ceiling. Reason: SPEC section 3 keeps the catalogue small, and the sections are the same.
+B151. The experiment spec's open items table now has "likely owner (role)" and "by when (only if a meeting or launch sets one)" columns. Self-check 32 checks the new fields (business limits, what this size can and cannot detect, overlapping tests).
+B152. The two worked examples' readouts were rewritten as stories (TL;DR, takeaway headers, appendix holding the number tables) with no number changed. Each analysis got a "Where it stands" block with invented but consistent text. The query results were not changed.
+B153. The word `handoff` stays in SPEC.md and DECISIONS.md as a removal record. Self-check 41 excludes those two files and fails on any other mention. The generic rubric row "Chat-app handoff" became "Chat-app hand-back" so the word is gone from evals and docs.
+B154. Self-check 16 now requires `storytell` to be restated in `run-analysis` and `review-analysis`, and `viz` in review. Checks 28, 30, 32 and 39 were updated for the new template and wording. Checks 40 to 46 are new.
+B155. The eval runner was run in dry-run mode only (65 cases found). This session has no API key.
+B156. The plugin version went from 0.5.0 to 0.6.0 in both manifests.
+B157. Card counters: one sentence added to the card rule in every skill that restates it (nine skills and `grilling`), the same text each time, as in B135.
+B158. Items 14 and 15 (setup) are rules for the skill's output step: answered items are compared with the Ways of working rows before saving, and stale files are named by full path. No new question was added to setup.
+
 ## Questions for Cenan
 
 Short yes/no or A/B. Default is used until answered.
@@ -287,3 +325,8 @@ Q7. The pricing page example reports a real but awkward result (effect below the
 
 Q8. Chat-app evals moved from incognito to normal chats, as the v0.4 brief says. Default: yes (A: normal chats, B: back to incognito for the old cases).
 Q9. The worked examples got invented Decisions and Hypotheses rows to match the v0.4 template. Default: keep (A: keep, B: re-run them in a live chat and replace).
+
+Q10. The v0.6 PR is a draft into `v0.5`, because PR #4 is not merged. Default: yes (A: into `v0.5`, B: retarget to `main` once PR #4 merges).
+Q11. The worked examples were renamed from `queries/` to `scripts/`. Default: yes (A: keep the rename, B: restore `queries/` and say they are v0.5 records).
+Q12. The slide pack card recommends "No" when the readout is read, not presented. Default: yes (A: recommend No, B: recommend Yes).
+Q13. `.pptx` build was not tried in a chat sandbox. Can you build a pack in claude.ai once and tell us whether the fallback outline was needed? Default: keep the fallback (A: keep, B: drop it if the build works).
