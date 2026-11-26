@@ -101,7 +101,7 @@ data-work/analyses/<YYYY-MM-DD>-<slug>/
 After a save, name the path. Use one of three forms and no others:
 
 1. "Saved to `<path>` in your Project files" (you wrote it there).
-2. "Download `<file>`" (you could not write to Project files; never ask the user to move a file into a Project folder, chat apps do not allow it).
+2. "Download `<file>`" (you could not write to Project files). If it matters, say where a later step expects it ("the next step reads it from `<path>`"). Never ask the user to move a file or add it to a Project folder: chat apps do not let users place uploads in folders.
 3. "Printed below; save it as `<path>`" (creating the file failed).
 
 Never claim a save that did not happen. Never say "replace the old one, it is already saved there": it is saved, or the user must add it, never both. Coding agent: name the path you wrote.
