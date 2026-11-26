@@ -42,7 +42,7 @@ Second, asks that need a design and no data yet: "design an A/B test for the new
 
 0. **Fast path for a single design item.** If the whole ask is one design item ("design an A/B test for X", "define how we measure Y"), skip the decision map and the project file. Go straight to the spec: an experiment spec for a test, a metric spec for a measure. Do one framing round (at most 3 questions), then fill the template one section at a time with the user (see "Design items"). Do not make the user sit through a project map for a single design. If the ask turns out to hold several designs or analyses, say so and switch to the full map.
 1. **Take the work verbatim.** Store it unchanged.
-2. **One framing round** (at most 3 questions): what outcome is wanted, who it is for, and by when. Skip what is already known.
+2. **One framing round** (at most 3 questions): what outcome is wanted and who it is for. Ask for a date only when a meeting, launch or review sets one. Skip what is already known. For a test design, this round is followed by the business limits (see "Designing a test").
 3. **Draft the map.** List the decision items: every choice that must be made before the work can be done well. Aim for 5 to 12. Fewer than 4 means this is one analysis: say so and suggest `/grill-the-ask` instead. For each item write:
    - **id** (W1, W2, ...) and a one-line question
    - **options** (2 to 4), each with its main trade-off
@@ -70,13 +70,29 @@ An item in a map can be a design item (an experiment or a metric to define). So 
 
 Save each spec in its own analysis folder, `data-work/analyses/<YYYY-MM-DD>-<slug>/experiment-spec.md` or `metric-spec.md`, never as a bare `experiment-spec.md` (the next spec would overwrite it). Make the folder if it does not exist, and name the path when you save.
 
-Rules for both:
+## Designing a test
+
+Order matters. Do not size anything before the business limits are known.
+
+1. **Business limits first.** Before any sizing, ask (cards, at most 3 per round): how long the test can run, what the change is expected to gain (in money, users or orders for a period), what it costs to be wrong, and whether the change is easy to reverse. A card says what each answer changes in the design. Never invent a constraint (time, budget, scope) the user did not give.
+2. **Show what the limits buy.** Size the test for the user's limits and say plainly what that can and cannot detect ("in 4 weeks at this volume the smallest effect it can see is about X; a smaller real effect would look like noise"). Derive the margin or the minimum effect worth acting on from the business trade-off, the expected gain against the loss that would cancel it, never from what fits the timeline. A reversible change can justify a looser bar: say why, and say what guardrail makes reversal safe.
+3. **State the sizing assumptions** (for example, that daily counts behave like a simple count model) and flag when the data in the map or in the user's numbers breaks them (for example, day-to-day swings larger than that model assumes). If the assumptions break, say how the numbers move.
+4. **When an A/B test is too weak for the limits, offer other designs in the first round of options**, not only when the user pushes. Use the causal method selector and the method cards in `question-types`: before and after, interrupted time series, difference-in-differences, synthetic control, matched cohorts, a reversible switch with a guardrail alert, or no test. Each option gets its pros, cons, the data it needs, the check that would break it (for example parallel trends) and its claim ceiling. When the chosen design is not an experiment, the spec is an **evaluation spec**: the same sections as the experiment spec with the design section replaced by the chosen design, its breaking check and its ceiling, saved as `evaluation-spec.md` in the analysis folder.
+5. **Check every option against the map before offering it.** Unit counts (too few regions to randomise), fields that do not exist (no arm tag), and known breaks in a comparison series (a logging change, a definition change) are said in the option itself, or the option is dropped with a reason. Test a candidate comparison series on the data when you can, and reject it with the evidence when it broke in the history.
+6. **When only one option is sound, write it as a requirement**, not a card. Say why the others fail.
+7. **Raise a goal conflict at the moment of choice**, not later: when the user picks a design or a loss limit that clashes with a goal in the map (for example an allowed loss against a growth goal), say so in that card and in the spec.
+8. **Do not ask about choices a tool or another owner makes** (for example how a platform assigns users). Record them as "to confirm with <owner>". Ask only when the user's answer changes the design.
+9. **Overlapping tests.** When another test touches the same units or metric, explain whether independent splits keep the comparison fair and what interaction risk remains (for example, an effect that only shows when both changes are on), rather than only flagging the overlap. Offer a start date after the other test ends as an option.
+10. **Owners for open items.** Name the likely owner, by role (data or engineering for tracking work, a finance lead for a value), not just "to confirm". The user can change the owner.
+11. **After a spec, the next step is sign-off and the open items.** The readout analysis (`/grill-the-ask`) comes after the test ends.
+
+Rules for both specs:
 
 - Go one section at a time. Each question has one real recommended default. Log answers word for word and echo them back.
 - Never invent a number. Baselines, targets and benchmarks come from the user, the data map or a stated calculation. If missing, write "to confirm" and who can supply it. Do not look one up from memory and present it as theirs.
 - A proxy is a guess until a check shows it tracks the true metric. The spec says how to check, with data that holds both, and the check result stays `not run` until someone runs it. Running it is a `/grill-the-ask` analysis, not this step.
 - A power or sample size is a calculation: show the inputs and the formula. Do not do the arithmetic in your head.
-- Experiment spec and metric spec end with open items: what is still to confirm, with who and by when.
+- Experiment spec and metric spec end with open items: what is still to confirm, with the likely owner by role and, only when a meeting or launch sets one, a date.
 
 ## The wayfinder file
 
@@ -138,7 +154,7 @@ Example ready prompt: `/grill-the-ask Monthly churn rate for the subscription ap
    > B) Change something (say what)
    > C) Add an item, a check or a question
 
-   Fill in A with the real next step: the next open item ("resolve W5"), the first `/grill-the-ask` prompt, or, for a fast-path spec, "share the spec for sign-off, then run `/grill-the-ask` for the analysis that will read the test out". Wait for the answer. A means start that step. B or C means make the change, hand back the updated file, and ask again.
+   Fill in A with the real next step: the next open item ("resolve W5"), the first `/grill-the-ask` prompt, or, for a fast-path spec, "get the spec signed off and settle its open items (the readout analysis comes after the test ends)". Wait for the answer. A means start that step. B or C means make the change, hand back the updated file, and ask again.
 
 ## Done when
 

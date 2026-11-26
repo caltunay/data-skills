@@ -9,6 +9,16 @@ Date:
 
 Fill every line. If a line cannot be filled, write what is missing and who can supply it. Never invent a number: a number comes from the user, the data map or a stated calculation.
 
+## 0. Business limits
+
+Asked before any sizing. Never invent a limit the user did not give.
+
+- How long the test can run:
+- Expected gain if the change works (value, period, where the figure comes from):
+- Cost of being wrong:
+- Easy to reverse? (and the guardrail that makes reversal safe):
+- Designs considered (A/B, before and after, time series, difference-in-differences, synthetic control, matched cohorts, reversible switch with alert, no test), and why this one. If the chosen design is not an experiment, this file is an evaluation spec: replace section 2 with the design, its breaking check and its claim ceiling.
+
 ## 1. Hypothesis
 
 - Change being tested:
@@ -37,6 +47,9 @@ Fill every line. If a line cannot be filled, write what is missing and who can s
 - Sample per arm: <from the calculation, with the formula or tool used>
 - Runtime: <days, fixed in advance, at least one full weekly cycle>
 - Seasonality: <holidays, sales, month-end, releases that overlap the run, and what is done about them>
+- What this size can and cannot detect: <in plain words>
+- Sizing assumptions, and whether the data breaks them:
+- Overlapping tests: <does an independent split keep the comparison fair, what interaction risk remains, start date after the other test ends as an option>
 
 ## 5. Checks and decision rule
 
@@ -47,5 +60,5 @@ Fill every line. If a line cannot be filled, write what is missing and who can s
 
 ## 6. Open items
 
-| item | who can answer | by when |
+| item | likely owner (role) | by when (only if a meeting or launch sets one) |
 |---|---|---|
