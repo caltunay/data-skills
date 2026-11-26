@@ -112,3 +112,11 @@ order by 1
 | file hand-back | downloads | 2026-01-01 | setup |
 
 Where work lives: chat Projects, or a repo layout (one repo with a folder per project, a repo per project, or a team repo). File hand-back: downloads, Project files, or a named document tool. Skills ask about hand-back once per Project, then read it from here.
+
+## 13. Open gaps
+
+| gap | what is unknown | who can answer | raised in | verified | source |
+|---|---|---|---|---|---|
+| (none yet) | | | | | |
+
+One row per open gap, each its own entry (never buried inside another line). `/retro-analysis` records gaps found in a run, for example a target whose scope is unclear. `/grill-the-ask` reads this section and asks about a gap that matters to the new ask, then the row is closed or updated at the next retro.

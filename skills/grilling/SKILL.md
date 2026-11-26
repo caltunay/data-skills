@@ -13,7 +13,7 @@ Only for data asks: an analysis, a metric, a query, a report, an experiment. If 
 
 ## Core rule
 
-Ask in rounds of at most 3 questions. Give each question 2 to 4 options and one real recommended default, with a one-line reason. Use the environment's multiple-choice question tool if it has one; otherwise list the options as text. Wait for the answers. Never assume silently. Show whatever a question refers to (a tree, a table, a draft) before you ask it. Each option says what it means in a few words.
+Ask in rounds of at most 3 questions. Give each question 2 to 4 options and one real recommended default, with a one-line reason. Use the environment's multiple-choice question tool if it has one; otherwise list the options as text. Card counters show the position out of the full total across rounds (for example "2 of 5"), never a count that restarts each round. Wait for the answers. Never assume silently. Show whatever a question refers to (a tree, a table, a draft) before you ask it. Each option says what it means in a few words.
 
 ## How to run a round
 
