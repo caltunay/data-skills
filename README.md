@@ -48,8 +48,8 @@ Codex also has a plugin manifest. Or upload the ZIPs in claude.ai and ChatGPT. S
 | `/setup-data-work` | Tests data access, interviews you, writes `DATA-MAP.md` |
 | `/grill-the-ask` | Turns a vague ask into a clear question, with assumptions and a depth |
 | `/plan-analysis` | Options, a chosen plan, the analysis table spec, success checks |
-| `/run-analysis` | Builds the table, climbs the validation ladder, runs the method, drafts `readout.md` |
-| `/review-analysis` | Technical and business review, claim check, verdict. Checks the readout word by word and marks it final |
+| `/run-analysis` | Builds the table, climbs the validation ladder, runs the method with every script saved as a file, drafts `readout.md` as a story |
+| `/review-analysis` | Technical and business review, claim check, verdict. Reruns the scripts, checks the story and the readout word by word, marks it final, and offers a slide pack |
 | `/retro-analysis` | Proposes data map updates. You approve each one |
 
 ## Demo: two worked examples
@@ -83,6 +83,7 @@ Plain models already spot visible flaws. These skills add:
 - explicit assumptions with likely alternatives
 - a data-check floor at every depth, then a validation ladder that tests the data against an independent path
 - claim ceilings tied to the question type
+- a readout that tells a story: a TL;DR, then sections whose headers are the takeaways
 - a review that can say "no material issues"
 - a data map that learns from every analysis
 
@@ -96,7 +97,7 @@ Plain models already spot visible flaws. These skills add:
 | Plan | One line, flat hypotheses | Hypothesis tree, 2 to 4 options | Plus power or MDE |
 | Ladder | Compact data-check floor | Full floor plus full ladder | Plus alternative specification |
 | Review | Self-check plus recompute | Technical plus business, best in a fresh chat | Plus leadership questions |
-| Readout | Short answer in chat | `readout.md` and `readout.docx` | Plus appendix |
+| Readout | Short answer in chat | `readout.md` (a story with a TL;DR) and `readout.docx` | Plus appendix |
 | Files | None | `analysis.md`, `readout.md` | Full analysis folder |
 
 ## What is inside
@@ -108,7 +109,7 @@ Plain models already spot visible flaws. These skills add:
 
 ## Works with or without a data connection
 
-If your agent can run queries, it does. In a chat app with a code tool, attach your data files (CSV, Excel) and it loads them and runs the checks itself. Only with no code tool does it hand you numbered queries, in groups, and wait for the paste. In a chat app it saves each file to your Project files at its full path, or offers a download and tells you where to add it. Every step ends with a go-ahead question. It never fails because a tool is missing.
+If your agent can run queries, it does. In a chat app with a code tool, attach your data files (CSV, Excel) and it loads them and runs the checks itself. Only with no code tool does it hand you numbered queries, in groups, and wait for the paste. In a chat app it saves each file to your Project files at its full path, or offers a download and tells you to download it. Every step ends with a go-ahead question. It never fails because a tool is missing.
 
 ## Your files
 

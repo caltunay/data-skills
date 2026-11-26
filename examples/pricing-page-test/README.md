@@ -10,7 +10,7 @@ A worked example on invented data for an invented online shop. It follows the fl
 | `DATA-MAP.md` | setup, then retro | The data map, with 5 entries added by the retro |
 | `analysis.md` | grill, plan, run, review, retro | Ask, assumptions, the plan with power, ladder log, the 10 method card checks, findings, review, retro |
 | `readout.md` | run (draft), review (final) | The stakeholder readout |
-| `queries/` | run | Numbered check queries, one purpose each, expected result stated first |
+| `scripts/` | run | Numbered scripts, one purpose each, expected result stated first |
 | `stats.py` | run | The sample ratio check, power, test and intervals, from the query results |
 | `outputs/` | scripts | `results.txt` and `stats.txt`: the real results |
 

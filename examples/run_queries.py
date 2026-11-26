@@ -4,7 +4,7 @@
 Usage: python3 examples/run_queries.py examples/signup-drop
 
 Loads every CSV in <example>/data into an in-memory SQLite database (table name = file name),
-runs every .sql file in <example>/queries in name order, and writes the results to
+runs every .sql file in <example>/scripts in name order, and writes the results to
 <example>/outputs/results.txt. Standard library only.
 """
 import csv
@@ -63,7 +63,7 @@ def main():
     example = Path(sys.argv[1])
     conn = connect(example)
     lines = []
-    for path in sorted((example / "queries").glob("*.sql")):
+    for path in sorted((example / "scripts").glob("*.sql")):
         lines.append(f"=== {path.name}")
         lines.extend(line for line in path.read_text().splitlines() if line.startswith("--"))
         header, raw = run_file(conn, path)

@@ -3,7 +3,15 @@ updated: 2026-02-24 09:00
 
 # Analysis: did the new pricing page increase orders?
 
-Invented example. Every number below comes from `outputs/results.txt` and `outputs/stats.txt`, produced by running the files in `queries/` and `stats.py`.
+Invented example. Every number below comes from `outputs/results.txt` and `outputs/stats.txt`, produced by running the files in `scripts/` and `stats.py`.
+
+## Where it stands
+
+- Status: retro done
+- Answer so far: The new page raised 7-day paid conversion from 10.2% to 11.8% (95% interval +0.2 to +3.1 points). Week 2 was weaker.
+- Open risks: Week 2 was weaker; revenue per visitor not clearly up.
+- Next step: Roll out to 95% and hold 5% for four weeks.
+- How to resume: Open `data-work/analyses/2026-02-25-pricing-page-test/`; the work is complete, start the next ask with `/grill-the-ask`.
 
 ## 1. Meta
 
@@ -191,7 +199,7 @@ Open high-impact assumptions next to these findings: none.
 
 ## 11. Appendix: Review pack
 
-The code behind each headline number. Every query file is in `queries/`; results are in `outputs/results.txt` and `outputs/stats.txt`.
+The code behind each headline number. Every query file is in `scripts/`; results are in `outputs/results.txt` and `outputs/stats.txt`.
 
 ### Conversion by arm (control 10.15%, variant 11.79%)
 

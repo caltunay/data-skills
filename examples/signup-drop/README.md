@@ -12,7 +12,7 @@ The ask is a "why". The data supports "how much, when and where". The example sh
 | `DATA-MAP.md` | setup, then retro | The data map, with 6 entries added by the retro |
 | `analysis.md` | grill, plan, run, review, retro | The working notes: ask, assumptions, plan, ladder log, findings, review, retro |
 | `readout.md` | run (draft), review (final) | The stakeholder readout |
-| `queries/` | run | Numbered check queries, one purpose each, expected result stated first |
+| `scripts/` | run | Numbered scripts, one purpose each, expected result stated first |
 | `outputs/results.txt` | `run_queries.py` | The real result of every query |
 | `outputs/signups-daily-feb-mar.svg` | `make_chart.py` | The readout chart, built from `q4-2-daily-series-feb-mar.sql` |
 
