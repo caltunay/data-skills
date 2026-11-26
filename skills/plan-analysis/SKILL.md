@@ -49,7 +49,7 @@ Record decisions already made. Do not invent new ones.
    - expected row count or range
 8. Set **success checks** up front: what must be true for the result to be trusted. Include the trusted number to reconcile to and the tolerance. Say which count must match it, raw or cleaned, and why. Example: "Raw paid orders within 1% of 120,400 (finance report), because the report counts before our dedup." Copy every item under the card's "Checks that must pass" into the success checks now, word for word. Never defer them to the run ("checks from the card" is not a success check). If the card file will not open, copy the line from the compact cards.
 9. Add any new assumptions to the table. Each "Key assumption" on the card that the data cannot confirm becomes a row.
-10. **Readout skeleton (optional, standard and deep).** Offer it: "Draft the readout skeleton now, to check that the story would answer the decision?" If yes, write `readout.md` from the readout template with placeholders only (XX%, [segment], [date]). Never an invented number. Set the status line to `**Status: SKELETON**`. Read it against the decision in Ask: would this layout answer it? Change the plan if not. `/run-analysis` replaces the skeleton with the draft.
+10. **Readout skeleton (optional, standard and deep).** Offer it: "Draft the readout skeleton now, to check that the story would answer the decision?" If yes, write `readout.md` from the readout template (a story: a TL;DR and takeaway-sentence headers, with placeholders only (XX%, [segment], [date])). Never an invented number. Set the status line to `**Status: SKELETON**`. Read it against the decision in Ask: would this layout answer it? Change the plan if not. `/run-analysis` replaces the skeleton with the draft.
 
 ## Depth table
 
