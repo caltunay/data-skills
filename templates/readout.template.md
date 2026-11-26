@@ -8,49 +8,35 @@ updated: YYYY-MM-DD HH:MM
 Audience: exec | product | data | mixed
 Date:
 
-<!-- Portable markdown only: no app-specific macros. At most 3 callouts in the whole readout, as blockquotes with a bold label (Answer, Caveat, Ask). Bold only the one takeaway per section. The status line is SKELETON (placeholders only, from /plan-analysis), then DRAFT (from /run-analysis), then FINAL (set by /review-analysis). A readout.docx is built from this text with the charts embedded: edit this file, then rebuild the .docx. -->
+<!-- Portable markdown only: no app-specific macros. The readout is the decision layer and analysis.md is the evidence layer. Read in order, the headers alone tell the story. Caps: at most 5 headline numbers, 3 charts, 3 callouts. A callout is a blockquote with a bold label (Ask, Caveat, Decision) and appears only where a decision or attention is needed. Bold only the one takeaway per section. The status line is SKELETON (placeholders only, from /plan-analysis), then DRAFT (from /run-analysis), then FINAL (set by /review-analysis). A readout.docx is built from this text with the charts embedded: edit this file, then rebuild the .docx. -->
 
-## 1. Answer
+## TL;DR
 
-> **Answer:** two lines. The answer first.
+Two to three lines: the answer, what it means, and the ask. Plain words, rounded numbers for an exec audience.
 
-## 2. Key numbers
+## <Takeaway sentence: the first thing the reader must believe>
 
-| number | value | uncertainty |
-|---|---|---|
-| | | |
+The chart or number under this header proves the header. If a number tells the reader what it would take to change the answer (the gap to a target, the size of change needed), it goes here, not in the appendix.
 
-At most 5 numbers. Every number carries its uncertainty: an interval, a tolerance, or "exact count for the period". Other numbers go to the Appendix. A chart replaces a number row when it says the same thing.
+![Alt text: what the chart shows and its takeaway](<chart-name>.svg)
 
-## 3. Charts
+## <Takeaway sentence: the next thing, drilling in>
 
-At most 3 charts for an exec audience. Each title states the takeaway. One annotation marks the key moment (for example, a marker on the day a step happened). Charts are image files in the analysis folder, linked here by their real path relative to this file, with alt text. A coding agent keeps them in `outputs/`. A chat app keeps them beside this file. Never link `outputs/` in a chat app:
-
-![Alt text: what the chart shows and its takeaway](<chart-name>.png)
-
-No chart is fine when a number says it better.
-
-## 4. What it means
-
-What it means for the decision, and the recommendation. **One bold takeaway.**
+One message per section. One chart at most. Every number carries its uncertainty, in plain words ("we are 95% sure it fell").
 
 > **Ask:** the one thing you need from the reader, if any.
 
-## 5. Caveats
+## Caveats
 
 > **Caveat:** the caveat that most changes how the answer should be read.
 
 - Open high-impact assumptions:
 - What this analysis can and cannot say (the claim ceiling, in plain words):
 
-## 6. Method
+## Method
 
-Three lines: data, method, checks passed. Claim only what ran. Do not write "full validation ladder" unless every rung ran against an independent path and passed.
+Three lines: data, method, checks passed. Claim only what ran. Do not write "full validation ladder" unless every rung ran against an independent path and passed. Working notes: `analysis.md` (its Review pack lists the scripts behind each headline number).
 
-## 7. Link
+## Appendix
 
-Working notes: `analysis.md` (its Review pack holds the code behind each headline number).
-
-## 8. Appendix
-
-Numbers beyond the 5 key numbers, segment tables, the ladder summary. Optional at standard depth.
+Analyst-only figures (raw-count checks, intervals of robustness cuts, recompute detail), other numbers, segment tables and the ladder summary. Optional at standard depth.

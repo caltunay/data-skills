@@ -41,7 +41,8 @@ When you stop, say what you are waiting for and set the Progress line, for examp
 - `stats-tests`: choose the test by data type and design. Report direction, magnitude and uncertainty. Correct for multiple comparisons.
 - `question-types`: word every claim at or below the ceiling. One file per question type holds the method cards. Load the card for the chosen method and apply its "Checks that must pass" (the plan's success checks hold a copy; the compact cards in the `question-types` skill are the fallback). No "caused" without a randomised experiment or a credible causal design that passed its checks.
 - `data-map`: read it before writing queries. Flag entries older than 90 days or contradicted by data, then ask.
-- `viz` (experimental): choose the chart by the question. The title states the takeaway, axes carry units, bars start at zero, uncertainty is shown, no dual axes, no 3D, colour-blind safe, same scale when comparing. In a readout: at most 3 charts for exec, one annotation on the key moment, saved as image files in the analysis folder and linked by their real path with alt text.
+- `viz` (experimental): choose the chart by the message it must prove (target: bars plus a target line; time: line; mix: stacked bars; spread: histogram or box). One message per chart, the takeaway as its title. Axes carry units, bars start at zero, uncertainty is shown, no dual axes, no 3D, colour-blind safe, same scale when comparing. In a readout: at most 3 charts for exec, one annotation on the key moment, saved as image files in the analysis folder (SVG in a chat app that can write text but not binary files) and linked by their real path with alt text.
+- `storytell`: the readout is a story. A TL;DR of 2 to 3 lines, then sections whose headers are takeaway sentences, each proved by a chart or number; callouts only where a decision or attention is needed; caveats, a short method, an appendix. Plain, rounded words. Never raise a claim to make the story cleaner.
 - `assumptions`: ask instead of assuming. When you must assume, add a row. Standard and deep depth always show the full 7-column table (id, assumption, why unavoidable, likely alternatives, impact if wrong, how to check, status). Never drop columns.
 
 ## Steps
@@ -78,24 +79,30 @@ Every script that produces a headline number, a check or a chart is saved as its
 
 ## Draft readout
 
-One layout. Wording adapts to the audience set in grilling (Meta). The default readout serves that audience. `/storytell` is for other audiences and formats, not a fix for a readout that ignored its audience.
+The readout is a story, not a form. It is the decision layer. `analysis.md` is the evidence layer. Apply `storytell` to draft it (core rule if it does not load: the readout tells a story top down, then drills in; every header is a takeaway sentence; the chart or number under it proves it; no claim above the ceiling). One layout. Wording adapts to the audience set in grilling (Meta). The default readout serves that audience. `/storytell` also makes other audiences and formats on request.
 
-1. **Answer** in 2 lines.
-2. **Key numbers**, each with its uncertainty. At most 5. For an exec audience this limit is strict. Every other number goes to the Appendix.
-3. **Charts** (apply `viz`). At most 3 in an exec readout. Each title states the takeaway. One annotation on the key moment (for example, a marker on the day a step happened). A chart replaces number rows that say the same thing, which keeps the 5-number limit. Charts are image files in the analysis folder (a coding agent uses its `outputs/` subfolder), saved at their full path. The link in `readout.md` is the chart's real path relative to the readout (`<chart>.png`, or `outputs/<chart>.png` only when that folder exists), never `outputs/` in a chat app. In a chat app, hand each chart over in one of the three forms. In hand-over mode, give the chart spec plus ready-to-run code. No chart is fine when a number says it better.
-4. **What it means** and the recommendation.
-5. **Caveats:** open high-impact assumptions, and the claim ceiling in plain words.
-6. **Method** in 3 lines. Claim only what ran: name the checks that passed, as they were run. Never write "full validation ladder" if a rung was skipped, failed, or compared only against the frame the table was built from.
-7. **Link** to `analysis.md`.
-8. **Appendix:** the other numbers, segment tables, the ladder summary.
+1. **TL;DR:** 2 to 3 lines covering the answer, what it means and the ask.
+2. **Story sections,** top down, then drilling in. Each section header is a takeaway sentence. The chart or number under it proves it. One message per section. Read in order, the headers alone tell the story. Never a label-only header such as "Answer", "Key numbers", "Charts" or "What it means".
+3. **Callouts only where a decision or attention is needed.** At most 3 in the whole readout.
+4. **Caveats,** then a short **Method** (3 lines), then the **Appendix.**
+
+Caps: at most 5 headline numbers (strict for an exec audience), 3 charts, 3 callouts. Analyst-only figures (raw-count checks, intervals of robustness cuts, recompute detail) go to the appendix or to `analysis.md`.
+
+**Lead with the insight a decision needs.** If a number tells the reader what it would take to change the answer (the gap to a target, the size of change needed), it belongs in the story, not the appendix.
+
+**Charts** (apply `viz`). Pick the chart from the message it must prove: a number against a target (bars plus a target line), change over time (line), mix (stacked bars), spread (histogram or box plot). One message per chart, and the takeaway is its title. One annotation on the key moment. A chart replaces number rows that say the same thing, which keeps the 5-number limit. Charts are image files in the analysis folder (a coding agent uses its `outputs/` subfolder), saved at their full path and linked by their real path relative to the readout with alt text, never `outputs/` in a chat app. When you can write text files to the Project files but not binary files, save each chart as SVG and link it from `readout.md`. Keep PNG only inside binary outputs (`.docx`, `.pptx`). Each chart comes from a script in `scripts/`. In hand-over mode, give the chart spec plus ready-to-run code. No chart is fine when a number says it better.
+
+**Plain words.** Round numbers for an exec audience. Plain phrases over jargon ("almost double the target", not "85% above"; "we are 95% sure it fell", not "interval below zero"). The same goes for question cards and decks.
+
+**Method** claims only what ran: name the checks that passed, as they were run. Never write "full validation ladder" if a rung was skipped, failed, or compared only against the frame the table was built from.
 
 The `.docx` carries the same text and the charts. Portable markdown only for `readout.md`, no app-specific macros:
 
-- Callouts are blockquotes with a bold label: `> **Answer:** ...`, `> **Caveat:** ...`, `> **Ask:** ...`. At most 3 in the whole readout, so they stand out.
+- Callouts are blockquotes with a bold label (`> **Ask:** ...`, `> **Caveat:** ...`, `> **Decision:** ...`).
 - The status is a bold label at the top: `**Status: DRAFT**` or `**Status: FINAL**`.
 - Bold only the one takeaway per section.
 
-Every sentence stays at or below the claim ceiling. The draft is not final: `/review-analysis` checks it word by word and marks it final. Say so when you hand it over.
+Every sentence stays at or below the claim ceiling. The draft is not final: `/review-analysis` checks it word by word, checks the story, and marks it final. Say so when you hand it over.
 
 ## Depth table
 
